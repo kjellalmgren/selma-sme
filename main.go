@@ -11,8 +11,8 @@ import (
 
 // todo
 type Process struct {
-	processId  string `json:"processId"`
-	customerId string `json:"customerId,omitempty"`
+	ProcessId  string `json:"processId"`
+	CustomerId string `json:"customerId,omitempty"`
 }
 
 var processes []Process
@@ -20,16 +20,16 @@ var process Process
 
 // our main function
 func main() {
-	process.processId = "1"
-	process.customerId = "Kjell Almgren"
-	processes = append(processes, Process{processId: "1", customerId: "19601005-0190"})
-	processes = append(processes, Process{processId: "2", customerId: "19710101-0120"})
-	processes = append(processes, Process{processId: "3", customerId: "19720101-0120"})
-	processes = append(processes, Process{processId: "4", customerId: "19730202-0240"})
+	process.ProcessId = "1"
+	process.CustomerId = "Kjell Almgren"
+	processes = append(processes, Process{ProcessId: "1", CustomerId: "19601005-0190"})
+	processes = append(processes, Process{ProcessId: "2", CustomerId: "19710101-0120"})
+	processes = append(processes, Process{ProcessId: "3", CustomerId: "19720101-0120"})
+	processes = append(processes, Process{ProcessId: "4", CustomerId: "19730202-0240"})
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
 	router.HandleFunc("/v1/getProcess", getProcess).Methods("GET")
-	router.HandleFunc("/v1/getProcesses", getProcesses).Methods("GET")
+	router.HandleFunc("/v1/getProcesses/{customerId}", getProcesses).Methods("GET")
 	fmt.Printf("Listen on server localhost:8000\r\n")
 	err := http.ListenAndServe(":8000", router)
 	if err != nil {
@@ -50,7 +50,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 //
 func getProcess(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getProcess executed...")
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	if err := json.NewEncoder(w).Encode(process); err != nil {
@@ -64,12 +64,12 @@ func getProcess(w http.ResponseWriter, r *http.Request) {
 //
 func getProcesses(w http.ResponseWriter, r *http.Request) {
 
-	processes = append(processes, Process{processId: "11", customerId: "19601005-0190"})
+	processes = append(processes, Process{ProcessId: "11", CustomerId: "19601005-0190"})
 	fmt.Printf("getProcesses executed...\r\n")
 	for i, p := range processes {
-		fmt.Println(i, p.processId, p.customerId)
+		fmt.Println(i, p.ProcessId, p.CustomerId)
 	}
-	w.Header().Add("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Add("Access-Control-Allow-Origin", r.Header.Get("Origin"))
 	w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	if err := json.NewEncoder(w).Encode(processes); err != nil {

@@ -1,1 +1,3 @@
-# selma-sme
+# Selma-SME
+
+## Static REST-API

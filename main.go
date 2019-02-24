@@ -28,8 +28,8 @@ func main() {
 	processes = append(processes, Process{ProcessId: "4", CustomerId: "19730202-0240"})
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
-	router.HandleFunc("/v1/getProcess", getProcess).Methods("GET")
-	router.HandleFunc("/v1/getProcesses/{customerId}", getProcesses).Methods("GET")
+	router.HandleFunc("/v1/Process", getProcess).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Processes/{customerId}", getProcesses).Methods("GET", "OPTIONS")
 	fmt.Printf("Listen on server localhost:8000\r\n")
 	err := http.ListenAndServe(":8000", router)
 	if err != nil {
@@ -51,8 +51,10 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func getProcess(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getProcess executed...")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
 	if err := json.NewEncoder(w).Encode(process); err != nil {
 		panic(err)
 	}
@@ -70,8 +72,10 @@ func getProcesses(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(i, p.ProcessId, p.CustomerId)
 	}
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Add("Access-Control-Allow-Origin", r.Header.Get("Origin"))
-	w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
 	if err := json.NewEncoder(w).Encode(processes); err != nil {
 		panic(err)
 	}

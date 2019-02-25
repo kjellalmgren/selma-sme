@@ -72,7 +72,6 @@ func getProcess(w http.ResponseWriter, r *http.Request) {
 func getProcesses(w http.ResponseWriter, r *http.Request) {
 
 	var processes []Process
-	//var process Process
 	//
 	fmt.Printf("getProcesses executed...\r\n")
 	//

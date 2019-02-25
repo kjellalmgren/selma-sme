@@ -71,6 +71,9 @@ func getProcesses(w http.ResponseWriter, r *http.Request) {
 	for i, p := range processes {
 		fmt.Println(i, p.ProcessId, p.CustomerId)
 	}
+	vars := mux.Vars(r)
+	fmt.Println(vars["customerId"]) // customerId
+	fmt.Println()
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")

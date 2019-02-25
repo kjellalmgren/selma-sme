@@ -9,10 +9,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// todo
+//
+//	Process
+//
 type Process struct {
-	ProcessId  string `json:"processId"`
-	CustomerId string `json:"customerId,omitempty"`
+	ProcessID  string `json:"processId"`
+	CustomerID string `json:"customerId,omitempty"`
 }
 
 var processes []Process
@@ -20,12 +22,12 @@ var process Process
 
 // our main function
 func main() {
-	process.ProcessId = "1"
-	process.CustomerId = "Kjell Almgren"
-	processes = append(processes, Process{ProcessId: "1", CustomerId: "19601005-0190"})
-	processes = append(processes, Process{ProcessId: "2", CustomerId: "19710101-0120"})
-	processes = append(processes, Process{ProcessId: "3", CustomerId: "19720101-0120"})
-	processes = append(processes, Process{ProcessId: "4", CustomerId: "19730202-0240"})
+	process.ProcessID = "1"
+	process.CustomerID = "Kjell Almgren"
+	processes = append(processes, Process{ProcessID: "1", CustomerID: "19601005-0190"})
+	processes = append(processes, Process{ProcessID: "2", CustomerID: "19710101-0120"})
+	processes = append(processes, Process{ProcessID: "3", CustomerID: "19720101-0120"})
+	processes = append(processes, Process{ProcessID: "4", CustomerID: "19730202-0240"})
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
 	router.HandleFunc("/v1/Process", getProcess).Methods("GET", "OPTIONS")
@@ -46,7 +48,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 //
-//	getProcess
+// getProcess
 //
 func getProcess(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getProcess executed...")
@@ -66,10 +68,10 @@ func getProcess(w http.ResponseWriter, r *http.Request) {
 //
 func getProcesses(w http.ResponseWriter, r *http.Request) {
 
-	processes = append(processes, Process{ProcessId: "11", CustomerId: "19601005-0190"})
+	processes = append(processes, Process{ProcessID: "11", CustomerID: "19601005-0190"})
 	fmt.Printf("getProcesses executed...\r\n")
 	for i, p := range processes {
-		fmt.Println(i, p.ProcessId, p.CustomerId)
+		fmt.Println(i, p.ProcessID, p.CustomerID)
 	}
 	vars := mux.Vars(r)
 	fmt.Println(vars["customerId"]) // customerId

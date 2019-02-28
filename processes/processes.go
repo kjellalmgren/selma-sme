@@ -54,3 +54,21 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 }
+
+//
+// DeleteProcess
+func DeleteProcess(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Printf("deleteProcess executed...\r\n")
+	//
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
+	//
+	vars := mux.Vars(r)
+	fmt.Println(vars["processId"]) // processId
+	w.WriteHeader(http.StatusOK)
+	//
+}

@@ -8,4 +8,5 @@ reserverCaseId ska vid anrop första gången även anropa setCaseIdStatus
 	Method: setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}
 	caseIdStatus: Enum: STARTEDBYAPPLICANT
 	
-	LIME ska uppdateras att
+LIME ska uppdateras att kund startat ansökan, befintlig kund, ny kund. LIME kundkort ska logga aktiviteten.
+

@@ -8,17 +8,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// Process struct
+type Process struct {
+	ProcessID   string `json:"processId,omitempty"`
+	CustomerID  string `json:"customerId,omitempty"`
+	DateCreated string `json:"dateCreated,omitempty"`
+}
+
 //
 // getProcesses
 //
 func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
-	// Process struct
-	type Process struct {
-		ProcessID   string `json:"processId,omitempty"`
-		CustomerID  string `json:"customerId,omitempty"`
-		DateCreated string `json:"dateCreated,omitempty"`
-	}
 	var processes []Process
 	//
 	fmt.Printf("getProcesses executed...\r\n")
@@ -35,6 +36,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	switch vars["customerId"] {
 	case "19700101-1001":
 		processes = append(processes, Process{ProcessID: "11", CustomerID: "19700101-1001", DateCreated: "2019-02-27"})
+		processes = append(processes, Process{ProcessID: "11", CustomerID: "19700101-2002", DateCreated: "2019-02-26"})
 	case "19700101-2002":
 		processes = append(processes, Process{ProcessID: "22", CustomerID: "19700101-2002", DateCreated: "2019-02-20"})
 	default:

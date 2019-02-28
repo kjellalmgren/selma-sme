@@ -18,6 +18,7 @@ Services: selma-sme
 //
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -82,7 +83,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func getHostname() string {
 
 	hostname, err1 := os.Hostname()
-	if err1 == nil {
+	if err1 != nil {
 		//log.Printf("Hostname: %s", hostname)
 		fmt.Println("Error when try to resolve Hostname: ", hostname)
 	}
@@ -100,7 +101,24 @@ func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	// (e.g. Redis) by performing a simple PING, and include them in the response.
 	//io.WriteString(w, `[{"alive": "true",`)
 	//io.WriteString(w, `"status": "200"}]`)
+
+	type HealthCheck struct {
+		HealthStatus int `json:"healthStatus,omitempty"`
+	}
+	var healtCheck HealthCheck
+	healtCheck.HealthStatus = http.StatusOK
+	//
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
+	//
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	//
+	if err := json.NewEncoder(w).Encode(healtCheck); err != nil {
+		panic(err)
+	}
 	fmt.Printf("Http-Status %d received\r\n", http.StatusOK)
 }

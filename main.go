@@ -1,6 +1,5 @@
 package main
 
-//
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
@@ -11,9 +10,9 @@ Services: selma-sme
 	win64: GOOS=windows GOARCH=amd64 go build -v
 	arm64: GOOS=linux GOARCH=arm64 go build -v
 	arm: GOOS=linux GOARCH=arm go build -v
-	exprimental: GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -ldflags '-w -s' -a -installsuffix cgo -o selma-sme
-	expriemntal: CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -tags selma-sme -ldflags '-w'
-	exprimental: GOOS=linux GOARCH=arm64 go build -a --ldflags 'extldflags "-static"' -tags selma-sme -installsuffix selma-sme .
+	exprimental: GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -ldflags '-w -s' -a -installsuffix cgo -o selmasme
+	expriemntal: CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -tags selmasme -ldflags '-w'
+	exprimental: GOOS=linux GOARCH=arm64 go build -a --ldflags 'extldflags "-static"' -tags selmasme -installsuffix selma-sme .
 */
 
 import (
@@ -22,6 +21,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"selmasme/version"
 
 	"github.com/gorilla/mux"
 )
@@ -60,11 +60,12 @@ type Process struct {
 // our main function
 func main() {
 
-	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, PingVersion()))
+	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.PingVersion()))
 	fmt.Fprint(os.Stdout, fmt.Sprintf(getHostname()))
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
 	router.HandleFunc("/v1/Processes/{customerId}", getProcesses).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	fmt.Printf("Listen on server localhost:8000\r\n")
 	err := http.ListenAndServe(":8000", router)
 	if err != nil {
@@ -133,7 +134,17 @@ func getHostname() string {
 }
 
 //
-//	getVersion
-func PingVersion() string {
-	return "v0.4.8"
+//
+func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	// A very simple health check.
+	//w.WriteHeader(http.StatusOK)
+	//w.Header().Set("Content-Type", "application/json")
+
+	// In the future we could report back on the status of our DB, or our cache
+	// (e.g. Redis) by performing a simple PING, and include them in the response.
+	//io.WriteString(w, `[{"alive": "true",`)
+	//io.WriteString(w, `"status": "200"}]`)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	fmt.Printf("Http-Status %d received\r\n", http.StatusOK)
 }

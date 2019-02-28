@@ -3,7 +3,7 @@ package main
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
-	Date: 2019-02-27
+	Date: 2019-02-28
 	Description: Service to feed Selma-SME UX, just for test purpose
 	Architecture:
 	win32: GOOS=windows GOARCH=386 go build -v

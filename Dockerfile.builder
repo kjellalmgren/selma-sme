@@ -35,4 +35,4 @@ EXPOSE 8000
 # run it!
 
 ENTRYPOINT ["./selmasme"]
-#CMD ["./selma-sme"]
+#CMD ["./selmasme"]

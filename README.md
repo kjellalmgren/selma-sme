@@ -13,8 +13,8 @@
     # push to hub.docker.com, assumes docker login
     $ docker push tetracon/selmasme:0.4.9
     # run container version 0.4.9
-    $ docker run -it --name selmasme --publish=8000:8000 -t tetracon/selmasme:0.4.9
+    $ docker run -d --name selmasme --publish=8000:8000 -t tetracon/selmasme:0.4.9
     # run shell to look into container
-    $ docker run -it -t tetracon/selmasme:0.4.9 sh
+    $ docker run -d -t tetracon/selmasme:0.4.9 sh
 
     # docker service create --name=pingservices --publish=80:9000 tetracon/pingservices:2.19

@@ -26,8 +26,9 @@ func ReserveCaseId(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
 	//
 	vars := mux.Vars(r)
-	fmt.Println(vars["processId"])  // processId
-	fmt.Println(vars["customerId"]) // customerId
+	fmt.Println(vars["processId"])    // processId
+	fmt.Println(vars["customerId"])   // customerId
+	fmt.Println(vars["caseIdStatus"]) // caseIdStatus
 	//
 	var cases Cases
 	cases.CaseID = "108000" // Hardcoded

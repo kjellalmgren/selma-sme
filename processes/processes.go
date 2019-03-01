@@ -34,11 +34,15 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(vars["customerId"]) // customerId
 	fmt.Println()
 	switch vars["customerId"] {
-	case "19700101-1001":
-		processes = append(processes, Process{ProcessID: "11", CustomerID: "19700101-1001", DateCreated: "2019-02-27"})
-		processes = append(processes, Process{ProcessID: "11", CustomerID: "19700101-2002", DateCreated: "2019-02-26"})
-	case "19700101-2002":
-		processes = append(processes, Process{ProcessID: "22", CustomerID: "19700101-2002", DateCreated: "2019-02-20"})
+	case "19640120-3887":
+		processes = append(processes,
+			Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+				CustomerID:  "19640120-3887",
+				DateCreated: "2019-03-01"})
+		processes = append(processes,
+			Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+				CustomerID:  "19650705-5579",
+				DateCreated: "2019-02-26"})
 	default:
 		w.WriteHeader(http.StatusNotFound)
 	}

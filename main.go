@@ -23,6 +23,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"selmasme/applicants"
 	"selmasme/cases"
 	"selmasme/processes"
 	"selmasme/version"
@@ -61,12 +62,15 @@ func main() {
 	fmt.Fprint(os.Stdout, fmt.Sprintf(getHostname()))
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
-	// Processes.go
+	// processes.go
 	router.HandleFunc("/v1/Processes/{customerId}", processes.GetProcesses).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/deleteProcess/{processId}", processes.DeleteProcess).Methods("POST", "OPTIONS")
 	// cases.go
-	router.HandleFunc("/v1/reserveCaseId/{processId}/{customerId}", cases.ReserveCaseId).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/reserveCaseId/{processId}/{customerId}/{caseIdStatus}", cases.ReserveCaseId).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}", cases.SetCaseIDStatus).Methods("POST", "OPTIONS")
+	// applicants.go
+	router.HandleFunc("/v1/Applicants/{processId}", applicants.GetApplicants).Methods("GET", "OPTIONS")
+	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	fmt.Printf("Listen on server localhost:8000\r\n")
 	err := http.ListenAndServe(":8000", router)

@@ -3,7 +3,7 @@ package main
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
-	Date: 2019-02-28
+	Date: 2019-03-02
 	Description: Service to feed Selma-SME UX, just for test purpose
 	Architecture:
 	win32: GOOS=windows GOARCH=386 go build -v
@@ -25,6 +25,13 @@ import (
 	"os"
 	"selmasme/applicants"
 	"selmasme/cases"
+	"selmasme/collaterals"
+	"selmasme/companies"
+	"selmasme/companyeconomies"
+	"selmasme/extloans"
+	"selmasme/households"
+	"selmasme/loans"
+	"selmasme/personaleconomies"
 	"selmasme/processes"
 	"selmasme/version"
 
@@ -70,6 +77,20 @@ func main() {
 	router.HandleFunc("/v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}", cases.SetCaseIDStatus).Methods("POST", "OPTIONS")
 	// applicants.go
 	router.HandleFunc("/v1/Applicants/{processId}", applicants.GetApplicants).Methods("GET", "OPTIONS")
+	// loans.go
+	router.HandleFunc("/v1/Loans/{processId}", loans.GetLoans).Methods("GET", "OPTIONS")
+	// extloans.go
+	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}", extloans.GetExtLoans).Methods("GET", "OPTIONS")
+	// collaterals.go
+	router.HandleFunc("/v1/Collaterals/{processId}/{customerId}", collaterals.GetCollaterals).Methods("GET", "OPTIONS")
+	// companies.go
+	router.HandleFunc("/v1/Companies/{processId}", companies.GetCompanies).Methods("GET", "OPTIONS")
+	// households.go
+	router.HandleFunc("/v1/Households/{processId}", households.GetHouseholds).Methods("GET", "OPTIONS")
+	// personalEconomies
+	router.HandleFunc("/v1/PersonalEconomies/{processId}/{customerId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
+	// companyEconomies
+	router.HandleFunc("/v1/CompanyEconomies/{processId}/{companyId}", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	fmt.Printf("Listen on server localhost:8000\r\n")

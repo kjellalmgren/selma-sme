@@ -20,9 +20,9 @@ type Applicant struct {
 	ContactInformation    []ContactInformationType
 	ApplicantEmployeed    bool   `json:"applicantEmployeed,omitempty"`
 	ApplicantLPEmployment string `json:"applicantLPEmployment,omitempty"`
-	ApplicantMember       bool   `json:"applicantMember,omitempty"`
-	ApplicantBySms        bool   `json:"applicantBySms,omitempty"`
-	ApplicantByeMail      bool   `json:"applicantByeMail,omitempty"`
+	ApplicantMember       bool   `json:"applicantMember"`
+	ApplicantBySms        bool   `json:"applicantBySms"`
+	ApplicantByeMail      bool   `json:"applicantByeMail"`
 }
 
 // ContactInformationType struct
@@ -69,7 +69,8 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 				ApplicantBySms:        true,
 				ApplicantByeMail:      true})
 		applicants = append(applicants,
-			Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			Applicant{
+				ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:           "19650705-5579",
 				ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
 				ApplicantName:        "Patrik Andersson",

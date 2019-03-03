@@ -78,8 +78,10 @@ func main() {
 	router.HandleFunc("/v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}", cases.SetCaseIDStatus).Methods("POST", "OPTIONS")
 	// applicants.go
 	router.HandleFunc("/v1/Applicants/{processId}", applicants.GetApplicants).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Applicant/{processId}/{customerId}", applicants.GetApplicant).Methods("GET", "OPTIONS")
 	// loans.go
 	router.HandleFunc("/v1/Loans/{processId}", loans.GetLoans).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Loan/{processId}/{loanId}", loans.GetLoan).Methods("GET", "OPTIONS")
 	// extloans.go
 	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}", extloans.GetExtLoans).Methods("GET", "OPTIONS")
 	// collaterals.go

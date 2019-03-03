@@ -10,14 +10,14 @@ import (
 
 // ExtLoans
 type ExtLoan struct {
-	ProcessID         string `json:"processId,omitempty"`
-	CustomerID        string `json:"customerId,omitempty"`
-	ExtLoanID         string `json:"extloanId,omitempty"`
-	ExtCreditInstitut string `json:"extCreditInstitut,omitempty"`
-	ExtLoanClearing   string `json:"extLoanClearing,omitempty"`
-	ExtLoanNumber     string `json:"extloanNumber,omitempty"`
-	ExtLoanAmount     string `json:"extLoanAmount,omitempty"`
-	ExtRedeemLoan     bool   `json:"extRedeemLoan"`
+	ProcessID         string  `json:"processId,omitempty"`
+	CustomerID        string  `json:"customerId,omitempty"`
+	ExtLoanID         string  `json:"extloanId,omitempty"`
+	ExtCreditInstitut string  `json:"extCreditInstitut,omitempty"`
+	ExtLoanClearing   string  `json:"extLoanClearing,omitempty"`
+	ExtLoanNumber     string  `json:"extloanNumber,omitempty"`
+	ExtLoanAmount     float32 `json:"extLoanAmount,omitempty"`
+	ExtRedeemLoan     bool    `json:"extRedeemLoan"`
 }
 
 // GetExtLoans
@@ -43,7 +43,7 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 				ExtCreditInstitut: "SEB",
 				ExtLoanClearing:   "5270",
 				ExtLoanNumber:     "0028600",
-				ExtLoanAmount:     "100000",
+				ExtLoanAmount:     100000.00,
 				ExtRedeemLoan:     true})
 	}
 	//

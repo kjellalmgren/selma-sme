@@ -36,7 +36,6 @@ type ContactInformationType struct {
 func GetApplicants(w http.ResponseWriter, r *http.Request) {
 
 	var applicants []Applicant
-	//var ci ContactInformationType
 	//
 	vars := mux.Vars(r)
 	fmt.Printf("getApplicants executed: processId: %s...\r\n", vars["processId"])
@@ -88,6 +87,76 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 				ApplicantMember:       false,
 				ApplicantBySms:        true,
 				ApplicantByeMail:      true})
+	}
+	//
+	if err := json.NewEncoder(w).Encode(applicants); err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		panic(err)
+	}
+	w.WriteHeader(http.StatusOK)
+	//
+}
+
+//
+// GetApplicant
+func GetApplicant(w http.ResponseWriter, r *http.Request) {
+
+	var applicants []Applicant
+
+	vars := mux.Vars(r)
+	fmt.Printf("getApplicant executed: processId: %s/%s...\r\n", vars["processId"], vars["customerId"])
+	//
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
+	//
+	switch vars["processId"] {
+	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
+		switch vars["customerId"] {
+		case "19640120-3887":
+			applicants = append(applicants,
+				Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+					CustomerID:           "19640120-3887",
+					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
+					ApplicantName:        "Anna Andersson",
+					ApplicantAddress:     "Stora vägen 1",
+					ApplicantPostAddress: "420 20 Katrineholm",
+					ApplicantRole:        "",
+					ContactInformation: []ContactInformationType{
+						ContactInformationType{
+							ApplicantEmail:        "anna.andersson@gmail.com",
+							ApplicantMobileNumber: "07344455666",
+						},
+					},
+					ApplicantEmployeed:    false,
+					ApplicantLPEmployment: "PERMANENT",
+					ApplicantMember:       false,
+					ApplicantBySms:        true,
+					ApplicantByeMail:      true})
+		case "19650705-5579":
+			applicants = append(applicants,
+				Applicant{
+					ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+					CustomerID:           "19650705-5579",
+					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
+					ApplicantName:        "Patrik Andersson",
+					ApplicantAddress:     "Stora vägen 1",
+					ApplicantPostAddress: "420 20 Katrineholm",
+					ApplicantRole:        "",
+					ContactInformation: []ContactInformationType{
+						ContactInformationType{
+							ApplicantEmail:        "patrik.andersson@katrineholmrevision.se",
+							ApplicantMobileNumber: "07335533777",
+						},
+					},
+					ApplicantEmployeed:    false,
+					ApplicantLPEmployment: "PERMANENT",
+					ApplicantMember:       false,
+					ApplicantBySms:        true,
+					ApplicantByeMail:      true})
+		}
 	}
 	//
 	if err := json.NewEncoder(w).Encode(applicants); err != nil {

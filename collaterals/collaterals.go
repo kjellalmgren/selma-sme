@@ -40,8 +40,8 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 			Collateral{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:             "19640120-3887",
 				CollateralID:           "b25961de-3cc3-11e9-b210-d663bd873d93",
-				CollateralName:         "SKOGEN 4:3",
-				CollateralMunicipality: "Katrineholm",
+				CollateralName:         "ÅGERSTA 1:6",
+				CollateralMunicipality: "ENKÖPING",
 				CollateralStreet:       "Bergsgatan 12",
 				UseAsCollateral:        false,
 				BuyCollateral:          true})

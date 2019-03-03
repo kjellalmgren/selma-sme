@@ -17,7 +17,7 @@ type PersonalEconomy struct {
 	Income             string `json:"income,omitempty"`
 	TypeOfEmployeement string `json:"typeOfEmployeement,omitempty"`
 	Employeer          string `json:"employeer,omitempty"`
-	EmployeedFromYear  string `json:"employeedFromYear"`
+	EmployeedFromYear  string `json:"yearOfEmployment"`
 }
 
 // GetPersonalEconomies

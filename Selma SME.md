@@ -27,4 +27,9 @@ LIME ska uppdateras att kund startat ansökan, befintlig kund, ny kund. LIME kun
 	DONE: We have changed the naming convention regarding household members	
 #### PersonalEconomies
 	TBD: Årlig inkomst från UC måste nog läggas till
-	
+	DONE: yearOfEmployment has changed name
+
+#### CompanyEconomies
+	DONE: Added companyId to point to company
+
+#### Budgets mybe should be under CompanyEconomies as a array list

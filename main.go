@@ -30,6 +30,7 @@ import (
 	"selmasme/companyeconomies"
 	"selmasme/extloans"
 	"selmasme/households"
+	"selmasme/kycinformations"
 	"selmasme/loans"
 	"selmasme/personaleconomies"
 	"selmasme/processes"
@@ -51,7 +52,7 @@ _________    __
    |  | / _ \|  _| /  __|/ _ \ / __/ _ \| '_ \
    |  | \ __/| |_  | |  | (_| | (_| (_) | | | | 
    |__| \___| \__| |_|   \__,_|\___\___/|_| |_| 
-version: %s
+Server-version: %s Model-version: %s
 `
 )
 
@@ -65,7 +66,7 @@ var (
 // our main function
 func main() {
 
-	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.PingVersion()))
+	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
 	fmt.Fprint(os.Stdout, fmt.Sprintf(getHostname()))
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
@@ -91,6 +92,8 @@ func main() {
 	router.HandleFunc("/v1/PersonalEconomies/{processId}/{customerId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
 	// companyEconomies
 	router.HandleFunc("/v1/CompanyEconomies/{processId}/{companyId}", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
+	// kycinformations.go
+	router.HandleFunc("/v1/KycInformations/{processId}", kycinformations.GetKycInformations).Methods("GET", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	fmt.Printf("Listen on server localhost:8000\r\n")

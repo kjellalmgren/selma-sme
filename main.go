@@ -86,11 +86,13 @@ func main() {
 	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}", extloans.GetExtLoans).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}/{extloanId}", extloans.GetExtLoan).Methods("GET", "OPTIONS")
 	// collaterals.go
-	router.HandleFunc("/v1/Collaterals/{processId}/{customerId}", collaterals.GetCollaterals).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Collaterals/{processId}", collaterals.GetCollaterals).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Collateral/{processId}/{collateralId}", collaterals.GetCollateral).Methods("GET", "OPTIONS")
 	// companies.go
 	router.HandleFunc("/v1/Companies/{processId}", companies.GetCompanies).Methods("GET", "OPTIONS")
 	// households.go
 	router.HandleFunc("/v1/Households/{processId}", households.GetHouseholds).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Household/{processId}/{householdId}", households.GetHousehold).Methods("GET", "OPTIONS")
 	// personalEconomies
 	router.HandleFunc("/v1/PersonalEconomies/{processId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}", personaleconomies.GetPersonalEconomy).Methods("GET", "OPTIONS")

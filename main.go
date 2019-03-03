@@ -84,6 +84,7 @@ func main() {
 	router.HandleFunc("/v1/Loan/{processId}/{loanId}", loans.GetLoan).Methods("GET", "OPTIONS")
 	// extloans.go
 	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}", extloans.GetExtLoans).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}/{extloanId}", extloans.GetExtLoan).Methods("GET", "OPTIONS")
 	// collaterals.go
 	router.HandleFunc("/v1/Collaterals/{processId}/{customerId}", collaterals.GetCollaterals).Methods("GET", "OPTIONS")
 	// companies.go
@@ -110,7 +111,7 @@ func main() {
 // Index
 //
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Welcome!")
+	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
 }
 
 //
@@ -127,7 +128,7 @@ func getHostname() string {
 }
 
 //
-//
+// HealthCheckHandler
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	// A very simple health check.
 	//w.WriteHeader(http.StatusOK)

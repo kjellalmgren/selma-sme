@@ -93,6 +93,7 @@ func main() {
 	router.HandleFunc("/v1/Households/{processId}", households.GetHouseholds).Methods("GET", "OPTIONS")
 	// personalEconomies
 	router.HandleFunc("/v1/PersonalEconomies/{processId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}", personaleconomies.GetPersonalEconomy).Methods("GET", "OPTIONS")
 	// companyEconomies
 	router.HandleFunc("/v1/CompanyEconomies/{processId}", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
 	// kycinformations.go

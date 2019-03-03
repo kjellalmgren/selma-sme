@@ -89,9 +89,9 @@ func main() {
 	// households.go
 	router.HandleFunc("/v1/Households/{processId}", households.GetHouseholds).Methods("GET", "OPTIONS")
 	// personalEconomies
-	router.HandleFunc("/v1/PersonalEconomies/{processId}/{customerId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/PersonalEconomies/{processId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
 	// companyEconomies
-	router.HandleFunc("/v1/CompanyEconomies/{processId}/{companyId}", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/CompanyEconomies/{processId}", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
 	// kycinformations.go
 	router.HandleFunc("/v1/KycInformations/{processId}", kycinformations.GetKycInformations).Methods("GET", "OPTIONS")
 	// Healt services local

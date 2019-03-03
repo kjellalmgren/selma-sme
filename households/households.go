@@ -13,14 +13,23 @@ type Household struct {
 	ProcessID            string `json:"processId,omitempty"`
 	HouseholdMembers     []HouseholdMemberType
 	HouseholdID          string `json:"householdId,omitempty"`
-	NumberOfChildsAtHome string `json:"numberOfChildsAtHome"`
-	NumberOfCars         string `json:"numberOfCars"`
-	ChildMaintenanceCost string `json:"childMaintenanceCost"`
+	NumberOfChildsAtHome int    `json:"numberOfChildsAtHome"`
+	Childs               []ChildType
+	NumberOfCars         int     `json:"numberOfCars"`
+	ChildMaintenanceCost float32 `json:"childMaintenanceCost"`
 }
 
 // HouseholdMemberType
 type HouseholdMemberType struct {
 	CustomerIDs string `json:"householdMember"`
+}
+
+//
+// ChildType
+type ChildType struct {
+	ChildID         string `json:"childId"`
+	ChildsAge       int    `json:"childsAge"`
+	PartInHousehold bool   `json:"partInHousehold"`
 }
 
 // GetApplicants
@@ -47,9 +56,21 @@ func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 					},
 				},
 				HouseholdID:          "4253017a-3d17-11e9-b210-d663bd873d93",
-				NumberOfChildsAtHome: "2",
-				NumberOfCars:         "1",
-				ChildMaintenanceCost: "0"})
+				NumberOfChildsAtHome: 2,
+				Childs: []ChildType{
+					ChildType{
+						ChildID:         "248485ca-3d9d-11e9-b210-d663bd873d93",
+						ChildsAge:       5,
+						PartInHousehold: true,
+					},
+					ChildType{
+						ChildID:         "eb38da7c-3d9d-11e9-b210-d663bd873d93",
+						ChildsAge:       8,
+						PartInHousehold: true,
+					},
+				},
+				NumberOfCars:         1,
+				ChildMaintenanceCost: 0})
 	}
 
 	//

@@ -15,11 +15,16 @@ type Collateral struct {
 	CollateralID           string `json:"collateralId"`
 	CollateralCode         string `json:"collateralCode"`
 	CollateralName         string `json:"collateralName"`
-	TaxedOwner             string `json:"taxedOwner"`
+	TaxedOwners            []TaxedOwnerType
 	CollateralMunicipality string `json:"collateralMunicipality"`
 	CollateralStreet       string `json:"collateralStreet"`
 	UseAsCollateral        bool   `json:"useAsCollateral"`
 	BuyCollateral          bool   `json:"buyCollateral"`
+}
+
+type TaxedOwnerType struct {
+	TaxedId    string `json:"taxedId"`
+	TaxedOwner string `json:"taxedOwner"`
 }
 
 // GetCollaterals
@@ -40,11 +45,16 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		collaterals = append(collaterals,
 			Collateral{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID:             "19640120-3887",
-				CollateralID:           "b25961de-3cc3-11e9-b210-d663bd873d93",
-				CollateralCode:         "10",
-				CollateralName:         "ÅGERSTA 1:6",
-				TaxedOwner:             "Anna Andersson",
+				CustomerID:     "19640120-3887",
+				CollateralID:   "b25961de-3cc3-11e9-b210-d663bd873d93",
+				CollateralCode: "10",
+				CollateralName: "ÅGERSTA 1:6",
+				TaxedOwners: []TaxedOwnerType{
+					TaxedOwnerType{
+						TaxedId:    "c73119bc-3e71-11e9-b210-d663bd873d93",
+						TaxedOwner: "Anna Andersson",
+					},
+				},
 				CollateralMunicipality: "ENKÖPING",
 				CollateralStreet:       "Bergsgatan 12",
 				UseAsCollateral:        false,
@@ -79,11 +89,16 @@ func GetCollateral(w http.ResponseWriter, r *http.Request) {
 		case "b25961de-3cc3-11e9-b210-d663bd873d93":
 			collaterals = append(collaterals,
 				Collateral{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CustomerID:             "19640120-3887",
-					CollateralID:           "b25961de-3cc3-11e9-b210-d663bd873d93",
-					CollateralCode:         "10",
-					CollateralName:         "ÅGERSTA 1:6",
-					TaxedOwner:             "Anna Andersson",
+					CustomerID:     "19640120-3887",
+					CollateralID:   "b25961de-3cc3-11e9-b210-d663bd873d93",
+					CollateralCode: "10",
+					CollateralName: "ÅGERSTA 1:6",
+					TaxedOwners: []TaxedOwnerType{
+						TaxedOwnerType{
+							TaxedId:    "c73119bc-3e71-11e9-b210-d663bd873d93",
+							TaxedOwner: "Anna Andersson",
+						},
+					},
 					CollateralMunicipality: "ENKÖPING",
 					CollateralStreet:       "Bergsgatan 12",
 					UseAsCollateral:        false,

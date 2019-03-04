@@ -17,18 +17,15 @@ type Cases struct {
 //	OperationId: ReserverCaseId
 func ReserveCaseId(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Printf("ReserveCaseID executed...\r\n")
+	vars := mux.Vars(r)
+	fmt.Printf("ReserveCaseID executed...ProcessId: %s /customerID: %s / caseIdStatus: %s\r\n",
+		vars["processId"], vars["customerId"], vars["caseIdStatus"])
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
-	//
-	vars := mux.Vars(r)
-	fmt.Println(vars["processId"])    // processId
-	fmt.Println(vars["customerId"])   // customerId
-	fmt.Println(vars["caseIdStatus"]) // caseIdStatus
 	//
 	var cases Cases
 	cases.CaseID = "108000" // Hardcoded

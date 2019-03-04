@@ -83,13 +83,14 @@ func main() {
 	router.HandleFunc("/v1/Loans/{processId}", loans.GetLoans).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Loan/{processId}/{loanId}", loans.GetLoan).Methods("GET", "OPTIONS")
 	// extloans.go
-	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}", extloans.GetExtLoans).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/ExtLoans/{processId}/{customerId}/{extloanId}", extloans.GetExtLoan).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/ExtLoans/{processId}", extloans.GetExtLoans).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/ExtLoan/{processId}/{extloanId}", extloans.GetExtLoan).Methods("GET", "OPTIONS")
 	// collaterals.go
 	router.HandleFunc("/v1/Collaterals/{processId}", collaterals.GetCollaterals).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Collateral/{processId}/{collateralId}", collaterals.GetCollateral).Methods("GET", "OPTIONS")
 	// companies.go
 	router.HandleFunc("/v1/Companies/{processId}", companies.GetCompanies).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Company/{processId}/{companyId}", companies.GetCompany).Methods("GET", "OPTIONS")
 	// households.go
 	router.HandleFunc("/v1/Households/{processId}", households.GetHouseholds).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Household/{processId}/{householdId}", households.GetHousehold).Methods("GET", "OPTIONS")
@@ -98,8 +99,10 @@ func main() {
 	router.HandleFunc("/v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}", personaleconomies.GetPersonalEconomy).Methods("GET", "OPTIONS")
 	// companyEconomies
 	router.HandleFunc("/v1/CompanyEconomies/{processId}", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/CompanyEconomy/{processId}/{companyId}/{companyEconomyId}", companyeconomies.GetCompanyEconomy).Methods("GET", "OPTIONS")
 	// kycinformations.go
 	router.HandleFunc("/v1/KycInformations/{processId}", kycinformations.GetKycInformations).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/KycInformation/{processId}/{customerId}/{kycId}", kycinformations.GetKycInformation).Methods("GET", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	fmt.Printf("Listen on server localhost:8000\r\n")

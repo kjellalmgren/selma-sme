@@ -59,6 +59,7 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 }
 
 //
+// GetLoan
 func GetLoan(w http.ResponseWriter, r *http.Request) {
 
 	var loans []Loan

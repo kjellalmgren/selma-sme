@@ -55,11 +55,14 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
+// GetExtLoan
 func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 	var extloans []ExtLoan
 	//
 	vars := mux.Vars(r)
-	fmt.Printf("getExtLoans executed: processId: %s...\r\n", vars["processId"], vars["extloanId"])
+	fmt.Printf("getExtLoans executed: processId: %s /extloanId: %s...\r\n",
+		vars["processId"],
+		vars["extloanId"])
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -69,20 +72,17 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 	//
 	switch vars["processId"] {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch vars["customerId"] {
-		case "19640120-3887":
-			switch vars["extloanId"] {
-			case "5aa735e8-3cbd-11e9-b210-d663bd873d93":
-				extloans = append(extloans,
-					ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-						CustomerID:        "19640120-3887",
-						ExtLoanID:         "5aa735e8-3cbd-11e9-b210-d663bd873d93",
-						ExtCreditInstitut: "SEB",
-						ExtLoanClearing:   "5270",
-						ExtLoanNumber:     "0028600",
-						ExtLoanAmount:     100000.00,
-						ExtRedeemLoan:     true})
-			}
+		switch vars["extloanId"] {
+		case "5aa735e8-3cbd-11e9-b210-d663bd873d93":
+			extloans = append(extloans,
+				ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+					CustomerID:        "19640120-3887",
+					ExtLoanID:         "5aa735e8-3cbd-11e9-b210-d663bd873d93",
+					ExtCreditInstitut: "SEB",
+					ExtLoanClearing:   "5270",
+					ExtLoanNumber:     "0028600",
+					ExtLoanAmount:     100000.00,
+					ExtRedeemLoan:     true})
 		}
 	}
 	//

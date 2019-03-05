@@ -74,7 +74,7 @@ func main() {
 	router.HandleFunc("/v1/Processes/{customerId}", processes.GetProcesses).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/deleteProcess/{processId}", processes.DeleteProcess).Methods("POST", "OPTIONS")
 	// cases.go
-	router.HandleFunc("/v1/reserveCaseId/{processId}/{customerId}/{caseIdStatus}", cases.ReserveCaseId).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/reserveCaseId/{processId}/{customerId}/{caseIdStatus}", cases.ReserveCaseID).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}", cases.SetCaseIDStatus).Methods("POST", "OPTIONS")
 	// applicants.go
 	router.HandleFunc("/v1/Applicants/{processId}", applicants.GetApplicants).Methods("GET", "OPTIONS")

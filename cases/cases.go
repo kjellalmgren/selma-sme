@@ -10,22 +10,27 @@ import (
 
 // Cases struct
 type Cases struct {
-	CaseID string `json:"caseId,omitempty"`
+	CaseID string `json:"caseId"`
 }
 
 //
 //	OperationId: ReserverCaseId
-func ReserveCaseId(w http.ResponseWriter, r *http.Request) {
+func ReserveCaseID(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
-	fmt.Printf("ReserveCaseID executed...ProcessId: %s /customerID: %s / caseIdStatus: %s\r\n",
-		vars["processId"], vars["customerId"], vars["caseIdStatus"])
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
+	//
+	for k, v := range r.Header {
+		fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
+	}
+	fmt.Printf("kjell-header: %s", r.Header.Get("X-process-ID"))
+	fmt.Printf("ReserveCaseID executed...ProcessId: %s /customerID: %s / caseIdStatus: %s\r\n",
+		vars["processId"], vars["customerId"], vars["caseIdStatus"])
 	//
 	var cases Cases
 	cases.CaseID = "108000" // Hardcoded

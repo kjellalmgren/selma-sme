@@ -24,11 +24,13 @@ func ReserveCaseID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
+	varsh := r.Header
 	//
 	for k, v := range r.Header {
 		fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
+		fmt.Println("Header field %q, Value %q\n", k, v)
 	}
-	fmt.Printf("kjell-header: %s", r.Header.Get("X-process-ID"))
+	fmt.Printf("kjell-header: %s\r\n", varsh["x-process-id"])
 	fmt.Printf("ReserveCaseID executed...ProcessId: %s /customerID: %s / caseIdStatus: %s\r\n",
 		vars["processId"], vars["customerId"], vars["caseIdStatus"])
 	//

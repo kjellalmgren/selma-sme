@@ -82,6 +82,10 @@ func main() {
 	// loans.go
 	router.HandleFunc("/v1/Loans/{processId}", loans.GetLoans).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Loan/{processId}/{loanId}", loans.GetLoan).Methods("GET", "OPTIONS")
+	//
+	router.HandleFunc("/v1/xloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/xloans/{loanId}", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/xloans/delete/{loanId}", loans.DeleteLoanx).Methods("POST", "DELETE", "OPTIONS")
 	// extloans.go
 	router.HandleFunc("/v1/ExtLoans/{processId}", extloans.GetExtLoans).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/ExtLoan/{processId}/{extloanId}", extloans.GetExtLoan).Methods("GET", "OPTIONS")

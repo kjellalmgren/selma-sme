@@ -10,13 +10,13 @@ import (
 
 // ExtLoans
 type ExtLoan struct {
-	ProcessID         string  `json:"processId,omitempty"`
-	CustomerID        string  `json:"customerId,omitempty"`
-	ExtLoanID         string  `json:"extloanId,omitempty"`
-	ExtCreditInstitut string  `json:"extCreditInstitut,omitempty"`
-	ExtLoanClearing   string  `json:"extLoanClearing,omitempty"`
-	ExtLoanNumber     string  `json:"extloanNumber,omitempty"`
-	ExtLoanAmount     float32 `json:"extLoanAmount,omitempty"`
+	ProcessID         string  `json:"processId"`
+	CustomerID        string  `json:"customerId"`
+	ExtLoanID         string  `json:"extloanId"`
+	ExtCreditInstitut string  `json:"extCreditInstitut"`
+	ExtLoanClearing   string  `json:"extLoanClearing"`
+	ExtLoanNumber     string  `json:"extloanNumber"`
+	ExtLoanAmount     float32 `json:"extLoanAmount"`
 	ExtRedeemLoan     bool    `json:"extRedeemLoan"`
 }
 

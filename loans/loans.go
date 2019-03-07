@@ -10,12 +10,12 @@ import (
 
 // Loans
 type Loan struct {
-	ProcessID     string  `json:"processId,omitempty"`
-	LoanID        string  `json:"loanId,omitempty"`
-	LoanNumber    string  `json:"loanNumber,omitempty"`
-	LoanAmount    float32 `json:"loanAmount,omitempty"`
-	NumberOfLoans int     `json:"numberOfLoans,omitempty"`
-	PurposeOfLoan string  `json:"purposeOfLoan,omitempty"`
+	ProcessID     string  `json:"processId"`
+	LoanID        string  `json:"loanId"`
+	LoanNumber    string  `json:"loanNumber"`
+	LoanAmount    float32 `json:"loanAmount"`
+	NumberOfLoans int     `json:"numberOfLoans"`
+	PurposeOfLoan string  `json:"purposeOfLoan"`
 }
 
 // GetLoans

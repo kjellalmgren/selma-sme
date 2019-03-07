@@ -11,9 +11,9 @@ import (
 //
 // Process struct
 type Process struct {
-	ProcessID   string `json:"processId,omitempty"`
-	CustomerID  string `json:"customerId,omitempty"`
-	DateCreated string `json:"dateCreated,omitempty"`
+	ProcessID   string `json:"processId"`
+	CustomerID  string `json:"customerId"`
+	DateCreated string `json:"dateCreated"`
 }
 
 //

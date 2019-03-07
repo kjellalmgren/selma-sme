@@ -10,9 +10,9 @@ import (
 
 // Household
 type Household struct {
-	ProcessID            string `json:"processId,omitempty"`
+	ProcessID            string `json:"processId"`
 	HouseholdMembers     []HouseholdMemberType
-	HouseholdID          string `json:"householdId,omitempty"`
+	HouseholdID          string `json:"householdId"`
 	NumberOfChildsAtHome int    `json:"numberOfChildsAtHome"`
 	Childs               []ChildType
 	NumberOfCars         int     `json:"numberOfCars"`

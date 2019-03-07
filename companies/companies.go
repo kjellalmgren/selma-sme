@@ -10,11 +10,11 @@ import (
 
 // Company
 type Company struct {
-	ProcessID     string `json:"processId,omitempty"`
-	CompanyID     string `json:"companyId,omitempty"`
-	OrgNumber     string `json:"orgNr,omitempty"`
-	CompanyName   string `json:"companyName,omitempty"`
-	NumberOfLoans string `json:"numberOfLoans,omitempty"`
+	ProcessID     string `json:"processId"`
+	CompanyID     string `json:"companyId"`
+	OrgNumber     string `json:"orgNr"`
+	CompanyName   string `json:"companyName"`
+	NumberOfLoans string `json:"numberOfLoans"`
 	Created       string `json:"created"`
 }
 

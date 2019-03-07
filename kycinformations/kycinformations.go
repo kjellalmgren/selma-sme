@@ -10,9 +10,9 @@ import (
 
 // KycInformations
 type KycInformation struct {
-	ProcessID                string `json:"processId,omitempty"`
-	CustomerID               string `json:"customerId,omitempty"`
-	KycId                    string `json:"kycId,omitempty"`
+	ProcessID                string `json:"processId"`
+	CustomerID               string `json:"customerId"`
+	KycId                    string `json:"kycId"`
 	KycAcceptUC              bool   `json:"kycAcceptUC"`
 	KycAcceptGDPR            bool   `json:"kycAcceptGDPR"`
 	KycUCAware               bool   `json:"kycUCAware"`

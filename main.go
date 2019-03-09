@@ -18,6 +18,7 @@ Services: selma-sme
 //
 
 import (
+	"crypto/x509"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -62,6 +63,24 @@ var (
 	vrsn bool
 )
 
+var (
+	client *http.Client
+	pool   *x509.CertPool
+)
+
+// init
+/*
+func init() {
+	pool = x509.NewCertPool()
+	pool.AppendCertsFromPEM(pemCerts)
+	client = &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{RootCAs: pool},
+		},
+	}
+}
+*/
+
 //
 // our main function
 func main() {
@@ -74,11 +93,12 @@ func main() {
 	router.HandleFunc("/v1/Processes/{customerId}", processes.GetProcesses).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/deleteProcess/{processId}", processes.DeleteProcess).Methods("POST", "OPTIONS")
 	// cases.go
-	router.HandleFunc("/v1/reserveCaseId/{processId}/{customerId}/{caseIdStatus}", cases.ReserveCaseID).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/reserveCaseId", cases.ReserveCaseID).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}", cases.SetCaseIDStatus).Methods("POST", "OPTIONS")
 	// applicants.go
 	router.HandleFunc("/v1/Applicants/{processId}", applicants.GetApplicants).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Applicant/{processId}/{customerId}", applicants.GetApplicant).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Applicant/{customerId}", applicants.UpdateApplicant).Methods("POST", "OPTIONS")
 	// loans.go
 	router.HandleFunc("/v1/Loans/{processId}", loans.GetLoans).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Loan/{processId}/{loanId}", loans.GetLoan).Methods("GET", "OPTIONS")
@@ -110,7 +130,7 @@ func main() {
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	fmt.Printf("Listen on server localhost:8000\r\n")
-	err := http.ListenAndServe(":8000", router)
+	err := http.ListenAndServeTLS(":8000", "cert.pem", "key.pem", router)
 	if err != nil {
 		fmt.Printf("ListenAndServer Error: %s", err.Error())
 		log.Fatal(err)

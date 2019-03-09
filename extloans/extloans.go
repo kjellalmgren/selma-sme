@@ -8,16 +8,23 @@ import (
 	"github.com/gorilla/mux"
 )
 
+//
 // ExtLoans
 type ExtLoan struct {
-	ProcessID         string  `json:"processId"`
-	CustomerID        string  `json:"customerId"`
+	ProcessID         string `json:"processId"`
+	ExtLoanOwners     []ExtLoanOwner
 	ExtLoanID         string  `json:"extloanId"`
 	ExtCreditInstitut string  `json:"extCreditInstitut"`
 	ExtLoanClearing   string  `json:"extLoanClearing"`
 	ExtLoanNumber     string  `json:"extloanNumber"`
 	ExtLoanAmount     float32 `json:"extLoanAmount"`
 	ExtRedeemLoan     bool    `json:"extRedeemLoan"`
+}
+
+//
+// CustomerIds
+type ExtLoanOwner struct {
+	CustomerID string `json:"customerId"`
 }
 
 // GetExtLoans
@@ -38,7 +45,11 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		extloans = append(extloans,
 			ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID:        "19640120-3887",
+				ExtLoanOwners: []ExtLoanOwner{
+					ExtLoanOwner{
+						CustomerID: "19640120-3887",
+					},
+				},
 				ExtLoanID:         "5aa735e8-3cbd-11e9-b210-d663bd873d93",
 				ExtCreditInstitut: "SEB",
 				ExtLoanClearing:   "5270",
@@ -76,7 +87,11 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 		case "5aa735e8-3cbd-11e9-b210-d663bd873d93":
 			extloans = append(extloans,
 				ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CustomerID:        "19640120-3887",
+					ExtLoanOwners: []ExtLoanOwner{
+						ExtLoanOwner{
+							CustomerID: "19640120-3887",
+						},
+					},
 					ExtLoanID:         "5aa735e8-3cbd-11e9-b210-d663bd873d93",
 					ExtCreditInstitut: "SEB",
 					ExtLoanClearing:   "5270",

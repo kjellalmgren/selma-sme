@@ -45,6 +45,7 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
 	switch vars["processId"] {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
@@ -165,4 +166,21 @@ func GetApplicant(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 	//
+}
+
+// "UpdateApplicant..." go-lint
+func UpdateApplicant(w http.ResponseWriter, r *http.Request) {
+
+	//
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	//
+	//varsh := r.Header
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("Update-Applicant executed: processId: %s...\r\n", processid)
+
+	w.WriteHeader(http.StatusOK)
 }

@@ -38,3 +38,6 @@ TBD: can we remove customerId from ExtLoanType or do we need it for KALP. ExtLoa
 #### CollateralType should remove customerId
 	We probaly don´t need customerId in type of collateral
 	
+# Processes
+GetProcess
+När en ny process startas ska 

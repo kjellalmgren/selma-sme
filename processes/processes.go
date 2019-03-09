@@ -32,8 +32,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	vars := mux.Vars(r)
-	fmt.Println(vars["customerId"]) // customerId
-	fmt.Println()
+
 	switch vars["customerId"] {
 	case "19640120-3887":
 		processes = append(processes,

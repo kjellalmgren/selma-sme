@@ -17,22 +17,21 @@ type Cases struct {
 //	OperationId: ReserverCaseId
 func ReserveCaseID(w http.ResponseWriter, r *http.Request) {
 
-	vars := mux.Vars(r)
+	//vars := mux.Vars(r)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
-	varsh := r.Header
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
+	w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
+	processid := r.Header.Get("X-process-Id")
 	//
 	for k, v := range r.Header {
 		fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
 		fmt.Println("Header field %q, Value %q\n", k, v)
 	}
-	fmt.Printf("kjell-header: %s\r\n", varsh["x-process-id"])
-	fmt.Printf("ReserveCaseID executed...ProcessId: %s /customerID: %s / caseIdStatus: %s\r\n",
-		vars["processId"], vars["customerId"], vars["caseIdStatus"])
+	fmt.Printf("ReserveCaseID executed...X-Process-ID: %s\r\n", processid)
 	//
 	var cases Cases
 	cases.CaseID = "108000" // Hardcoded

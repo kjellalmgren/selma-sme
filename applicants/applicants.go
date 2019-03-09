@@ -1,8 +1,11 @@
 package applicants
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -181,6 +184,19 @@ func UpdateApplicant(w http.ResponseWriter, r *http.Request) {
 	//varsh := r.Header
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Update-Applicant executed: processId: %s...\r\n", processid)
+	//
+	var data Applicant
 
+	//reader, _ := r.GetBody()
+	//defer reader.Close()
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	log.Printf("Name: %s", data.ApplicantName)
 	w.WriteHeader(http.StatusOK)
 }

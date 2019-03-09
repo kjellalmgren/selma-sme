@@ -26,11 +26,11 @@ WORKDIR /selmasme
 COPY selmasme /selmasme
 
 # copy our self-signed certificate
-##COPY tetracon-server.crt /go/src/selma-sme
-##COPY tetracon-server.key /go/src/selma-sme
+COPY cert.pem /selmasme
+COPY key.pem /selmasme
 
 # tell we are exposing our service on port 8000
-EXPOSE 8000
+EXPOSE 8443
 
 # run it!
 

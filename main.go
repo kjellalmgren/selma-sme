@@ -37,7 +37,9 @@ import (
 	"selmasme/processes"
 	"selmasme/version"
 
+	"github.com/fatih/color"
 	"github.com/gorilla/mux"
+	"github.com/sirupsen/logrus"
 )
 
 //
@@ -69,24 +71,21 @@ var (
 )
 
 // init
-/*
 func init() {
-	pool = x509.NewCertPool()
-	pool.AppendCertsFromPEM(pemCerts)
-	client = &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{RootCAs: pool},
-		},
-	}
+
+	// instanciate a new logger
+	var log = logrus.New()
+	log.Formatter = new(logrus.TextFormatter)
+	log.Level = logrus.DebugLevel
+	color.Set(color.FgHiGreen)
+	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
+	color.Unset()
 }
-*/
 
 //
 // our main function
 func main() {
 
-	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
-	fmt.Fprint(os.Stdout, fmt.Sprintf(getHostname()))
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
 	// processes.go
@@ -129,11 +128,20 @@ func main() {
 	router.HandleFunc("/v1/KycInformation/{processId}/{customerId}/{kycId}", kycinformations.GetKycInformation).Methods("GET", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
-	fmt.Printf("Listen on server localhost:8000\r\n")
-	err := http.ListenAndServeTLS(":8000", "cert.pem", "key.pem", router)
+	color.Set(color.FgHiRed)
+	fmt.Fprint(os.Stdout, fmt.Sprintf(getHostname()))
+	color.Set(color.FgHiGreen)
+	fmt.Printf(" Listen on TLS-server ")
+	color.Set(color.FgHiYellow)
+	fmt.Printf("localhost")
+	color.Set(color.FgHiCyan)
+	fmt.Printf(":8443\r\n")
+	color.Unset()
+	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
 	if err != nil {
-		fmt.Printf("ListenAndServer Error: %s", err.Error())
+		fmt.Printf("ListenAndServeTLS Error: %s", err.Error())
 		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 }
 

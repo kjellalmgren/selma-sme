@@ -7,17 +7,8 @@
 	
 ## Create certificate
 
-	$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
-	...
-	$ openssl rsa -passin pass:x -in server.pass.key -out server.key
-	# writing RSA key
-	$ rm server.pass.key
-	$ openssl req -new -key server.key -out server.csr
-	...
-	Country Name (2 letter code) [AU]:US
-	State or Province Name (full name) [Some-State]:California
-	...
-	A challenge password []:
+	# use 127.0.0.1:8000 when register
+	$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem
 	...
 
 ## Generate SSL certificate

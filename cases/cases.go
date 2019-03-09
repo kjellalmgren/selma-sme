@@ -27,16 +27,17 @@ func ReserveCaseID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	processid := r.Header.Get("X-process-Id")
 	//
-	for k, v := range r.Header {
-		fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
-		fmt.Println("Header field %q, Value %q\n", k, v)
-	}
+	//for k, v := range r.Header {
+	//	fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
+	//	fmt.Println("Header field %q, Value %q\n", k, v)
+	//}
 	fmt.Printf("ReserveCaseID executed...X-Process-ID: %s\r\n", processid)
 	//
 	var cases Cases
 	cases.CaseID = "108000" // Hardcoded
 	//
 	if err := json.NewEncoder(w).Encode(cases); err != nil {
+		w.WriteHeader(http.StatusNotFound)
 		panic(err)
 	}
 	w.WriteHeader(http.StatusOK)

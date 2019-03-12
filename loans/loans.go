@@ -83,7 +83,7 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 					LoanNumber:    "930101011212",
 					LoanAmount:    2000000,
 					NumberOfLoans: 1,
-					PurposeOfLoan: "FAF"})
+					PurposeOfLoan: "Fastighetsköp - annan fastighet"})
 		case "76f0b120-3cb8-11e9-b210-d663bd873d93":
 			loans = append(loans,
 				Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
@@ -91,7 +91,7 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 					LoanNumber:    "930101011213",
 					LoanAmount:    200000,
 					NumberOfLoans: 1,
-					PurposeOfLoan: "RTM"})
+					PurposeOfLoan: "Ny/tillbyggnad/renovering mjölkstall"})
 		}
 	}
 	//

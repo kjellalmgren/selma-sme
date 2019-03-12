@@ -95,9 +95,10 @@ func main() {
 	router.HandleFunc("/v1/reserveCaseId", cases.ReserveCaseID).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}", cases.SetCaseIDStatus).Methods("POST", "OPTIONS")
 	// applicants.go
-	router.HandleFunc("/v1/Applicants/{processId}", applicants.GetApplicants).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/Applicant/{processId}/{customerId}", applicants.GetApplicant).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/Applicant/{customerId}", applicants.UpdateApplicant).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/Applicants", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
+	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
+	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
+	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
 	// loans.go
 	router.HandleFunc("/v1/Loans/{processId}", loans.GetLoans).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Loan/{processId}/{loanId}", loans.GetLoan).Methods("GET", "OPTIONS")

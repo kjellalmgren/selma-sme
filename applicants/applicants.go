@@ -10,7 +10,7 @@ import (
 )
 
 // Applicant struct
-type Applicant struct {
+type applicant struct {
 	ProcessID             string `json:"processId"`
 	CustomerID            string `json:"customerId"`
 	ApplicantID           string `json:"applicantId"`
@@ -18,7 +18,7 @@ type Applicant struct {
 	ApplicantAddress      string `json:"applicantAddress"`
 	ApplicantPostAddress  string `json:"applicantPostAddress"`
 	StakeholderType       string `json:"stakeholderType"`
-	ContactInformation    []ContactInformationType
+	ContactInformation    []contactInformationType
 	ApplicantEmployeed    bool   `json:"applicantEmployeed"`
 	ApplicantLPEmployment string `json:"applicantLPEmployment"`
 	ApplicantMember       bool   `json:"applicantMember"`
@@ -26,40 +26,29 @@ type Applicant struct {
 	ApplicantByeMail      bool   `json:"applicantByeMail"`
 }
 
-type UpateApplicantType struct {
-	ContactInformation []ContactInformationType
+type upateApplicantType struct {
+	ContactInformation []contactInformationType
 	StakeholderType    string `json:"stakeholderType"`
 	ApplicantBySms     bool   `json:"applicantBySms"`
 	ApplicantByeMail   bool   `json:"applicantByeMail"`
 }
 
-/*
-{
-	"contactInformation": {
-	  "eMail": "anna.andersson@gmail.com",
-	  "mobileNumber": "07344455666"
-	},
-	"notifiedBySms": true,
-	"notifiedByeMail": true,
-	"stakeholderType": "NA"
-  }
-*/
 //
-type CustomerID struct {
+type customerID struct {
 	CustomerID string `json:"customerId"`
 }
 
 // ContactInformationType struct
-type ContactInformationType struct {
-	ApplicantEmail        string `json:"applicantEmail"`
-	ApplicantMobileNumber string `json:"applicantMobileNumber"`
+type contactInformationType struct {
+	ApplicantEmail        string `json:"applicantByeMail"`
+	ApplicantMobileNumber string `json:"applicantBySms"`
 }
 
 //
 // GetApplicants
 func getApplicants(w http.ResponseWriter, r *http.Request) {
 
-	var applicants []Applicant
+	var applicants []applicant
 	//
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
@@ -75,15 +64,15 @@ func getApplicants(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		applicants = append(applicants,
-			Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:           "19640120-3887",
 				ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
 				ApplicantName:        "Anna Andersson",
 				ApplicantAddress:     "Stora vägen 1",
 				ApplicantPostAddress: "420 20 Katrineholm",
 				StakeholderType:      "",
-				ContactInformation: []ContactInformationType{
-					ContactInformationType{
+				ContactInformation: []contactInformationType{
+					contactInformationType{
 						ApplicantEmail:        "anna.andersson@gmail.com",
 						ApplicantMobileNumber: "07344455666",
 					},
@@ -94,7 +83,7 @@ func getApplicants(w http.ResponseWriter, r *http.Request) {
 				ApplicantBySms:        true,
 				ApplicantByeMail:      true})
 		applicants = append(applicants,
-			Applicant{
+			applicant{
 				ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:           "19650705-5579",
 				ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
@@ -102,8 +91,8 @@ func getApplicants(w http.ResponseWriter, r *http.Request) {
 				ApplicantAddress:     "Stora vägen 1",
 				ApplicantPostAddress: "420 20 Katrineholm",
 				StakeholderType:      "",
-				ContactInformation: []ContactInformationType{
-					ContactInformationType{
+				ContactInformation: []contactInformationType{
+					contactInformationType{
 						ApplicantEmail:        "patrik.andersson@katrineholmrevision.se",
 						ApplicantMobileNumber: "07335533777",
 					},
@@ -149,11 +138,11 @@ func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 // GetApplicant
 func getApplicant(w http.ResponseWriter, r *http.Request) {
 
-	var applicants []Applicant
+	var applicants []applicant
 
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
-	var data CustomerID
+	var data customerID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -175,15 +164,15 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 		switch data.CustomerID {
 		case "19640120-3887":
 			applicants = append(applicants,
-				Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+				applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					CustomerID:           "19640120-3887",
 					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
 					ApplicantName:        "Anna Andersson",
 					ApplicantAddress:     "Stora vägen 1",
 					ApplicantPostAddress: "420 20 Katrineholm",
 					StakeholderType:      "BORGENSMAN",
-					ContactInformation: []ContactInformationType{
-						ContactInformationType{
+					ContactInformation: []contactInformationType{
+						contactInformationType{
 							ApplicantEmail:        "anna.andersson@gmail.com",
 							ApplicantMobileNumber: "07344455666",
 						},
@@ -195,7 +184,7 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 					ApplicantByeMail:      true})
 		case "19650705-5579":
 			applicants = append(applicants,
-				Applicant{
+				applicant{
 					ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					CustomerID:           "19650705-5579",
 					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
@@ -203,8 +192,8 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 					ApplicantAddress:     "Stora vägen 1",
 					ApplicantPostAddress: "420 20 Katrineholm",
 					StakeholderType:      "EKONOMISKINTRESSEGEMENSKAP",
-					ContactInformation: []ContactInformationType{
-						ContactInformationType{
+					ContactInformation: []contactInformationType{
+						contactInformationType{
 							ApplicantEmail:        "patrik.andersson@katrineholmrevision.se",
 							ApplicantMobileNumber: "07335533777",
 						},
@@ -240,7 +229,7 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Update-Applicant executed: processId: %s...\r\n", processid)
 	//
-	var data UpateApplicantType
+	var data upateApplicantType
 
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
@@ -253,7 +242,12 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	log.Printf("eMail: %s Mobil: - %s", data.ApplicantByeMail, data.ApplicantBySms)
+	log.Printf("stakeHolder: %s", data.StakeholderType)
+	//
+	for _, ci := range data.ContactInformation {
+		log.Printf("eMail: %s - MobileNumber: %s", ci.ApplicantEmail, ci.ApplicantMobileNumber)
+	}
+	// We have to write back updateApplicantType
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -274,7 +268,7 @@ func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 		processid := r.Header.Get("X-process-Id")
 		fmt.Printf("Delete-Applicant executed: processId: %s...\r\n", processid)
 		//
-		var data CustomerID
+		var data customerID
 		var r1 []byte
 		r1, err := ioutil.ReadAll(r.Body)
 		if err != nil {

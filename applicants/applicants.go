@@ -26,7 +26,7 @@ type applicant struct {
 	ApplicantByeMail      bool   `json:"applicantByeMail"`
 }
 
-type upateApplicantType struct {
+type updateApplicantType struct {
 	ContactInformation []contactInformationType
 	StakeholderType    string `json:"stakeholderType"`
 	ApplicantBySms     bool   `json:"applicantBySms"`
@@ -227,27 +227,37 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 	//
 	//varsh := r.Header
 	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("Update-Applicant executed: processId: %s...\r\n", processid)
+	fmt.Printf("Update-Applicant executed, processId: %s...\r\n", processid)
 	//
-	var data upateApplicantType
+	var data updateApplicantType
+	//var d []contactInformationType
 
+	//
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
-	if err == nil {
+	if err != nil {
 		fmt.Fprintf(w, "%s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-
+	//
 	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	log.Printf("stakeHolder: %s", data.StakeholderType)
 	//
+	d := make([]contactInformationType, 1, 1)
+	d[0].ApplicantEmail = "kjell.almgren@landshypotek.se"
+	d[0].ApplicantMobileNumber = "+46733981482"
+	data.ContactInformation = d
 	for _, ci := range data.ContactInformation {
 		log.Printf("eMail: %s - MobileNumber: %s", ci.ApplicantEmail, ci.ApplicantMobileNumber)
 	}
 	// We have to write back updateApplicantType
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		panic(err)
+	}
 	w.WriteHeader(http.StatusOK)
 }
 

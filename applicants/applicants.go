@@ -46,7 +46,7 @@ type contactInformationType struct {
 
 //
 // GetApplicants
-func getApplicants(w http.ResponseWriter, r *http.Request) {
+func GetApplicants(w http.ResponseWriter, r *http.Request) {
 
 	var applicants []applicant
 	//
@@ -123,8 +123,6 @@ func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
 	switch r.Method {
-	case "GET":
-		getApplicants(w, r)
 	case "POST":
 		getApplicant(w, r)
 	case "DELETE":

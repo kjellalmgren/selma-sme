@@ -113,8 +113,10 @@ func main() {
 	router.HandleFunc("/v1/Collaterals/{processId}", collaterals.GetCollaterals).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Collateral/{processId}/{collateralId}", collaterals.GetCollateral).Methods("GET", "OPTIONS")
 	// companies.go
-	router.HandleFunc("/v1/Companies/{processId}", companies.GetCompanies).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/Company/{processId}/{companyId}", companies.GetCompany).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Companies", companies.GetCompanies).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("PATCH", "OPTIONS")
 	// households.go
 	router.HandleFunc("/v1/Households/{processId}", households.GetHouseholds).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Household/{processId}/{householdId}", households.GetHousehold).Methods("GET", "OPTIONS")
@@ -122,8 +124,10 @@ func main() {
 	router.HandleFunc("/v1/PersonalEconomies/{processId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}", personaleconomies.GetPersonalEconomy).Methods("GET", "OPTIONS")
 	// companyEconomies
-	router.HandleFunc("/v1/CompanyEconomies/{processId}", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/CompanyEconomy/{processId}/{companyId}/{companyEconomyId}", companyeconomies.GetCompanyEconomy).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/CompanyEconomies", companyeconomies.GetCompanyEconomies).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/CompanyEconomy", companyeconomies.CompanyEconomyEntry).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/CompanyEconomy", companyeconomies.CompanyEconomyEntry).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/CompanyEconomy}", companyeconomies.CompanyEconomyEntry).Methods("PATCH", "OPTIONS")
 	// kycinformations.go
 	router.HandleFunc("/v1/KycInformations/{processId}", kycinformations.GetKycInformations).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/KycInformation/{processId}/{customerId}/{kycId}", kycinformations.GetKycInformation).Methods("GET", "OPTIONS")

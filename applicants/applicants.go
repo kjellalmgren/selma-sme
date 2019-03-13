@@ -229,7 +229,6 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 	//
 	var data updateApplicantType
 	//var d []contactInformationType
-
 	//
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
@@ -270,7 +269,6 @@ func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
-	//varsh := r.Header
 	switch r.Method {
 	case "DELETE":
 		processid := r.Header.Get("X-process-Id")

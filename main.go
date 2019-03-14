@@ -93,7 +93,7 @@ func main() {
 	router.HandleFunc("/v1/deleteProcess/{processId}", processes.DeleteProcess).Methods("POST", "OPTIONS")
 	// cases.go
 	router.HandleFunc("/v1/reserveCaseId", cases.ReserveCaseID).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}", cases.SetCaseIDStatus).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/setCaseIdStatus", cases.SetCaseIDStatus).Methods("PATCH", "OPTIONS")
 	// applicants.go
 	router.HandleFunc("/v1/Applicants", applicants.GetApplicants).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
 	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")

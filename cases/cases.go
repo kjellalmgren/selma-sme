@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 // Cases struct
@@ -22,7 +20,7 @@ func ReserveCaseID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PATCH, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
 	w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	processid := r.Header.Get("X-process-Id")
@@ -52,13 +50,12 @@ func SetCaseIDStatus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "PATCH, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
 	//
-	vars := mux.Vars(r)
-	fmt.Println(vars["processId"])    // processId
-	fmt.Println(vars["caseId"])       // caseId
-	fmt.Println(vars["caseIdStatus"]) // caseIdStatus
+	processid := r.Header.Get("X-process-ID")
+	fmt.Printf("setCaseIDStatus executed...X-Process-ID: %s\r\n", processid)
+	//
 	//
 	w.WriteHeader(http.StatusOK)
 }

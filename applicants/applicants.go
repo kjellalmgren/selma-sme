@@ -129,6 +129,8 @@ func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 		deleteApplicant(w, r)
 	case "PATCH":
 		updateApplicant(w, r)
+	case "PUT":
+		addApplicant(w, r)
 	}
 }
 
@@ -283,5 +285,20 @@ func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 		}
 		json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
 		fmt.Printf("deleteApplicant executed: processId: %s/CustomerId: %s...\r\n", processid, data.CustomerID)
+		w.WriteHeader(http.StatusOK)
 	}
+}
+
+// addApplicant
+func addApplicant(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	//
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("Add-Applicant executed, processId: %s...\r\n", processid)
+	w.WriteHeader(http.StatusCreated)
 }

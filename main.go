@@ -99,6 +99,7 @@ func main() {
 	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
 	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
 	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
+	router.HandleFunc("/v1/Applicant", applicants.ApplicantEntry).Methods("PUT", "OPTIONS")
 	// loans.go
 	router.HandleFunc("/v1/Loans/{processId}", loans.GetLoans).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/Loan/{processId}/{loanId}", loans.GetLoan).Methods("GET", "OPTIONS")

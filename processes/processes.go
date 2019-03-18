@@ -21,7 +21,6 @@ type customerID struct {
 
 //
 // getProcesses
-//
 func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
 	var processes []Process

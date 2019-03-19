@@ -1,8 +1,10 @@
 package processes
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -35,17 +37,25 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getProcesses executed, processid: %s...\r\n", processid)
 	//
 	//var data customerID
-	customerid := r.Header.Get("X-customer-Id")
-	fmt.Printf("getProcesses executed, customerID: %s...\r\n", customerid)
-	//var r1 []byte
-	//r1, err := ioutil.ReadAll(r.Body)
-	//if err != nil {
-	//	fmt.Fprintf(w, "%s", err)
-	//	fmt.Println("Tester\r\n")
-	//	w.WriteHeader(http.StatusNotFound)
-	//}
+	//customerid := r.Header.Get("X-customer-Id")
+	//fmt.Printf("getProcesses executed, customerID: %s...\r\n", customerid)
 	//
-	switch customerid {
+	var data customerID
+	//
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	fmt.Printf("getProcesses executed, customerID: %s...\r\n", data.CustomerID)
+	//
+	switch data.CustomerID {
 	case "19640120-3887":
 		processes = append(processes,
 			Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",

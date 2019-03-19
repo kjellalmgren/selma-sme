@@ -119,8 +119,8 @@ func main() {
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("PATCH", "OPTIONS")
 	// households.go
-	router.HandleFunc("/v1/Households/{processId}", households.GetHouseholds).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/Household/{processId}/{householdId}", households.GetHousehold).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Households", households.GetHouseholds).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/Household", households.GetHousehold).Methods("POST", "OPTIONS")
 	// personalEconomies
 	router.HandleFunc("/v1/PersonalEconomies/{processId}", personaleconomies.GetPersonalEconomies).Methods("GET", "OPTIONS")
 	router.HandleFunc("/v1/PersonalEconomy/{processId}/{customerId}/{personalEconomyId}", personaleconomies.GetPersonalEconomy).Methods("GET", "OPTIONS")

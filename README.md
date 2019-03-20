@@ -11,15 +11,15 @@
     # Use this for alpine container
     $ GOOS=linux GOARCH=arm64 go build -v
     # build with tag selma.sme, -t equals tag
-    $ docker build --file Dockerfile.builder -t tetracon/selmasme:0.5.4 .
+    $ docker build --file Dockerfile.builder -t tetracon/selmasme:0.5.5 .
     # push to hub.docker.com, assumes docker login
-    $ docker push tetracon/selmasme:0.5.4
+    $ docker push tetracon/selmasme:0.5.5
     # create netork
     $ docker network create --driver bridge selmasme-net
-    # run container version 0.5.4
-    $ docker run -d --name selmasme --network selmasme-net --publish=8443:8443 -t tetracon/selmasme:0.5.4
+    # run container version 0.5.5
+    $ docker run -d --name selmasme --network selmasme-net --publish=8443:8443 -t tetracon/selmasme:0.5.5
     # run shell to look into container
-    $ docker run -d -t tetracon/selmasme:0.5.4 sh
+    $ docker run -d -t tetracon/selmasme:0.5.5 sh
     #
     # Remove container
     $ docker stop [CONTAINERID]

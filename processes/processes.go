@@ -10,7 +10,7 @@ import (
 
 //
 // Process struct
-type Process struct {
+type process struct {
 	ProcessID          string `json:"processId"`
 	CustomerID         []customerID
 	ProcessCreatedDate string `json:"processCreatedDate"`
@@ -25,7 +25,7 @@ type customerID struct {
 // getProcesses
 func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
-	var processes []Process
+	var processes []process
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -58,7 +58,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	switch data.CustomerID {
 	case "19640120-3887":
 		processes = append(processes,
-			Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID: []customerID{
 					customerID{
 						CustomerID: "19640120-3887",
@@ -66,7 +66,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 				},
 				ProcessCreatedDate: "2019-03-01"})
 		processes = append(processes,
-			Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID: []customerID{
 					customerID{
 						CustomerID: "19640120-3887",

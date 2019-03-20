@@ -1,15 +1,15 @@
 package personaleconomies
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 // PersonalEconomy
-type PersonalEconomy struct {
+type personalEconomy struct {
 	ProcessID          string  `json:"processId"`
 	CustomerID         string  `json:"customerId"`
 	PersonalEconomyID  string  `json:"personalEconomyId"`
@@ -20,10 +20,15 @@ type PersonalEconomy struct {
 	EmployeedFromYear  string  `json:"yearOfEmployment"`
 }
 
+//
+type personalEconomyID struct {
+	PersonalEconomyID string `json:"personalEconomyID"`
+}
+
 // GetPersonalEconomies
 func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 
-	var personaleconomies []PersonalEconomy
+	var personaleconomies []personalEconomy
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getPersonalEconomies executed: processId: %s...\r\n", processid)
@@ -37,7 +42,7 @@ func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		personaleconomies = append(personaleconomies,
-			PersonalEconomy{
+			personalEconomy{
 				ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:         "19640120-3887",
 				PersonalEconomyID:  "52a50f80-3d28-11e9-b210-d663bd873d93",
@@ -47,7 +52,7 @@ func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 				Employeer:          "Anna Andersson Skog och djurhållning",
 				EmployeedFromYear:  "2012"})
 		personaleconomies = append(personaleconomies,
-			PersonalEconomy{
+			personalEconomy{
 				ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:         "19650705-5579",
 				PersonalEconomyID:  "bf5ea49c-3d28-11e9-b210-d663bd873d93",
@@ -70,12 +75,26 @@ func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 // GetPersonalEconomy
 func GetPersonalEconomy(w http.ResponseWriter, r *http.Request) {
 
-	var personaleconomies []PersonalEconomy
+	var personaleconomies []personalEconomy
 	//
-	vars := mux.Vars(r)
+	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("getPersonalEconomies executed: processId: %s/customerId: %s/personalEconomyId: %s...\r\n",
-		processid, vars["customerId"], vars["personalEconomyId"])
+	//
+	var data personalEconomyID
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	fmt.Printf("getPersonalEconomies executed: processId: %s /personalEconomyId: %s...\r\n",
+		processid, data.PersonalEconomyID)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -85,38 +104,36 @@ func GetPersonalEconomy(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch vars["customerId"] {
-		case "19640120-3887":
-			switch vars["personalEconomyId"] {
-			case "52a50f80-3d28-11e9-b210-d663bd873d93":
-				personaleconomies = append(personaleconomies,
-					PersonalEconomy{
-						ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-						CustomerID:         "19640120-3887",
-						PersonalEconomyID:  "52a50f80-3d28-11e9-b210-d663bd873d93",
-						YearlyIncome:       340000,
-						Income:             0,
-						TypeOfEmployeement: "Tillsvidare",
-						Employeer:          "Anna Andersson Skog och djurhållning",
-						EmployeedFromYear:  "2012"})
-			}
-		case "19650705-5579":
-			switch vars["personalEconomyId"] {
-			case "bf5ea49c-3d28-11e9-b210-d663bd873d93":
-				personaleconomies = append(personaleconomies,
-					PersonalEconomy{
-						ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-						CustomerID:         "19650705-5579",
-						PersonalEconomyID:  "bf5ea49c-3d28-11e9-b210-d663bd873d93",
-						YearlyIncome:       0,
-						Income:             460000,
-						TypeOfEmployeement: "Tillsvidare",
-						Employeer:          "Katrineholm Revision AB",
-						EmployeedFromYear:  "2009"})
-			}
+
+		switch data.PersonalEconomyID {
+		case "52a50f80-3d28-11e9-b210-d663bd873d93":
+			personaleconomies = append(personaleconomies,
+				personalEconomy{
+					ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+					CustomerID:         "19640120-3887",
+					PersonalEconomyID:  "52a50f80-3d28-11e9-b210-d663bd873d93",
+					YearlyIncome:       340000,
+					Income:             0,
+					TypeOfEmployeement: "Tillsvidare",
+					Employeer:          "Anna Andersson Skog och djurhållning",
+					EmployeedFromYear:  "2012"})
+		}
+
+		switch data.PersonalEconomyID {
+		case "bf5ea49c-3d28-11e9-b210-d663bd873d93":
+			personaleconomies = append(personaleconomies,
+				personalEconomy{
+					ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+					CustomerID:         "19650705-5579",
+					PersonalEconomyID:  "bf5ea49c-3d28-11e9-b210-d663bd873d93",
+					YearlyIncome:       0,
+					Income:             460000,
+					TypeOfEmployeement: "Tillsvidare",
+					Employeer:          "Katrineholm Revision AB",
+					EmployeedFromYear:  "2009"})
 		}
 	}
-
+	//
 	if err := json.NewEncoder(w).Encode(personaleconomies); err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		panic(err)

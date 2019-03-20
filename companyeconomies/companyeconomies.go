@@ -154,7 +154,21 @@ func deleteCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 	//
 	//varsh := r.Header
 	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("deleteCompanyEconomy executed, processId: %s...\r\n", processid)
+	//
+	var data companyEconomyID
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	fmt.Printf("deleteCompanyEconomy executed, processId: %s companyId: %s...\r\n", processid, data.CompanyEconomyID)
 	w.WriteHeader(http.StatusOK)
 }
 func updateCompanyEconomy(w http.ResponseWriter, r *http.Request) {

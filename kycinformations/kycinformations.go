@@ -9,7 +9,7 @@ import (
 )
 
 // KycInformations
-type KycInformation struct {
+type kycInformation struct {
 	ProcessID                string `json:"processId"`
 	CustomerID               string `json:"customerId"`
 	KycId                    string `json:"kycId"`
@@ -23,10 +23,10 @@ type KycInformation struct {
 // GetKycInformations
 func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 
-	var kycinformations []KycInformation
+	var kycinformations []kycInformation
 	//
-	vars := mux.Vars(r)
-	fmt.Printf("getKycInformations executed: processId: %s...\r\n", vars["processId"])
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("getKycInformations executed: processId: %s...\r\n", processid)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -34,10 +34,10 @@ func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	switch vars["processId"] {
+	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		kycinformations = append(kycinformations,
-			KycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			kycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:               "19640120-3887",
 				KycId:                    "498b538c-3d82-11e9-b210-d663bd873d93",
 				KycAcceptUC:              true,
@@ -57,10 +57,11 @@ func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 // GetKycInformation
 func GetKycInformation(w http.ResponseWriter, r *http.Request) {
 
-	var kycinformations []KycInformation
+	var kycinformations []kycInformation
 	//
 	vars := mux.Vars(r)
-	fmt.Printf("getKycInformations executed: processId: %s...\r\n", vars["processId"])
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("getKycInformation executed: processId: %s...\r\n", processid)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -68,14 +69,14 @@ func GetKycInformation(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me")
 	//
-	switch vars["processId"] {
+	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		switch vars["customerId"] {
 		case "19640120-3887":
 			switch vars["kycId"] {
 			case "498b538c-3d82-11e9-b210-d663bd873d93":
 				kycinformations = append(kycinformations,
-					KycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+					kycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 						CustomerID:               "19640120-3887",
 						KycId:                    "498b538c-3d82-11e9-b210-d663bd873d93",
 						KycAcceptUC:              true,

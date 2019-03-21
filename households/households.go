@@ -63,11 +63,11 @@ func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 // GetHousehold
 func GetHousehold(w http.ResponseWriter, r *http.Request) {
 
-	var households []Household
+	var households []models.Household
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
 	//
-	var data householdID
+	var data models.HouseholdID
 	//
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
@@ -95,22 +95,22 @@ func GetHousehold(w http.ResponseWriter, r *http.Request) {
 		switch data.HosueholdID {
 		case "4253017a-3d17-11e9-b210-d663bd873d93":
 			households = append(households,
-				Household{
+				models.Household{
 					ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					HouseholdMembers: []HouseholdMemberType{
-						HouseholdMemberType{
+					HouseholdMembers: []models.HouseholdMemberType{
+						models.HouseholdMemberType{
 							CustomerIDs: "19640120-3887",
 						},
 					},
 					HouseholdID:          "4253017a-3d17-11e9-b210-d663bd873d93",
 					NumberOfChildsAtHome: 2,
-					Childs: []ChildType{
-						ChildType{
+					Childs: []models.ChildType{
+						models.ChildType{
 							ChildID:         "248485ca-3d9d-11e9-b210-d663bd873d93",
 							ChildsAge:       5,
 							PartInHousehold: true,
 						},
-						ChildType{
+						models.ChildType{
 							ChildID:         "eb38da7c-3d9d-11e9-b210-d663bd873d93",
 							ChildsAge:       8,
 							PartInHousehold: true,

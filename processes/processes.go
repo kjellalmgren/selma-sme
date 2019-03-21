@@ -21,7 +21,7 @@ type processAll struct {
 	Companies         []models.Company
 	CompanyEconomies  []models.CompanyEconomy
 	PersonalEconomies []models.PersonalEconomy
-	Collaterals       []models.Collaterals
+	Collaterals       []models.Collateral
 }
 
 //

@@ -104,11 +104,11 @@ func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 // GetApplicant
 func getApplicant(w http.ResponseWriter, r *http.Request) {
 
-	var applicants []applicant
+	var applicants []models.Applicant
 
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
-	var data customerID
+	var data models.CustomerID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -211,7 +211,7 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("stakeHolder: %s", data.StakeholderType)
 	//
-	d := make([]contactInformationType, 1, 1)
+	d := make([]models.ContactInformationType, 1, 1)
 	d[0].ApplicantEmail = "kjell.almgren@landshypotek.se"
 	d[0].ApplicantMobileNumber = "+46733981482"
 	data.ContactInformation = d

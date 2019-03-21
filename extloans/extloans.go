@@ -26,7 +26,7 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		extloans = append(Extloans,
+		extloans = append(extloans,
 			models.ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				ExtLoanOwners: []models.ExtLoanOwner{
 					models.ExtLoanOwner{
@@ -81,7 +81,7 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 		switch data.ExtLoanID {
 		case "5aa735e8-3cbd-11e9-b210-d663bd873d93":
 			extloans = append(extloans,
-				extLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+				models.ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					ExtLoanOwners: []models.ExtLoanOwner{
 						models.ExtLoanOwner{
 							CustomerID: "19640120-3887",

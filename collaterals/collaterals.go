@@ -15,7 +15,8 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 	var collaterals []models.Collateral
 	//
 	vars := mux.Vars(r)
-	fmt.Printf("getCollaterals executed: processId: %s...\r\n", vars["processId"])
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("getCollaterals executed: processId: %s...\r\n", processid)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -53,7 +54,7 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 // GetCollateral
 func GetCollateral(w http.ResponseWriter, r *http.Request) {
 
-	var collaterals []Collateral
+	var collaterals []models.Collateral
 	//
 	vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")

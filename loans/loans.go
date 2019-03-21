@@ -80,6 +80,7 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 	var loans []loan
 	//
 	processid := r.Header.Get("X-process-Id")
+	//
 	var data loanID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)

@@ -19,10 +19,6 @@ type Household struct {
 	ChildMaintenanceCost float32 `json:"childMaintenanceCost"`
 }
 
-type householdID struct {
-	HosueholdID string `json:"householdId"`
-}
-
 // HouseholdMemberType
 type HouseholdMemberType struct {
 	CustomerIDs string `json:"householdMember"`
@@ -34,6 +30,10 @@ type ChildType struct {
 	ChildID         string `json:"childId"`
 	ChildsAge       int    `json:"childsAge"`
 	PartInHousehold bool   `json:"partInHousehold"`
+}
+
+type householdID struct {
+	HosueholdID string `json:"householdId"`
 }
 
 // GetHouseholds

@@ -91,6 +91,7 @@ func main() {
 	// processes.go
 	router.HandleFunc("/v1/Processes", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
 	router.HandleFunc("/v1/Process", processes.DeleteProcess).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/getProcess", processes.GetProcessAll).Methods("GET", "OPTIONS")
 	// cases.go
 	router.HandleFunc("/v1/reserveCaseId", cases.ReserveCaseID).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus", cases.SetCaseIDStatus).Methods("PATCH", "OPTIONS")
@@ -172,8 +173,8 @@ func getHostname() string {
 	return hostname
 }
 
-// HealthCheckHandler
 //
+// HealthCheckHandler
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	// A very simple health check.
 	//w.WriteHeader(http.StatusOK)

@@ -81,6 +81,11 @@ type Loan struct {
 	Aims          []AimType
 }
 
+// LoanId
+type LoanID struct {
+	LoanID string `json:"loanId"`
+}
+
 // aimType
 type AimType struct {
 	AimID          string  `json:"aimId"`
@@ -165,6 +170,11 @@ type PersonalEconomy struct {
 	EmployeedFromYear  string  `json:"yearOfEmployment"`
 }
 
+//
+type PersonalEconomyID struct {
+	PersonalEconomyID string `json:"personalEconomyID"`
+}
+
 // Cases struct
 type Cases struct {
 	CaseID string `json:"caseId"`
@@ -188,6 +198,23 @@ type Collateral struct {
 type TaxedOwnerType struct {
 	TaxedID    string `json:"taxedId"`
 	TaxedOwner string `json:"taxedOwner"`
+}
+
+// CollateralID
+type CollateralID struct {
+	CollateralID string `json:"collateralId"`
+}
+
+// KycInformation
+type KycInformation struct {
+	ProcessID                string `json:"processId"`
+	CustomerID               string `json:"customerId"`
+	KycID                    string `json:"kycId"`
+	KycAcceptUC              bool   `json:"kycAcceptUC"`
+	KycAcceptGDPR            bool   `json:"kycAcceptGDPR"`
+	KycUCAware               bool   `json:"kycUCAware"`
+	KycPublicFunction        bool   `json:"kycPublicFunction"`
+	KycRelatedPublicFunction bool   `json:"kycRelatedPublicFunction"`
 }
 
 // Xall

@@ -4,26 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"selmasme/models"
 
 	"github.com/gorilla/mux"
 )
 
-// KycInformations
-type kycInformation struct {
-	ProcessID                string `json:"processId"`
-	CustomerID               string `json:"customerId"`
-	KycId                    string `json:"kycId"`
-	KycAcceptUC              bool   `json:"kycAcceptUC"`
-	KycAcceptGDPR            bool   `json:"kycAcceptGDPR"`
-	KycUCAware               bool   `json:"kycUCAware"`
-	KycPublicFunction        bool   `json:"kycPublicFunction"`
-	KycRelatedPublicFunction bool   `json:"kycRelatedPublicFunction"`
-}
-
 // GetKycInformations
 func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 
-	var kycinformations []kycInformation
+	var kycinformations []models.KycInformation
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getKycInformations executed: processId: %s...\r\n", processid)
@@ -37,9 +26,9 @@ func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		kycinformations = append(kycinformations,
-			kycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			models.KycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:               "19640120-3887",
-				KycId:                    "498b538c-3d82-11e9-b210-d663bd873d93",
+				KycID:                    "498b538c-3d82-11e9-b210-d663bd873d93",
 				KycAcceptUC:              true,
 				KycAcceptGDPR:            true,
 				KycUCAware:               true,
@@ -57,7 +46,7 @@ func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 // GetKycInformation
 func GetKycInformation(w http.ResponseWriter, r *http.Request) {
 
-	var kycinformations []kycInformation
+	var kycinformations []models.KycInformation
 	//
 	vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
@@ -76,9 +65,9 @@ func GetKycInformation(w http.ResponseWriter, r *http.Request) {
 			switch vars["kycId"] {
 			case "498b538c-3d82-11e9-b210-d663bd873d93":
 				kycinformations = append(kycinformations,
-					kycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+					models.KycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 						CustomerID:               "19640120-3887",
-						KycId:                    "498b538c-3d82-11e9-b210-d663bd873d93",
+						KycID:                    "498b538c-3d82-11e9-b210-d663bd873d93",
 						KycAcceptUC:              true,
 						KycAcceptGDPR:            true,
 						KycUCAware:               true,

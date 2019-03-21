@@ -6,32 +6,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"selmasme/models"
 )
-
-// Loans
-type loan struct {
-	ProcessID     string  `json:"processId"`
-	LoanID        string  `json:"loanId"`
-	LoanNumber    string  `json:"loanNumber"`
-	LoanAmount    float32 `json:"loanAmount"`
-	PurposeOfLoan string  `json:"purposeOfLoan"`
-	Aims          []aimType
-}
-type aimType struct {
-	AimID          string  `json:"aimId"`
-	AimText        string  `json:"aimText"`
-	LoanAmountPart float32 `json:"loanAmountPart"`
-}
-
-//
-type loanID struct {
-	LoanID string `json:"loanId"`
-}
 
 // GetLoans
 func GetLoans(w http.ResponseWriter, r *http.Request) {
 
-	var loans []loan
+	var loans []models.Loan
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getLoans executed: processId: %s...\r\n", processid)
@@ -45,18 +26,18 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		loans = append(loans,
-			loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
 				LoanNumber:    "930101011212",
 				LoanAmount:    2300000,
 				PurposeOfLoan: "Köp",
-				Aims: []aimType{
-					aimType{
+				Aims: []models.AimType{
+					models.AimType{
 						AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
 						AimText:        "Fastighetsköp - annan fastighet",
 						LoanAmountPart: 2000000,
 					},
-					aimType{
+					models.AimType{
 						AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
 						AimText:        "Renovering mjölkstall",
 						LoanAmountPart: 300000,
@@ -77,11 +58,11 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 // GetLoan
 func GetLoan(w http.ResponseWriter, r *http.Request) {
 
-	var loans []loan
+	var loans []models.Loan
 	//
 	processid := r.Header.Get("X-process-Id")
 	//
-	var data loanID
+	var data models.LoanID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -106,18 +87,18 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 		switch data.LoanID {
 		case "9b8e4822-3cb7-11e9-b210-d663bd873d93":
 			loans = append(loans,
-				loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+				models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
 					LoanNumber:    "930101011212",
 					LoanAmount:    2300000,
 					PurposeOfLoan: "Köp",
-					Aims: []aimType{
-						aimType{
+					Aims: []models.AimType{
+						models.AimType{
 							AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
 							AimText:        "Fastighetsköp - annan fastighet",
 							LoanAmountPart: 2000000,
 						},
-						aimType{
+						models.AimType{
 							AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
 							AimText:        "Renovering mjölkstall",
 							LoanAmountPart: 300000,
@@ -138,7 +119,7 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 // GetLoansx
 func GetLoansx(w http.ResponseWriter, r *http.Request) {
 
-	var loans []loan
+	var loans []models.Loan
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("GetXLoans executed: X-process-ID: %s...\r\n", processid)
@@ -153,18 +134,18 @@ func GetLoansx(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("XprocessID", "9a65d28a-46bb-4442-b96d-6a09fda6b18b")
 	// r.Header().Get("XprocessID")
 	loans = append(loans,
-		loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+		models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 			LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
 			LoanNumber:    "930101011212",
 			LoanAmount:    2300000,
 			PurposeOfLoan: "Köp",
-			Aims: []aimType{
-				aimType{
+			Aims: []models.AimType{
+				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
 					AimText:        "Fastighetsköp - annan fastighet",
 					LoanAmountPart: 2000000,
 				},
-				aimType{
+				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
 					AimText:        "Renovering mjölkstall",
 					LoanAmountPart: 300000,
@@ -183,9 +164,9 @@ func GetLoansx(w http.ResponseWriter, r *http.Request) {
 // GetLoanx
 func GetLoanx(w http.ResponseWriter, r *http.Request) {
 
-	var loans []loan
+	var loans []models.Loan
 	processid := r.Header.Get("X-process-Id")
-	var data loanID
+	var data models.LoanID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -207,18 +188,18 @@ func GetLoanx(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	loans = append(loans,
-		loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+		models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 			LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
 			LoanNumber:    "930101011212",
 			LoanAmount:    2300000,
 			PurposeOfLoan: "Köp",
-			Aims: []aimType{
-				aimType{
+			Aims: []models.AimType{
+				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
 					AimText:        "Fastighetsköp - annan fastighet",
 					LoanAmountPart: 2000000,
 				},
-				aimType{
+				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
 					AimText:        "Renovering mjölkstall",
 					LoanAmountPart: 300000,
@@ -239,7 +220,7 @@ func DeleteLoanx(w http.ResponseWriter, r *http.Request) {
 
 	//
 	processid := r.Header.Get("X-process-Id")
-	var data loanID
+	var data models.LoanID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -270,7 +251,7 @@ func DeleteLoan(w http.ResponseWriter, r *http.Request) {
 	//
 	processid := r.Header.Get("X-process-Id")
 	//
-	var data loanID
+	var data models.LoanID
 	//
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)

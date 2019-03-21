@@ -10,7 +10,6 @@ import (
 )
 
 //
-
 // processAll
 type processAll struct {
 	Processes         []models.Process
@@ -22,14 +21,13 @@ type processAll struct {
 	CompanyEconomies  []models.CompanyEconomy
 	PersonalEconomies []models.PersonalEconomy
 	Collaterals       []models.Collateral
+	KycInformations   []models.KycInformation
 }
 
 //
 // ***************************************************************
-
-// ***************************************************************
 //
-// getProcesses
+// GetProcesses
 func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
 	var processes []models.Process
@@ -128,6 +126,8 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	var companies []models.Company
 	var companyeconomies []models.CompanyEconomy
 	var personaleconomies []models.PersonalEconomy
+	var kycinformations []models.KycInformation
+	var collaterals []models.Collateral
 
 	var d models.XAll
 	var p models.Person
@@ -205,6 +205,8 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	processall.Companies = append(companies)
 	processall.CompanyEconomies = append(companyeconomies)
 	processall.PersonalEconomies = append(personaleconomies)
+	processall.KycInformations = append(kycinformations)
+	processall.Collaterals = append(collaterals)
 
 	//
 	if err := json.NewEncoder(w).Encode(processall); err != nil {

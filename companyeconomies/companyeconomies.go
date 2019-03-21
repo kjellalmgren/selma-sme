@@ -6,31 +6,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"selmasme/models"
 )
-
-//
-// CompanyEconomies
-type companyEconomy struct {
-	ProcessID        string `json:"processId"`
-	CompanyID        string `json:"companyId"`
-	CompanyEconomyID string `json:"companyEconomyId"`
-	Revenues         []revenue
-}
-
-type revenue struct {
-	RevenueID   string  `json:"revenueId"`
-	RevenueYear int32   `json:"revenueYear"`
-	Revenue     float32 `json:"revenue"`
-}
-type companyEconomyID struct {
-	CompanyEconomyID string `json:"companyEconomyId"`
-}
 
 //
 // GetCompanyEconomies
 func GetCompanyEconomies(w http.ResponseWriter, r *http.Request) {
 
-	var companyeconomies []companyEconomy
+	var companyeconomies []models.CompanyEconomy
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getCompanyEconomies executed: processId: %s...\r\n", processid)
@@ -44,12 +27,12 @@ func GetCompanyEconomies(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		companyeconomies = append(companyeconomies,
-			companyEconomy{
+			models.CompanyEconomy{
 				ProcessID:        "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CompanyID:        "02d6a03e-5895-4077-98f7-7a5c192868b7",
 				CompanyEconomyID: "4804f0c2-3d2d-11e9-b210-d663bd873d93",
-				Revenues: []revenue{
-					revenue{
+				Revenues: []models.Revenue{
+					models.Revenue{
 						RevenueID:   "d85fa472-3f31-11e9-b210-d663bd873d93",
 						RevenueYear: 0,
 						Revenue:     2000000,
@@ -88,12 +71,12 @@ func CompanyEconomyEntry(w http.ResponseWriter, r *http.Request) {
 // GetCompanyEconomy
 func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 
-	var companyeconomies []companyEconomy
+	var companyeconomies []models.CompanyEconomy
 
 	//
 	processid := r.Header.Get("X-process-Id")
 	//
-	var data companyEconomyID
+	var data models.CompanyEconomyID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -120,12 +103,12 @@ func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 		switch data.CompanyEconomyID {
 		case "4804f0c2-3d2d-11e9-b210-d663bd873d93":
 			companyeconomies = append(companyeconomies,
-				companyEconomy{
+				models.CompanyEconomy{
 					ProcessID:        "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					CompanyID:        "02d6a03e-5895-4077-98f7-7a5c192868b7",
 					CompanyEconomyID: "4804f0c2-3d2d-11e9-b210-d663bd873d93",
-					Revenues: []revenue{
-						revenue{
+					Revenues: []models.Revenue{
+						models.Revenue{
 							RevenueID:   "d85fa472-3f31-11e9-b210-d663bd873d93",
 							RevenueYear: 0,
 							Revenue:     2000000,
@@ -155,7 +138,7 @@ func deleteCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 	//varsh := r.Header
 	processid := r.Header.Get("X-process-Id")
 	//
-	var data companyEconomyID
+	var data models.CompanyEconomyID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {

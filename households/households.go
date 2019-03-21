@@ -6,40 +6,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"selmasme/models"
 )
-
-// Household
-type Household struct {
-	ProcessID            string `json:"processId"`
-	HouseholdMembers     []HouseholdMemberType
-	HouseholdID          string `json:"householdId"`
-	NumberOfChildsAtHome int    `json:"numberOfChildsAtHome"`
-	Childs               []ChildType
-	NumberOfCars         int     `json:"numberOfCars"`
-	ChildMaintenanceCost float32 `json:"childMaintenanceCost"`
-}
-
-// HouseholdMemberType
-type HouseholdMemberType struct {
-	CustomerIDs string `json:"householdMember"`
-}
-
-//
-// ChildType
-type ChildType struct {
-	ChildID         string `json:"childId"`
-	ChildsAge       int    `json:"childsAge"`
-	PartInHousehold bool   `json:"partInHousehold"`
-}
-
-type householdID struct {
-	HosueholdID string `json:"householdId"`
-}
 
 // GetHouseholds
 func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 
-	var households []Household
+	var households []models.Household
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getHouseholds executed: processId: %s...\r\n", processid)
@@ -53,22 +26,22 @@ func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		households = append(households,
-			Household{
+			models.Household{
 				ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				HouseholdMembers: []HouseholdMemberType{
-					HouseholdMemberType{
+				HouseholdMembers: []models.HouseholdMemberType{
+					models.HouseholdMemberType{
 						CustomerIDs: "19640120-3887",
 					},
 				},
 				HouseholdID:          "4253017a-3d17-11e9-b210-d663bd873d93",
 				NumberOfChildsAtHome: 2,
-				Childs: []ChildType{
-					ChildType{
+				Childs: []models.ChildType{
+					models.ChildType{
 						ChildID:         "248485ca-3d9d-11e9-b210-d663bd873d93",
 						ChildsAge:       5,
 						PartInHousehold: true,
 					},
-					ChildType{
+					models.ChildType{
 						ChildID:         "eb38da7c-3d9d-11e9-b210-d663bd873d93",
 						ChildsAge:       8,
 						PartInHousehold: true,

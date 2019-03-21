@@ -7,48 +7,14 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"selmasme/models"
 )
-
-// Applicant struct
-type applicant struct {
-	ProcessID             string `json:"processId"`
-	CustomerID            string `json:"customerId"`
-	ApplicantID           string `json:"applicantId"`
-	ApplicantName         string `json:"applicantName"`
-	ApplicantAddress      string `json:"applicantAddress"`
-	ApplicantPostAddress  string `json:"applicantPostAddress"`
-	StakeholderType       string `json:"stakeholderType"`
-	ContactInformation    []contactInformationType
-	ApplicantEmployeed    bool   `json:"applicantEmployeed"`
-	ApplicantLPEmployment string `json:"applicantLPEmployment"`
-	ApplicantMember       bool   `json:"applicantMember"`
-	ApplicantBySms        bool   `json:"applicantBySms"`
-	ApplicantByeMail      bool   `json:"applicantByeMail"`
-}
-
-type updateApplicantType struct {
-	ContactInformation []contactInformationType
-	StakeholderType    string `json:"stakeholderType"`
-	ApplicantBySms     bool   `json:"applicantBySms"`
-	ApplicantByeMail   bool   `json:"applicantByeMail"`
-}
-
-//
-type customerID struct {
-	CustomerID string `json:"customerId"`
-}
-
-// ContactInformationType struct
-type contactInformationType struct {
-	ApplicantEmail        string `json:"applicantByeMail"`
-	ApplicantMobileNumber string `json:"applicantBySms"`
-}
 
 //
 // GetApplicants
 func GetApplicants(w http.ResponseWriter, r *http.Request) {
 
-	var applicants []applicant
+	var applicants []models.Applicant
 	//
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
@@ -64,15 +30,15 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		applicants = append(applicants,
-			applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+			models.Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:           "19640120-3887",
 				ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
 				ApplicantName:        "Anna Andersson",
 				ApplicantAddress:     "Stora vägen 1",
 				ApplicantPostAddress: "420 20 Katrineholm",
 				StakeholderType:      "",
-				ContactInformation: []contactInformationType{
-					contactInformationType{
+				ContactInformation: []models.ContactInformationType{
+					models.ContactInformationType{
 						ApplicantEmail:        "anna.andersson@gmail.com",
 						ApplicantMobileNumber: "07344455666",
 					},
@@ -83,7 +49,7 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 				ApplicantBySms:        true,
 				ApplicantByeMail:      true})
 		applicants = append(applicants,
-			applicant{
+			models.Applicant{
 				ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CustomerID:           "19650705-5579",
 				ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
@@ -91,8 +57,8 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 				ApplicantAddress:     "Stora vägen 1",
 				ApplicantPostAddress: "420 20 Katrineholm",
 				StakeholderType:      "",
-				ContactInformation: []contactInformationType{
-					contactInformationType{
+				ContactInformation: []models.ContactInformationType{
+					models.ContactInformationType{
 						ApplicantEmail:        "patrik.andersson@katrineholmrevision.se",
 						ApplicantMobileNumber: "07335533777",
 					},
@@ -164,15 +130,15 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 		switch data.CustomerID {
 		case "19640120-3887":
 			applicants = append(applicants,
-				applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+				models.Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					CustomerID:           "19640120-3887",
 					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
 					ApplicantName:        "Anna Andersson",
 					ApplicantAddress:     "Stora vägen 1",
 					ApplicantPostAddress: "420 20 Katrineholm",
 					StakeholderType:      "BORGENSMAN",
-					ContactInformation: []contactInformationType{
-						contactInformationType{
+					ContactInformation: []models.ContactInformationType{
+						models.ContactInformationType{
 							ApplicantEmail:        "anna.andersson@gmail.com",
 							ApplicantMobileNumber: "07344455666",
 						},
@@ -184,7 +150,7 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 					ApplicantByeMail:      true})
 		case "19650705-5579":
 			applicants = append(applicants,
-				applicant{
+				models.Applicant{
 					ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					CustomerID:           "19650705-5579",
 					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
@@ -192,8 +158,8 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 					ApplicantAddress:     "Stora vägen 1",
 					ApplicantPostAddress: "420 20 Katrineholm",
 					StakeholderType:      "EKONOMISKINTRESSEGEMENSKAP",
-					ContactInformation: []contactInformationType{
-						contactInformationType{
+					ContactInformation: []models.ContactInformationType{
+						models.ContactInformationType{
 							ApplicantEmail:        "patrik.andersson@katrineholmrevision.se",
 							ApplicantMobileNumber: "07335533777",
 						},
@@ -229,7 +195,7 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Update-Applicant executed, processId: %s...\r\n", processid)
 	//
-	var data updateApplicantType
+	var data models.UpdateApplicantType
 	//var d []contactInformationType
 	//
 	var r1 []byte
@@ -276,7 +242,7 @@ func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 		processid := r.Header.Get("X-process-Id")
 		fmt.Printf("Delete-Applicant executed: processId: %s...\r\n", processid)
 		//
-		var data customerID
+		var data models.CustomerID
 		var r1 []byte
 		r1, err := ioutil.ReadAll(r.Body)
 		if err != nil {

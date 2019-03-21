@@ -7,29 +7,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"selmasme/models"
 )
-
-// Company
-type company struct {
-	ProcessID       string `json:"processId"`
-	CompanyID       string `json:"companyId"`
-	OrgNumber       string `json:"orgNr"`
-	CompanyName     string `json:"companyName"`
-	NumberOfLoans   string `json:"numberOfLoans"`
-	Created         string `json:"created"`
-	BusinessFocus   string `json:"businessFocus"`
-	SelectedCompany bool   `json:"selectedCompany"`
-}
-
-// companyID
-type companyID struct {
-	CompanyID string `json:"companyId"`
-}
-
-// updateCopmpanyType
-type updateCompanyType struct {
-	BusinessFocus string `json:"businessFocus"`
-}
 
 // CompanyEntry
 func CompanyEntry(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +33,7 @@ func CompanyEntry(w http.ResponseWriter, r *http.Request) {
 // GetCompanies
 func GetCompanies(w http.ResponseWriter, r *http.Request) {
 
-	var companies []company
+	var companies []models.Company
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getCompanies executed: processId: %s...\r\n", processid)
@@ -68,7 +47,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		companies = append(companies,
-			company{
+			models.Company{
 				ProcessID:       "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 				CompanyID:       "461460c2-3d14-11e9-b210-d663bd873d93",
 				OrgNumber:       "551010-8474",
@@ -89,9 +68,9 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 // getCompany
 func getCompany(w http.ResponseWriter, r *http.Request) {
 
-	var companies []company
+	var companies []models.Company
 	processid := r.Header.Get("X-process-Id")
-	var data companyID
+	var data models.CompanyID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -116,7 +95,7 @@ func getCompany(w http.ResponseWriter, r *http.Request) {
 		switch data.CompanyID {
 		case "461460c2-3d14-11e9-b210-d663bd873d93":
 			companies = append(companies,
-				company{
+				models.Company{
 					ProcessID:       "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 					CompanyID:       "461460c2-3d14-11e9-b210-d663bd873d93",
 					OrgNumber:       "551010-8474",
@@ -148,7 +127,7 @@ func deleteCompany(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Delete-Company executed: processId: %s...\r\n", processid)
 	//
-	var data companyID
+	var data models.CompanyID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -174,7 +153,7 @@ func updateCompany(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("updateCompany executed, processId: %s...\r\n", processid)
 	//
-	var data updateCompanyType
+	var data models.UpdateCompanyType
 	//
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)

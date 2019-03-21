@@ -6,36 +6,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"selmasme/models"
 )
 
 //
-// ExtLoan
-type extLoan struct {
-	ProcessID         string `json:"processId"`
-	ExtLoanOwners     []extLoanOwner
-	ExtLoanID         string  `json:"extloanId"`
-	ExtCreditInstitut string  `json:"extCreditInstitut"`
-	ExtLoanClearing   string  `json:"extLoanClearing"`
-	ExtLoanNumber     string  `json:"extloanNumber"`
-	ExtLoanAmount     float32 `json:"extLoanAmount"`
-	ExtRedeemLoan     bool    `json:"extRedeemLoan"`
-}
-
-//
-// ExtLoanOwner
-type extLoanOwner struct {
-	CustomerID string `json:"customerId"`
-}
-
-// extloanID
-type extLoanID struct {
-	ExtLoanId string `json:"extloanId"`
-}
-
 // GetExtLoans
 func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 
-	var extloans []extLoan
+	var extloans []models.ExtLoan
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getExtLoans executed: processId: %s...\r\n", processid)
@@ -48,10 +26,10 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		extloans = append(extloans,
-			extLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				ExtLoanOwners: []extLoanOwner{
-					extLoanOwner{
+		extloans = append(Extloans,
+			models.ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+				ExtLoanOwners: []models.ExtLoanOwner{
+					models.ExtLoanOwner{
 						CustomerID: "19640120-3887",
 					},
 				},
@@ -73,10 +51,10 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 
 // GetExtLoan
 func GetExtLoan(w http.ResponseWriter, r *http.Request) {
-	var extloans []extLoan
+	var extloans []models.ExtLoan
 	//
 	processid := r.Header.Get("X-process-Id")
-	var data extLoanID
+	var data models.ExtLoanID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -90,7 +68,7 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("getExtLoans executed: processId: %s /extloanId: %s...\r\n",
 		processid,
-		data.ExtLoanId)
+		data.ExtLoanID)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -100,12 +78,12 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.ExtLoanId {
+		switch data.ExtLoanID {
 		case "5aa735e8-3cbd-11e9-b210-d663bd873d93":
 			extloans = append(extloans,
 				extLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					ExtLoanOwners: []extLoanOwner{
-						extLoanOwner{
+					ExtLoanOwners: []models.ExtLoanOwner{
+						models.ExtLoanOwner{
 							CustomerID: "19640120-3887",
 						},
 					},

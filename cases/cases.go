@@ -4,12 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"selmasme/models"
 )
-
-// Cases struct
-type Cases struct {
-	CaseID string `json:"caseId"`
-}
 
 //
 //	OperationId: ReserverCaseId
@@ -31,7 +27,7 @@ func ReserveCaseID(w http.ResponseWriter, r *http.Request) {
 	//}
 	fmt.Printf("ReserveCaseID executed...X-Process-ID: %s\r\n", processid)
 	//
-	var cases Cases
+	var cases models.Cases
 	cases.CaseID = "108000" // Hardcoded
 	//
 	if err := json.NewEncoder(w).Encode(cases); err != nil {

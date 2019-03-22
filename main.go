@@ -25,6 +25,7 @@ import (
 	"net/http"
 	"os"
 	"selmasme/applicants"
+	"selmasme/budgets"
 	"selmasme/cases"
 	"selmasme/collaterals"
 
@@ -121,6 +122,9 @@ func main() {
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("PATCH", "OPTIONS")
+	//
+	router.HandleFunc("/v1/Budgets", budgets.GetBudgets).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/Budget", budgets.GetBudgets).Methods("POST", "GET", "OPTIONS")
 	// households.go
 	router.HandleFunc("/v1/Households", households.GetHouseholds).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/Household", households.GetHousehold).Methods("POST", "OPTIONS")
@@ -163,7 +167,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 //
 //	getHostName
-//
 func getHostname() string {
 
 	hostname, err1 := os.Hostname()

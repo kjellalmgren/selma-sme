@@ -1,0 +1,22 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "customerId": "19640120-3887",
+    "personalEconomyId": "52a50f80-3d28-11e9-b210-d663bd873d93",
+    "yearlyIncome": 340000,
+    "income": 0,
+    "typeOfEmployeement": "Tillsvidare",
+    "employeer": "Anna Andersson Skog och djurhållning",
+    "yearOfEmployment": "2012"
+  },
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "customerId": "19650705-5579",
+    "personalEconomyId": "bf5ea49c-3d28-11e9-b210-d663bd873d93",
+    "yearlyIncome": 0,
+    "income": 460000,
+    "typeOfEmployeement": "Tillsvidare",
+    "employeer": "Katrineholm Revision AB",
+    "yearOfEmployment": "2009"
+  }
+]

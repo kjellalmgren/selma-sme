@@ -12,7 +12,6 @@ import (
 // GetPersonalEconomies
 func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 
-	var personaleconomies []models.PersonalEconomy
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getPersonalEconomies executed: processId: %s...\r\n", processid)
@@ -23,28 +22,16 @@ func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	personaleconomies := []models.PersonalEconomy{}
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		personaleconomies = append(personaleconomies,
-			models.PersonalEconomy{
-				ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID:         "19640120-3887",
-				PersonalEconomyID:  "52a50f80-3d28-11e9-b210-d663bd873d93",
-				YearlyIncome:       340000,
-				Income:             0,
-				TypeOfEmployeement: "Tillsvidare",
-				Employeer:          "Anna Andersson Skog och djurhållning",
-				EmployeedFromYear:  "2012"})
-		personaleconomies = append(personaleconomies,
-			models.PersonalEconomy{
-				ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID:         "19650705-5579",
-				PersonalEconomyID:  "bf5ea49c-3d28-11e9-b210-d663bd873d93",
-				YearlyIncome:       0,
-				Income:             460000,
-				TypeOfEmployeement: "Tillsvidare",
-				Employeer:          "Katrineholm Revision AB",
-				EmployeedFromYear:  "2009"})
+		file, err := ioutil.ReadFile("personaleconomies.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading personaleconomies.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		_ = json.Unmarshal([]byte(file), &personaleconomies)
 	}
 	//
 	if err := json.NewEncoder(w).Encode(personaleconomies); err != nil {
@@ -59,9 +46,13 @@ func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 // GetPersonalEconomy
 func GetPersonalEconomy(w http.ResponseWriter, r *http.Request) {
 
-	var personaleconomies []models.PersonalEconomy
 	//
-	//vars := mux.Vars(r)
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	//
 	processid := r.Header.Get("X-process-Id")
 	//
 	var data models.PersonalEconomyID
@@ -80,47 +71,31 @@ func GetPersonalEconomy(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getPersonalEconomies executed: processId: %s /personalEconomyId: %s...\r\n",
 		processid, data.PersonalEconomyID)
 	//
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	personaleconomies := []models.PersonalEconomy{}
+	file, err := ioutil.ReadFile("personaleconomies.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading personaleconomies.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	peconret := make([]models.PersonalEconomy, 1, 1)
+	_ = json.Unmarshal([]byte(file), &personaleconomies)
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-
-		switch data.PersonalEconomyID {
-		case "52a50f80-3d28-11e9-b210-d663bd873d93":
-			personaleconomies = append(personaleconomies,
-				models.PersonalEconomy{
-					ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CustomerID:         "19640120-3887",
-					PersonalEconomyID:  "52a50f80-3d28-11e9-b210-d663bd873d93",
-					YearlyIncome:       340000,
-					Income:             0,
-					TypeOfEmployeement: "Tillsvidare",
-					Employeer:          "Anna Andersson Skog och djurhållning",
-					EmployeedFromYear:  "2012"})
-		}
-
-		switch data.PersonalEconomyID {
-		case "bf5ea49c-3d28-11e9-b210-d663bd873d93":
-			personaleconomies = append(personaleconomies,
-				models.PersonalEconomy{
-					ProcessID:          "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CustomerID:         "19650705-5579",
-					PersonalEconomyID:  "bf5ea49c-3d28-11e9-b210-d663bd873d93",
-					YearlyIncome:       0,
-					Income:             460000,
-					TypeOfEmployeement: "Tillsvidare",
-					Employeer:          "Katrineholm Revision AB",
-					EmployeedFromYear:  "2009"})
+		for i := 0; i < len(personaleconomies); i++ {
+			if personaleconomies[i].PersonalEconomyID == data.PersonalEconomyID {
+				peconret[0] = personaleconomies[i]
+			}
 		}
 	}
-	//
-	if err := json.NewEncoder(w).Encode(personaleconomies); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if peconret[0].PersonalEconomyID == data.PersonalEconomyID {
+		if err := json.NewEncoder(w).Encode(peconret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "PersonalEconomy not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
 }

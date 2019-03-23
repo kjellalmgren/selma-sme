@@ -1,0 +1,17 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "extloanId": "5aa735e8-3cbd-11e9-b210-d663bd873d93",
+    "ExtLoanOwners": [
+      {
+        "customerId": "19640120-3887"
+      }
+    ],
+
+    "extCreditInstitut": "SEB",
+    "extLoanClearing": "5270",
+    "extloanNumber": "0028600",
+    "extLoanAmount": 100000,
+    "extRedeemLoan": true
+  }
+]

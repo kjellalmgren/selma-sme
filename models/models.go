@@ -1,46 +1,47 @@
 package models
 
-// Process struct
+// Process documentation
 type Process struct {
 	ProcessID          string `json:"processId"`
 	CustomerID         []CustomerID
 	ProcessCreatedDate string `json:"processCreatedDate"`
 }
 
-// CustomerID
+// CustomerID documentation
 type CustomerID struct {
 	CustomerID string `json:"customerId"`
 }
 
-// Household
+// Household documentation
 type Household struct {
 	ProcessID            string `json:"processId"`
-	HouseholdMembers     []HouseholdMemberType
 	HouseholdID          string `json:"householdId"`
-	NumberOfChildsAtHome int    `json:"numberOfChildsAtHome"`
+	HouseholdMembers     []HouseholdMemberType
+	NumberOfChildsAtHome int `json:"numberOfChildsAtHome"`
 	Childs               []ChildType
 	NumberOfCars         int     `json:"numberOfCars"`
 	ChildMaintenanceCost float32 `json:"childMaintenanceCost"`
 }
 
-// HouseholdMemberType
+// HouseholdMemberType documentation
 type HouseholdMemberType struct {
 	CustomerIDs string `json:"householdMember"`
 }
 
 //
-// ChildType
+// ChildType documentation
 type ChildType struct {
 	ChildID         string `json:"childId"`
 	ChildsAge       int    `json:"childsAge"`
 	PartInHousehold bool   `json:"partInHousehold"`
 }
 
+// HouseholdID documentation
 type HouseholdID struct {
-	HosueholdID string `json:"householdId"`
+	HouseholdID string `json:"householdId"`
 }
 
-// Applicant struct
+// Applicant documentation
 type Applicant struct {
 	ProcessID             string `json:"processId"`
 	CustomerID            string `json:"customerId"`
@@ -57,7 +58,7 @@ type Applicant struct {
 	ApplicantByeMail      bool   `json:"applicantByeMail"`
 }
 
-// UpdateApplicantType
+// UpdateApplicantType documentation
 type UpdateApplicantType struct {
 	ContactInformation []ContactInformationType
 	StakeholderType    string `json:"stakeholderType"`
@@ -71,7 +72,7 @@ type ContactInformationType struct {
 	ApplicantMobileNumber string `json:"applicantBySms"`
 }
 
-// Loan
+// Loan documentation
 type Loan struct {
 	ProcessID     string  `json:"processId"`
 	LoanID        string  `json:"loanId"`
@@ -81,23 +82,23 @@ type Loan struct {
 	Aims          []AimType
 }
 
-// LoanId
+// LoanID documentation
 type LoanID struct {
 	LoanID string `json:"loanId"`
 }
 
-// aimType
+// AimType documentation
 type AimType struct {
 	AimID          string  `json:"aimId"`
 	AimText        string  `json:"aimText"`
 	LoanAmountPart float32 `json:"loanAmountPart"`
 }
 
-// ExtLoan
+// ExtLoan documentation
 type ExtLoan struct {
 	ProcessID         string `json:"processId"`
+	ExtLoanID         string `json:"extloanId"`
 	ExtLoanOwners     []ExtLoanOwner
-	ExtLoanID         string  `json:"extloanId"`
 	ExtCreditInstitut string  `json:"extCreditInstitut"`
 	ExtLoanClearing   string  `json:"extLoanClearing"`
 	ExtLoanNumber     string  `json:"extloanNumber"`
@@ -106,12 +107,12 @@ type ExtLoan struct {
 }
 
 //
-// ExtLoanOwner
+// ExtLoanOwner documentation
 type ExtLoanOwner struct {
 	CustomerID string `json:"customerId"`
 }
 
-// ExtloanID
+// ExtloanID documentation
 type ExtLoanID struct {
 	ExtLoanID string `json:"extloanId"`
 }
@@ -124,14 +125,14 @@ type CompanyEconomy struct {
 	Revenues         []Revenue
 }
 
-// CompanyEconomyID
+// CompanyEconomyID documentation
 type CompanyEconomyID struct {
 	CompanyEconomyID string `json:"companyEconomyId"`
 }
 
-// Revenue
+// Revenue documentation
 type Revenue struct {
-	RevenueID   string  `json:"revenueId"`
+	//RevenueID   string  `json:"revenueId"`
 	RevenueYear int32   `json:"revenueYear"`
 	Revenue     float32 `json:"revenue"`
 }
@@ -148,17 +149,17 @@ type Company struct {
 	SelectedCompany bool   `json:"selectedCompany"`
 }
 
-// UpdateCopmpanyType
+// UpdateCopmpanyType documentation
 type UpdateCompanyType struct {
 	BusinessFocus string `json:"businessFocus"`
 }
 
-// CompanyID
+// CompanyID documentation
 type CompanyID struct {
 	CompanyID string `json:"companyId"`
 }
 
-// PersonalEconomy
+// PersonalEconomy documentation
 type PersonalEconomy struct {
 	ProcessID          string  `json:"processId"`
 	CustomerID         string  `json:"customerId"`
@@ -170,17 +171,17 @@ type PersonalEconomy struct {
 	EmployeedFromYear  string  `json:"yearOfEmployment"`
 }
 
-//
+// PersonalEconomyID documentation
 type PersonalEconomyID struct {
 	PersonalEconomyID string `json:"personalEconomyID"`
 }
 
-// Cases struct
+// Cases documentation
 type Cases struct {
 	CaseID string `json:"caseId"`
 }
 
-// Collateral
+// Collateral documentation
 type Collateral struct {
 	ProcessID              string `json:"processId"`
 	CustomerID             string `json:"customerId"`
@@ -194,18 +195,18 @@ type Collateral struct {
 	BuyCollateral          bool   `json:"buyCollateral"`
 }
 
-// TaxedOwnerType
+// TaxedOwnerType documentation
 type TaxedOwnerType struct {
 	TaxedID    string `json:"taxedId"`
 	TaxedOwner string `json:"taxedOwner"`
 }
 
-// CollateralID
+// CollateralID documentation
 type CollateralID struct {
 	CollateralID string `json:"collateralId"`
 }
 
-// KycInformation
+// KycInformation documentation
 type KycInformation struct {
 	ProcessID                string `json:"processId"`
 	CustomerID               string `json:"customerId"`
@@ -217,58 +218,62 @@ type KycInformation struct {
 	KycRelatedPublicFunction bool   `json:"kycRelatedPublicFunction"`
 }
 
-// Budget
+// Budget documentation
 type Budget struct {
-	ProcessID        string  `json:"processId"`
-	CompanyEconomyID string  `json:"companyId"`
-	BudgetID         string  `json:"budgetId"`
-	BudgetYear       int     `json:"budgetYear"`
-	Value1           float32 `json:"value1"`
-	Value2           float32 `json:"value2"`
-	Value3           float32 `json:"value3"`
-	Value4           float32 `json:"value4"`
-	Value5           float32 `json:"value5"`
-	Value6           float32 `json:"value6"`
-	Value7           float32 `json:"value7"`
-	Value8           float32 `json:"value8"`
-	Value9           float32 `json:"value9"`
-	Value10          float32 `json:"value10"`
-	Value11          float32 `json:"value11"`
-	Value12          float32 `json:"value12"`
-	Value13          float32 `json:"value13"`
-	Value14          float32 `json:"value14"`
-	Value15          float32 `json:"value15"`
-	Value16          float32 `json:"value16"`
-	Value17          float32 `json:"value17"`
-	Value18          float32 `json:"value18"`
-	Value19          float32 `json:"value19"`
-	Value20          float32 `json:"value20"`
-	Value21          float32 `json:"value21"`
-	Value22          float32 `json:"value22"`
-	Value23          float32 `json:"value23"`
-	Value24          float32 `json:"value24"`
-	Value25          float32 `json:"value25"`
+	ProcessID        string `json:"processId"`
+	CompanyEconomyID string `json:"companyEconomyId"`
+	BudgetYears      []BudgetYear
+}
+
+// BudgetYear documentation
+type BudgetYear struct {
+	BudgetYear int     `json:"budgetYear"`
+	Value1     float32 `json:"value1"`
+	Value2     float32 `json:"value2"`
+	Value3     float32 `json:"value3"`
+	Value4     float32 `json:"value4"`
+	Value5     float32 `json:"value5"`
+	Value6     float32 `json:"value6"`
+	Value7     float32 `json:"value7"`
+	Value8     float32 `json:"value8"`
+	Value9     float32 `json:"value9"`
+	Value10    float32 `json:"value10"`
+	Value11    float32 `json:"value11"`
+	Value12    float32 `json:"value12"`
+	Value13    float32 `json:"value13"`
+	Value14    float32 `json:"value14"`
+	Value15    float32 `json:"value15"`
+	Value16    float32 `json:"value16"`
+	Value17    float32 `json:"value17"`
+	Value18    float32 `json:"value18"`
+	Value19    float32 `json:"value19"`
+	Value20    float32 `json:"value20"`
+	Value21    float32 `json:"value21"`
+	Value22    float32 `json:"value22"`
+	Value23    float32 `json:"value23"`
+	Value24    float32 `json:"value24"`
+	Value25    float32 `json:"value25"`
 }
 
 //
-// BudgetID
+// BudgetID documentation
 type BudgetID struct {
 	BudgetID string `json:"budgetId"`
 }
 
-// Xall
+// XAll documentation
 type XAll struct {
 	Persons []Person
 	Animals []Animal
 }
 
-// Person
+// Person documentation
 type Person struct {
 	Name   string
 	Mobile string
 }
 
-// Animal
+// Animal documentation
 type Animal struct {
 	AnimalID string
 	Animal   string

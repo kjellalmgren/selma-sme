@@ -1,0 +1,21 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "loanId": "9b8e4822-3cb7-11e9-b210-d663bd873d93",
+    "loanNumber": "930101011212",
+    "loanAmount": 2300000,
+    "purposeOfLoan": "Köp",
+    "Aims": [
+      {
+        "aimId": "fce3d0aa-4b04-11e9-8646-d663bd873d93",
+        "aimText": "Fastighetsköp - annan fastighet",
+        "loanAmountPart": 2000000
+      },
+      {
+        "aimId": "fce3d0aa-4b04-11e9-8646-d663bd873d94",
+        "aimText": "Renovering mjölkstall",
+        "loanAmountPart": 300000
+      }
+    ]
+  }
+]

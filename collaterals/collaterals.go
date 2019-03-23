@@ -7,16 +7,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"selmasme/models"
-
-	"github.com/gorilla/mux"
 )
 
 // GetCollaterals
 func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 
-	var collaterals []models.Collateral
 	//
-	vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getCollaterals executed: processId: %s...\r\n", processid)
 	//
@@ -26,37 +22,35 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	switch vars["processId"] {
-	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		collaterals = append(collaterals,
-			models.Collateral{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID:     "19640120-3887",
-				CollateralID:   "b25961de-3cc3-11e9-b210-d663bd873d93",
-				CollateralCode: "10",
-				CollateralName: "ÅGERSTA 1:6",
-				TaxedOwners: []models.TaxedOwnerType{
-					models.TaxedOwnerType{
-						TaxedID:    "c73119bc-3e71-11e9-b210-d663bd873d93",
-						TaxedOwner: "Anna Andersson",
-					},
-				},
-				CollateralMunicipality: "ENKÖPING",
-				CollateralStreet:       "Bergsgatan 12",
-				UseAsCollateral:        false,
-				BuyCollateral:          true})
-	}
+	collaterals := []models.Collateral{}
 	//
-	if err := json.NewEncoder(w).Encode(collaterals); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	switch processid {
+	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
+		file, err := ioutil.ReadFile("collaterals.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading collaterals.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		_ = json.Unmarshal([]byte(file), &collaterals)
+		//
+		if err := json.NewEncoder(w).Encode(collaterals); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
 	}
-	w.WriteHeader(http.StatusOK)
 }
 
 // GetCollateral
 func GetCollateral(w http.ResponseWriter, r *http.Request) {
 
-	var collaterals []models.Collateral
+	//var collaterals []models.Collateral
+	//
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	processid := r.Header.Get("X-process-Id")
 	var data models.CollateralID
@@ -74,38 +68,31 @@ func GetCollateral(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getCollateral executed: processId: %s /collateralId: %s...\r\n",
 		processid, data.CollateralID)
 	//
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	collaterals := []models.Collateral{}
+	file, err := ioutil.ReadFile("collaterals.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading collaterls.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	collret := make([]models.Collateral, 1, 1)
+	_ = json.Unmarshal([]byte(file), &collaterals)
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.CollateralID {
-		case "b25961de-3cc3-11e9-b210-d663bd873d93":
-			collaterals = append(collaterals,
-				models.Collateral{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CustomerID:     "19640120-3887",
-					CollateralID:   "b25961de-3cc3-11e9-b210-d663bd873d93",
-					CollateralCode: "10",
-					CollateralName: "ÅGERSTA 1:6",
-					TaxedOwners: []models.TaxedOwnerType{
-						models.TaxedOwnerType{
-							TaxedID:    "c73119bc-3e71-11e9-b210-d663bd873d93",
-							TaxedOwner: "Anna Andersson",
-						},
-					},
-					CollateralMunicipality: "ENKÖPING",
-					CollateralStreet:       "Bergsgatan 12",
-					UseAsCollateral:        false,
-					BuyCollateral:          true})
+		for i := 0; i < len(collaterals); i++ {
+			if collaterals[i].CollateralID == data.CollateralID {
+				collret[0] = collaterals[i]
+			}
 		}
 	}
-	//
-	if err := json.NewEncoder(w).Encode(collaterals); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if collret[0].CollateralID == data.CollateralID {
+		if err := json.NewEncoder(w).Encode(collret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "Collateral not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
 }

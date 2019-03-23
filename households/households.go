@@ -12,7 +12,7 @@ import (
 // GetHouseholds
 func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 
-	var households []models.Household
+	//var households []models.Household
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getHouseholds executed: processId: %s...\r\n", processid)
@@ -23,34 +23,18 @@ func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	households := []models.Household{}
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		households = append(households,
-			models.Household{
-				ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				HouseholdMembers: []models.HouseholdMemberType{
-					models.HouseholdMemberType{
-						CustomerIDs: "19640120-3887",
-					},
-				},
-				HouseholdID:          "4253017a-3d17-11e9-b210-d663bd873d93",
-				NumberOfChildsAtHome: 2,
-				Childs: []models.ChildType{
-					models.ChildType{
-						ChildID:         "248485ca-3d9d-11e9-b210-d663bd873d93",
-						ChildsAge:       5,
-						PartInHousehold: true,
-					},
-					models.ChildType{
-						ChildID:         "eb38da7c-3d9d-11e9-b210-d663bd873d93",
-						ChildsAge:       8,
-						PartInHousehold: true,
-					},
-				},
-				NumberOfCars:         1,
-				ChildMaintenanceCost: 0})
+		file, err := ioutil.ReadFile("households.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading households.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		//households = []models.Household{}
+		_ = json.Unmarshal([]byte(file), &households)
 	}
-
 	//
 	if err := json.NewEncoder(w).Encode(households); err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -63,7 +47,7 @@ func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 // GetHousehold
 func GetHousehold(w http.ResponseWriter, r *http.Request) {
 
-	var households []models.Household
+	//var households []models.Household
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
 	//
@@ -82,7 +66,7 @@ func GetHousehold(w http.ResponseWriter, r *http.Request) {
 	}
 	//
 	fmt.Printf("getHouseholds executed: processId: %s/ HouseholdId: %s...\r\n",
-		processid, data.HosueholdID)
+		processid, data.HouseholdID)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -90,41 +74,33 @@ func GetHousehold(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	households := []models.Household{}
+	file, err := ioutil.ReadFile("households.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading households.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	houseret := make([]models.Household, 1, 1)
+	_ = json.Unmarshal([]byte(file), &households)
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.HosueholdID {
-		case "4253017a-3d17-11e9-b210-d663bd873d93":
-			households = append(households,
-				models.Household{
-					ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					HouseholdMembers: []models.HouseholdMemberType{
-						models.HouseholdMemberType{
-							CustomerIDs: "19640120-3887",
-						},
-					},
-					HouseholdID:          "4253017a-3d17-11e9-b210-d663bd873d93",
-					NumberOfChildsAtHome: 2,
-					Childs: []models.ChildType{
-						models.ChildType{
-							ChildID:         "248485ca-3d9d-11e9-b210-d663bd873d93",
-							ChildsAge:       5,
-							PartInHousehold: true,
-						},
-						models.ChildType{
-							ChildID:         "eb38da7c-3d9d-11e9-b210-d663bd873d93",
-							ChildsAge:       8,
-							PartInHousehold: true,
-						},
-					},
-					NumberOfCars:         1,
-					ChildMaintenanceCost: 0})
+		for i := 0; i < len(households); i++ {
+			if households[i].HouseholdID == data.HouseholdID {
+				houseret[0] = households[i]
+			}
 		}
 	}
 	//
-	if err := json.NewEncoder(w).Encode(households); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if houseret[0].HouseholdID == data.HouseholdID {
+		if err := json.NewEncoder(w).Encode(houseret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "Household not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
 	//
 }

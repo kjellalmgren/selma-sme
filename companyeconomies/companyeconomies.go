@@ -10,10 +10,9 @@ import (
 )
 
 //
-// GetCompanyEconomies
+// GetCompanyEconomies documentation
 func GetCompanyEconomies(w http.ResponseWriter, r *http.Request) {
 
-	var companyeconomies []models.CompanyEconomy
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getCompanyEconomies executed: processId: %s...\r\n", processid)
@@ -24,20 +23,15 @@ func GetCompanyEconomies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	companyeconomies := []models.CompanyEconomy{}
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		companyeconomies = append(companyeconomies,
-			models.CompanyEconomy{
-				ProcessID:        "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CompanyID:        "02d6a03e-5895-4077-98f7-7a5c192868b7",
-				CompanyEconomyID: "4804f0c2-3d2d-11e9-b210-d663bd873d93",
-				Revenues: []models.Revenue{
-					models.Revenue{
-						RevenueID:   "d85fa472-3f31-11e9-b210-d663bd873d93",
-						RevenueYear: 0,
-						Revenue:     2000000,
-					},
-				}})
+		file, err := ioutil.ReadFile("companyeconomies.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading companyeconomies.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		_ = json.Unmarshal([]byte(file), &companyeconomies)
 	}
 	//
 	if err := json.NewEncoder(w).Encode(companyeconomies); err != nil {
@@ -68,10 +62,8 @@ func CompanyEconomyEntry(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// GetCompanyEconomy
+// getCompanyEconomy documentation
 func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
-
-	var companyeconomies []models.CompanyEconomy
 
 	//
 	processid := r.Header.Get("X-process-Id")
@@ -98,32 +90,33 @@ func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	companyeconomies := []models.CompanyEconomy{}
+	file, err := ioutil.ReadFile("companyeconomies.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading companyeconomies.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	ceconret := make([]models.CompanyEconomy, 1, 1)
+	_ = json.Unmarshal([]byte(file), &companyeconomies)
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.CompanyEconomyID {
-		case "4804f0c2-3d2d-11e9-b210-d663bd873d93":
-			companyeconomies = append(companyeconomies,
-				models.CompanyEconomy{
-					ProcessID:        "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CompanyID:        "02d6a03e-5895-4077-98f7-7a5c192868b7",
-					CompanyEconomyID: "4804f0c2-3d2d-11e9-b210-d663bd873d93",
-					Revenues: []models.Revenue{
-						models.Revenue{
-							RevenueID:   "d85fa472-3f31-11e9-b210-d663bd873d93",
-							RevenueYear: 0,
-							Revenue:     2000000,
-						},
-					},
-				})
+		for i := 0; i < len(companyeconomies); i++ {
+			if companyeconomies[i].CompanyEconomyID == data.CompanyEconomyID {
+				ceconret[0] = companyeconomies[i]
+			}
 		}
 	}
-	//
-	if err := json.NewEncoder(w).Encode(companyeconomies); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if ceconret[0].CompanyEconomyID == data.CompanyEconomyID {
+		if err := json.NewEncoder(w).Encode(ceconret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "CompanyEconomy not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
-	//
 }
 
 func deleteCompanyEconomy(w http.ResponseWriter, r *http.Request) {

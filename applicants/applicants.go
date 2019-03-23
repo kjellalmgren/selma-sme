@@ -16,7 +16,6 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 
 	//var applicants []models.Applicant
 	//
-	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getApplicants executed: processId: %s...\r\n", processid)
 	//

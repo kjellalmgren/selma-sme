@@ -13,7 +13,6 @@ import (
 // GetExtLoans
 func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 
-	var extloans []models.ExtLoan
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getExtLoans executed: processId: %s...\r\n", processid)
@@ -24,21 +23,16 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	extloans := []models.ExtLoan{}
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		extloans = append(extloans,
-			models.ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				ExtLoanOwners: []models.ExtLoanOwner{
-					models.ExtLoanOwner{
-						CustomerID: "19640120-3887",
-					},
-				},
-				ExtLoanID:         "5aa735e8-3cbd-11e9-b210-d663bd873d93",
-				ExtCreditInstitut: "SEB",
-				ExtLoanClearing:   "5270",
-				ExtLoanNumber:     "0028600",
-				ExtLoanAmount:     100000.00,
-				ExtRedeemLoan:     true})
+		file, err := ioutil.ReadFile("extloans.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading extloans.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		_ = json.Unmarshal([]byte(file), &extloans)
 	}
 	//
 	if err := json.NewEncoder(w).Encode(extloans); err != nil {
@@ -46,12 +40,17 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	w.WriteHeader(http.StatusOK)
-	//
 }
 
 // GetExtLoan
 func GetExtLoan(w http.ResponseWriter, r *http.Request) {
-	var extloans []models.ExtLoan
+
+	//
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	processid := r.Header.Get("X-process-Id")
 	var data models.ExtLoanID
@@ -70,35 +69,31 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 		processid,
 		data.ExtLoanID)
 	//
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	extloans := []models.ExtLoan{}
+	file, err := ioutil.ReadFile("extloans.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading extloans.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	extloanret := make([]models.ExtLoan, 1, 1)
+	_ = json.Unmarshal([]byte(file), &extloans)
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.ExtLoanID {
-		case "5aa735e8-3cbd-11e9-b210-d663bd873d93":
-			extloans = append(extloans,
-				models.ExtLoan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					ExtLoanOwners: []models.ExtLoanOwner{
-						models.ExtLoanOwner{
-							CustomerID: "19640120-3887",
-						},
-					},
-					ExtLoanID:         "5aa735e8-3cbd-11e9-b210-d663bd873d93",
-					ExtCreditInstitut: "SEB",
-					ExtLoanClearing:   "5270",
-					ExtLoanNumber:     "0028600",
-					ExtLoanAmount:     100000.00,
-					ExtRedeemLoan:     true})
+		for i := 0; i < len(extloans); i++ {
+			if extloans[i].ExtLoanID == data.ExtLoanID {
+				extloanret[0] = extloans[i]
+			}
 		}
 	}
-	//
-	if err := json.NewEncoder(w).Encode(extloans); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if extloanret[0].ExtLoanID == data.ExtLoanID {
+		if err := json.NewEncoder(w).Encode(extloanret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "ExtLoan not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
 }

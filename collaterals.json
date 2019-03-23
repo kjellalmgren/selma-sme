@@ -1,0 +1,19 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "customerId": "19640120-3887",
+    "collateralId": "b25961de-3cc3-11e9-b210-d663bd873d93",
+    "collateralCode": "10",
+    "collateralName": "ÅGERSTA 1:6",
+    "TaxedOwners": [
+      {
+        "taxedId": "c73119bc-3e71-11e9-b210-d663bd873d93",
+        "taxedOwner": "Anna Andersson"
+      }
+    ],
+    "collateralMunicipality": "ENKÖPING",
+    "collateralStreet": "Bergsgatan 12",
+    "useAsCollateral": false,
+    "buyCollateral": true
+  }
+]

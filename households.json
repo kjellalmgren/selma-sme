@@ -1,0 +1,29 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "householdId": "4253017a-3d17-11e9-b210-d663bd873d93",
+    "HouseholdMembers": [
+      {
+        "householdMember": "19640120-3887"
+      },
+      {
+        "householdMember": "19650705-5579"
+      }
+    ],
+    "numberOfChildsAtHome": 2,
+    "Childs": [
+      {
+        "childId": "248485ca-3d9d-11e9-b210-d663bd873d93",
+        "childsAge": 5,
+        "partInHousehold": true
+      },
+      {
+        "childId": "eb38da7c-3d9d-11e9-b210-d663bd873d93",
+        "childsAge": 8,
+        "partInHousehold": true
+      }
+    ],
+    "numberOfCars": 1,
+    "childMaintenanceCost": 0
+  }
+]

@@ -12,7 +12,7 @@ import (
 // GetLoans
 func GetLoans(w http.ResponseWriter, r *http.Request) {
 
-	var loans []models.Loan
+	//var loans []models.Loan
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getLoans executed: processId: %s...\r\n", processid)
@@ -23,27 +23,16 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	loans := []models.Loan{}
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		loans = append(loans,
-			models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
-				LoanNumber:    "930101011212",
-				LoanAmount:    2300000,
-				PurposeOfLoan: "Köp",
-				Aims: []models.AimType{
-					models.AimType{
-						AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
-						AimText:        "Fastighetsköp - annan fastighet",
-						LoanAmountPart: 2000000,
-					},
-					models.AimType{
-						AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
-						AimText:        "Renovering mjölkstall",
-						LoanAmountPart: 300000,
-					},
-				},
-			})
+		file, err := ioutil.ReadFile("loans.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading loans.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		_ = json.Unmarshal([]byte(file), &loans)
 	}
 	//
 	if err := json.NewEncoder(w).Encode(loans); err != nil {
@@ -58,9 +47,13 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 // GetLoan
 func GetLoan(w http.ResponseWriter, r *http.Request) {
 
-	var loans []models.Loan
-	//
+	//var loans []models.Loan
 	processid := r.Header.Get("X-process-Id")
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	var data models.LoanID
 	var r1 []byte
@@ -76,43 +69,33 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("getLoan executed: X-process-ID: %s...LoanId: %s\r\n", processid, data.LoanID)
 	//
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
-	//
+	loans := []models.Loan{}
+	file, err := ioutil.ReadFile("loans.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading loans.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	loanret := make([]models.Loan, 1, 1)
+	_ = json.Unmarshal([]byte(file), &loans)
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.LoanID {
-		case "9b8e4822-3cb7-11e9-b210-d663bd873d93":
-			loans = append(loans,
-				models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
-					LoanNumber:    "930101011212",
-					LoanAmount:    2300000,
-					PurposeOfLoan: "Köp",
-					Aims: []models.AimType{
-						models.AimType{
-							AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
-							AimText:        "Fastighetsköp - annan fastighet",
-							LoanAmountPart: 2000000,
-						},
-						models.AimType{
-							AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
-							AimText:        "Renovering mjölkstall",
-							LoanAmountPart: 300000,
-						},
-					},
-				})
+		for i := 0; i < len(loans); i++ {
+			if loans[i].LoanID == data.LoanID {
+				loanret[0] = loans[i]
+			}
 		}
 	}
 	//
-	if err := json.NewEncoder(w).Encode(loans); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if loanret[0].LoanID == data.LoanID {
+		if err := json.NewEncoder(w).Encode(loanret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "Loan not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
 	//
 }
 

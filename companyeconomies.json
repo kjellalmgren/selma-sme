@@ -1,0 +1,21 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "companyId": "02d6a03e-5895-4077-98f7-7a5c192868b7",
+    "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93",
+    "Revenues": [
+      {
+        "revenueYear": 2016,
+        "revenue": 2000000
+      },
+      {
+        "revenueYear": 2017,
+        "revenue": 2100000
+      },
+      {
+        "revenueYear": 2018,
+        "revenue": 2300000
+      }
+    ]
+  }
+]

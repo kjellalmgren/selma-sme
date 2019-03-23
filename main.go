@@ -124,7 +124,7 @@ func main() {
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("PATCH", "OPTIONS")
 	//
 	router.HandleFunc("/v1/Budgets", budgets.GetBudgets).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/Budget", budgets.GetBudgets).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/Budget", budgets.GetBudget).Methods("POST", "GET", "OPTIONS")
 	// households.go
 	router.HandleFunc("/v1/Households", households.GetHouseholds).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/Household", households.GetHousehold).Methods("POST", "OPTIONS")

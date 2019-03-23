@@ -33,7 +33,6 @@ func CompanyEntry(w http.ResponseWriter, r *http.Request) {
 // GetCompanies
 func GetCompanies(w http.ResponseWriter, r *http.Request) {
 
-	var companies []models.Company
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("getCompanies executed: processId: %s...\r\n", processid)
@@ -44,16 +43,16 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	companies := []models.Company{}
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		companies = append(companies,
-			models.Company{
-				ProcessID:       "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CompanyID:       "461460c2-3d14-11e9-b210-d663bd873d93",
-				OrgNumber:       "551010-8474",
-				CompanyName:     "Anna Andersson Skog och djurhållning",
-				Created:         "2012-01-01",
-				SelectedCompany: true})
+		file, err := ioutil.ReadFile("companies.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading companies.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		//companies = []models.Company{}
+		_ = json.Unmarshal([]byte(file), &companies)
 	}
 	//
 	if err := json.NewEncoder(w).Encode(companies); err != nil {
@@ -68,7 +67,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 // getCompany
 func getCompany(w http.ResponseWriter, r *http.Request) {
 
-	var companies []models.Company
+	//var companies []models.Company
 	processid := r.Header.Get("X-process-Id")
 	var data models.CompanyID
 	var r1 []byte
@@ -90,26 +89,35 @@ func getCompany(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	companies := []models.Company{}
+	file, err := ioutil.ReadFile("companies.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading companies.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	compret := make([]models.Company, 1, 1)
+	_ = json.Unmarshal([]byte(file), &companies)
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.CompanyID {
-		case "461460c2-3d14-11e9-b210-d663bd873d93":
-			companies = append(companies,
-				models.Company{
-					ProcessID:       "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CompanyID:       "461460c2-3d14-11e9-b210-d663bd873d93",
-					OrgNumber:       "551010-8474",
-					CompanyName:     "Anna Andersson Skog och djurhållning",
-					Created:         "2012-01-01",
-					SelectedCompany: true})
+
+		for i := 0; i < len(companies); i++ {
+			if companies[i].CompanyID == data.CompanyID {
+				compret[0] = companies[i]
+			}
 		}
 	}
 	//
-	if err := json.NewEncoder(w).Encode(companies); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if compret[0].CompanyID == data.CompanyID {
+		if err := json.NewEncoder(w).Encode(compret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "Company not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
 	//
 }
 

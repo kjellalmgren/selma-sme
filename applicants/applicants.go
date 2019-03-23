@@ -14,7 +14,7 @@ import (
 // GetApplicants
 func GetApplicants(w http.ResponseWriter, r *http.Request) {
 
-	var applicants []models.Applicant
+	//var applicants []models.Applicant
 	//
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
@@ -27,48 +27,13 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
-	switch processid {
-	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		applicants = append(applicants,
-			models.Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID:           "19640120-3887",
-				ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
-				ApplicantName:        "Anna Andersson",
-				ApplicantAddress:     "Stora vägen 1",
-				ApplicantPostAddress: "420 20 Katrineholm",
-				StakeholderType:      "",
-				ContactInformation: []models.ContactInformationType{
-					models.ContactInformationType{
-						ApplicantEmail:        "anna.andersson@gmail.com",
-						ApplicantMobileNumber: "07344455666",
-					},
-				},
-				ApplicantEmployeed:    false,
-				ApplicantLPEmployment: "PERMANENT",
-				ApplicantMember:       false,
-				ApplicantBySms:        true,
-				ApplicantByeMail:      true})
-		applicants = append(applicants,
-			models.Applicant{
-				ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID:           "19650705-5579",
-				ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
-				ApplicantName:        "Patrik Andersson",
-				ApplicantAddress:     "Stora vägen 1",
-				ApplicantPostAddress: "420 20 Katrineholm",
-				StakeholderType:      "",
-				ContactInformation: []models.ContactInformationType{
-					models.ContactInformationType{
-						ApplicantEmail:        "patrik.andersson@katrineholmrevision.se",
-						ApplicantMobileNumber: "07335533777",
-					},
-				},
-				ApplicantEmployeed:    false,
-				ApplicantLPEmployment: "PERMANENT",
-				ApplicantMember:       false,
-				ApplicantBySms:        true,
-				ApplicantByeMail:      true})
+	file, err := ioutil.ReadFile("applicants.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
 	}
+	applicants := []models.Applicant{}
+	_ = json.Unmarshal([]byte(file), &applicants)
 	//
 	if err := json.NewEncoder(w).Encode(applicants); err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -104,7 +69,7 @@ func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 // GetApplicant
 func getApplicant(w http.ResponseWriter, r *http.Request) {
 
-	var applicants []models.Applicant
+	//var applicants []models.Applicant
 
 	//vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
@@ -125,58 +90,35 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
+	file, err := ioutil.ReadFile("applicants.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	applicants := []models.Applicant{}
+	//appret[0] := []models.Applicant{}
+	appret := make([]models.Applicant, 1, 1)
+	_ = json.Unmarshal([]byte(file), &applicants)
+
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.CustomerID {
-		case "19640120-3887":
-			applicants = append(applicants,
-				models.Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CustomerID:           "19640120-3887",
-					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
-					ApplicantName:        "Anna Andersson",
-					ApplicantAddress:     "Stora vägen 1",
-					ApplicantPostAddress: "420 20 Katrineholm",
-					StakeholderType:      "BORGENSMAN",
-					ContactInformation: []models.ContactInformationType{
-						models.ContactInformationType{
-							ApplicantEmail:        "anna.andersson@gmail.com",
-							ApplicantMobileNumber: "07344455666",
-						},
-					},
-					ApplicantEmployeed:    false,
-					ApplicantLPEmployment: "PERMANENT",
-					ApplicantMember:       false,
-					ApplicantBySms:        true,
-					ApplicantByeMail:      true})
-		case "19650705-5579":
-			applicants = append(applicants,
-				models.Applicant{
-					ProcessID:            "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-					CustomerID:           "19650705-5579",
-					ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
-					ApplicantName:        "Patrik Andersson",
-					ApplicantAddress:     "Stora vägen 1",
-					ApplicantPostAddress: "420 20 Katrineholm",
-					StakeholderType:      "EKONOMISKINTRESSEGEMENSKAP",
-					ContactInformation: []models.ContactInformationType{
-						models.ContactInformationType{
-							ApplicantEmail:        "patrik.andersson@katrineholmrevision.se",
-							ApplicantMobileNumber: "07335533777",
-						},
-					},
-					ApplicantEmployeed:    false,
-					ApplicantLPEmployment: "PERMANENT",
-					ApplicantMember:       false,
-					ApplicantBySms:        true,
-					ApplicantByeMail:      true})
+		for i := 0; i < len(applicants); i++ {
+			if applicants[i].CustomerID == data.CustomerID {
+				appret[0] = applicants[i]
+			}
 		}
 	}
 	//
-	if err := json.NewEncoder(w).Encode(applicants); err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		panic(err)
+	if applicants[0].CustomerID == data.CustomerID {
+		if err := json.NewEncoder(w).Encode(appret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "Applicant not Found", http.StatusNotFound)
 	}
-	w.WriteHeader(http.StatusOK)
+
 	//
 }
 

@@ -1,0 +1,14 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "CustomerID": [
+      {
+        "customerId": "19640120-3887"
+      },
+      {
+        "customerId": "19650705-5579"
+      }
+    ],
+    "processCreatedDate": "2019-06-01"
+  }
+]

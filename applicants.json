@@ -1,0 +1,42 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "customerId": "19640120-3887",
+    "applicantId": "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
+    "applicantName": "Anna Andersson",
+    "applicantAddress": "Stora vägen 1",
+    "applicantPostAddress": "420 20 Katrineholm",
+    "stakeholderType": "",
+    "ContactInformation": [
+      {
+        "applicantByeMail": "anna.andersson@gmail.com",
+        "applicantBySms": "07344455666"
+      }
+    ],
+    "applicantEmployeed": false,
+    "applicantLPEmployment": "PERMANENT",
+    "applicantMember": false,
+    "applicantBySms": true,
+    "applicantByeMail": true
+  },
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "customerId": "19650705-5579",
+    "applicantId": "12ab301d-b0ae-46ba-ac99-ff7389fe356f",
+    "applicantName": "Patrik Andersson",
+    "applicantAddress": "Stora vägen 1",
+    "applicantPostAddress": "420 20 Katrineholm",
+    "stakeholderType": "",
+    "ContactInformation": [
+      {
+        "applicantByeMail": "patrik.andersson@katrineholmrevision.se",
+        "applicantBySms": "07335533777"
+      }
+    ],
+    "applicantEmployeed": false,
+    "applicantLPEmployment": "PERMANENT",
+    "applicantMember": false,
+    "applicantBySms": true,
+    "applicantByeMail": true
+  }
+]

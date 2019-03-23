@@ -30,7 +30,7 @@ type processAll struct {
 // GetProcesses
 func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
-	var processes []models.Process
+	//var processes []models.Process
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -60,29 +60,14 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("getProcesses executed, customerID: %s...\r\n", data.CustomerID)
 	//
-	switch data.CustomerID {
-	case "19640120-3887":
-		processes = append(processes,
-			models.Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID: []models.CustomerID{
-					models.CustomerID{
-						CustomerID: "19640120-3887",
-					},
-				},
-				ProcessCreatedDate: "2019-03-01"})
-		processes = append(processes,
-			models.Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-				CustomerID: []models.CustomerID{
-					models.CustomerID{
-						CustomerID: "19640120-3887",
-					},
-				},
-				ProcessCreatedDate: "2019-02-26"})
-	default:
-		//w.WriteHeader(http.StatusNotFound)
+	file, err := ioutil.ReadFile("processes.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading processes.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
 	}
-	//w.WriteHeader(http.StatusNotFound)
-
+	processes := []models.Process{}
+	_ = json.Unmarshal([]byte(file), &processes)
+	//
 	//
 	//for i, p := range processes {
 	//	fmt.Println(i, p.ProcessID, p.CustomerID)

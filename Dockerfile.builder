@@ -22,6 +22,8 @@ MAINTAINER kjell.almgren@tetracon.se
 RUN mkdir -p /selmasme
 WORKDIR /selmasme
 
+# COPY all json files
+COPY applicants.json /selmasme
 # COPY executable ./selma-sme
 COPY selmasme /selmasme
 

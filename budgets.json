@@ -4,6 +4,7 @@
     "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93",
     "BudgetYears": [
       {
+        "budgetId": "6737d7be-520f-47f5-a761-b24c1db2df5e",
         "budgetYear": 2019,
         "value1": 200000,
         "value2": 100000,
@@ -32,6 +33,7 @@
         "value25": 20000
       },
       {
+        "budgetId": "e03f4a81-0c6a-49a7-a421-697a850f78cb",
         "budgetYear": 2020,
         "value1": 200000,
         "value2": 100000,

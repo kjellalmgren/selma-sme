@@ -257,9 +257,9 @@ type BudgetYear struct {
 
 //
 // BudgetID documentation
-type BudgetID struct {
-	BudgetID string `json:"budgetId"`
-}
+//type BudgetID struct {
+//	CompanyEconomyID string `json:"companyEconomyId"`
+//}
 
 // XAll documentation
 type XAll struct {

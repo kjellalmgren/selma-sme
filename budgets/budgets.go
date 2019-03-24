@@ -53,10 +53,7 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
-	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("GetBudget executed: processId: %s...\r\n", processid)
-	//
-	var data models.BudgetID
+	var data models.CompanyEconomyID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -64,18 +61,40 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	//
+	//data.BudgetID
+	//data.CompanyEconomyID
 	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("GetBudget executed: processId: %s companyEconomy: %s...\r\n", processid, data.CompanyEconomyID)
+	//
+	file, err := ioutil.ReadFile("budgets.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading budgets.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	budret := make([]models.Budget, 1, 1)
+	_ = json.Unmarshal([]byte(file), &budgets)
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
+		for i := 0; i < len(budgets); i++ {
+			if budgets[i].CompanyEconomyID == data.CompanyEconomyID {
+				budret[0] = budgets[i]
+			}
+		}
+	}
+	if budret[0].CompanyEconomyID == data.CompanyEconomyID {
+		if err := json.NewEncoder(w).Encode(budret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "Budget not Found", 404)
+		//w.WriteHeader(http.StatusNotFound)
+	}
 
-	}
-	if err := json.NewEncoder(w).Encode(budgets); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		panic(err)
-	}
-	w.WriteHeader(http.StatusOK)
 }

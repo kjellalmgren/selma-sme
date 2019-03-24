@@ -21,7 +21,8 @@ type processAll struct {
 	CompanyEconomies  []models.CompanyEconomy
 	PersonalEconomies []models.PersonalEconomy
 	Collaterals       []models.Collateral
-	KycInformations   []models.KycInformation
+	//KycInformations   []models.KycInformation
+	Budgets []models.Budget
 }
 
 //
@@ -103,24 +104,23 @@ func DeleteProcess(w http.ResponseWriter, r *http.Request) {
 func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	//
 	var processall processAll
-	var processes []models.Process
-	var applicants []models.Applicant
-	var loans []models.Loan
-	var extloans []models.ExtLoan
-	var households []models.Household
-	var companies []models.Company
-	var companyeconomies []models.CompanyEconomy
-	var personaleconomies []models.PersonalEconomy
-	var kycinformations []models.KycInformation
-	var collaterals []models.Collateral
-
+	processes := []models.Process{}
+	applicants := []models.Applicant{}
+	loans := []models.Loan{}
+	extloans := []models.ExtLoan{}
+	households := []models.Household{}
+	companies := []models.Company{}
+	companyeconomies := []models.CompanyEconomy{}
+	personaleconomies := []models.PersonalEconomy{}
+	//var kycinformations []models.KycInformation
+	collaterals := []models.Collateral{}
+	budgets := []models.Budget{}
+	//
 	var d models.XAll
 	var p models.Person
 	p.Name = "Kjell Almgren"
 	p.Mobile = "0733981482"
 	d.Persons = append(d.Persons, p)
-	//
-	//
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("GetProcessAll executed, processid: %s...\r\n", processid)
@@ -131,56 +131,76 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
 	//
-	processes = append(processes,
-		models.Process{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-			CustomerID: []models.CustomerID{
-				models.CustomerID{
-					CustomerID: "19640120-3887",
-				},
-			},
-			ProcessCreatedDate: "2019-03-01"})
+	file, err := ioutil.ReadFile("processes.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading processes.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &processes)
 	//
-	applicants = append(applicants,
-		models.Applicant{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-			CustomerID:           "19640120-3887",
-			ApplicantID:          "12ab301d-b0ae-46ba-ac99-ff7389fe356e",
-			ApplicantName:        "Anna Andersson",
-			ApplicantAddress:     "Stora vägen 1",
-			ApplicantPostAddress: "420 20 Katrineholm",
-			StakeholderType:      "",
-			ContactInformation: []models.ContactInformationType{
-				models.ContactInformationType{
-					ApplicantEmail:        "anna.andersson@gmail.com",
-					ApplicantMobileNumber: "07344455666",
-				},
-			},
-			ApplicantEmployeed:    false,
-			ApplicantLPEmployment: "PERMANENT",
-			ApplicantMember:       false,
-			ApplicantBySms:        true,
-			ApplicantByeMail:      true})
+	file, err = ioutil.ReadFile("applicants.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &applicants)
 	//
-	loans = append(loans,
-		models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-			LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
-			LoanNumber:    "930101011212",
-			LoanAmount:    2300000,
-			PurposeOfLoan: "Köp",
-			Aims: []models.AimType{
-				models.AimType{
-					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
-					AimText:        "Fastighetsköp - annan fastighet",
-					LoanAmountPart: 2000000,
-				},
-				models.AimType{
-					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
-					AimText:        "Renovering mjölkstall",
-					LoanAmountPart: 300000,
-				},
-			},
-		})
+	file, err = ioutil.ReadFile("loans.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading loans.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &loans)
+	file, err = ioutil.ReadFile("companies.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading companies.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//companies = []models.Company{}
+	_ = json.Unmarshal([]byte(file), &companies)
 	//
+	file, err = ioutil.ReadFile("personaleconomies.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading personaleconomies.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &personaleconomies)
 	//
+	file, err = ioutil.ReadFile("companyeconomies.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading companyeconomies.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &companyeconomies)
+	//
+	file, err = ioutil.ReadFile("extloans.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading extloans.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &extloans)
+	//
+	file, err = ioutil.ReadFile("households.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading households.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//households = []models.Household{}
+	_ = json.Unmarshal([]byte(file), &households)
+	//
+	file, err = ioutil.ReadFile("collaterals.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading collaterals.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &collaterals)
+	//
+	file, err = ioutil.ReadFile("budgets.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading budgets.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &budgets)
 	//
 	processall.Applicans = append(applicants)
 	processall.Processes = append(processes)
@@ -190,8 +210,9 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	processall.Companies = append(companies)
 	processall.CompanyEconomies = append(companyeconomies)
 	processall.PersonalEconomies = append(personaleconomies)
-	processall.KycInformations = append(kycinformations)
+	//processall.KycInformations = append(kycinformations)
 	processall.Collaterals = append(collaterals)
+	processall.Budgets = append(budgets)
 
 	//
 	if err := json.NewEncoder(w).Encode(processall); err != nil {

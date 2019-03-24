@@ -27,6 +27,8 @@ func CompanyEntry(w http.ResponseWriter, r *http.Request) {
 		deleteCompany(w, r)
 	case "PATCH":
 		updateCompany(w, r)
+	case "PUT":
+		addCompany(w, r)
 	}
 }
 
@@ -181,5 +183,36 @@ func updateCompany(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		panic(err)
 	}
+	w.WriteHeader(http.StatusOK)
+}
+
+// addCompany
+func addCompany(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("Delete-Company executed: processId: %s...\r\n", processid)
+
+	var data models.Company
+	//
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	str := fmt.Sprintf("Company %s has been added", data.CompanyName)
+	log.Printf(str)
+	//http.Error(w, str, 200)
 	w.WriteHeader(http.StatusOK)
 }

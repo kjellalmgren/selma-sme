@@ -4,9 +4,10 @@
     "companyId": "461460c2-3d14-11e9-b210-d663bd873d93",
     "orgNr": "551010-8474",
     "companyName": "Anna Andersson Skog och djurhållning",
-    "numberOfLoans": "",
     "created": "2012-01-01",
-    "businessFocus": "",
+    "businessFocus": "(Huvudinriktning)",
+    "industriCode": "28300",
+    "industriText": "Manufacture of agricultural and forestry machinery",
     "selectedCompany": true
   }
 ]

@@ -4,7 +4,7 @@ package version
 
 // ServerVersion - version number (exported)
 func ServerVersion() string {
-	return "v0.7.1"
+	return "v0.7.2"
 }
 
 // ModelVersion (Open API version)

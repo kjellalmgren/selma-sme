@@ -137,19 +137,20 @@ type Revenue struct {
 	Revenue     float32 `json:"revenue"`
 }
 
-// Company
+// Company documentation
 type Company struct {
 	ProcessID       string `json:"processId"`
 	CompanyID       string `json:"companyId"`
 	OrgNumber       string `json:"orgNr"`
 	CompanyName     string `json:"companyName"`
-	NumberOfLoans   string `json:"numberOfLoans"`
 	Created         string `json:"created"`
 	BusinessFocus   string `json:"businessFocus"`
+	IndustriCode    string `json:"industriCode"` // SNI-kod
+	IndustriText    string `json:"industriText"` // SNI-Text, kategori
 	SelectedCompany bool   `json:"selectedCompany"`
 }
 
-// UpdateCopmpanyType documentation
+// UpdateCompanyType documentation
 type UpdateCompanyType struct {
 	BusinessFocus string `json:"businessFocus"`
 }

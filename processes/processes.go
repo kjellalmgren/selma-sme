@@ -25,6 +25,24 @@ type processAll struct {
 	Budgets []models.Budget
 }
 
+// ProcessEntry documentation
+func ProcessEntry(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
+	//
+	switch r.Method {
+	case "DELETE":
+		deleteProcess(w, r)
+	case "PUT":
+		addProcess(w, r)
+	}
+}
+
 //
 // ***************************************************************
 //
@@ -83,7 +101,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
 //
 // DeleteProcess
-func DeleteProcess(w http.ResponseWriter, r *http.Request) {
+func deleteProcess(w http.ResponseWriter, r *http.Request) {
 
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("deleteProcess executed, processid: %s...\r\n", processid)
@@ -98,6 +116,41 @@ func DeleteProcess(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("deleteProcess executed, caseIdStatus: %s...\r\n", caseidstatus)
 	w.WriteHeader(http.StatusOK)
 	//
+}
+
+// AddProcess documentation
+func addProcess(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
+	//
+	var data models.CustomerID
+	//
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	fmt.Printf("AddProcess executed, will return a processid and a caseId from Loan Process for customer: %s...\r\n", data.CustomerID)
+
+	// *** Status has to be setr i production ***
+	//caseidstatus := r.Header.Get("caseIdStatus")
+	processidcaseid := models.ProcessIDCaseID{}
+	//
+	processidcaseid.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
+	processidcaseid.CaseID = "106100"
+	//
+	if err := json.NewEncoder(w).Encode(processidcaseid); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		panic(err)
+	}
+	w.WriteHeader(http.StatusOK)
 }
 
 // GetProcessAll

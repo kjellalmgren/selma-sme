@@ -7,6 +7,12 @@ type Process struct {
 	ProcessCreatedDate string `json:"processCreatedDate"`
 }
 
+// ProcessIDCaseID documentation
+type ProcessIDCaseID struct {
+	ProcessID string `json:"processId"`
+	CaseID    string `json:"caseId"`
+}
+
 // CustomerID documentation
 type CustomerID struct {
 	CustomerID string `json:"customerId"`

@@ -9,5 +9,5 @@ func ServerVersion() string {
 
 // ModelVersion (Open API version)
 func ModelVersion() string {
-	return "v0.5.5"
+	return "v0.5.6"
 }

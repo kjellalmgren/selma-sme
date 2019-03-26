@@ -161,14 +161,13 @@ func main() {
 }
 
 //
-// Index
-//
+// Index documentation
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
 }
 
 //
-//	getHostName
+//	getHostName documentation
 func getHostname() string {
 
 	hostname, err1 := os.Hostname()
@@ -180,7 +179,7 @@ func getHostname() string {
 }
 
 //
-// HealthCheckHandler
+// HealthCheckHandler documentation
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	// A very simple health check.
 	//w.WriteHeader(http.StatusOK)

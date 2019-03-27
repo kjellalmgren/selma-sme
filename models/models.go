@@ -225,6 +225,11 @@ type KycInformation struct {
 	KycRelatedPublicFunction bool   `json:"kycRelatedPublicFunction"`
 }
 
+// KycID documentation
+type KycID struct {
+	KycID string `json:"kycId"`
+}
+
 // Budget documentation
 type Budget struct {
 	ProcessID        string `json:"processId"`

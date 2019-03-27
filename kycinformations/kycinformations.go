@@ -7,8 +7,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"selmasme/models"
-
-	"github.com/gorilla/mux"
 )
 
 // KycEntry documents
@@ -30,6 +28,8 @@ func KycEntry(w http.ResponseWriter, r *http.Request) {
 		updateKycInformation(w, r)
 	case "PUT":
 		addKycInformation(w, r)
+	case "POST":
+		getKycInformation(w, r)
 	}
 }
 
@@ -64,11 +64,8 @@ func getKycInformations(w http.ResponseWriter, r *http.Request) {
 // GetKycInformation information
 func getKycInformation(w http.ResponseWriter, r *http.Request) {
 
-	var kycinformations []models.KycInformation
 	//
-	vars := mux.Vars(r)
 	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("getKycInformation executed: processId: %s...\r\n", processid)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -76,7 +73,7 @@ func getKycInformation(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	var data models.CustomerID
+	var data models.KycID
 	//
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
@@ -84,32 +81,35 @@ func getKycInformation(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	//
 	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	//
+	fmt.Printf("getKycInformation executed: processId: %s kycId: %s...\r\n", processid, data.KycID)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
+	file, err := ioutil.ReadFile("kycinformations.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading kycinformations.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	kycinformations := []models.KycInformation{}
+	//appret[0] := []models.Applicant{}
+	kycret := make([]models.KycInformation, 1, 1)
+	_ = json.Unmarshal([]byte(file), &kycinformations)
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		switch data.CustomerID {
-		case "19640120-3887":
-			switch vars["kycId"] {
-			case "498b538c-3d82-11e9-b210-d663bd873d93":
-				kycinformations = append(kycinformations,
-					models.KycInformation{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-						CustomerID:               "19640120-3887",
-						KycID:                    "498b538c-3d82-11e9-b210-d663bd873d93",
-						KycAcceptUC:              true,
-						KycAcceptGDPR:            true,
-						KycUCAware:               true,
-						KycPublicFunction:        false,
-						KycRelatedPublicFunction: false})
+		switch data.KycID {
+		case "9bca3a55-2458-41d5-9420-f12bdcd0c809":
+			for i := 0; i < len(kycinformations); i++ {
+				if kycinformations[i].KycID == data.KycID {
+					kycret[0] = kycinformations[i]
+				}
 			}
 		}
 	}
 	//
-	if err := json.NewEncoder(w).Encode(kycinformations); err != nil {
+	if err := json.NewEncoder(w).Encode(kycret); err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		panic(err)
 	}
@@ -129,6 +129,7 @@ func deleteKycInformation(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("deleteKycInformation executed: processId: %s...\r\n", processid)
 
+	w.WriteHeader(http.StatusOK)
 }
 
 // addKycInformation documentation
@@ -143,6 +144,8 @@ func addKycInformation(w http.ResponseWriter, r *http.Request) {
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("addKycInformation executed: processId: %s...\r\n", processid)
+
+	w.WriteHeader(http.StatusOK)
 }
 
 // updateKycInformation documentation

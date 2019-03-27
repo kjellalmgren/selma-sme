@@ -1,0 +1,12 @@
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "customerId": "19640120-3887",
+    "kycId": "{\"kycId\": \"9bca3a55-2458-41d5-9420-f12bdcd0c809\"}",
+    "kycAcceptUC": false,
+    "kycAcceptGDPR": false,
+    "kycUCAware": false,
+    "kycPublicFunction": false,
+    "kycRelatedPublicFunction": false
+  }
+]

@@ -139,8 +139,11 @@ func main() {
 	router.HandleFunc("/v1/CompanyEconomy", companyeconomies.CompanyEconomyEntry).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/CompanyEconomy}", companyeconomies.CompanyEconomyEntry).Methods("PATCH", "OPTIONS")
 	// kycinformations.go
-	router.HandleFunc("/v1/KycInformations", kycinformations.GetKycInformations).Methods("POST", "OPTIONS")
-	router.HandleFunc("/v1/KycInformation", kycinformations.GetKycInformation).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/KycInformations", kycinformations.KycEntry).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/KycInformation", kycinformations.KycEntry).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/KycInformation", kycinformations.KycEntry).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/v1/KycInformation", kycinformations.KycEntry).Methods("DELETE", "OPTIONS")
+
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	color.Set(color.FgHiRed)

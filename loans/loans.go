@@ -9,7 +9,7 @@ import (
 	"selmasme/models"
 )
 
-// GetLoans
+// GetLoans documntation
 func GetLoans(w http.ResponseWriter, r *http.Request) {
 
 	//var loans []models.Loan
@@ -44,7 +44,7 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 }
 
 //
-// GetLoan
+// GetLoan documentation
 func GetLoan(w http.ResponseWriter, r *http.Request) {
 
 	//var loans []models.Loan
@@ -99,7 +99,7 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// GetLoansx
+// GetLoansx documentation
 func GetLoansx(w http.ResponseWriter, r *http.Request) {
 
 	var loans []models.Loan
@@ -144,7 +144,7 @@ func GetLoansx(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// GetLoanx
+// GetLoanx documentation
 func GetLoanx(w http.ResponseWriter, r *http.Request) {
 
 	var loans []models.Loan
@@ -198,7 +198,7 @@ func GetLoanx(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// DeleteLoanx
+// DeleteLoanx documewntation
 func DeleteLoanx(w http.ResponseWriter, r *http.Request) {
 
 	//
@@ -228,7 +228,7 @@ func DeleteLoanx(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// DeleteLoan
+// DeleteLoan documentation
 func DeleteLoan(w http.ResponseWriter, r *http.Request) {
 
 	//

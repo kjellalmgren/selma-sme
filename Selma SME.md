@@ -10,7 +10,8 @@ reserverCaseId ska vid anrop första gången även anropa setCaseIdStatus
 	
 LIME ska uppdateras att kund startat ansökan, befintlig kund, ny kund. LIME kundkort ska logga aktiviteten.
 
-
+CustomerId: "19640120-3887": "d5744655-b71e-428a-98b9-2b6c66c8c95a"
+CustomerId: "19650705-5579": "b2f86b36-7ff3-428e-ab45-8dad11952dae"
 
 ## To Do
 #### General
@@ -39,5 +40,5 @@ TBD: can we remove customerId from ExtLoanType or do we need it for KALP. ExtLoa
 	We probaly don´t need customerId in type of collateral
 	
 # Processes
-GetProcess
-När en ny process startas ska 
+addProcess
+När en ny process startas ska ska ProcessId, CustomerId samt CaseID reservras i Loan Process

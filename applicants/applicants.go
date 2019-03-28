@@ -38,6 +38,7 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 		panic(err)
 	}
+
 	w.WriteHeader(http.StatusOK)
 	//
 }
@@ -196,7 +197,10 @@ func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// addApplicant
+// addApplicant documentation
+// When we create an applicant we should be returning a uuid and start communicate this
+// in the API calls going forward.
+//
 func addApplicant(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -207,5 +211,22 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Add-Applicant executed, processId: %s...\r\n", processid)
+	//
+	var data models.Applicant
+	//
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+
+	http.Error(w, data.CustomerID+" - "+data.ApplicantID, 200)
+
 	w.WriteHeader(http.StatusCreated)
 }

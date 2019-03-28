@@ -11,7 +11,7 @@ import (
 )
 
 //
-// GetApplicants
+// GetApplicants documentation
 func GetApplicants(w http.ResponseWriter, r *http.Request) {
 
 	//var applicants []models.Applicant
@@ -43,7 +43,7 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// ApplicantEntry
+// ApplicantEntry documentation
 func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -66,12 +66,10 @@ func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 }
 
 //
-// GetApplicant
+// GetApplicant documentation
 func getApplicant(w http.ResponseWriter, r *http.Request) {
 
-	//var applicants []models.Applicant
-
-	//vars := mux.Vars(r)
+	//
 	processid := r.Header.Get("X-process-Id")
 	var data models.CustomerID
 	var r1 []byte
@@ -99,7 +97,7 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 	//appret[0] := []models.Applicant{}
 	appret := make([]models.Applicant, 1, 1)
 	_ = json.Unmarshal([]byte(file), &applicants)
-
+	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		for i := 0; i < len(applicants); i++ {
@@ -118,7 +116,6 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "Applicant not Found", http.StatusNotFound)
 	}
-
 	//
 }
 
@@ -168,7 +165,7 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// DeleteApplicant
+// DeleteApplicant documentation
 func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 
 	//
@@ -200,7 +197,6 @@ func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 // addApplicant documentation
 // When we create an applicant we should be returning a uuid and start communicate this
 // in the API calls going forward.
-//
 func addApplicant(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -209,6 +205,8 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "PUT, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	// 19640120-3887 d5744655-b71e-428a-98b9-2b6c66c8c95a
+	// 19650705-5579 b2f86b36-7ff3-428e-ab45-8dad11952dae
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Add-Applicant executed, processId: %s...\r\n", processid)
 	//
@@ -225,8 +223,7 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-
+	//
 	http.Error(w, data.CustomerID+" - "+data.ApplicantID, 200)
-
 	w.WriteHeader(http.StatusCreated)
 }

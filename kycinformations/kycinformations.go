@@ -46,7 +46,7 @@ func getKycInformations(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	file, err := ioutil.ReadFile("kycinformations.json")
+	file, err := ioutil.ReadFile("json/kycinformations.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading kycinformtions.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
@@ -87,7 +87,7 @@ func getKycInformation(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	file, err := ioutil.ReadFile("kycinformations.json")
+	file, err := ioutil.ReadFile("json/kycinformations.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading kycinformations.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

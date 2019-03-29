@@ -27,7 +27,7 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("loans.json")
+		file, err := ioutil.ReadFile("json/loans.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading loans.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -70,7 +70,7 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getLoan executed: X-process-ID: %s...LoanId: %s\r\n", processid, data.LoanID)
 	//
 	loans := []models.Loan{}
-	file, err := ioutil.ReadFile("loans.json")
+	file, err := ioutil.ReadFile("json/loans.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading loans.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

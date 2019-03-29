@@ -26,7 +26,7 @@ func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("personaleconomies.json")
+		file, err := ioutil.ReadFile("json/personaleconomies.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading personaleconomies.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -72,7 +72,7 @@ func GetPersonalEconomy(w http.ResponseWriter, r *http.Request) {
 		processid, data.PersonalEconomyID)
 	//
 	personaleconomies := []models.PersonalEconomy{}
-	file, err := ioutil.ReadFile("personaleconomies.json")
+	file, err := ioutil.ReadFile("json/personaleconomies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading personaleconomies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

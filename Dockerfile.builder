@@ -23,16 +23,16 @@ RUN mkdir -p /selmasme
 WORKDIR /selmasme
 #
 # COPY all json files
-COPY processes.json /selmasme
-COPY applicants.json /selmasme
-COPY budgets.json /selmasme
-COPY collaterals.json /selmasme
-COPY companyeconomies.json /selmasme
-COPY extloans.json /selmasme
-COPY households.json /selmasme
-COPY loans.json /selmasme
-COPY personaleconomies.json /selmasme
-COPY companies.json /selmasme
+COPY json/processes.json /selmasme/json
+COPY json/applicants.json /selmasme/json
+COPY json/budgets.json /selmasme/json
+COPY json/collaterals.json /selmasme/json
+COPY json/companyeconomies.json /selmasme/json
+COPY json/extloans.json /selmasme/json
+COPY json/households.json /selmasme/json
+COPY json/loans.json /selmasme/json
+COPY json/personaleconomies.json /selmasme/json
+COPY json/companies.json /selmasme/json
 # COPY executable ./selma-sme
 COPY selmasme /selmasme
 #

@@ -77,7 +77,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("getProcesses executed, customerID: %s...\r\n", data.CustomerID)
 	//
-	file, err := ioutil.ReadFile("processes.json")
+	file, err := ioutil.ReadFile("json/processes.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading processes.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
@@ -182,27 +182,27 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
 	//
-	file, err := ioutil.ReadFile("processes.json")
+	file, err := ioutil.ReadFile("json/processes.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading processes.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &processes)
 	//
-	file, err = ioutil.ReadFile("applicants.json")
+	file, err = ioutil.ReadFile("json/applicants.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &applicants)
 	//
-	file, err = ioutil.ReadFile("loans.json")
+	file, err = ioutil.ReadFile("json/loans.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading loans.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &loans)
-	file, err = ioutil.ReadFile("companies.json")
+	file, err = ioutil.ReadFile("json/companies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading companies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
@@ -210,28 +210,28 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	//companies = []models.Company{}
 	_ = json.Unmarshal([]byte(file), &companies)
 	//
-	file, err = ioutil.ReadFile("personaleconomies.json")
+	file, err = ioutil.ReadFile("json/personaleconomies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading personaleconomies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &personaleconomies)
 	//
-	file, err = ioutil.ReadFile("companyeconomies.json")
+	file, err = ioutil.ReadFile("json/companyeconomies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading companyeconomies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &companyeconomies)
 	//
-	file, err = ioutil.ReadFile("extloans.json")
+	file, err = ioutil.ReadFile("json/extloans.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading extloans.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &extloans)
 	//
-	file, err = ioutil.ReadFile("households.json")
+	file, err = ioutil.ReadFile("json/households.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading households.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
@@ -239,21 +239,21 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	//households = []models.Household{}
 	_ = json.Unmarshal([]byte(file), &households)
 	//
-	file, err = ioutil.ReadFile("collaterals.json")
+	file, err = ioutil.ReadFile("json/collaterals.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading collaterals.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &collaterals)
 	//
-	file, err = ioutil.ReadFile("budgets.json")
+	file, err = ioutil.ReadFile("json/budgets.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading budgets.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &budgets)
 	//
-	file, err = ioutil.ReadFile("kycinformations.json")
+	file, err = ioutil.ReadFile("json/kycinformations.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading kycinformations.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

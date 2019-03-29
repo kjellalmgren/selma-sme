@@ -10,7 +10,7 @@ import (
 	"selmasme/models"
 )
 
-// CompanyEntry
+// CompanyEntry documentations
 func CompanyEntry(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -32,7 +32,7 @@ func CompanyEntry(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// GetCompanies
+// GetCompanies documentation
 func GetCompanies(w http.ResponseWriter, r *http.Request) {
 
 	//
@@ -48,7 +48,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 	companies := []models.Company{}
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("companies.json")
+		file, err := ioutil.ReadFile("json/companies.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading companies.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -66,7 +66,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 }
 
 //
-// getCompany
+// getCompany documentation
 func getCompany(w http.ResponseWriter, r *http.Request) {
 
 	//var companies []models.Company
@@ -92,7 +92,7 @@ func getCompany(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	companies := []models.Company{}
-	file, err := ioutil.ReadFile("companies.json")
+	file, err := ioutil.ReadFile("json/companies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading companies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
@@ -123,7 +123,7 @@ func getCompany(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// deleteCompany
+// deleteCompany documentation
 func deleteCompany(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -149,7 +149,7 @@ func deleteCompany(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// updateCompany
+// updateCompany documentation
 func updateCompany(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -159,7 +159,6 @@ func updateCompany(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
-	//varsh := r.Header
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("updateCompany executed, processId: %s...\r\n", processid)
 	//
@@ -186,7 +185,7 @@ func updateCompany(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// addCompany
+// addCompany documentation
 func addCompany(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")

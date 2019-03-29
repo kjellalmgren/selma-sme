@@ -27,7 +27,7 @@ func GetExtLoans(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("extloans.json")
+		file, err := ioutil.ReadFile("json/extloans.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading extloans.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -70,7 +70,7 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 		data.ExtLoanID)
 	//
 	extloans := []models.ExtLoan{}
-	file, err := ioutil.ReadFile("extloans.json")
+	file, err := ioutil.ReadFile("json/extloans.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading extloans.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

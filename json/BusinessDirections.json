@@ -1,0 +1,363 @@
+[
+  {
+    "BusinessCategoryID": "1",
+    "BusinessCategory": "Jordbruksväxter",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "10",
+        "BusinessDirection": "Spannmål & Oljeväxt."
+      },
+      {
+        "CategoriID": "11",
+        "BusinessDirection": "Jordbruksväxter"
+      },
+      {
+        "CategoriID": "12",
+        "BusinessDirection": "Vall (för avsalu) "
+      },
+      {
+        "CategoriID": "13",
+        "BusinessDirection": "Potatis"
+      },
+      {
+        "CategoriID": "14",
+        "BusinessDirection": "Sockerbetor"
+      },
+      {
+        "CategoriID": "15",
+        "BusinessDirection": "Vallfrö"
+      },
+      {
+        "CategoriID": "16",
+        "BusinessDirection": "Energigrödor"
+      },
+      {
+        "CategoriID": "17",
+        "BusinessDirection": "Övriga jordbruksgröd"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "2",
+    "BusinessCategory": "Trädgårdsväxter",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "20",
+        "BusinessDirection": "Trädgårdsväxter"
+      },
+      {
+        "BusinessDirectionID": "21",
+        "BusinessDirection": "Växthusodling"
+      },
+      {
+        "BusinessDirectionID": "22",
+        "BusinessDirection": "Frukt - och bärodling "
+      },
+      {
+        "BusinessDirectionID": "23",
+        "BusinessDirection": "Övriga trädgårdsväxt."
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "3",
+    "BusinessCategory": "Nötkreatur",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "30",
+        "BusinessDirection": "Mjölkproduktion"
+      },
+      {
+        "BusinessDirectionID": "31",
+        "BusinessDirection": "Am- och Dikor"
+      },
+      {
+        "BusinessDirectionID": "32",
+        "BusinessDirection": "Köttproduktion"
+      },
+      {
+        "BusinessDirectionID": "33",
+        "BusinessDirection": "Övriga nöt."
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "4",
+    "BusinessCategory": "Får och getter",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "40",
+        "BusinessDirection": "Förskötsel"
+      },
+      {
+        "BusinessDirectionID": "41",
+        "BusinessDirection": "Får och getter"
+      },
+      {
+        "BusinessDirectionID": "42",
+        "BusinessDirection": "Getskötsel"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "5",
+    "BusinessCategory": "Svinproduktion",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "50",
+        "BusinessDirection": "Smågrisproduktion"
+      },
+      {
+        "BusinessDirectionID": "51",
+        "BusinessDirection": "Svinproduktion"
+      },
+      {
+        "BusinessDirectionID": "52",
+        "BusinessDirection": "Slaktsvinsproduktion"
+      },
+      {
+        "BusinessDirectionID": "53",
+        "BusinessDirection": "Integrerad prod."
+      },
+      {
+        "BusinessDirectionID": "54",
+        "BusinessDirection": "Övrig svinproduktion"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "6",
+    "BusinessCategory": "Fjäderfäskötsel",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "60",
+        "BusinessDirection": "Äggproduktion"
+      },
+      {
+        "BusinessDirectionID": "61",
+        "BusinessDirection": "Fjäderfäskötsel"
+      },
+      {
+        "BusinessDirectionID": "62",
+        "BusinessDirection": "Slaktkyckling"
+      },
+      {
+        "BusinessDirectionID": "63",
+        "BusinessDirection": "Övrig fjäderfäsköts."
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "7",
+    "BusinessCategory": "Hästverksamhet",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "70",
+        "BusinessDirection": "Avel"
+      },
+      {
+        "BusinessDirectionID": "71",
+        "BusinessDirection": "Hästv erksamhet"
+      },
+      {
+        "BusinessDirectionID": "72",
+        "BusinessDirection": "Stallplatser"
+      },
+      {
+        "BusinessDirectionID": "73",
+        "BusinessDirection": "Ridskola & utbildning"
+      },
+      {
+        "BusinessDirectionID": "74",
+        "BusinessDirection": "Ridsport, tävling"
+      },
+      {
+        "BusinessDirectionID": "75",
+        "BusinessDirection": "Trav & galopp"
+      },
+      {
+        "BusinessDirectionID": "76",
+        "BusinessDirection": "Övrig hästverksamhet"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "8",
+    "BusinessCategory": "Annan djurskötsel",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "80",
+        "BusinessDirection": "Renskötsel"
+      },
+      {
+        "BusinessDirectionID": "81",
+        "BusinessDirection": "Annan djursköts."
+      },
+      {
+        "BusinessDirectionID": "82",
+        "BusinessDirection": "Pälsdjursuppfödning"
+      },
+      {
+        "BusinessDirectionID": "83",
+        "BusinessDirection": "Biodling"
+      },
+      {
+        "BusinessDirectionID": "84",
+        "BusinessDirection": "Ridsport, tävling"
+      },
+      {
+        "BusinessDirectionID": "85",
+        "BusinessDirection": "Övrig djurhållning"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "9",
+    "BusinessCategory": "Prod av skog",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "90",
+        "BusinessDirection": "Produktion av skog"
+      },
+      {
+        "BusinessDirectionID": "91",
+        "BusinessDirection": "Prod av skog"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "10",
+    "BusinessCategory": "Förädling av skog",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "100",
+        "BusinessDirection": "Förädling av skogsvara"
+      },
+      {
+        "BusinessDirectionID": "101",
+        "BusinessDirection": "Förädl. av skog"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "11",
+    "BusinessCategory": "Övrik skogsverksam.",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "110",
+        "BusinessDirection": "Övrig skogsverksamh."
+      },
+      {
+        "BusinessDirectionID": "111",
+        "BusinessDirection": "Övrig skogsverk."
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "12",
+    "BusinessCategory": "Maskinenteprenad",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "120",
+        "BusinessDirection": "Lantbruksmaskiner"
+      },
+      {
+        "BusinessDirectionID": "121",
+        "BusinessDirection": "Maskinentr."
+      },
+      {
+        "BusinessDirectionID": "122",
+        "BusinessDirection": "Skogsmaskiner"
+      },
+      {
+        "BusinessDirectionID": "123",
+        "BusinessDirection": "Övrig entreprenad"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "13",
+    "BusinessCategory": "Lokaler",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "130",
+        "BusinessDirection": "Uthyrning bostäder"
+      },
+      {
+        "BusinessDirectionID": "131",
+        "BusinessDirection": "Uth. Lokaer (ek b.)"
+      },
+      {
+        "BusinessDirectionID": "132",
+        "BusinessDirection": "Lokaler"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "14",
+    "BusinessCategory": "Turisn",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "140",
+        "BusinessDirection": "Bo på Lantgård/B&B"
+      },
+      {
+        "BusinessDirectionID": "141",
+        "BusinessDirection": "Turism"
+      },
+      {
+        "BusinessDirectionID": "142",
+        "BusinessDirection": "Hotel & Konferens"
+      },
+      {
+        "BusinessDirectionID": "142",
+        "BusinessDirection": "Natur, Hälsa & Rekr."
+      },
+      {
+        "BusinessDirectionID": "143",
+        "BusinessDirection": "Jakt & Fiske"
+      },
+      {
+        "BusinessDirectionID": "144",
+        "BusinessDirection": "Övrig turism"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "15",
+    "BusinessCategory": "Tillverkning",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "150",
+        "BusinessDirection": "Förädling egna prod."
+      },
+      {
+        "BusinessDirectionID": "151",
+        "BusinessDirection": "Tillverkning"
+      },
+      {
+        "BusinessDirectionID": "152",
+        "BusinessDirection": "Övrig tillverkning"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "16",
+    "BusinessCategory": "Tjäns. - konsultv",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "160",
+        "BusinessDirection": "Övrig tjänst & kons."
+      },
+      {
+        "BusinessDirectionID": "161",
+        "BusinessDirection": "Tjäns. - konsultv"
+      },
+      {
+        "BusinessDirectionID": "162",
+        "BusinessDirection": "Ink tjänst och cap."
+      }
+    ]
+  }
+]
+

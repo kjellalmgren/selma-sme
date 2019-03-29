@@ -27,7 +27,7 @@ func GetBudgets(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("budgets.json")
+		file, err := ioutil.ReadFile("json/budgets.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading budgets.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -70,7 +70,7 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("GetBudget executed: processId: %s companyEconomy: %s...\r\n", processid, data.CompanyEconomyID)
 	//
-	file, err := ioutil.ReadFile("budgets.json")
+	file, err := ioutil.ReadFile("json/budgets.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading budgets.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

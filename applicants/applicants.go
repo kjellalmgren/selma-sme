@@ -26,7 +26,7 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
-	file, err := ioutil.ReadFile("applicants.json")
+	file, err := ioutil.ReadFile("json/applicants.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
@@ -88,7 +88,7 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
-	file, err := ioutil.ReadFile("applicants.json")
+	file, err := ioutil.ReadFile("json/applicants.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

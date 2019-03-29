@@ -26,7 +26,7 @@ func GetCompanyEconomies(w http.ResponseWriter, r *http.Request) {
 	companyeconomies := []models.CompanyEconomy{}
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("companyeconomies.json")
+		file, err := ioutil.ReadFile("json/companyeconomies.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading companyeconomies.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -91,7 +91,7 @@ func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	companyeconomies := []models.CompanyEconomy{}
-	file, err := ioutil.ReadFile("companyeconomies.json")
+	file, err := ioutil.ReadFile("json/companyeconomies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading companyeconomies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

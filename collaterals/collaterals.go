@@ -9,7 +9,7 @@ import (
 	"selmasme/models"
 )
 
-// GetCollaterals
+// GetCollaterals documentation
 func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 
 	//
@@ -26,7 +26,7 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("collaterals.json")
+		file, err := ioutil.ReadFile("json/collaterals.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading collaterals.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -41,7 +41,7 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// GetCollateral
+// GetCollateral documentation
 func GetCollateral(w http.ResponseWriter, r *http.Request) {
 
 	//var collaterals []models.Collateral
@@ -69,7 +69,7 @@ func GetCollateral(w http.ResponseWriter, r *http.Request) {
 		processid, data.CollateralID)
 	//
 	collaterals := []models.Collateral{}
-	file, err := ioutil.ReadFile("collaterals.json")
+	file, err := ioutil.ReadFile("json/collaterals.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading collaterls.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

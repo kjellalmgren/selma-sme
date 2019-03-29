@@ -27,7 +27,7 @@ func GetHouseholds(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("households.json")
+		file, err := ioutil.ReadFile("json/households.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading households.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -75,7 +75,7 @@ func GetHousehold(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	households := []models.Household{}
-	file, err := ioutil.ReadFile("households.json")
+	file, err := ioutil.ReadFile("json/households.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading households.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)

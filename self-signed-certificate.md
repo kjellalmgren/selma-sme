@@ -7,7 +7,7 @@
 	
 ## Create certificate
 
-	# use 127.0.0.1:8000 when register
+	# use 127.0.0.1:8443 when register
 	$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem
 	...
 

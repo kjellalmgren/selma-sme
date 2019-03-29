@@ -21,7 +21,7 @@ MAINTAINER kjell.almgren@tetracon.se
 #switch to our app directory (/selma-sme)
 RUN mkdir -p /selmasme
 WORKDIR /selmasme
-
+#
 # COPY all json files
 COPY processes.json /selmasme
 COPY applicants.json /selmasme
@@ -35,15 +35,13 @@ COPY personaleconomies.json /selmasme
 COPY companies.json /selmasme
 # COPY executable ./selma-sme
 COPY selmasme /selmasme
-
+#
 # copy our self-signed certificate
 COPY cert.pem /selmasme
 COPY key.pem /selmasme
-
+#
 # tell we are exposing our service on port 8000
 EXPOSE 8443
-
 # run it!
-
 ENTRYPOINT ["./selmasme"]
 #CMD ["./selmasme"]

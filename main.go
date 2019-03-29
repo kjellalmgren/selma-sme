@@ -57,7 +57,7 @@ _________    __
    |  | / _ \|  _| /  __|/ _ \ / __/ _ \| '_ \
    |  | \ __/| |_  | |  | (_| | (_| (_) | | | | 
    |__| \___| \__| |_|   \__,_|\___\___/|_| |_| 
-Server-version: %s Model-version: %s
+Server-version: %s Model-version: %s Model-date: %s
 `
 )
 
@@ -65,6 +65,7 @@ Server-version: %s Model-version: %s
 var (
 	srv  bool
 	vrsn bool
+	date bool
 )
 
 var (
@@ -72,7 +73,7 @@ var (
 	pool   *x509.CertPool
 )
 
-// init
+// init documwentation
 func init() {
 
 	// instanciate a new logger
@@ -80,7 +81,7 @@ func init() {
 	log.Formatter = new(logrus.TextFormatter)
 	log.Level = logrus.DebugLevel
 	color.Set(color.FgHiGreen)
-	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
+	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion(), version.ModelDate()))
 	color.Unset()
 }
 
@@ -94,7 +95,7 @@ func main() {
 	router.HandleFunc("/v1/Processes", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
 	router.HandleFunc("/v1/Process", processes.ProcessEntry).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/getProcess", processes.GetProcessAll).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/Process", processes.ProcessEntry).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/v1/Process", processes.ProcessEntry).Methods("PUT", "OPTIONS") // addProcess
 	// cases.go
 	router.HandleFunc("/v1/reserveCaseId", cases.ReserveCaseID).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus", cases.SetCaseIDStatus).Methods("PATCH", "OPTIONS")
@@ -108,7 +109,7 @@ func main() {
 	router.HandleFunc("/v1/Loans", loans.GetLoans).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/Loan", loans.GetLoan).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/Loan", loans.DeleteLoan).Methods("DELETE", "OPTIONS")
-	//
+	// xloans.go
 	router.HandleFunc("/v1/xloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/xloans", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/xloans", loans.DeleteLoanx).Methods("POST", "DELETE", "OPTIONS")

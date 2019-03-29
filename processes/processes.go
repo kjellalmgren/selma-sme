@@ -21,8 +21,8 @@ type processAll struct {
 	CompanyEconomies  []models.CompanyEconomy
 	PersonalEconomies []models.PersonalEconomy
 	Collaterals       []models.Collateral
-	//KycInformations   []models.KycInformation
-	Budgets []models.Budget
+	KycInformations   []models.KycInformation
+	Budgets           []models.Budget
 }
 
 // ProcessEntry documentation
@@ -49,8 +49,6 @@ func ProcessEntry(w http.ResponseWriter, r *http.Request) {
 // GetProcesses
 func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
-	//var processes []models.Process
-	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -100,7 +98,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 }
 
 //
-// DeleteProcess
+// DeleteProcess documentation
 func deleteProcess(w http.ResponseWriter, r *http.Request) {
 
 	processid := r.Header.Get("X-process-Id")
@@ -153,7 +151,7 @@ func addProcess(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// GetProcessAll
+// GetProcessAll documentation
 func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	//
 	var processall processAll
@@ -165,7 +163,7 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	companies := []models.Company{}
 	companyeconomies := []models.CompanyEconomy{}
 	personaleconomies := []models.PersonalEconomy{}
-	//var kycinformations []models.KycInformation
+	kycinformations := []models.KycInformation{}
 	collaterals := []models.Collateral{}
 	budgets := []models.Budget{}
 	//
@@ -181,7 +179,7 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
 	//
 	file, err := ioutil.ReadFile("processes.json")
@@ -255,6 +253,13 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal([]byte(file), &budgets)
 	//
+	file, err = ioutil.ReadFile("kycinformations.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading kycinformations.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &kycinformations)
+	//
 	processall.Applicans = append(applicants)
 	processall.Processes = append(processes)
 	processall.Loans = append(loans)
@@ -263,15 +268,13 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	processall.Companies = append(companies)
 	processall.CompanyEconomies = append(companyeconomies)
 	processall.PersonalEconomies = append(personaleconomies)
-	//processall.KycInformations = append(kycinformations)
+	processall.KycInformations = append(kycinformations)
 	processall.Collaterals = append(collaterals)
 	processall.Budgets = append(budgets)
-
 	//
 	if err := json.NewEncoder(w).Encode(processall); err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		panic(err)
 	}
 	w.WriteHeader(http.StatusOK)
-
 }

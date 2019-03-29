@@ -210,8 +210,7 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Add-Applicant executed, processId: %s...\r\n", processid)
 	//
-	var data models.Applicant
-	//
+	data := models.Applicant{}
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -224,6 +223,23 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	//
-	http.Error(w, data.CustomerID+" - "+data.ApplicantID, 200)
+	if data.CustomerID == "19640122-3887" {
+		data.ApplicantID = "d5744655-b71e-428a-98b9-2b6c66c8c95a"
+	} else if data.CustomerID == "19650705-5579" {
+		data.ApplicantID = "b2f86b36-7ff3-428e-ab45-8dad11952dae"
+	}
+	//applicants := []models.Applicant{}
+	//appret := make([]models.Applicant, 1, 1)
+	applicant := make([]models.Applicant, 1, 1)
+	applicants := make([]models.Applicant, 1, 1)
+	applicant[0] = data
+	applicants[0] = applicant[0]
+
+	if err := json.NewEncoder(w).Encode(applicants); err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		panic(err)
+	}
+	fmt.Printf("CustomerId: %s - Generated ApplicantID: %s",
+		data.CustomerID, data.ApplicantID)
 	w.WriteHeader(http.StatusCreated)
 }

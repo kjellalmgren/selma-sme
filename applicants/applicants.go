@@ -228,8 +228,6 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 	} else if data.CustomerID == "19650705-5579" {
 		data.ApplicantID = "b2f86b36-7ff3-428e-ab45-8dad11952dae"
 	}
-	//applicants := []models.Applicant{}
-	//appret := make([]models.Applicant, 1, 1)
 	applicant := make([]models.Applicant, 1, 1)
 	applicants := make([]models.Applicant, 1, 1)
 	applicant[0] = data

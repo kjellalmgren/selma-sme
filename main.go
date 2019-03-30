@@ -109,10 +109,6 @@ func main() {
 	router.HandleFunc("/v1/Loans", loans.GetLoans).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/Loan", loans.GetLoan).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/Loan", loans.DeleteLoan).Methods("DELETE", "OPTIONS")
-	// xloans.go
-	router.HandleFunc("/v1/xloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/xloans", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/xloans", loans.DeleteLoanx).Methods("POST", "DELETE", "OPTIONS")
 	// extloans.go
 	router.HandleFunc("/v1/ExtLoans", extloans.GetExtLoans).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/ExtLoan", extloans.GetExtLoan).Methods("POST", "OPTIONS")
@@ -125,7 +121,7 @@ func main() {
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("PATCH", "OPTIONS")
 	router.HandleFunc("/v1/Company", companies.CompanyEntry).Methods("PUT", "OPTIONS")
-	//
+	// Budgets.go
 	router.HandleFunc("/v1/Budgets", budgets.GetBudgets).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/Budget", budgets.GetBudget).Methods("POST", "GET", "OPTIONS")
 	// households.go
@@ -144,7 +140,10 @@ func main() {
 	router.HandleFunc("/v1/KycInformation", kycinformations.KycEntry).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/KycInformation", kycinformations.KycEntry).Methods("PUT", "OPTIONS")
 	router.HandleFunc("/v1/KycInformation", kycinformations.KycEntry).Methods("DELETE", "OPTIONS")
-
+	// xloans.go
+	router.HandleFunc("/v1/xloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/xloans", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/xloans", loans.DeleteLoanx).Methods("POST", "DELETE", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	color.Set(color.FgHiRed)

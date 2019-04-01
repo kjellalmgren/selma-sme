@@ -147,6 +147,9 @@ func deleteCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("deleteCompanyEconomy executed, processId: %s companyId: %s...\r\n", processid, data.CompanyEconomyID)
 	w.WriteHeader(http.StatusOK)
 }
+
+//
+// updateCompanyEconomy documentation
 func updateCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")

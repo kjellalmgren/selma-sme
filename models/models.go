@@ -128,6 +128,7 @@ type CompanyEconomy struct {
 	ProcessID        string `json:"processId"`
 	CompanyID        string `json:"companyId"`
 	CompanyEconomyID string `json:"companyEconomyId"`
+	CustomerCategory int16  `json:"customerCategory"` // Kundklass från SAS
 	Revenues         []Revenue
 }
 

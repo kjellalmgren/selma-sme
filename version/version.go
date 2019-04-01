@@ -4,15 +4,15 @@ package version
 
 // ServerVersion - version number (exported)
 func ServerVersion() string {
-	return "v0.7.7"
+	return "v0.7.8"
 }
 
 // ModelVersion (Open API version)
 func ModelVersion() string {
-	return "v0.5.6"
+	return "v0.5.7"
 }
 
 // Model change date
 func ModelDate() string {
-	return "2019-03-29"
+	return "2019-03-31"
 }

@@ -132,16 +132,16 @@ type CompanyEconomy struct {
 	Revenues         []Revenue
 }
 
-// CompanyEconomyID documentation
-type CompanyEconomyID struct {
-	CompanyEconomyID string `json:"companyEconomyId"`
-}
-
 // Revenue documentation
 type Revenue struct {
 	//RevenueID   string  `json:"revenueId"`
 	RevenueYear int32   `json:"revenueYear"`
 	Revenue     float32 `json:"revenue"`
+}
+
+// CompanyEconomyID documentation
+type CompanyEconomyID struct {
+	CompanyEconomyID string `json:"companyEconomyId"`
 }
 
 // Company documentation

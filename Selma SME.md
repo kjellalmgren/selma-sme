@@ -46,3 +46,7 @@ När en ny process startas ska ska ProcessId, CustomerId samt CaseID reservras i
 ## Applicant
 **addApplicant**
 Efter vi har fått CustomerID via BankID kommer vi anropa addApplicant med Personnummer, tillbaka kommer en uppdaterad ApplicantID (uuid), denna ska användas i kommande kommunikation med modellen.
+
+## Ansökan AB
+**LimitGroup**
+Limitgrupp, huvudmän i företaget, behöver tas med i en fingerad Limitgrupp, vi behöver få med ägare till en Limitgrupp för att passa i modellen vid överföring till LP.

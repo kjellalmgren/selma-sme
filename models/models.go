@@ -88,16 +88,16 @@ type Loan struct {
 	Aims          []AimType
 }
 
-// LoanID documentation
-type LoanID struct {
-	LoanID string `json:"loanId"`
-}
-
 // AimType documentation
 type AimType struct {
 	AimID          string  `json:"aimId"`
 	AimText        string  `json:"aimText"`
 	LoanAmountPart float32 `json:"loanAmountPart"`
+}
+
+// LoanID documentation
+type LoanID struct {
+	LoanID string `json:"loanId"`
 }
 
 // ExtLoan documentation

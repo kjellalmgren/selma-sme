@@ -92,10 +92,10 @@ func main() {
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
 	// processes.go
-	router.HandleFunc("/v1/Processes", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
-	router.HandleFunc("/v1/Process", processes.ProcessEntry).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/getProcesses", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
 	router.HandleFunc("/v1/getProcess", processes.GetProcessAll).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/Process", processes.ProcessEntry).Methods("PUT", "OPTIONS") // addProcess
+	router.HandleFunc("/v1/deleteProcess", processes.ProcessEntry).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/updateProcess", processes.ProcessEntry).Methods("PUT", "OPTIONS") // addProcess
 	// cases.go
 	router.HandleFunc("/v1/reserveCaseId", cases.ReserveCaseID).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus", cases.SetCaseIDStatus).Methods("PATCH", "OPTIONS")

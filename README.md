@@ -20,6 +20,8 @@
     $ docker run -d --name selmasme --network selmasme-net --publish=8443:8443 -t tetracon/selmasme:0.5.8
     # run shell to look into container
     $ docker run -d -t tetracon/selmasme:0.5.8 sh
+    # bash
+    $ docker exec -it <mycontainer> sh
     #
     # Remove container
     $ docker stop [CONTAINERID]

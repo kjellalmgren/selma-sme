@@ -23,6 +23,7 @@ RUN mkdir -p /selmasme
 WORKDIR /selmasme
 #
 # COPY all json files
+RUN mkdir -p /selmasme/json
 COPY json/processes.json /selmasme/json
 COPY json/applicants.json /selmasme/json
 COPY json/budgets.json /selmasme/json

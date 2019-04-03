@@ -93,7 +93,7 @@ func main() {
 	router.HandleFunc("/", Index)
 	// processes.go
 	router.HandleFunc("/v1/getProcesses", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
-	router.HandleFunc("/v1/getProcess", processes.GetProcessAll).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/getProcess", processes.GetProcessAll).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/deleteProcess", processes.ProcessEntry).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/updateProcess", processes.ProcessEntry).Methods("PUT", "OPTIONS") // addProcess
 	// cases.go

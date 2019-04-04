@@ -22,7 +22,7 @@ func GetCollaterals(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	collaterals := []models.Collateral{}
+	collaterals := []models.CollateralType{}
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
@@ -68,13 +68,13 @@ func GetCollateral(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getCollateral executed: processId: %s /collateralId: %s...\r\n",
 		processid, data.CollateralID)
 	//
-	collaterals := []models.Collateral{}
+	collaterals := []models.CollateralType{}
 	file, err := ioutil.ReadFile("json/collaterals.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading collaterls.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	collret := make([]models.Collateral, 1, 1)
+	collret := make([]models.CollateralType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &collaterals)
 	//
 	switch processid {

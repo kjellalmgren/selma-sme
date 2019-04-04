@@ -45,7 +45,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	companies := []models.Company{}
+	companies := []models.CompanyType{}
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		file, err := ioutil.ReadFile("json/companies.json")
@@ -91,13 +91,13 @@ func getCompany(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	companies := []models.Company{}
+	companies := []models.CompanyType{}
 	file, err := ioutil.ReadFile("json/companies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading companies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	compret := make([]models.Company, 1, 1)
+	compret := make([]models.CompanyType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &companies)
 	//
 	switch processid {
@@ -197,7 +197,7 @@ func addCompany(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Delete-Company executed: processId: %s...\r\n", processid)
 
-	var data models.Company
+	var data models.CompanyType
 	//
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)

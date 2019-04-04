@@ -23,7 +23,7 @@ func GetBudgets(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("GetBudgets executed: processId: %s...\r\n", processid)
 	//
-	budgets := []models.Budget{}
+	budgets := []models.BudgetType{}
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
@@ -44,7 +44,7 @@ func GetBudgets(w http.ResponseWriter, r *http.Request) {
 // GetBudget
 func GetBudget(w http.ResponseWriter, r *http.Request) {
 
-	var budgets []models.Budget
+	var budgets []models.BudgetType
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -75,7 +75,7 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error reading budgets.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	budret := make([]models.Budget, 1, 1)
+	budret := make([]models.BudgetType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &budgets)
 	//
 	switch processid {

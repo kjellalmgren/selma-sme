@@ -51,7 +51,7 @@ func getKycInformations(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error reading kycinformtions.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	kycinformations := []models.KycInformation{}
+	kycinformations := []models.KycInformationType{}
 	_ = json.Unmarshal([]byte(file), &kycinformations)
 	//
 	if err := json.NewEncoder(w).Encode(kycinformations); err != nil {
@@ -92,9 +92,9 @@ func getKycInformation(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error reading kycinformations.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	kycinformations := []models.KycInformation{}
+	kycinformations := []models.KycInformationType{}
 	//appret[0] := []models.Applicant{}
-	kycret := make([]models.KycInformation, 1, 1)
+	kycret := make([]models.KycInformationType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &kycinformations)
 	//
 	switch processid {

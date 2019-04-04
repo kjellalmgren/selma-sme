@@ -1,7 +1,7 @@
 package models
 
 // Process documentation
-type Process struct {
+type ProcessType struct {
 	ProcessID          string `json:"processId"`
 	CustomerID         []CustomerID
 	ProcessCreatedDate string `json:"processCreatedDate"`
@@ -19,7 +19,7 @@ type CustomerID struct {
 }
 
 // Household documentation
-type Household struct {
+type HouseholdType struct {
 	ProcessID            string `json:"processId"`
 	HouseholdID          string `json:"householdId"`
 	HouseholdMembers     []HouseholdMemberType
@@ -48,7 +48,7 @@ type HouseholdID struct {
 }
 
 // Applicant documentation
-type Applicant struct {
+type ApplicantType struct {
 	ProcessID             string `json:"processId"`
 	CustomerID            string `json:"customerId"`
 	ApplicantID           string `json:"applicantId"`
@@ -79,7 +79,7 @@ type ContactInformationType struct {
 }
 
 // Loan documentation
-type Loan struct {
+type LoanType struct {
 	ProcessID     string  `json:"processId"`
 	LoanID        string  `json:"loanId"`
 	LoanNumber    string  `json:"loanNumber"`
@@ -101,7 +101,7 @@ type LoanID struct {
 }
 
 // ExtLoan documentation
-type ExtLoan struct {
+type ExtLoanType struct {
 	ProcessID         string `json:"processId"`
 	ExtLoanID         string `json:"extloanId"`
 	ExtLoanOwners     []ExtLoanOwner
@@ -124,7 +124,7 @@ type ExtLoanID struct {
 }
 
 // CompanyEconomy
-type CompanyEconomy struct {
+type CompanyEconomyType struct {
 	ProcessID        string `json:"processId"`
 	CompanyID        string `json:"companyId"`
 	CompanyEconomyID string `json:"companyEconomyId"`
@@ -145,7 +145,7 @@ type CompanyEconomyID struct {
 }
 
 // Company documentation
-type Company struct {
+type CompanyType struct {
 	ProcessID       string `json:"processId"`
 	CompanyID       string `json:"companyId"`
 	OrgNumber       string `json:"orgNr"`
@@ -168,7 +168,7 @@ type CompanyID struct {
 }
 
 // PersonalEconomy documentation
-type PersonalEconomy struct {
+type PersonalEconomyType struct {
 	ProcessID          string  `json:"processId"`
 	CustomerID         string  `json:"customerId"`
 	PersonalEconomyID  string  `json:"personalEconomyId"`
@@ -190,7 +190,7 @@ type Cases struct {
 }
 
 // Collateral documentation
-type Collateral struct {
+type CollateralType struct {
 	ProcessID              string `json:"processId"`
 	CustomerID             string `json:"customerId"`
 	CollateralID           string `json:"collateralId"`
@@ -215,7 +215,7 @@ type CollateralID struct {
 }
 
 // KycInformation documentation
-type KycInformation struct {
+type KycInformationType struct {
 	ProcessID                string `json:"processId"`
 	CustomerID               string `json:"customerId"`
 	KycID                    string `json:"kycId"`
@@ -232,7 +232,7 @@ type KycID struct {
 }
 
 // Budget documentation
-type Budget struct {
+type BudgetType struct {
 	ProcessID        string `json:"processId"`
 	CompanyEconomyID string `json:"companyEconomyId"`
 	BudgetYears      []BudgetYear

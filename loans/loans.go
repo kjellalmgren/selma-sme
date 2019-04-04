@@ -23,7 +23,7 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	loans := []models.Loan{}
+	loans := []models.LoanType{}
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
@@ -69,13 +69,13 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("getLoan executed: X-process-ID: %s...LoanId: %s\r\n", processid, data.LoanID)
 	//
-	loans := []models.Loan{}
+	loans := []models.LoanType{}
 	file, err := ioutil.ReadFile("json/loans.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading loans.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	loanret := make([]models.Loan, 1, 1)
+	loanret := make([]models.LoanType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &loans)
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
@@ -102,7 +102,7 @@ func GetLoan(w http.ResponseWriter, r *http.Request) {
 // GetLoansx documentation
 func GetLoansx(w http.ResponseWriter, r *http.Request) {
 
-	var loans []models.Loan
+	var loans []models.LoanType
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("GetXLoans executed: X-process-ID: %s...\r\n", processid)
@@ -117,7 +117,7 @@ func GetLoansx(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("XprocessID", "9a65d28a-46bb-4442-b96d-6a09fda6b18b")
 	// r.Header().Get("XprocessID")
 	loans = append(loans,
-		models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+		models.LoanType{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 			LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
 			LoanNumber:    "930101011212",
 			LoanAmount:    2300000,
@@ -147,7 +147,7 @@ func GetLoansx(w http.ResponseWriter, r *http.Request) {
 // GetLoanx documentation
 func GetLoanx(w http.ResponseWriter, r *http.Request) {
 
-	var loans []models.Loan
+	var loans []models.LoanType
 	processid := r.Header.Get("X-process-Id")
 	var data models.LoanID
 	var r1 []byte
@@ -171,7 +171,7 @@ func GetLoanx(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	loans = append(loans,
-		models.Loan{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+		models.LoanType{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
 			LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
 			LoanNumber:    "930101011212",
 			LoanAmount:    2300000,

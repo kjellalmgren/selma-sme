@@ -22,7 +22,7 @@ func GetPersonalEconomies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	personaleconomies := []models.PersonalEconomy{}
+	personaleconomies := []models.PersonalEconomyType{}
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
@@ -71,13 +71,13 @@ func GetPersonalEconomy(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("getPersonalEconomies executed: processId: %s /personalEconomyId: %s...\r\n",
 		processid, data.PersonalEconomyID)
 	//
-	personaleconomies := []models.PersonalEconomy{}
+	personaleconomies := []models.PersonalEconomyType{}
 	file, err := ioutil.ReadFile("json/personaleconomies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading personaleconomies.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	peconret := make([]models.PersonalEconomy, 1, 1)
+	peconret := make([]models.PersonalEconomyType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &personaleconomies)
 	//
 	switch processid {

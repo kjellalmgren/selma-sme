@@ -12,17 +12,17 @@ import (
 //
 // processAll
 type processAll struct {
-	Processes         []models.Process
-	Applicans         []models.Applicant
-	Loans             []models.Loan
-	ExtLoans          []models.ExtLoan
-	Households        []models.Household
-	Companies         []models.Company
-	CompanyEconomies  []models.CompanyEconomy
-	PersonalEconomies []models.PersonalEconomy
-	Collaterals       []models.Collateral
-	KycInformations   []models.KycInformation
-	Budgets           []models.Budget
+	Processes         []models.ProcessType
+	Applicans         []models.ApplicantType
+	Loans             []models.LoanType
+	ExtLoans          []models.ExtLoanType
+	Households        []models.HouseholdType
+	Companies         []models.CompanyType
+	CompanyEconomies  []models.CompanyEconomyType
+	PersonalEconomies []models.PersonalEconomyType
+	Collaterals       []models.CollateralType
+	KycInformations   []models.KycInformationType
+	Budgets           []models.BudgetType
 }
 
 // ProcessEntry documentation
@@ -82,7 +82,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error reading processes.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	processes := []models.Process{}
+	processes := []models.ProcessType{}
 	_ = json.Unmarshal([]byte(file), &processes)
 	//
 	//
@@ -155,17 +155,17 @@ func addProcess(w http.ResponseWriter, r *http.Request) {
 func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	//
 	var processall processAll
-	processes := []models.Process{}
-	applicants := []models.Applicant{}
-	loans := []models.Loan{}
-	extloans := []models.ExtLoan{}
-	households := []models.Household{}
-	companies := []models.Company{}
-	companyeconomies := []models.CompanyEconomy{}
-	personaleconomies := []models.PersonalEconomy{}
-	kycinformations := []models.KycInformation{}
-	collaterals := []models.Collateral{}
-	budgets := []models.Budget{}
+	processes := []models.ProcessType{}
+	applicants := []models.ApplicantType{}
+	loans := []models.LoanType{}
+	extloans := []models.ExtLoanType{}
+	households := []models.HouseholdType{}
+	companies := []models.CompanyType{}
+	companyeconomies := []models.CompanyEconomyType{}
+	personaleconomies := []models.PersonalEconomyType{}
+	kycinformations := []models.KycInformationType{}
+	collaterals := []models.CollateralType{}
+	budgets := []models.BudgetType{}
 	//
 	var d models.XAll
 	var p models.Person

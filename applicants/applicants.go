@@ -31,7 +31,7 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	applicants := []models.Applicant{}
+	applicants := []models.ApplicantType{}
 	_ = json.Unmarshal([]byte(file), &applicants)
 	//
 	if err := json.NewEncoder(w).Encode(applicants); err != nil {
@@ -93,9 +93,9 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error reading applicants.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
-	applicants := []models.Applicant{}
+	applicants := []models.ApplicantType{}
 	//appret[0] := []models.Applicant{}
-	appret := make([]models.Applicant, 1, 1)
+	appret := make([]models.ApplicantType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &applicants)
 	//
 	switch processid {
@@ -210,7 +210,7 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("Add-Applicant executed, processId: %s...\r\n", processid)
 	//
-	data := models.Applicant{}
+	data := models.ApplicantType{}
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -228,8 +228,8 @@ func addApplicant(w http.ResponseWriter, r *http.Request) {
 	} else if data.CustomerID == "19650705-5579" {
 		data.ApplicantID = "b2f86b36-7ff3-428e-ab45-8dad11952dae"
 	}
-	applicant := make([]models.Applicant, 1, 1)
-	applicants := make([]models.Applicant, 1, 1)
+	applicant := make([]models.ApplicantType, 1, 1)
+	applicants := make([]models.ApplicantType, 1, 1)
 	applicant[0] = data
 	applicants[0] = applicant[0]
 

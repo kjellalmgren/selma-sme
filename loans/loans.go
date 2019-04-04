@@ -35,6 +35,7 @@ func GetLoans(w http.ResponseWriter, r *http.Request) {
 		_ = json.Unmarshal([]byte(file), &loans)
 	}
 	//
+
 	if err := json.NewEncoder(w).Encode(loans); err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		panic(err)

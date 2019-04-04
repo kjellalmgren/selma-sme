@@ -1,6 +1,9 @@
 package uploads
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 // Upload documentation
 func Upload(w http.ResponseWriter, r *http.Request) {
@@ -13,10 +16,11 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	err := r.MultipartReader()
-	if err =! nil {
+	//MultipartReader r1
+	r2, err := r.MultipartReader()
+	if r2 != nil {
 		fmt.Fprintf(w, "Error file upload - %s", err)
-			w.WriteHeader(http.StatusNotFound)
+		w.WriteHeader(http.StatusNotFound)
 	}
 	w.WriteHeader(http.StatusOK)
 }

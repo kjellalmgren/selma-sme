@@ -29,6 +29,7 @@ import (
 	"selmasme/budgets"
 	"selmasme/cases"
 	"selmasme/collaterals"
+	"selmasme/uploads"
 
 	"selmasme/companies"
 	"selmasme/companyeconomies"
@@ -93,7 +94,7 @@ func main() {
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
 	router.HandleFunc("/v1/swagger", Swagger).Methods("GET", "POST", "OPTIONS")
-	router.HandleFunc("/v1/upload", Upload).Methods("GET", "POST", "OPTIONS")
+	router.HandleFunc("/v1/upload", uploads.Upload).Methods("GET", "POST", "OPTIONS")
 	// processes.go
 	router.HandleFunc("/v1/getProcesses", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
 	router.HandleFunc("/v1/getProcess", processes.GetProcessAll).Methods("POST", "OPTIONS")

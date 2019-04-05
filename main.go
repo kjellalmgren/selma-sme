@@ -3,7 +3,7 @@ package main
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
-	Date: 2019-04-02
+	Date: 2019-04-05
 	Description: Service to feed Selma-SME UX, just for test purpose
 	Architecture:
 	win32: GOOS=windows GOARCH=386 go build -v
@@ -21,7 +21,6 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -29,6 +28,7 @@ import (
 	"selmasme/budgets"
 	"selmasme/cases"
 	"selmasme/collaterals"
+	"selmasme/swagger"
 	"selmasme/uploads"
 
 	"selmasme/companies"
@@ -93,7 +93,7 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
-	router.HandleFunc("/v1/swagger", Swagger).Methods("GET", "POST", "OPTIONS")
+	router.HandleFunc("/v1/swagger", swagger.Swagger).Methods("GET", "POST", "OPTIONS")
 	router.HandleFunc("/v1/upload", uploads.Upload).Methods("GET", "POST", "OPTIONS")
 	// processes.go
 	router.HandleFunc("/v1/getProcesses", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
@@ -159,10 +159,10 @@ func main() {
 	color.Set(color.FgHiYellow)
 	fmt.Printf("localhost")
 	color.Set(color.FgHiCyan)
-	fmt.Printf(":8443\r\n")
+	fmt.Printf(":8400\r\n")
 	color.Unset()
-	//err := http.ListenAndServe(":8443", router)
-	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
+	err := http.ListenAndServe(":8400", router)
+	//err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
 	if err != nil {
 		fmt.Printf("ListenAndServeTLS Error: %s", err.Error())
 		log.Fatal(err)
@@ -174,29 +174,6 @@ func main() {
 // Index documentation
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
-}
-
-// swagger documentation
-func Swagger(w http.ResponseWriter, r *http.Request) {
-
-	//
-	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("swagger executed, processId: %s...\r\n", processid)
-	//
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
-	//
-	file, err := ioutil.ReadFile("json/selma-en-v0.5.8.yaml")
-	if err != nil {
-		fmt.Fprintf(w, "Error reading selma-en-v0.5.8.json - %s", err)
-		w.WriteHeader(http.StatusNotFound)
-	}
-	w.Write(file)
-	w.WriteHeader(http.StatusOK)
-	//fmt.Fprint(os.Stderr, fmt.Sprintf("selma-en-v0.5.8"))
 }
 
 // Upload documentation

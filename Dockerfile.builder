@@ -34,16 +34,17 @@ COPY json/households.json /selmasme/json
 COPY json/loans.json /selmasme/json
 COPY json/personaleconomies.json /selmasme/json
 COPY json/companies.json /selmasme/json
+COPY json/kycinformations.json /selmasme/json
 COPY json/selma-en-v0.5.8.yaml /selmasme/json
 # COPY executable ./selma-sme
 COPY selmasme /selmasme
 #
 # copy our self-signed certificate
-COPY cert.pem /selmasme
-COPY key.pem /selmasme
+#COPY cert.pem /selmasme
+#COPY key.pem /selmasme
 #
-# tell we are exposing our service on port 8443 for https & 8000 for http
-EXPOSE 8443 8000
+# tell we are exposing our service on port 8443 for https & 8400 for http
+EXPOSE 8400
 # run it!
 ENTRYPOINT ["./selmasme"]
 #CMD ["./selmasme"]

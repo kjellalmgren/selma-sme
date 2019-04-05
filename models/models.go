@@ -129,11 +129,11 @@ type CompanyEconomyType struct {
 	CompanyID        string `json:"companyId"`
 	CompanyEconomyID string `json:"companyEconomyId"`
 	CustomerCategory int16  `json:"customerCategory"` // Kundklass från SAS
-	Revenues         []Revenue
+	Revenues         []RevenueType
 }
 
 // Revenue documentation
-type Revenue struct {
+type RevenueType struct {
 	//RevenueID   string  `json:"revenueId"`
 	RevenueYear int32   `json:"revenueYear"`
 	Revenue     float32 `json:"revenue"`

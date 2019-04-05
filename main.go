@@ -21,6 +21,7 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -29,7 +30,6 @@ import (
 	"selmasme/cases"
 	"selmasme/collaterals"
 	"selmasme/swagger"
-	"selmasme/uploads"
 
 	"selmasme/companies"
 	"selmasme/companyeconomies"
@@ -94,7 +94,7 @@ func main() {
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
 	router.HandleFunc("/v1/swagger", swagger.Swagger).Methods("GET", "POST", "OPTIONS")
-	router.HandleFunc("/v1/upload", uploads.Upload).Methods("GET", "POST", "OPTIONS")
+	router.HandleFunc("/v1/upload", Upload).Methods("GET", "POST", "OPTIONS")
 	// processes.go
 	router.HandleFunc("/v1/getProcesses", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
 	router.HandleFunc("/v1/getProcess", processes.GetProcessAll).Methods("POST", "OPTIONS")
@@ -187,6 +187,36 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	fmt.Fprintf(w, "Upload file\n")
+	// 1. parse input, type multipart/form-data
+	r.ParseMultipartForm(10 << 20)
+	// 2. retrieve file from posted form-data
+	file, handler, err := r.FormFile("myFile")
+	if err != nil {
+		fmt.Println("Error retrieving file from form-data")
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+	fmt.Printf("Uploaded file: %+v\n", handler.Filename)
+	fmt.Printf("File Size file: %+v\n", handler.Size)
+	fmt.Printf("MIME Header %+v\n", handler, handler.Header)
+	// 3.
+	tempFile, err := ioutil.TempFile("temp-folders", "upload-*.pdf")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer tempFile.Close()
+	// 4.
+	fileBytes, err := ioutil.ReadAll(file)
+	if err != nil {
+		fmt.Println(err)
+	}
+	tempFile.Write(fileBytes)
+	fmt.Fprintf(w, "Successfully uploaded file \n")
+
+	// Parse
 	w.WriteHeader(http.StatusOK)
 }
 

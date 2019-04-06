@@ -8,7 +8,10 @@
 # Test binary, build with `go test -c`
 *.test
 .DS_Store
+/temp-folders
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+*.pdf
+*.png
 # executable
 selmasme

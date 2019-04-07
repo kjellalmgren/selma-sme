@@ -224,6 +224,7 @@ type KycInformationType struct {
 	KycUCAware               bool   `json:"kycUCAware"`
 	KycPublicFunction        bool   `json:"kycPublicFunction"`
 	KycRelatedPublicFunction bool   `json:"kycRelatedPublicFunction"`
+	KycHighRiskIndustry      bool   `json:"kycHighRiskIndustry"`
 }
 
 // KycID documentation

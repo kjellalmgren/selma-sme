@@ -1,0 +1,4 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="default-endpoint-seq">
+    <property name="service_ep" expression="fn:concat('http://selmasme:8400/', 'posts/')"/>
+    <header name="To" expression="get-property('service_ep')"/>
+</sequence>

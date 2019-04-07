@@ -13,5 +13,7 @@
 *.out
 *.pdf
 *.png
+# API meditation policy file
+meditation_ploicy.xml
 # executable
 selmasme

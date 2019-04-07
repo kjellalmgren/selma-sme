@@ -86,6 +86,8 @@ info:
   # 2019-03-28 0.5.6 kal Bugg in Applicant regarding example value for customerId
   # 2019-03-29 0.5.7 kal Changed location for json-files
   # 2019-04-01 0.5.7 kal customerCategory has been added to CompanyEconomies (from SAS)
+  # 2019-04-04 0.5.8 kal File upload multipart has been added
+  # 2019-04-07 0.5.8 kal kycHighRiskIndustry has been added (högriskbransch)
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -139,7 +141,7 @@ info:
     url: api.landshypotek.se/v1/sme
     email: developer@landshypotek.se
 #host: '127.0.0.1:8443'
-host: 'localhost:8443'
+host: 'localhost:8400'
 basePath: /
 tags:
   - name: Selma SME(EN) API Definitions
@@ -200,6 +202,31 @@ paths:
       responses:
         200:
           description: OK
+  #
+  #############################################################
+  # file upload
+  #############################################################
+  /v1/upload:
+    post:
+      tags:
+      - Uploads
+      description: The file to upload.
+      operationId: fileUpload
+      summary: Uploads a file.
+      consumes:
+      - multipart/form-data
+      parameters:
+      - in: formData
+        name: upfile
+        type: array
+        items:
+          type: string
+          format: binary
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/200OK'
   #
   ##############################################################
   # Processes
@@ -277,7 +304,7 @@ paths:
   # getProcessAll
   ##############################################################
   /v1/getProcess:
-    get:
+    post:
       tags:
       - Processes
       summary: Return all data for a given processid
@@ -3406,7 +3433,7 @@ paths:
     post:
       tags:
         - Budgets
-      summary: get a specific Budget to a company in Activiti
+      summary: get a specific Budget to a company Economy in Activiti
       description: >-
         TBD
       operationId: updateBudget
@@ -4837,12 +4864,18 @@ definitions:
     - false
     example: false
   kycRelatedPublicFunction:
-    type: boolean
     description: Är du familjemedlem eller medarbetare till en person som har, eller som under de senaste 18 månaderna innehaft en viktig offentlig funktion?
+    type: boolean
     enum:
     - true
     - false
     example: false
+  kycHighRiskIndustry:
+    description: High risk industry, högriskbransch (true/false)
+    type: boolean
+    enum:
+    - true
+    - false
   #
   #################################################################
   # START Response definitions
@@ -5437,7 +5470,32 @@ definitions:
       $ref: '#/definitions/budgetType'
   #
   BudgetYear:
-    description: TBD
+    description: Budget records, minusposter registreras som minusposter
+      value1; Resultaträkning; Skog
+      value2; Resultaträkning; Växtodling
+      value3; Resultaträkning; EU-stöd
+      value4; Resultaträkning; Övrig djurproduktion
+      value5; Resultaträkning; Förändring av lager produktion
+      value6; Resultaträkning; Mjölk
+      value7; Resultaträkning; Övriga intäkter
+      value8; Omsättning totalt (Totala intäkter) summa value1-7
+      value9; Inköp (Råvaror och förnödenheter)
+      value10; Arrendekostnader
+      value11; Personalkostnader
+      value12; Övriga rörelsekostnader
+      value13; S:a kostnader (summa value9-12)
+      value14; Resultat före avskrivningar (value8 + (-value13))
+      value15; Avskrivning inventarier (exkl. byggnadsinventerier)
+      value16; Övriga avskrivningar
+      value17; S:a avskrivningar (-value15) + (-value16)
+      value18; Resultat före avskrivningar value14 + (-value17)
+      value19; Finansiella intäkter
+      value20; Finansiella konstnader
+      value21; Resultat finansiella poster (value18) + value19 + (-value20)
+      value22; Extraordinärar intäkter och kostnader
+      value23; Bokslutsdispositioner
+      value24; Skatt (ägaruttag prognosår EF)
+      value25; Åretsresultat (value21) sum (value22+value23+value24)
     type: object
     properties:
       budgetYear:
@@ -5564,6 +5622,8 @@ definitions:
         $ref: '#/definitions/kycPublicFunction'
       kycRelatedPublicFunction:
         $ref: '#/definitions/kycRelatedPublicFunction'
+      kycHighRiskIndustry:
+        $ref: '#/definitions/kycHighRiskIndustry'
   #
   KycInformation:
     $ref: '#/definitions/kycInformationType'

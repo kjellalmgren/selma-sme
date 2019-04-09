@@ -43,7 +43,7 @@ func GetCompanyEconomies(w http.ResponseWriter, r *http.Request) {
 }
 
 // CompanyEconomyEntry
-func CompanyEconomyEntry(w http.ResponseWriter, r *http.Request) {
+func companyEconomyEntry(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -54,16 +54,16 @@ func CompanyEconomyEntry(w http.ResponseWriter, r *http.Request) {
 	//
 	switch r.Method {
 	case "POST":
-		getCompanyEconomy(w, r)
+		GetCompanyEconomy(w, r)
 	case "DELETE":
-		deleteCompanyEconomy(w, r)
+		DeleteCompanyEconomy(w, r)
 	case "PATCH":
-		updateCompanyEconomy(w, r)
+		UpdateCompanyEconomy(w, r)
 	}
 }
 
 // getCompanyEconomy documentation
-func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
+func GetCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 
 	//
 	processid := r.Header.Get("X-process-Id")
@@ -87,7 +87,7 @@ func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	companyeconomies := []models.CompanyEconomyType{}
@@ -119,12 +119,12 @@ func getCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func deleteCompanyEconomy(w http.ResponseWriter, r *http.Request) {
+func DeleteCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
@@ -144,18 +144,18 @@ func deleteCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	//
-	fmt.Printf("deleteCompanyEconomy executed, processId: %s companyId: %s...\r\n", processid, data.CompanyEconomyID)
+	fmt.Printf("DeleteCompanyEconomy executed, processId: %s companyId: %s...\r\n", processid, data.CompanyEconomyID)
 	w.WriteHeader(http.StatusOK)
 }
 
 //
 // updateCompanyEconomy documentation
-func updateCompanyEconomy(w http.ResponseWriter, r *http.Request) {
+func UpdateCompanyEconomy(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "PATCH, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//

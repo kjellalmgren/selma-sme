@@ -26,7 +26,7 @@ type processAll struct {
 }
 
 // ProcessEntry documentation
-func ProcessEntry(w http.ResponseWriter, r *http.Request) {
+func processEntry(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -37,9 +37,9 @@ func ProcessEntry(w http.ResponseWriter, r *http.Request) {
 	//
 	switch r.Method {
 	case "DELETE":
-		deleteProcess(w, r)
+		DeleteProcess(w, r)
 	case "PUT":
-		addProcess(w, r)
+		AddProcess(w, r)
 	}
 }
 
@@ -99,7 +99,7 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 
 //
 // DeleteProcess documentation
-func deleteProcess(w http.ResponseWriter, r *http.Request) {
+func DeleteProcess(w http.ResponseWriter, r *http.Request) {
 
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("deleteProcess executed, processid: %s...\r\n", processid)
@@ -117,7 +117,7 @@ func deleteProcess(w http.ResponseWriter, r *http.Request) {
 }
 
 // AddProcess documentation
-func addProcess(w http.ResponseWriter, r *http.Request) {
+func AddProcess(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")

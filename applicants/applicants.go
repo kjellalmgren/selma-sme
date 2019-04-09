@@ -43,8 +43,8 @@ func GetApplicants(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// ApplicantEntry documentation
-func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
+// ApplicantEntry documentation, not exposed
+func applicantEntry(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -55,19 +55,19 @@ func ApplicantEntry(w http.ResponseWriter, r *http.Request) {
 	//
 	switch r.Method {
 	case "POST":
-		getApplicant(w, r)
+		GetApplicant(w, r)
 	case "DELETE":
-		deleteApplicant(w, r)
+		DeleteApplicant(w, r)
 	case "PATCH":
-		updateApplicant(w, r)
+		UpdateApplicant(w, r)
 	case "PUT":
-		addApplicant(w, r)
+		AddApplicant(w, r)
 	}
 }
 
 //
 // GetApplicant documentation
-func getApplicant(w http.ResponseWriter, r *http.Request) {
+func GetApplicant(w http.ResponseWriter, r *http.Request) {
 
 	//
 	processid := r.Header.Get("X-process-Id")
@@ -84,7 +84,7 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
@@ -120,13 +120,13 @@ func getApplicant(w http.ResponseWriter, r *http.Request) {
 }
 
 // "UpdateApplicant..." go-lint
-func updateApplicant(w http.ResponseWriter, r *http.Request) {
+func UpdateApplicant(w http.ResponseWriter, r *http.Request) {
 
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "PATCH, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
@@ -166,13 +166,13 @@ func updateApplicant(w http.ResponseWriter, r *http.Request) {
 }
 
 // DeleteApplicant documentation
-func deleteApplicant(w http.ResponseWriter, r *http.Request) {
+func DeleteApplicant(w http.ResponseWriter, r *http.Request) {
 
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
@@ -197,7 +197,7 @@ func deleteApplicant(w http.ResponseWriter, r *http.Request) {
 // addApplicant documentation
 // When we create an applicant we should be returning a uuid and start communicate this
 // in the API calls going forward.
-func addApplicant(w http.ResponseWriter, r *http.Request) {
+func AddApplicant(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")

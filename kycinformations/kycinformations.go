@@ -9,8 +9,8 @@ import (
 	"selmasme/models"
 )
 
-// KycEntry documents
-func KycEntry(w http.ResponseWriter, r *http.Request) {
+// KycEntry documents, not exposed
+func kycEntry(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -21,20 +21,20 @@ func KycEntry(w http.ResponseWriter, r *http.Request) {
 	//
 	switch r.Method {
 	case "GET":
-		getKycInformations(w, r)
-	case "DELETE":
-		deleteKycInformation(w, r)
-	case "PATCH":
-		updateKycInformation(w, r)
-	case "PUT":
-		addKycInformation(w, r)
+		GetKycInformations(w, r)
 	case "POST":
-		getKycInformation(w, r)
+		GetKycInformation(w, r)
+	case "DELETE":
+		DeleteKycInformation(w, r)
+	case "PATCH":
+		UpdateKycInformation(w, r)
+	case "PUT":
+		AddKycInformation(w, r)
 	}
 }
 
 // GetKycInformations documentation
-func getKycInformations(w http.ResponseWriter, r *http.Request) {
+func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 
 	//
 	processid := r.Header.Get("X-process-Id")
@@ -43,7 +43,7 @@ func getKycInformations(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	file, err := ioutil.ReadFile("json/kycinformations.json")
@@ -62,7 +62,7 @@ func getKycInformations(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetKycInformation information
-func getKycInformation(w http.ResponseWriter, r *http.Request) {
+func GetKycInformation(w http.ResponseWriter, r *http.Request) {
 
 	//
 	processid := r.Header.Get("X-process-Id")
@@ -70,7 +70,7 @@ func getKycInformation(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	var data models.KycID
@@ -117,13 +117,13 @@ func getKycInformation(w http.ResponseWriter, r *http.Request) {
 }
 
 // deleteKycInformation documentation
-func deleteKycInformation(w http.ResponseWriter, r *http.Request) {
+func DeleteKycInformation(w http.ResponseWriter, r *http.Request) {
 
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	processid := r.Header.Get("X-process-Id")
@@ -133,13 +133,13 @@ func deleteKycInformation(w http.ResponseWriter, r *http.Request) {
 }
 
 // addKycInformation documentation
-func addKycInformation(w http.ResponseWriter, r *http.Request) {
+func AddKycInformation(w http.ResponseWriter, r *http.Request) {
 
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	processid := r.Header.Get("X-process-Id")
@@ -149,13 +149,13 @@ func addKycInformation(w http.ResponseWriter, r *http.Request) {
 }
 
 // updateKycInformation documentation
-func updateKycInformation(w http.ResponseWriter, r *http.Request) {
+func UpdateKycInformation(w http.ResponseWriter, r *http.Request) {
 
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "PATCH, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	processid := r.Header.Get("X-process-Id")

@@ -11,7 +11,7 @@ import (
 )
 
 // CompanyEntry documentations
-func CompanyEntry(w http.ResponseWriter, r *http.Request) {
+func companyEntry(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -22,13 +22,13 @@ func CompanyEntry(w http.ResponseWriter, r *http.Request) {
 	//
 	switch r.Method {
 	case "POST":
-		getCompany(w, r)
+		GetCompany(w, r)
 	case "DELETE":
-		deleteCompany(w, r)
+		DeleteCompany(w, r)
 	case "PATCH":
-		updateCompany(w, r)
+		UpdateCompany(w, r)
 	case "PUT":
-		addCompany(w, r)
+		AddCompany(w, r)
 	}
 }
 
@@ -42,7 +42,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	companies := []models.CompanyType{}
@@ -67,7 +67,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 
 //
 // getCompany documentation
-func getCompany(w http.ResponseWriter, r *http.Request) {
+func GetCompany(w http.ResponseWriter, r *http.Request) {
 
 	//var companies []models.Company
 	processid := r.Header.Get("X-process-Id")
@@ -88,7 +88,7 @@ func getCompany(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
 	companies := []models.CompanyType{}
@@ -124,12 +124,12 @@ func getCompany(w http.ResponseWriter, r *http.Request) {
 }
 
 // deleteCompany documentation
-func deleteCompany(w http.ResponseWriter, r *http.Request) {
+func DeleteCompany(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
@@ -150,7 +150,7 @@ func deleteCompany(w http.ResponseWriter, r *http.Request) {
 }
 
 // updateCompany documentation
-func updateCompany(w http.ResponseWriter, r *http.Request) {
+func UpdateCompany(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -186,7 +186,7 @@ func updateCompany(w http.ResponseWriter, r *http.Request) {
 }
 
 // addCompany documentation
-func addCompany(w http.ResponseWriter, r *http.Request) {
+func AddCompany(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")

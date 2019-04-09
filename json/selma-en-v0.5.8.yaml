@@ -231,7 +231,7 @@ paths:
   ##############################################################
   # Processes
   ##############################################################
-  /v1/getProcesses:
+  /v1/getprocesses:
     post:
       tags:
       - Processes
@@ -303,7 +303,7 @@ paths:
   ##############################################################
   # getProcessAll
   ##############################################################
-  /v1/getProcess:
+  /v1/getprocess:
     post:
       tags:
       - Processes
@@ -329,13 +329,13 @@ paths:
   ####################################################
   # addProcess
   ####################################################
-  /v1/updateProcess:
+  /v1/updateprocess:
     put:
       tags:
       - Processes
       summary: Operation will be invoked when a customer want to create a new application
       description: This operation will return a processid that has to be used i header X-process-ID for all other requests in all APIs. As parameter we will allways be using STARTEDBYAPPLICANT
-      operationId: addProcess
+      operationId: updateProcess
       produces:
       - application/json
       consumes:
@@ -355,7 +355,7 @@ paths:
   ####################################################
   # Delete Process
   ####################################################
-  /v1/deleteProcess:
+  /v1/deleteprocess:
     delete:
       tags:
       - Processes
@@ -425,7 +425,7 @@ paths:
   # We should have a discussion if we should use
   # customerId as a header parameter in this method
   ##################################################
-  /v1/reserveCaseId:
+  /v1/reserveeaseid:
     post:
       deprecated: true
       tags:
@@ -501,7 +501,7 @@ paths:
   ##################################################
   # setCaseIdStatus
   ##################################################
-  /v1/setCaseIdStatus:
+  /v1/setcaseidstatus:
     patch:
       tags:
         - Processes
@@ -574,7 +574,7 @@ paths:
   ####################################################################
   # Get a list of available applicant for a given processId in Activiti
   ####################################################################
-  /v1/Applicants:
+  /v1/getapplicants:
     post:
       tags:
         - Applicants
@@ -642,7 +642,7 @@ paths:
   ##################################################
   # get a specific Applicant
   ##################################################
-  /v1/Applicant:
+  /v1/getapplicant:
     post:
       tags:
         - Applicants
@@ -714,7 +714,7 @@ paths:
   ############################################
   # Delete a specific applicant
   ############################################
-  #/v1/Applicant:
+  /v1/deleteapplicant:
     delete:
       tags:
         - Applicants
@@ -787,7 +787,7 @@ paths:
   ###########################################
   # Update of a specific Applicant
   ###########################################
-  #/v1/Applicant:
+  /v1/updateapplicant:
     patch:
       tags:
         - Applicants
@@ -933,7 +933,7 @@ paths:
   #####################################################################
   # Get a list of available companies for a given processId in Activiti
   #####################################################################
-  /v1/Companies:
+  /v1/getcompanies:
     post:
       tags:
         - Companies
@@ -1002,7 +1002,7 @@ paths:
   # Company
   ####################################################
   # get a specific company
-  /v1/Company:
+  /v1/getcompany:
     post:
       tags:
         - Companies
@@ -1075,7 +1075,7 @@ paths:
   ########################################################
   # Update of a specific company
   ########################################################
-  #/v1/Company:
+  /v1/updatecompany:
     patch:
       tags:
         - Companies
@@ -1291,7 +1291,7 @@ paths:
   #####################################################################################
   # Get a list of available households for a given processId  in Activiti
   #####################################################################################
-  /v1/Households:
+  /v1/gethouseholds:
     post:
       tags:
         - Households
@@ -1359,7 +1359,7 @@ paths:
   #####################################################################################
   # Add household to the model
   #####################################################################################
-  /v1/Household:
+  /v1/addhousehold:
     put:
       tags:
         - Households
@@ -1431,7 +1431,7 @@ paths:
   ##################################################
   # get a specific household
   ##################################################
-  #/v1/Household:
+  /v1/gethousehold:
     post:
       tags:
         - Households
@@ -1503,7 +1503,7 @@ paths:
   ###########################################
   # Update of a specific household
   ###########################################
-  /v1/updateHousehold:
+  /v1/updatehousehold:
     post:
       tags:
         - Households
@@ -1576,7 +1576,7 @@ paths:
   ############################################
   # Delete a specific household
   ############################################
-  /v1/deleteHousehold:
+  /v1/deletehousehold:
     delete:
       tags:
         - Households
@@ -1649,7 +1649,7 @@ paths:
   ##############################################################
   # deleteChildInHousehold
   ##############################################################
-  /v1/deleteChildInHousehold:
+  /v1/deletechildinhousehold:
     post:
       tags:
         - Households
@@ -1719,7 +1719,7 @@ paths:
   #################################################################
   # addChildInHousehold
   #################################################################
-  /v1/addChildInHousehold:
+  /v1/addchildinhousehold:
     post:
       tags:
         - Households
@@ -1789,7 +1789,7 @@ paths:
   ######################################################################
   # deleteHouseholdMember
   ######################################################################
-  /v1/deleteHouseholdMember:
+  /v1/deletehouseholdmember:
     post:
       tags:
         - Households
@@ -1860,7 +1860,7 @@ paths:
   ##################################################################
   # addHouseholdMember
   ##################################################################
-  /v1/addHouseholdMember:
+  /v1/addhouseholdmember:
     post:
       tags:
         - Households
@@ -2214,7 +2214,7 @@ paths:
   ################################################################################
   # Get a list of available loans for a given processId and companyId in Activiti
   ################################################################################
-  /v1/Loans:
+  /v1/getloans:
     post:
       tags:
         - Loans
@@ -2282,7 +2282,7 @@ paths:
   #############################################
   # get a specific loan by processId and loanId
   #############################################
-  /v1/Loan:
+  /v1/getloan:
     post:
       tags:
         - Loans
@@ -2354,7 +2354,7 @@ paths:
   ###########################################
   # Update of a specific loan
   ###########################################
-  #/v1/Loan:
+  /v1/updateloan:
     patch:
       tags:
         - Loans
@@ -2427,7 +2427,7 @@ paths:
   ############################################
   # Delete a specific loan
   ############################################
-  #/v1/Loan:
+  /v1/deleteloan:
     delete:
       tags:
         - Loans
@@ -2498,7 +2498,7 @@ paths:
    ################################################################################
   # Get a list of available extloans for a given processId and customerId in Activiti
   ################################################################################
-  /v1/ExtLoans:
+  /v1/getextloans:
     post:
       tags:
         - ExtLoans
@@ -2567,7 +2567,7 @@ paths:
   ##################################################
   # get a specific extloan
   ##################################################
-  /v1/ExtLoan:
+  /v1/getExtloan:
     post:
       tags:
         - ExtLoans
@@ -2642,7 +2642,7 @@ paths:
   #######################################################
   # Update of a specific extloan
   #######################################################
-  #/v1/ExtLoan:
+  /v1/updateextloan:
     patch:
       tags:
         - ExtLoans
@@ -2715,7 +2715,7 @@ paths:
   #######################################################
   # Delete a specific extloan
   #######################################################
-  #/v1/ExtLoan:
+  /v1/deleteextloan:
     delete:
       tags:
         - ExtLoans
@@ -2790,7 +2790,7 @@ paths:
   # Get a list of available PersonalEconomies for a given processId and customerId
   # in Activiti
   ################################################################################
-  /v1/PersonalEconomies:
+  /v1/getpersonaleconomies:
     post:
       tags:
         - PersonalEconomies
@@ -2860,7 +2860,7 @@ paths:
   #################################################################
   # PersonalEconomy
   #################################################################
-  /v1/PersonalEconomy:
+  /v1/getPersonaleconomy:
     post:
       tags:
         - PersonalEconomies
@@ -2932,7 +2932,7 @@ paths:
   #######################################################################
   # Update of a specific PersonalEconomy
   #######################################################################
-  #/v1/PersonalEconomy:
+  /v1/updatepersonaleconomy:
     patch:
       tags:
         - PersonalEconomies
@@ -3005,7 +3005,7 @@ paths:
   ######################################################################
   # Delete a specific PersonalEconomy
   ######################################################################
-  #/v1/PersonalEconomy:
+  /v1/deletepersonaleconomy:
     delete:
       tags:
         - PersonalEconomies
@@ -3077,8 +3077,8 @@ paths:
   # Get a list of available CompanyEconomies for a given processId
   # in Activiti
   ################################################################################
-  /v1/CompanyEconomies:
-    post:
+  /v1/getcompanyeconomies:
+    get:
       tags:
         - CompanyEconomies
       summary: get a list of available CompanyEconomies
@@ -3145,7 +3145,7 @@ paths:
   ###############################################
   # CompanyEconomy
   ###############################################
-  /v1/CompanyEconomy:
+  /v1/getcompanyeconomy:
     post:
       tags:
         - CompanyEconomies
@@ -3218,7 +3218,7 @@ paths:
   ####################################################################
   # Update of a specific CompanyEconomy
   ####################################################################
-  #/v1/CompanyEconomy:
+  /v1/updatecompanyeconomy:
     patch:
       tags:
         - CompanyEconomies
@@ -3290,7 +3290,7 @@ paths:
   ####################################################################
   # Delete a specific CompanyEconomy
   ####################################################################
-  #/v1/CompanyEconomy:
+  /v1/deletecompanyeconomy:
     delete:
       tags:
         - CompanyEconomies
@@ -3361,8 +3361,8 @@ paths:
   ##################################################################################
   # Get a list of available Budgets for a given processId on a companyId in Activiti
   ##################################################################################
-  /v1/Budgets:
-    post:
+  /v1/getbudgets:
+    get:
       tags:
         - Budgets
       summary: get a list of available budgets
@@ -3429,14 +3429,14 @@ paths:
   ############################################################
   # get a specific Budget
   ############################################################
-  /v1/Budget:
+  /v1/getbudget:
     post:
       tags:
         - Budgets
       summary: get a specific Budget to a company Economy in Activiti
       description: >-
         TBD
-      operationId: updateBudget
+      operationId: getBudget
       # The method will handle the following MIME/Types
       produces:
       - application/json
@@ -3503,7 +3503,7 @@ paths:
   ############################################################
   # Delete a specific Budget
   ############################################################
-  #/v1/Budget:
+  /v1/deletebudget:
     delete:
       tags:
         - Budgets
@@ -3574,7 +3574,7 @@ paths:
   #########################################
   # KycInformations
   #########################################
-  /v1/KycInformations:
+  /v1/getkycinformations:
     get:
       tags:
         - KycInformations
@@ -3642,7 +3642,7 @@ paths:
   ####################################################
   # KycInformation
   ####################################################
-  /v1/KycInformation:
+  /v1/getkycinformation:
     post:
       tags:
         - KycInformations
@@ -3714,7 +3714,7 @@ paths:
   #########################################################
   # Update of a specific KycInformation
   #########################################################
-  #/v1/KycInformation:
+  /v1/updatekycinformation:
     patch:
       tags:
         - KycInformations
@@ -3787,7 +3787,7 @@ paths:
   #########################################################
   # Delete a specific KycInformation
   #########################################################
-  #/v1/KycInformation:
+  /v1/deletekkycinformation:
     delete:
       tags:
         - KycInformations
@@ -3858,7 +3858,7 @@ paths:
   #################################################
   # Submit Application
   #################################################
-  /v1/submitApplication:
+  /v1/submitapplication:
     post:
       tags:
         - submitApplications
@@ -3929,7 +3929,7 @@ paths:
   # XLoans
   ###################################
   ###################################
-  /v1/xloans:
+  /v1/getxloans:
     post:
       tags:
         - xloans (Experimental)
@@ -3993,13 +3993,13 @@ paths:
   ####################################
   # xloans POST Update
   ####################################
-  #/v1/xloans:
-    patch:
+  /v1/updatexloan:
+    get:
       tags:
         - xloans (Experimental)
       summary: Update some detail elements on a specific loan
       description: Get some details bases on header parameter XprocessID and in-path parameter loanId
-      operationId: getByLoanId
+      operationId: updatexLoan
       produces:
       - application/json
       consumes:
@@ -4062,13 +4062,13 @@ paths:
   ########################################
   # xloans DELETE
   ########################################
-  #/v1/xloans:
+  /v1/deletexloan:
     delete:
       tags:
         - xloans (Experimental)
       summary: Delete a specific loan
       description: Delete a loan based on header paraameter XprocessID and in-path parameter loanId
-      operationId: deleteLoanId
+      operationId: deletexLoan
       produces:
       - application/json
       consumes:

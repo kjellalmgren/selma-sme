@@ -40,11 +40,11 @@ COPY json/selma-en-v0.5.8.yaml /selmasme/json
 COPY selmasme /selmasme
 #
 # copy our self-signed certificate
-#COPY cert.pem /selmasme
-#COPY key.pem /selmasme
+COPY cert.pem /selmasme
+COPY key.pem /selmasme
 #
 # tell we are exposing our service on port 8443 for https & 8400 for http
-EXPOSE 8400
+EXPOSE 8443
 # run it!
 ENTRYPOINT ["./selmasme"]
 #CMD ["./selmasme"]

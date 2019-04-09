@@ -96,61 +96,74 @@ func main() {
 	router.HandleFunc("/v1/swagger", swagger.Swagger).Methods("GET", "POST", "OPTIONS")
 	router.HandleFunc("/v1/upload", Upload).Methods("GET", "POST", "OPTIONS")
 	// processes.go
-	router.HandleFunc("/v1/getprocesses", processes.GetProcesses).Methods("POST", "PATCH", "PUT", "OPTIONS")
+	//
+	router.HandleFunc("/v1/getprocesses", processes.GetProcesses).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getprocess", processes.GetProcessAll).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/deleteprocess", processes.DeleteProcess).Methods("DELETE", "OPTIONS")
-	//router.HandleFunc("/v1/updateprocess", processes.UpdateProcess).Methods("PUT", "OPTIONS") // addProcess
+	router.HandleFunc("/v1/updateprocessstatus", processes.UpdateProcess).Methods("PATCH", "OPTIONS")
+	router.HandleFunc("/v1/addprocess", processes.AddProcess).Methods("PUT", "OPTIONS") // addProcess
+	//
 	// cases.go
 	router.HandleFunc("/v1/reserveCaseId", cases.ReserveCaseID).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/setCaseIdStatus", cases.SetCaseIDStatus).Methods("PATCH", "OPTIONS")
+	//
 	// applicants.go
 	router.HandleFunc("/v1/getapplicants", applicants.GetApplicants).Methods("POST", "OPTIONS")
-	router.HandleFunc("/v1/getapplicant", applicants.GetApplicant).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/getapplicant", applicants.GetApplicant).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/updateapplicant", applicants.UpdateApplicant).Methods("PATCH", "OPTIONS")
 	router.HandleFunc("/v1/deleteapplicant", applicants.DeleteApplicant).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/addapplicant", applicants.AddApplicant).Methods("PUT", "OPTIONS")
+	//
 	// loans.go
 	router.HandleFunc("/v1/getloans", loans.GetLoans).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getloan", loans.GetLoan).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/deleteloan", loans.DeleteLoan).Methods("DELETE", "OPTIONS")
+	//
 	// extloans.go
 	router.HandleFunc("/v1/getextloans", extloans.GetExtLoans).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getextloan", extloans.GetExtLoan).Methods("POST", "OPTIONS")
+	//
 	// collaterals.go
-	router.HandleFunc("/v1/getCollaterals", collaterals.GetCollaterals).Methods("GET", "OPTIONS")
-	router.HandleFunc("/v1/getCollateral", collaterals.GetCollateral).Methods("GET", "OPTIONS")
+	router.HandleFunc("/v1/getCollaterals", collaterals.GetCollaterals).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/getCollateral", collaterals.GetCollateral).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/updateCollateral", collaterals.UpdateCollateral).Methods("PATCH", "OPTIONS")
 	router.HandleFunc("/v1/deleteCollateral", collaterals.DeleteCollateral).Methods("DELETE", "OPTIONS")
+	//
 	// companies.go
 	router.HandleFunc("/v1/getcompanies", companies.GetCompanies).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getcompany", companies.GetCompany).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/deletecompany", companies.DeleteCompany).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/updatecompany", companies.UpdateCompany).Methods("PATCH", "OPTIONS")
 	router.HandleFunc("/v1/addcompany", companies.AddCompany).Methods("PUT", "OPTIONS")
+	//
 	// Budgets.go
 	router.HandleFunc("/v1/getbudgets", budgets.GetBudgets).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/getbudget", budgets.GetBudget).Methods("POST", "GET", "OPTIONS")
+	//
 	// households.go
 	router.HandleFunc("/v1/gethouseholds", households.GetHouseholds).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/gethousehold", households.GetHousehold).Methods("POST", "OPTIONS")
 	// personalEconomies
 	router.HandleFunc("/v1/getpersonaleconomies", personaleconomies.GetPersonalEconomies).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getpersonaleconomy", personaleconomies.GetPersonalEconomy).Methods("POST", "OPTIONS")
+	//
 	// companyEconomies
 	router.HandleFunc("/v1/gompanyeconomies", companyeconomies.GetCompanyEconomies).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getcompanyeconomy", companyeconomies.GetCompanyEconomy).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/deletecompanyeconomy", companyeconomies.DeleteCompanyEconomy).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/updatecompanyeconomy}", companyeconomies.UpdateCompanyEconomy).Methods("PATCH", "OPTIONS")
+	//
 	// kycinformations.go
 	router.HandleFunc("/v1/getkycinformations", kycinformations.GetKycInformations).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getkycinformation", kycinformations.GetKycInformation).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/addkycinformation", kycinformations.AddKycInformation).Methods("PUT", "OPTIONS")
 	router.HandleFunc("/v1/deletekycinformation", kycinformations.DeleteKycInformation).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/updatekycinformation", kycinformations.UpdateKycInformation).Methods("PATCH", "OPTIONS")
+	//
 	// xloans.go
-	router.HandleFunc("/v1/xloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/xloans", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/xloans", loans.DeleteLoanx).Methods("POST", "DELETE", "OPTIONS")
+	router.HandleFunc("/v1/getxloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/getxloan", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/deletexloan", loans.DeleteLoanx).Methods("DELETE", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	color.Set(color.FgHiRed)

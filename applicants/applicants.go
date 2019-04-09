@@ -84,7 +84,7 @@ func GetApplicant(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
@@ -107,10 +107,10 @@ func GetApplicant(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	//
-	if applicants[0].CustomerID == data.CustomerID {
+	if appret[0].CustomerID == data.CustomerID {
 		if err := json.NewEncoder(w).Encode(appret); err != nil {
 			w.WriteHeader(http.StatusNotFound)
-			panic(err)
+			//panic(err)
 		}
 		w.WriteHeader(http.StatusOK)
 	} else {

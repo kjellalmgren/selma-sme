@@ -29,6 +29,7 @@ import (
 	"selmasme/budgets"
 	"selmasme/cases"
 	"selmasme/collaterals"
+	submitapplication "selmasme/submitapplications"
 	"selmasme/swagger"
 
 	"selmasme/companies"
@@ -164,6 +165,9 @@ func main() {
 	router.HandleFunc("/v1/getxloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/getxloan", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/deletexloan", loans.DeleteLoanx).Methods("DELETE", "OPTIONS")
+	//
+	// submitApplication.go
+	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	color.Set(color.FgHiRed)

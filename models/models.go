@@ -270,6 +270,20 @@ type BudgetYear struct {
 }
 
 //
+// submitApplication
+type SubmitApplication struct {
+	SubmitApplication bool `json:"submitApplication"`
+}
+
+//
+// Error struct
+type Error struct {
+	Status  int    `json:"status"`
+	Error   string `json:"error"`
+	Message string `json:"message"`
+}
+
+//
 // BudgetID documentation
 //type BudgetID struct {
 //	CompanyEconomyID string `json:"companyEconomyId"`

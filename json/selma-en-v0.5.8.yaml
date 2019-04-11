@@ -88,6 +88,8 @@ info:
   # 2019-04-01 0.5.7 kal customerCategory has been added to CompanyEconomies (from SAS)
   # 2019-04-04 0.5.8 kal File upload multipart has been added
   # 2019-04-07 0.5.8 kal kycHighRiskIndustry has been added (högriskbransch)
+  # 2019-04-09 0.5.8 kal Changed to POST from GET method, also changed resource naming convention
+  #
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -140,8 +142,8 @@ info:
     name: API v1 for SME initiative
     url: api.landshypotek.se/v1/sme
     email: developer@landshypotek.se
-#host: '127.0.0.1:8443'
-host: 'localhost:8400'
+host: 'localhost:8443'
+#host: 'localhost:8400'
 basePath: /
 tags:
   - name: Selma SME(EN) API Definitions
@@ -329,7 +331,7 @@ paths:
   ####################################################
   # addProcess
   ####################################################
-  /v1/updateprocess:
+  /v1/addprocess:
     put:
       tags:
       - Processes
@@ -499,15 +501,15 @@ paths:
             $ref: '#/definitions/ErrorModel'
   #
   ##################################################
-  # setCaseIdStatus
+  # updateProcessStatus
   ##################################################
-  /v1/setcaseidstatus:
+  /v1/updateprocessstatus:
     patch:
       tags:
         - Processes
       summary: set status on the reserved caseId
       description: When we create/reserve a caseId in LP we also have to set the status
-      operationId: setCaseIdStatus
+      operationId: updateProcessStatus
       # The method will handle the following MIME/Types
       produces:
       - application/json
@@ -861,7 +863,7 @@ paths:
   ##############################################
   # Add new Applicant if not exists
   ##############################################
-  #/v1/Applicant:  
+  /v1/addapplicant:  
     put:
       tags:
         - Applicants
@@ -1071,7 +1073,6 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
-  
   ########################################################
   # Update of a specific company
   ########################################################
@@ -2000,7 +2001,7 @@ paths:
   # get a specific colleteral
   #######################################################
   /v1/getCollateral:
-    get:
+    post:
       tags:
         - Collaterals
       summary: Get a specific collateral by processId, customerId and collateralId
@@ -2860,7 +2861,7 @@ paths:
   #################################################################
   # PersonalEconomy
   #################################################################
-  /v1/getPersonaleconomy:
+  /v1/getpersonaleconomy:
     post:
       tags:
         - PersonalEconomies
@@ -3078,7 +3079,7 @@ paths:
   # in Activiti
   ################################################################################
   /v1/getcompanyeconomies:
-    get:
+    post:
       tags:
         - CompanyEconomies
       summary: get a list of available CompanyEconomies
@@ -3362,7 +3363,7 @@ paths:
   # Get a list of available Budgets for a given processId on a companyId in Activiti
   ##################################################################################
   /v1/getbudgets:
-    get:
+    post:
       tags:
         - Budgets
       summary: get a list of available budgets
@@ -3575,7 +3576,7 @@ paths:
   # KycInformations
   #########################################
   /v1/getkycinformations:
-    get:
+    post:
       tags:
         - KycInformations
       summary: get a list of available KycInformations
@@ -3994,7 +3995,7 @@ paths:
   # xloans POST Update
   ####################################
   /v1/updatexloan:
-    get:
+    post:
       tags:
         - xloans (Experimental)
       summary: Update some detail elements on a specific loan

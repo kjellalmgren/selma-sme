@@ -283,6 +283,12 @@ type Error struct {
 	Message string `json:"message"`
 }
 
+type MessageBody struct {
+	Status      bool
+	MessageText string
+	Filename    string
+}
+
 //
 // BudgetID documentation
 //type BudgetID struct {

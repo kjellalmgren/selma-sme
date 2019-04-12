@@ -10,22 +10,28 @@ import (
 )
 
 // CreatePdf documentation
-func CreatePdf(customerID string) models.MessageBody {
+func CreatePdf(applicant models.ApplicantType) models.MessageBody {
 
 	message := models.MessageBody{}
 
 	t := time.Now()
 	fmt.Println(t.String())
 	fmt.Println(t.Format("2006-01-02 15:04:05"))
-	filename := customerID + "-" + t.Format("2006-01-02T15:04:05")
+	filename := applicant.CustomerID + "-" + t.Format("2006-01-02T15:04:05"+".pdf")
+	fmt.Println(filename)
+	//filename = "sme.pdf"
+	//
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
 	pdf.SetFont("Arial", "B", 16)
-	pdf.Cell(40, 10, "Applicants-1")
+	pdf.Cell(40, 10, "Applicant")
+	pdf.SetFont("Arial", "B", 12)
+	pdf.Cell(50, 10, applicant.CustomerID)
+	pdf.Cell(60, 10, applicant.ApplicantName)
 	//
 	err := savePDF(filename, pdf)
 	if err != nil {
-		log.Fatalf("CreatePdf::CreatePdf: Cannot save PDF: %s|n", filename)
+		log.Fatalf("createPdf::CreatePdf: Cannot save PDF: %s|n", filename)
 		message.Status = false
 		message.MessageText = "Error creating pdf document..."
 		message.Filename = ""

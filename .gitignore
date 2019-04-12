@@ -9,11 +9,12 @@
 *.test
 .DS_Store
 /temp-folders
+/json
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 *.pdf
 *.png
 # API meditation policy file
-meditation_ploicy.xml
+meditation_policy.xml
 # executable
 selmasme

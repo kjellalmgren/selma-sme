@@ -289,6 +289,20 @@ type MessageBody struct {
 	Filename    string
 }
 
+type ProcessAllType struct {
+	Processes         []ProcessType
+	Applicans         []ApplicantType
+	Loans             []LoanType
+	ExtLoans          []ExtLoanType
+	Households        []HouseholdType
+	Companies         []CompanyType
+	CompanyEconomies  []CompanyEconomyType
+	PersonalEconomies []PersonalEconomyType
+	Collaterals       []CollateralType
+	KycInformations   []KycInformationType
+	Budgets           []BudgetType
+}
+
 //
 // BudgetID documentation
 //type BudgetID struct {

@@ -10,21 +10,6 @@ import (
 )
 
 //
-// processAll
-type processAll struct {
-	Processes         []models.ProcessType
-	Applicans         []models.ApplicantType
-	Loans             []models.LoanType
-	ExtLoans          []models.ExtLoanType
-	Households        []models.HouseholdType
-	Companies         []models.CompanyType
-	CompanyEconomies  []models.CompanyEconomyType
-	PersonalEconomies []models.PersonalEconomyType
-	Collaterals       []models.CollateralType
-	KycInformations   []models.KycInformationType
-	Budgets           []models.BudgetType
-}
-
 // ProcessEntry documentation
 func processEntry(w http.ResponseWriter, r *http.Request) {
 
@@ -189,7 +174,7 @@ func UpdateProcess(w http.ResponseWriter, r *http.Request) {
 // GetProcessAll documentation
 func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	//
-	var processall processAll
+	processall := models.ProcessAllType{}
 	processes := []models.ProcessType{}
 	applicants := []models.ApplicantType{}
 	loans := []models.LoanType{}

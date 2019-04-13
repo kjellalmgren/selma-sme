@@ -1,7 +1,9 @@
 package createpdf
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"selmasme/models"
 	"time"
@@ -15,6 +17,83 @@ type TableRow struct {
 	Value string
 }
 
+// CreatePdfDocuments documentation
+func CreatePdfDocument(processid string) models.MessageBody {
+
+	message := models.MessageBody{}
+
+	//processall := models.ProcessAllType{}
+	// processes := []models.ProcessType{}
+	//applicants := []models.ApplicantType{}
+	// loans := []models.LoanType{}
+	// extloans := []models.ExtLoanType{}
+	// households := []models.HouseholdType{}
+	// companies := []models.CompanyType{}
+	// companyeconomies := []models.CompanyEconomyType{}
+	// personaleconomies := []models.PersonalEconomyType{}
+	// kycinformations := []models.KycInformationType{}
+	// collaterals := []models.CollateralType{}
+	// budgets := []models.BudgetType{}
+
+	processall := models.ProcessAllType{}
+	processes := getProcesses(processid)
+	applicants := getApplicants(processid)
+
+	processall.Processes = append(processes)
+	processall.Applicans = append(applicants)
+	//
+
+	return message
+
+}
+
+//
+// getProcesses
+func getProcesses(processid string) []models.ProcessType {
+
+	processes := []models.ProcessType{}
+	procret := make([]models.ProcessType, 1, 2)
+
+	file, err := ioutil.ReadFile("json/processes.json")
+	if err != nil {
+		fmt.Println("Error reading processes.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &processes)
+	j := 0
+	for i := 0; i < len(processes); i++ {
+		if processes[i].ProcessID == processid {
+			procret[j] = processes[i]
+			j++
+		}
+	}
+	return processes
+}
+
+//
+// getApplicant documentation
+func getApplicants(processid string) []models.ApplicantType {
+
+	//message := models.MessageBody{}
+	applicants := []models.ApplicantType{}
+	appret := make([]models.ApplicantType, 1, 5)
+	//
+	file, err := ioutil.ReadFile("json/applicants.json")
+	if err != nil {
+		fmt.Println("Error reading applicants.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &applicants)
+	//
+	j := 0
+	for i := 0; i < len(applicants); i++ {
+		if applicants[i].ProcessID == processid {
+			appret[j] = applicants[i]
+			j++
+		}
+	}
+	return applicants
+}
+
+// Should be replace by CreatePdfDocument
 // CreatePdf documentation
 func CreatePdf(applicant models.ApplicantType) models.MessageBody {
 
@@ -50,6 +129,10 @@ func CreatePdf(applicant models.ApplicantType) models.MessageBody {
 		tr = append(tr, TableRow{Key: "eMail:", Value: ci.ApplicantMobileNumber})
 	}
 	tr = append(tr, TableRow{Key: "Stakeholder:", Value: applicant.StakeholderType})
+	tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
+	tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
+	tr = append(tr, TableRow{Key: "Anställd:", Value: fmt.Sprintf("%v", applicant.ApplicantEmployeed)})
+
 	//str[5] = applicant.ApplicantByeMail.string()
 	//str[6] = applicant.ApplicantBySms.string()
 	pdf = table(pdf, strTable[1:])

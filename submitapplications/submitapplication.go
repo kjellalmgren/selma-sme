@@ -45,7 +45,8 @@ func Submit(w http.ResponseWriter, r *http.Request) {
 	} else if data.SubmitApplication == true {
 		//
 		//mb := models.MessageBody{}
-		applicant := getApplicant("19640120-3887")
+		applicants := getApplicants(processid)
+		//pAll := processes.GetProcessAll(w, r)
 		mb := createpdf.CreatePdf(applicant)
 		if mb.Status == true {
 			err1 := models.Error{}
@@ -66,23 +67,25 @@ func Submit(w http.ResponseWriter, r *http.Request) {
 
 //
 // getApplicant documentation
-func getApplicant(customerID string) models.ApplicantType {
+func getApplicants(processid string) []models.ApplicantType {
 
 	//message := models.MessageBody{}
 	applicants := []models.ApplicantType{}
-	appret := make([]models.ApplicantType, 1, 1)
+	appret := make([]models.ApplicantType, 1, 5)
 	//
 	file, err := ioutil.ReadFile("json/applicants.json")
 	if err != nil {
 		fmt.Println("Error reading applicants.json - %s\r\n", err)
 		//w.WriteHeader(http.StatusNotFound)
 	}
+	j := 0
 	_ = json.Unmarshal([]byte(file), &applicants)
 	//
 	for i := 0; i < len(applicants); i++ {
-		if applicants[i].CustomerID == customerID {
-			appret[0] = applicants[i]
+		if applicants[i].ProcessID == processid {
+			appret[j] = applicants[i]
+			j++
 		}
 	}
-	return appret[0]
+	return applicants
 }

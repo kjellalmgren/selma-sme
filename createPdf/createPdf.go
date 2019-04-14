@@ -60,9 +60,21 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
-	// TODO: Processes
 	var tr []TableRow
-	//
+	// Processes
+	for _, process := range processes {
+		pdf.SetFont("Arial", "B", 16)
+		strHeader := make([]string, 1, 1)
+		strHeader[0] = "Processes"
+		pdf = header(pdf, strHeader)
+		pdf.SetFont("Arial", "B", 12)
+		tr = append(tr, TableRow{Key: "ProcessID:", Value: process.ProcessID})
+		tr = append(tr, TableRow{Key: "Created date:", Value: process.ProcessCreatedDate})
+		for _, customerID := range process.CustomerID {
+			tr = append(tr, TableRow{Key: "CustomerId:", Value: customerID.CustomerID})
+		}
+	}
+	// Applicants
 	for _, applicant := range applicants {
 		pdf.SetFont("Arial", "B", 16)
 		strHeader := make([]string, 1, 1)
@@ -116,6 +128,7 @@ func getProcesses(processid string) []models.ProcessType {
 	_ = json.Unmarshal([]byte(file), &processes)
 	j := 0
 	for _, process := range processes {
+
 		if process.ProcessID == processid {
 			procret[j] = process
 			j++

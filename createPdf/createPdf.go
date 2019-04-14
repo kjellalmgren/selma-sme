@@ -17,28 +17,35 @@ type TableRow struct {
 	Value string
 }
 
-// CreatePdfDocuments documentation
+// CreatePdfDocument documentation
 func CreatePdfDocument(processid string) models.MessageBody {
 
 	message := models.MessageBody{}
-	//processall := models.ProcessAllType{}
-	// processes := []models.ProcessType{}
-	//applicants := []models.ApplicantType{}
-	// loans := []models.LoanType{}
-	// extloans := []models.ExtLoanType{}
-	// households := []models.HouseholdType{}
-	// companies := []models.CompanyType{}
-	// companyeconomies := []models.CompanyEconomyType{}
-	// personaleconomies := []models.PersonalEconomyType{}
-	// kycinformations := []models.KycInformationType{}
-	// collaterals := []models.CollateralType{}
-	// budgets := []models.BudgetType{}
-
+	//
 	processall := models.ProcessAllType{}
 	processes := getProcesses(processid)
 	applicants := getApplicants(processid)
+	companies := getCompanies(processid)
+	collaterals := getCollaterals(processid)
+	loans := getLoans(processid)
+	extloans := getExtLoans(processid)
+	households := getHouseholds(processid)
+	companyeconomies := getCompanyEconomies(processid)
+	personaleconomies := getPersonalEconomies(processid)
+	kycinformations := getKycInformations(processid)
+	budgets := getBudgets(processid)
+	//
 	processall.Processes = append(processes)
 	processall.Applicans = append(applicants)
+	processall.Companies = append(companies)
+	processall.Collaterals = append(collaterals)
+	processall.Loans = append(loans)
+	processall.ExtLoans = append(extloans)
+	processall.Households = append(households)
+	processall.CompanyEconomies = append(companyeconomies)
+	processall.PersonalEconomies = append(personaleconomies)
+	processall.KycInformations = append(kycinformations)
+	processall.Budgets = append(budgets)
 	//
 	// ##########################################
 	// # Create the actual pdf document
@@ -53,9 +60,9 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
-	//
+	// TODO: Processes
 	var tr []TableRow
-
+	//
 	for _, applicant := range applicants {
 		pdf.SetFont("Arial", "B", 16)
 		strHeader := make([]string, 1, 1)
@@ -78,6 +85,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		//pdf = table(pdf, strTable[1:])
 		pdf = table1(pdf, tr)
 	}
+	// Companies
 	//
 	err := savePDF(filename, pdf)
 	if err != nil {
@@ -138,6 +146,213 @@ func getApplicants(processid string) []models.ApplicantType {
 		}
 	}
 	return appret
+}
+
+// getCompanies documentation
+func getCompanies(processid string) []models.CompanyType {
+
+	//message := models.MessageBody{}
+	companies := []models.CompanyType{}
+	compret := make([]models.CompanyType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/companies.json")
+	if err != nil {
+		fmt.Println("Error reading companies.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &companies)
+	//
+	j := 0
+	for _, company := range companies {
+		if company.ProcessID == processid {
+			compret[j] = company
+			j++
+		}
+	}
+	return compret
+}
+
+// getCollaterals documentation
+func getCollaterals(processid string) []models.CollateralType {
+
+	//message := models.MessageBody{}
+	collaterals := []models.CollateralType{}
+	collret := make([]models.CollateralType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/collaterals.json")
+	if err != nil {
+		fmt.Println("Error reading collaterals.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &collaterals)
+	//
+	j := 0
+	for _, collateral := range collaterals {
+		if collateral.ProcessID == processid {
+			collret[j] = collateral
+			j++
+		}
+	}
+	return collret
+}
+
+// getLoans documentation
+func getLoans(processid string) []models.LoanType {
+
+	//message := models.MessageBody{}
+	loans := []models.LoanType{}
+	loanret := make([]models.LoanType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/loans.json")
+	if err != nil {
+		fmt.Println("Error reading loans.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &loans)
+	//
+	j := 0
+	for _, loan := range loans {
+		if loan.ProcessID == processid {
+			loanret[j] = loan
+			j++
+		}
+	}
+	return loanret
+}
+
+// getExtLoans documentation
+func getExtLoans(processid string) []models.ExtLoanType {
+
+	//message := models.MessageBody{}
+	extloans := []models.ExtLoanType{}
+	loanret := make([]models.ExtLoanType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/extloans.json")
+	if err != nil {
+		fmt.Println("Error reading extloans.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &extloans)
+	//
+	j := 0
+	for _, extloan := range extloans {
+		if extloan.ProcessID == processid {
+			loanret[j] = extloan
+			j++
+		}
+	}
+	return loanret
+}
+
+// getHouseholds documentation
+func getHouseholds(processid string) []models.HouseholdType {
+
+	//message := models.MessageBody{}
+	households := []models.HouseholdType{}
+	householdret := make([]models.HouseholdType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/households.json")
+	if err != nil {
+		fmt.Println("Error reading households.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &households)
+	//
+	j := 0
+	for _, household := range households {
+		if household.ProcessID == processid {
+			householdret[j] = household
+			j++
+		}
+	}
+	return householdret
+}
+
+// getCompanyEconomies documentation
+func getCompanyEconomies(processid string) []models.CompanyEconomyType {
+
+	//message := models.MessageBody{}
+	companyeconomies := []models.CompanyEconomyType{}
+	compret := make([]models.CompanyEconomyType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/companyeconomies.json")
+	if err != nil {
+		fmt.Println("Error reading companyeconomies.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &companyeconomies)
+	//
+	j := 0
+	for _, companyeconomy := range companyeconomies {
+		if companyeconomy.ProcessID == processid {
+			compret[j] = companyeconomy
+			j++
+		}
+	}
+	return compret
+}
+
+// getPersonalEconomies documentation
+func getPersonalEconomies(processid string) []models.PersonalEconomyType {
+
+	//message := models.MessageBody{}
+	personaleconomies := []models.PersonalEconomyType{}
+	persret := make([]models.PersonalEconomyType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/personaleconomies.json")
+	if err != nil {
+		fmt.Println("Error reading personaleconomies.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &personaleconomies)
+	//
+	j := 0
+	for _, personaleconomy := range personaleconomies {
+		if personaleconomy.ProcessID == processid {
+			persret[j] = personaleconomy
+			j++
+		}
+	}
+	return persret
+}
+
+// getKycInformartions documentation
+func getKycInformations(processid string) []models.KycInformationType {
+
+	//message := models.MessageBody{}
+	kycinformations := []models.KycInformationType{}
+	kycret := make([]models.KycInformationType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/kycinformations.json")
+	if err != nil {
+		fmt.Println("Error reading kycinformations.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &kycinformations)
+	//
+	j := 0
+	for _, kycinformation := range kycinformations {
+		if kycinformation.ProcessID == processid {
+			kycret[j] = kycinformation
+			j++
+		}
+	}
+	return kycret
+}
+
+// GetBudgets documentation
+func getBudgets(processid string) []models.BudgetType {
+
+	//message := models.MessageBody{}
+	budgets := []models.BudgetType{}
+	budret := make([]models.BudgetType, 2, 2)
+	//
+	file, err := ioutil.ReadFile("json/budgets.json")
+	if err != nil {
+		fmt.Println("Error reading budgets.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &budgets)
+	//
+	j := 0
+	for _, budget := range budgets {
+		if budget.ProcessID == processid {
+			budret[j] = budget
+			j++
+		}
+	}
+	return budret
 }
 
 // savePDF documentation

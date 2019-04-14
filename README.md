@@ -1,7 +1,5 @@
 # Selma-SME
 
-## Docker login
-    tetracon/Pdx10p2017!
 
 ## Static REST-API
 

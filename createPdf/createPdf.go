@@ -21,7 +21,6 @@ type TableRow struct {
 func CreatePdfDocument(processid string) models.MessageBody {
 
 	message := models.MessageBody{}
-
 	//processall := models.ProcessAllType{}
 	// processes := []models.ProcessType{}
 	//applicants := []models.ApplicantType{}
@@ -38,11 +37,59 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	processall := models.ProcessAllType{}
 	processes := getProcesses(processid)
 	applicants := getApplicants(processid)
-
 	processall.Processes = append(processes)
 	processall.Applicans = append(applicants)
 	//
+	// ##########################################
+	// # Create the actual pdf document
+	// ##########################################
+	t := time.Now().Local()
+	fmt.Println(t.String())
+	fmt.Println(t.Format("2006-01-02 15:04:05"))
 
+	filename := processid + "-" + t.Format("2006-01-02 15:04:05") + ".pdf"
+	fmt.Println(filename)
+	//filename = "sme.pdf"
+	//
+	pdf := gofpdf.New("P", "mm", "A4", "")
+	pdf.AddPage()
+	//
+	var tr []TableRow
+
+	for _, applicant := range applicants {
+		pdf.SetFont("Arial", "B", 16)
+		strHeader := make([]string, 1, 1)
+		strHeader[0] = "Applicants"
+		pdf = header(pdf, strHeader)
+		pdf.SetFont("Arial", "B", 12)
+		tr = append(tr, TableRow{Key: "customerId:", Value: applicant.CustomerID})
+		tr = append(tr, TableRow{Key: "name:", Value: applicant.ApplicantName})
+		tr = append(tr, TableRow{Key: "Adress:", Value: applicant.ApplicantAddress})
+		tr = append(tr, TableRow{Key: "PostNr:", Value: applicant.ApplicantPostAddress})
+		for _, ci := range applicant.ContactInformation {
+			log.Printf("eMail: %s - MobileNumber: %s", ci.ApplicantEmail, ci.ApplicantMobileNumber)
+			tr = append(tr, TableRow{Key: "eMail:", Value: ci.ApplicantEmail})
+			tr = append(tr, TableRow{Key: "eMail:", Value: ci.ApplicantMobileNumber})
+		}
+		tr = append(tr, TableRow{Key: "Stakeholder:", Value: applicant.StakeholderType})
+		tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
+		tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
+		tr = append(tr, TableRow{Key: "Anställd:", Value: fmt.Sprintf("%v", applicant.ApplicantEmployeed)})
+		//pdf = table(pdf, strTable[1:])
+		pdf = table1(pdf, tr)
+	}
+	//
+	err := savePDF(filename, pdf)
+	if err != nil {
+		log.Fatalf("createPdf::CreatePdfDocument: Cannot save PDF: %s|n", filename)
+		message.Status = false
+		message.MessageText = "Error creating pdf document..."
+		message.Filename = ""
+	} else {
+		message.Status = true
+		message.MessageText = "OK"
+		message.Filename = ""
+	}
 	return message
 
 }
@@ -52,7 +99,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 func getProcesses(processid string) []models.ProcessType {
 
 	processes := []models.ProcessType{}
-	procret := make([]models.ProcessType, 1, 2)
+	procret := make([]models.ProcessType, 1, 3)
 
 	file, err := ioutil.ReadFile("json/processes.json")
 	if err != nil {
@@ -60,13 +107,13 @@ func getProcesses(processid string) []models.ProcessType {
 	}
 	_ = json.Unmarshal([]byte(file), &processes)
 	j := 0
-	for i := 0; i < len(processes); i++ {
-		if processes[i].ProcessID == processid {
-			procret[j] = processes[i]
+	for _, process := range processes {
+		if process.ProcessID == processid {
+			procret[j] = process
 			j++
 		}
 	}
-	return processes
+	return procret
 }
 
 //
@@ -75,7 +122,7 @@ func getApplicants(processid string) []models.ApplicantType {
 
 	//message := models.MessageBody{}
 	applicants := []models.ApplicantType{}
-	appret := make([]models.ApplicantType, 1, 5)
+	appret := make([]models.ApplicantType, 2, 2)
 	//
 	file, err := ioutil.ReadFile("json/applicants.json")
 	if err != nil {
@@ -84,75 +131,13 @@ func getApplicants(processid string) []models.ApplicantType {
 	_ = json.Unmarshal([]byte(file), &applicants)
 	//
 	j := 0
-	for i := 0; i < len(applicants); i++ {
-		if applicants[i].ProcessID == processid {
-			appret[j] = applicants[i]
+	for _, applicant := range applicants {
+		if applicant.ProcessID == processid {
+			appret[j] = applicant
 			j++
 		}
 	}
-	return applicants
-}
-
-// Should be replace by CreatePdfDocument
-// CreatePdf documentation
-func CreatePdf(applicant models.ApplicantType) models.MessageBody {
-
-	message := models.MessageBody{}
-
-	t := time.Now()
-	fmt.Println(t.String())
-	fmt.Println(t.Format("2006-01-02 15:04:05"))
-
-	filename := applicant.CustomerID + "-" + t.Format("2006-01-02T15:04:05"+".pdf")
-	fmt.Println(filename)
-	//filename = "sme.pdf"
-	//
-	pdf := gofpdf.New("P", "mm", "A4", "")
-	pdf.AddPage()
-	pdf.SetFont("Arial", "B", 16)
-	//str := []string{}
-	strHeader := make([]string, 1, 1)
-	strHeader[0] = "Applicants"
-	strTable := make([][]string, 1, 20)
-	pdf = header(pdf, strHeader)
-	pdf.SetFont("Arial", "B", 12)
-
-	var tr []TableRow
-
-	tr = append(tr, TableRow{Key: "customerId:", Value: applicant.CustomerID})
-	tr = append(tr, TableRow{Key: "name:", Value: applicant.ApplicantName})
-	tr = append(tr, TableRow{Key: "Adress:", Value: applicant.ApplicantAddress})
-	tr = append(tr, TableRow{Key: "PostNr:", Value: applicant.ApplicantPostAddress})
-	for _, ci := range applicant.ContactInformation {
-		log.Printf("eMail: %s - MobileNumber: %s", ci.ApplicantEmail, ci.ApplicantMobileNumber)
-		tr = append(tr, TableRow{Key: "eMail:", Value: ci.ApplicantEmail})
-		tr = append(tr, TableRow{Key: "eMail:", Value: ci.ApplicantMobileNumber})
-	}
-	tr = append(tr, TableRow{Key: "Stakeholder:", Value: applicant.StakeholderType})
-	tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
-	tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
-	tr = append(tr, TableRow{Key: "Anställd:", Value: fmt.Sprintf("%v", applicant.ApplicantEmployeed)})
-
-	//str[5] = applicant.ApplicantByeMail.string()
-	//str[6] = applicant.ApplicantBySms.string()
-	pdf = table(pdf, strTable[1:])
-	pdf = table1(pdf, tr)
-	//pdf.Cell(50, 10, applicant.CustomerID)
-	//pdf.Cell(60, 10, applicant.ApplicantName)
-	//
-	err := savePDF(filename, pdf)
-	if err != nil {
-		log.Fatalf("createPdf::CreatePdf: Cannot save PDF: %s|n", filename)
-		message.Status = false
-		message.MessageText = "Error creating pdf document..."
-		message.Filename = ""
-	} else {
-		message.Status = true
-		message.MessageText = "OK"
-		message.Filename = ""
-	}
-	//
-	return message
+	return appret
 }
 
 // savePDF documentation

@@ -44,10 +44,7 @@ func Submit(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	} else if data.SubmitApplication == true {
 		//
-		//mb := models.MessageBody{}
-		applicants := getApplicants(processid)
-		//pAll := processes.GetProcessAll(w, r)
-		mb := createpdf.CreatePdf(applicant)
+		mb := createpdf.CreatePdfDocument(processid)
 		if mb.Status == true {
 			err1 := models.Error{}
 			err1.Status = http.StatusOK
@@ -63,29 +60,4 @@ func Submit(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		//
 	}
-}
-
-//
-// getApplicant documentation
-func getApplicants(processid string) []models.ApplicantType {
-
-	//message := models.MessageBody{}
-	applicants := []models.ApplicantType{}
-	appret := make([]models.ApplicantType, 1, 5)
-	//
-	file, err := ioutil.ReadFile("json/applicants.json")
-	if err != nil {
-		fmt.Println("Error reading applicants.json - %s\r\n", err)
-		//w.WriteHeader(http.StatusNotFound)
-	}
-	j := 0
-	_ = json.Unmarshal([]byte(file), &applicants)
-	//
-	for i := 0; i < len(applicants); i++ {
-		if applicants[i].ProcessID == processid {
-			appret[j] = applicants[i]
-			j++
-		}
-	}
-	return applicants
 }

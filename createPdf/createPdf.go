@@ -56,11 +56,10 @@ func CreatePdfDocument(processid string) models.MessageBody {
 
 	filename := processid + "-" + t.Format("2006-01-02 15:04:05") + ".pdf"
 	fmt.Println(filename)
-	//filename = "sme.pdf"
 	//
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
-	var tr []TableRow
+	tr := []TableRow{} // Initiate table on page one
 	// Processes
 	for _, process := range processes {
 		pdf.SetFont("Arial", "B", 16)
@@ -74,8 +73,11 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "CustomerId:", Value: customerID.CustomerID})
 		}
 	}
+	pdf = table1(pdf, tr) // add table to page
 	// Applicants
+
 	for _, applicant := range applicants {
+		tr = []TableRow{}
 		pdf.SetFont("Arial", "B", 16)
 		strHeader := make([]string, 1, 1)
 		strHeader[0] = "Applicants"
@@ -94,9 +96,9 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
 		tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
 		tr = append(tr, TableRow{Key: "Anställd:", Value: fmt.Sprintf("%v", applicant.ApplicantEmployeed)})
-		//pdf = table(pdf, strTable[1:])
-		pdf = table1(pdf, tr)
+		pdf = table1(pdf, tr) // add table to page current page
 	}
+
 	// Companies
 	//
 	err := savePDF(filename, pdf)

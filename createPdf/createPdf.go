@@ -87,12 +87,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	hr.Value = "Applicants"
 	pdf.SetFont("Arial", "B", 11)
 	for _, applicant := range applicants {
-		//pdf = header1(pdf, hr.Value)
-		pdf.SetFont("Arial", "B", 16)
-		pdf.SetFillColor(240, 240, 240)
-		tr = append(tr, TableRow{Key: "Applicants:", Value: ""})
-		pdf.SetFillColor(255, 255, 255)
-		pdf.SetFont("Arial", "B", 11)
+		pdf = header1(pdf, hr.Value)
 		tr = append(tr, TableRow{Key: "customerId:", Value: applicant.CustomerID})
 		tr = append(tr, TableRow{Key: "name:", Value: applicant.ApplicantName})
 		tr = append(tr, TableRow{Key: "Adress:", Value: applicant.ApplicantAddress})
@@ -136,9 +131,9 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	hr = HeaderRow{}
 	pdf.SetFont("Arial", "B", 16)
 	hr.Value = "Collaterals"
-	pdf.SetFont("Arial", "B", 11)
 	for _, collateral := range collaterals {
 		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "collateralID:", Value: collateral.CollateralID})
 		tr = append(tr, TableRow{Key: "Fastighetskod:", Value: collateral.CollateralCode})
 		tr = append(tr, TableRow{Key: "CustomerID:", Value: collateral.CustomerID})
@@ -153,6 +148,48 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "Owner:", Value: taxedOwner.TaxedOwner})
 		}
 	}
+	//
+	// Budget
+	//
+	tr = []TableRow{}
+	hr = HeaderRow{}
+	pdf.SetFont("Arial", "B", 16)
+	hr.Value = "Budget"
+	pdf.SetFont("Arial", "B", 11)
+	for _, budget := range budgets {
+		pdf = header1(pdf, hr.Value)
+		tr = append(tr, TableRow{Key: "CompanyID:", Value: budget.CompanyEconomyID})
+		for _, budgetyear := range budget.BudgetYears {
+			tr = append(tr, TableRow{Key: "Year:", Value: fmt.Sprintf("%v", budgetyear.BudgetYear)})
+			tr = append(tr, TableRow{Key: "Value1:", Value: fmt.Sprintf("%v", budgetyear.Value1)})
+			tr = append(tr, TableRow{Key: "Value2:", Value: fmt.Sprintf("%v", budgetyear.Value2)})
+			tr = append(tr, TableRow{Key: "Value3:", Value: fmt.Sprintf("%v", budgetyear.Value3)})
+			tr = append(tr, TableRow{Key: "Value4:", Value: fmt.Sprintf("%v", budgetyear.Value4)})
+			tr = append(tr, TableRow{Key: "Value5:", Value: fmt.Sprintf("%v", budgetyear.Value5)})
+			tr = append(tr, TableRow{Key: "Value6:", Value: fmt.Sprintf("%v", budgetyear.Value6)})
+			tr = append(tr, TableRow{Key: "Value7:", Value: fmt.Sprintf("%v", budgetyear.Value7)})
+			tr = append(tr, TableRow{Key: "Value8:", Value: fmt.Sprintf("%v", budgetyear.Value8)})
+			tr = append(tr, TableRow{Key: "Value9:", Value: fmt.Sprintf("%v", budgetyear.Value9)})
+			tr = append(tr, TableRow{Key: "Value10:", Value: fmt.Sprintf("%v", budgetyear.Value10)})
+			tr = append(tr, TableRow{Key: "Value11:", Value: fmt.Sprintf("%v", budgetyear.Value11)})
+			tr = append(tr, TableRow{Key: "Value12:", Value: fmt.Sprintf("%v", budgetyear.Value12)})
+			tr = append(tr, TableRow{Key: "Value13:", Value: fmt.Sprintf("%v", budgetyear.Value13)})
+			tr = append(tr, TableRow{Key: "Value14:", Value: fmt.Sprintf("%v", budgetyear.Value14)})
+			tr = append(tr, TableRow{Key: "Value15:", Value: fmt.Sprintf("%v", budgetyear.Value15)})
+			tr = append(tr, TableRow{Key: "Value16:", Value: fmt.Sprintf("%v", budgetyear.Value16)})
+			tr = append(tr, TableRow{Key: "Value17:", Value: fmt.Sprintf("%v", budgetyear.Value17)})
+			tr = append(tr, TableRow{Key: "Value18:", Value: fmt.Sprintf("%v", budgetyear.Value18)})
+			tr = append(tr, TableRow{Key: "Value19:", Value: fmt.Sprintf("%v", budgetyear.Value19)})
+			tr = append(tr, TableRow{Key: "Value20:", Value: fmt.Sprintf("%v", budgetyear.Value20)})
+			tr = append(tr, TableRow{Key: "Value21:", Value: fmt.Sprintf("%v", budgetyear.Value21)})
+			tr = append(tr, TableRow{Key: "Value22:", Value: fmt.Sprintf("%v", budgetyear.Value22)})
+			tr = append(tr, TableRow{Key: "Value23:", Value: fmt.Sprintf("%v", budgetyear.Value23)})
+			tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", budgetyear.Value24)})
+			tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", budgetyear.Value25)})
+
+		}
+	}
+	//
 	pdf = table1(pdf, tr) // add table to page current page
 	//
 	// Save pdf file to a local destination
@@ -169,39 +206,41 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		message.Filename = ""
 	}
 	return message
-
 }
 
 //
-// getProcesses
+// getProcesses documentation
 func getProcesses(processid string) []models.ProcessType {
 
 	processes := []models.ProcessType{}
-	procret := make([]models.ProcessType, 1, 3)
+	//procret := make([]models.ProcessType, 1, 3)
+	var procret []models.ProcessType
 
 	file, err := ioutil.ReadFile("json/processes.json")
 	if err != nil {
 		fmt.Println("Error reading processes.json - %s", err)
 	}
 	_ = json.Unmarshal([]byte(file), &processes)
-	j := 0
+	//j := 0
 	for _, process := range processes {
 
 		if process.ProcessID == processid {
-			procret[j] = process
-			j++
+			//procret[j] = process
+			procret = append(procret, process)
+			//j++
 		}
 	}
 	return procret
 }
 
 //
-// getApplicant documentation
+// getApplicants documentation
 func getApplicants(processid string) []models.ApplicantType {
 
 	//message := models.MessageBody{}
 	applicants := []models.ApplicantType{}
-	appret := make([]models.ApplicantType, 2, 2)
+	//appret := make([]models.ApplicantType, 2, 2)
+	var appret []models.ApplicantType
 	//
 	file, err := ioutil.ReadFile("json/applicants.json")
 	if err != nil {
@@ -209,11 +248,12 @@ func getApplicants(processid string) []models.ApplicantType {
 	}
 	_ = json.Unmarshal([]byte(file), &applicants)
 	//
-	j := 0
+	//j := 0
 	for _, applicant := range applicants {
 		if applicant.ProcessID == processid {
-			appret[j] = applicant
-			j++
+			//appret[j] = applicant
+			appret = append(appret, applicant)
+			//j++
 		}
 	}
 	return appret
@@ -224,7 +264,9 @@ func getCompanies(processid string) []models.CompanyType {
 
 	//message := models.MessageBody{}
 	companies := []models.CompanyType{}
-	compret := make([]models.CompanyType, 2, 2)
+	var compret []models.CompanyType
+	//compret := make([]models.CompanyType, 1, length+1)
+	//fmt.Println("Length=%d", length)
 	//
 	file, err := ioutil.ReadFile("json/companies.json")
 	if err != nil {
@@ -232,11 +274,12 @@ func getCompanies(processid string) []models.CompanyType {
 	}
 	_ = json.Unmarshal([]byte(file), &companies)
 	//
-	j := 0
+	//j := 0
 	for _, company := range companies {
 		if company.ProcessID == processid {
-			compret[j] = company
-			j++
+			//compret[j] = company
+			compret = append(compret, company)
+			//j++
 		}
 	}
 	return compret
@@ -247,7 +290,7 @@ func getCollaterals(processid string) []models.CollateralType {
 
 	//message := models.MessageBody{}
 	collaterals := []models.CollateralType{}
-	collret := make([]models.CollateralType, 2, 2)
+	var collret []models.CollateralType
 	//
 	file, err := ioutil.ReadFile("json/collaterals.json")
 	if err != nil {
@@ -255,11 +298,10 @@ func getCollaterals(processid string) []models.CollateralType {
 	}
 	_ = json.Unmarshal([]byte(file), &collaterals)
 	//
-	j := 0
 	for _, collateral := range collaterals {
 		if collateral.ProcessID == processid {
-			collret[j] = collateral
-			j++
+			//collret[j] = collateral
+			collret = append(collret, collateral)
 		}
 	}
 	return collret
@@ -270,7 +312,8 @@ func getLoans(processid string) []models.LoanType {
 
 	//message := models.MessageBody{}
 	loans := []models.LoanType{}
-	loanret := make([]models.LoanType, 2, 2)
+	var loanret []models.LoanType
+	//loanret := make([]models.LoanType, 2, 2)
 	//
 	file, err := ioutil.ReadFile("json/loans.json")
 	if err != nil {
@@ -278,11 +321,10 @@ func getLoans(processid string) []models.LoanType {
 	}
 	_ = json.Unmarshal([]byte(file), &loans)
 	//
-	j := 0
 	for _, loan := range loans {
 		if loan.ProcessID == processid {
-			loanret[j] = loan
-			j++
+			//loanret[j] = loan
+			loanret = append(loanret, loan)
 		}
 	}
 	return loanret
@@ -293,7 +335,8 @@ func getExtLoans(processid string) []models.ExtLoanType {
 
 	//message := models.MessageBody{}
 	extloans := []models.ExtLoanType{}
-	loanret := make([]models.ExtLoanType, 2, 2)
+	//loanret := make([]models.ExtLoanType, 2, 2)
+	var loanret []models.ExtLoanType
 	//
 	file, err := ioutil.ReadFile("json/extloans.json")
 	if err != nil {
@@ -301,11 +344,10 @@ func getExtLoans(processid string) []models.ExtLoanType {
 	}
 	_ = json.Unmarshal([]byte(file), &extloans)
 	//
-	j := 0
 	for _, extloan := range extloans {
 		if extloan.ProcessID == processid {
-			loanret[j] = extloan
-			j++
+			//loanret[j] = extloan
+			loanret = append(loanret, extloan)
 		}
 	}
 	return loanret
@@ -316,7 +358,8 @@ func getHouseholds(processid string) []models.HouseholdType {
 
 	//message := models.MessageBody{}
 	households := []models.HouseholdType{}
-	householdret := make([]models.HouseholdType, 2, 2)
+	// householdret := make([]models.HouseholdType, 2, 2)
+	var householdret []models.HouseholdType
 	//
 	file, err := ioutil.ReadFile("json/households.json")
 	if err != nil {
@@ -324,11 +367,10 @@ func getHouseholds(processid string) []models.HouseholdType {
 	}
 	_ = json.Unmarshal([]byte(file), &households)
 	//
-	j := 0
 	for _, household := range households {
 		if household.ProcessID == processid {
-			householdret[j] = household
-			j++
+			//householdret[j] = household
+			householdret = append(householdret, household)
 		}
 	}
 	return householdret
@@ -339,7 +381,8 @@ func getCompanyEconomies(processid string) []models.CompanyEconomyType {
 
 	//message := models.MessageBody{}
 	companyeconomies := []models.CompanyEconomyType{}
-	compret := make([]models.CompanyEconomyType, 2, 2)
+	//compret := make([]models.CompanyEconomyType, 2, 2)
+	var compret []models.CompanyEconomyType
 	//
 	file, err := ioutil.ReadFile("json/companyeconomies.json")
 	if err != nil {
@@ -347,11 +390,10 @@ func getCompanyEconomies(processid string) []models.CompanyEconomyType {
 	}
 	_ = json.Unmarshal([]byte(file), &companyeconomies)
 	//
-	j := 0
 	for _, companyeconomy := range companyeconomies {
 		if companyeconomy.ProcessID == processid {
-			compret[j] = companyeconomy
-			j++
+			//compret[j] = companyeconomy
+			compret = append(compret, companyeconomy)
 		}
 	}
 	return compret
@@ -362,7 +404,8 @@ func getPersonalEconomies(processid string) []models.PersonalEconomyType {
 
 	//message := models.MessageBody{}
 	personaleconomies := []models.PersonalEconomyType{}
-	persret := make([]models.PersonalEconomyType, 2, 2)
+	//persret := make([]models.PersonalEconomyType, 2, 2)
+	var persret []models.PersonalEconomyType
 	//
 	file, err := ioutil.ReadFile("json/personaleconomies.json")
 	if err != nil {
@@ -370,11 +413,10 @@ func getPersonalEconomies(processid string) []models.PersonalEconomyType {
 	}
 	_ = json.Unmarshal([]byte(file), &personaleconomies)
 	//
-	j := 0
 	for _, personaleconomy := range personaleconomies {
 		if personaleconomy.ProcessID == processid {
-			persret[j] = personaleconomy
-			j++
+			//persret[j] = personaleconomy
+			persret = append(persret, personaleconomy)
 		}
 	}
 	return persret
@@ -385,7 +427,8 @@ func getKycInformations(processid string) []models.KycInformationType {
 
 	//message := models.MessageBody{}
 	kycinformations := []models.KycInformationType{}
-	kycret := make([]models.KycInformationType, 2, 2)
+	//kycret := make([]models.KycInformationType, 2, 2)
+	var kycret []models.KycInformationType
 	//
 	file, err := ioutil.ReadFile("json/kycinformations.json")
 	if err != nil {
@@ -393,11 +436,10 @@ func getKycInformations(processid string) []models.KycInformationType {
 	}
 	_ = json.Unmarshal([]byte(file), &kycinformations)
 	//
-	j := 0
 	for _, kycinformation := range kycinformations {
 		if kycinformation.ProcessID == processid {
-			kycret[j] = kycinformation
-			j++
+			//kycret[j] = kycinformation
+			kycret = append(kycret, kycinformation)
 		}
 	}
 	return kycret
@@ -408,7 +450,8 @@ func getBudgets(processid string) []models.BudgetType {
 
 	//message := models.MessageBody{}
 	budgets := []models.BudgetType{}
-	budret := make([]models.BudgetType, 2, 2)
+	//budret := make([]models.BudgetType, 2, 2)
+	var budret []models.BudgetType
 	//
 	file, err := ioutil.ReadFile("json/budgets.json")
 	if err != nil {
@@ -416,11 +459,10 @@ func getBudgets(processid string) []models.BudgetType {
 	}
 	_ = json.Unmarshal([]byte(file), &budgets)
 	//
-	j := 0
 	for _, budget := range budgets {
 		if budget.ProcessID == processid {
-			budret[j] = budget
-			j++
+			//budret[j] = budget
+			budret = append(budret, budget)
 		}
 	}
 	return budret

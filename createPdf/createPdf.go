@@ -17,6 +17,11 @@ type TableRow struct {
 	Value string
 }
 
+// HeaderRow
+type HeaderRow struct {
+	Value string
+}
+
 // CreatePdfDocument documentation
 func CreatePdfDocument(processid string) models.MessageBody {
 
@@ -60,13 +65,14 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
 	tr := []TableRow{} // Initiate table on page one
+	hr := HeaderRow{}
 	// Processes
+	pdf.SetFont("Arial", "B", 16)
+	hr.Value = "Processes"
+	//
 	for _, process := range processes {
-		pdf.SetFont("Arial", "B", 16)
-		strHeader := make([]string, 1, 1)
-		strHeader[0] = "Processes"
-		pdf = header(pdf, strHeader)
-		pdf.SetFont("Arial", "B", 12)
+		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "ProcessID:", Value: process.ProcessID})
 		tr = append(tr, TableRow{Key: "Created date:", Value: process.ProcessCreatedDate})
 		for _, customerID := range process.CustomerID {
@@ -75,14 +81,18 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	}
 	pdf = table1(pdf, tr) // add table to page
 	// Applicants
-
+	tr = []TableRow{}
+	hr = HeaderRow{}
+	pdf.SetFont("Arial", "B", 16)
+	hr.Value = "Applicants"
+	pdf.SetFont("Arial", "B", 11)
 	for _, applicant := range applicants {
-		tr = []TableRow{}
+		//pdf = header1(pdf, hr.Value)
 		pdf.SetFont("Arial", "B", 16)
-		strHeader := make([]string, 1, 1)
-		strHeader[0] = "Applicants"
-		pdf = header(pdf, strHeader)
-		pdf.SetFont("Arial", "B", 12)
+		pdf.SetFillColor(240, 240, 240)
+		tr = append(tr, TableRow{Key: "Applicants:", Value: ""})
+		pdf.SetFillColor(255, 255, 255)
+		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "customerId:", Value: applicant.CustomerID})
 		tr = append(tr, TableRow{Key: "name:", Value: applicant.ApplicantName})
 		tr = append(tr, TableRow{Key: "Adress:", Value: applicant.ApplicantAddress})
@@ -90,16 +100,62 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		for _, ci := range applicant.ContactInformation {
 			log.Printf("eMail: %s - MobileNumber: %s", ci.ApplicantEmail, ci.ApplicantMobileNumber)
 			tr = append(tr, TableRow{Key: "eMail:", Value: ci.ApplicantEmail})
-			tr = append(tr, TableRow{Key: "eMail:", Value: ci.ApplicantMobileNumber})
+			tr = append(tr, TableRow{Key: "phone:", Value: ci.ApplicantMobileNumber})
 		}
 		tr = append(tr, TableRow{Key: "Stakeholder:", Value: applicant.StakeholderType})
 		tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
 		tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
 		tr = append(tr, TableRow{Key: "Anställd:", Value: fmt.Sprintf("%v", applicant.ApplicantEmployeed)})
-		pdf = table1(pdf, tr) // add table to page current page
 	}
+	pdf = table1(pdf, tr) // add table to page current page
 
 	// Companies
+	//
+	tr = []TableRow{}
+	hr = HeaderRow{}
+	pdf.SetFont("Arial", "B", 16)
+	hr.Value = "Companies"
+	pdf.SetFont("Arial", "B", 11)
+	for _, company := range companies {
+		pdf = header1(pdf, hr.Value)
+		tr = append(tr, TableRow{Key: "companyId:", Value: company.CompanyID})
+		tr = append(tr, TableRow{Key: "OrgNr:", Value: company.OrgNumber})
+		tr = append(tr, TableRow{Key: "CompanyName:", Value: company.CompanyName})
+		tr = append(tr, TableRow{Key: "BusinessFocus:", Value: company.BusinessFocus})
+		tr = append(tr, TableRow{Key: "Created:", Value: company.Created})
+		tr = append(tr, TableRow{Key: "SNI-code:", Value: company.IndustriCode})
+		tr = append(tr, TableRow{Key: "SNI-Text:", Value: company.IndustriText})
+		tr = append(tr, TableRow{Key: "Selected:", Value: fmt.Sprintf("%v", company.SelectedCompany)})
+
+	}
+	pdf = table1(pdf, tr) // add table to page current page
+	//
+	// Collaterals
+	//
+	tr = []TableRow{}
+	hr = HeaderRow{}
+	pdf.SetFont("Arial", "B", 16)
+	hr.Value = "Collaterals"
+	pdf.SetFont("Arial", "B", 11)
+	for _, collateral := range collaterals {
+		pdf = header1(pdf, hr.Value)
+		tr = append(tr, TableRow{Key: "collateralID:", Value: collateral.CollateralID})
+		tr = append(tr, TableRow{Key: "Fastighetskod:", Value: collateral.CollateralCode})
+		tr = append(tr, TableRow{Key: "CustomerID:", Value: collateral.CustomerID})
+		tr = append(tr, TableRow{Key: "ProcessID:", Value: collateral.ProcessID})
+		tr = append(tr, TableRow{Key: "Kommun:", Value: collateral.CollateralMunicipality})
+		tr = append(tr, TableRow{Key: "fastighetsnamn", Value: collateral.CollateralName})
+		tr = append(tr, TableRow{Key: "Gata:", Value: collateral.CollateralStreet})
+		tr = append(tr, TableRow{Key: "Använd säkerhet:", Value: fmt.Sprintf("%v", collateral.UseAsCollateral)})
+		tr = append(tr, TableRow{Key: "Köpa säkerhet:", Value: fmt.Sprintf("%v", collateral.BuyCollateral)})
+		for _, taxedOwner := range collateral.TaxedOwners {
+			tr = append(tr, TableRow{Key: "TaxedID:", Value: taxedOwner.TaxedID})
+			tr = append(tr, TableRow{Key: "Owner:", Value: taxedOwner.TaxedOwner})
+		}
+	}
+	pdf = table1(pdf, tr) // add table to page current page
+	//
+	// Save pdf file to a local destination
 	//
 	err := savePDF(filename, pdf)
 	if err != nil {
@@ -376,29 +432,11 @@ func savePDF(filename string, pdf *gofpdf.Fpdf) error {
 }
 
 // header documentation
-func header(pdf *gofpdf.Fpdf, hdr []string) *gofpdf.Fpdf {
+func header1(pdf *gofpdf.Fpdf, hdr string) *gofpdf.Fpdf {
 	pdf.SetFont("Arial", "B", 16)
 	pdf.SetFillColor(240, 240, 240)
-	for _, str := range hdr {
-		pdf.CellFormat(40, 7, str, "1", 0, "", true, 0, "")
-	}
+	pdf.CellFormat(40, 7, hdr, "1", 0, "", true, 0, "")
 	pdf.Ln(-1)
-	return pdf
-}
-
-// table documentation
-func table(pdf *gofpdf.Fpdf, tbl [][]string) *gofpdf.Fpdf {
-	// Reset font and fill color.
-	pdf.SetFont("Arial", "", 16)
-	pdf.SetFillColor(255, 255, 255)
-	// Every column gets aligned according to its contents.
-	align := []string{"L", "C", "L", "R", "R", "R"}
-	for _, line := range tbl {
-		for i, str := range line {
-			pdf.CellFormat(40, 7, str, "1", 0, align[i], false, 0, "")
-		}
-		pdf.Ln(-1)
-	}
 	return pdf
 }
 

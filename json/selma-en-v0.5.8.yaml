@@ -90,6 +90,7 @@ info:
   # 2019-04-07 0.5.8 kal kycHighRiskIndustry has been added (högriskbransch)
   # 2019-04-09 0.5.8 kal Changed to POST from GET method, also changed resource naming convention
   #
+  # 2019-04-15 0.5.8 kal typeOfCollateral has been added 'FASTIGHET', 'EU_STOD', 'BORGEN'
   ##########################################################################################
   # Errors definitions has not been defined in any responses
   ##########################################################################################
@@ -4282,10 +4283,11 @@ definitions:
     example: '420 20 Katrineholm'
   #
   stakeholderType:
-    description: <h3>StakeholderType</h3><br>Maps to Loan Process stakeholders<br><b>'Borgensman'<br>'Driftbolag'<br>'Maka/Make/regpartner'<br>'sambo'<br>'ägarandel i pant'<br>'ägare juridiskt över 50%'<br>'övriga med ekonomisk intressegemenskap'<br>'NA'</b> - betyder att de är en sökande på lånet.<br>
+    description: <h3>StakeholderType</h3><br>Maps to Loan Process stakeholders<br><b>'Borgensman'<br>'Driftbolag'<br>'Maka/Make/regpartner'<br>'sambo'<br>'ägarandel i pant'<br>'ägare juridiskt över 50%'<br>'övriga med ekonomisk intressegemenskap'<br>'SOKANDE'</b> - betyder att de är en sökande på lånet.<br>
     type: string
     enum:
     - NA
+    - SOKANDE
     - INTRESSENT
     - BORGENSMAN
     - DRIFTBOLAG
@@ -4357,7 +4359,7 @@ definitions:
     description: Organisation number from external service, swedish ssn (UC or SAP for existing
       companies)
     type: string
-    example: '19550101-1010'
+    example: '16550101-1010'
   #
   companyName:
     description: Full name of the company from external services or BusinessName in SAP.
@@ -4497,10 +4499,18 @@ definitions:
     format: uuid
     example: '{"collateralId": "b25961de-3cc3-11e9-b210-d663bd873d93"}'
   #
+  typeOfCollateral:
+    description: Värdeföråd för säkerhet (Fastighet, EU-stöd, borgensman)
+    type: string
+    enum:
+    - 'FASTIGHET'
+    - 'EUSTOD'
+    - 'BORGENSMAN'
+    example: 'FASTIGHET'
   collateralCode:
     description: TBD - Fastighetskod (ska denna användas?)
     type: string
-    example: '10'
+    example: '110'
   #
   collateralName:
     description: Fastighetbeteckning
@@ -4523,7 +4533,7 @@ definitions:
     example: '12'
   #
   collateralAge:
-    description: Ålder på skogen för sökerhet
+    description: Ålder på skogen för säkerheten
     type: string
     enum:
     - '0-20 år'

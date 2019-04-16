@@ -193,6 +193,7 @@ type Cases struct {
 type CollateralType struct {
 	ProcessID              string `json:"processId"`
 	CustomerID             string `json:"customerId"`
+	TypeOfCollateral       string `json:"typeOfCollateral"`
 	CollateralID           string `json:"collateralId"`
 	CollateralCode         string `json:"collateralCode"`
 	CollateralName         string `json:"collateralName"`

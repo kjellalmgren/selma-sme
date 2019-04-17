@@ -62,32 +62,36 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	filename := processid + "-" + t.Format("2006-01-02 15:04:05") + ".pdf"
 	fmt.Println(filename)
 	//
+	// Create a new documents to receive customer data
 	pdf := gofpdf.New("P", "mm", "A4", "")
-	pdf.AddPage()
-	tr := []TableRow{} // Initiate table on page one
 	hr := HeaderRow{}
 	// Processes
-	pdf.SetFont("Arial", "B", 16)
 	hr.Value = "Processes"
-	//
+	tr := []TableRow{} // Initiate table on page one
 	for _, process := range processes {
+		pdf.AddPage()
+		tr = []TableRow{}
+		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
 		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "ProcessID:", Value: process.ProcessID})
 		tr = append(tr, TableRow{Key: "Created date:", Value: process.ProcessCreatedDate})
+		tr = append(tr, TableRow{Key: "Last Accessed:", Value: process.LastAccessed})
 		for _, customerID := range process.CustomerID {
 			tr = append(tr, TableRow{Key: "CustomerId:", Value: customerID.CustomerID})
 		}
+		pdf = table1(pdf, tr) // add table to page
 	}
-	pdf = table1(pdf, tr) // add table to page
+
 	// Applicants
-	tr = []TableRow{}
 	hr = HeaderRow{}
-	pdf.SetFont("Arial", "B", 16)
 	hr.Value = "Applicants"
-	pdf.SetFont("Arial", "B", 11)
 	for _, applicant := range applicants {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "customerId:", Value: applicant.CustomerID})
 		tr = append(tr, TableRow{Key: "name:", Value: applicant.ApplicantName})
 		tr = append(tr, TableRow{Key: "Adress:", Value: applicant.ApplicantAddress})
@@ -101,18 +105,19 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
 		tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
 		tr = append(tr, TableRow{Key: "Anställd:", Value: fmt.Sprintf("%v", applicant.ApplicantEmployeed)})
+		pdf = table1(pdf, tr) // add table to page current page
 	}
-	pdf = table1(pdf, tr) // add table to page current page
-
+	//
 	// Companies
 	//
-	tr = []TableRow{}
 	hr = HeaderRow{}
-	pdf.SetFont("Arial", "B", 16)
 	hr.Value = "Companies"
-	pdf.SetFont("Arial", "B", 11)
 	for _, company := range companies {
+		pdf.AddPage()
+		tr = []TableRow{}
+		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "companyId:", Value: company.CompanyID})
 		tr = append(tr, TableRow{Key: "OrgNr:", Value: company.OrgNumber})
 		tr = append(tr, TableRow{Key: "CompanyName:", Value: company.CompanyName})
@@ -121,17 +126,18 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "SNI-code:", Value: company.IndustriCode})
 		tr = append(tr, TableRow{Key: "SNI-Text:", Value: company.IndustriText})
 		tr = append(tr, TableRow{Key: "Selected:", Value: fmt.Sprintf("%v", company.SelectedCompany)})
-
+		pdf = table1(pdf, tr) // add table to page current page
 	}
-	pdf = table1(pdf, tr) // add table to page current page
+
 	//
 	// Collaterals
 	//
-	tr = []TableRow{}
 	hr = HeaderRow{}
-	pdf.SetFont("Arial", "B", 16)
 	hr.Value = "Collaterals"
 	for _, collateral := range collaterals {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
 		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "collateralID:", Value: collateral.CollateralID})
@@ -147,18 +153,22 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "TaxedID:", Value: taxedOwner.TaxedID})
 			tr = append(tr, TableRow{Key: "Owner:", Value: taxedOwner.TaxedOwner})
 		}
+		pdf = table1(pdf, tr) // add table to page current page
 	}
+
 	//
 	// Budget
 	//
-	tr = []TableRow{}
 	hr = HeaderRow{}
-	pdf.SetFont("Arial", "B", 16)
 	hr.Value = "Budget"
-	pdf.SetFont("Arial", "B", 11)
 	for _, budget := range budgets {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "CompanyID:", Value: budget.CompanyEconomyID})
+		fmt.Println("#: %v", len(budget.BudgetYears))
 		for _, budgetyear := range budget.BudgetYears {
 			tr = append(tr, TableRow{Key: "Year:", Value: fmt.Sprintf("%v", budgetyear.BudgetYear)})
 			tr = append(tr, TableRow{Key: "Value1:", Value: fmt.Sprintf("%v", budgetyear.Value1)})
@@ -186,11 +196,15 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "Value23:", Value: fmt.Sprintf("%v", budgetyear.Value23)})
 			tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", budgetyear.Value24)})
 			tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", budgetyear.Value25)})
-
 		}
+		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//
-	pdf = table1(pdf, tr) // add table to page current page
+
+	//
+	//
+	//
+
 	//
 	// Save pdf file to a local destination
 	//
@@ -503,4 +517,25 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 	//The ImageOptions method takes a file path, x, y, width, and height parameters, and an ImageOptions struct to specify a couple of options.
 	pdf.ImageOptions("stats.png", 225, 10, 25, 25, false, gofpdf.ImageOptions{ImageType: "PNG", ReadDpi: true}, 0, "")
 	return pdf
+}
+
+func fixBudgetRows(l1 []models.BudgetYear) {
+
+	type Row struct {
+		Year1   int
+		Year2   int
+		Value12 float32
+		Value22 float32
+	}
+	length := len(l1)
+	var r1 []Row
+	make([]models.PersonalEconomyType, 2, 2)
+	for _, budgetyear := range l1 {
+		switch length {
+		case 1:
+			r1.Year1 = budgetyear.BudgetYear
+			r1.Value12 = budgetyear.Value1
+		case 2:
+		}
+	}
 }

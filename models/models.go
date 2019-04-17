@@ -5,6 +5,7 @@ type ProcessType struct {
 	ProcessID          string `json:"processId"`
 	CustomerID         []CustomerID
 	ProcessCreatedDate string `json:"processCreatedDate"`
+	LastAccessed       string `json:"lastAccessed"`
 }
 
 // ProcessIDCaseID documentation

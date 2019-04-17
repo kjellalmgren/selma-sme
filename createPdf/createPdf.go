@@ -168,34 +168,38 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf = header1(pdf, hr.Value)
 		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "CompanyID:", Value: budget.CompanyEconomyID})
+		fixBudgetRows(budget.BudgetYears)
 		fmt.Println("#: %v", len(budget.BudgetYears))
 		for _, budgetyear := range budget.BudgetYears {
 			tr = append(tr, TableRow{Key: "Year:", Value: fmt.Sprintf("%v", budgetyear.BudgetYear)})
-			tr = append(tr, TableRow{Key: "Value1:", Value: fmt.Sprintf("%v", budgetyear.Value1)})
-			tr = append(tr, TableRow{Key: "Value2:", Value: fmt.Sprintf("%v", budgetyear.Value2)})
-			tr = append(tr, TableRow{Key: "Value3:", Value: fmt.Sprintf("%v", budgetyear.Value3)})
-			tr = append(tr, TableRow{Key: "Value4:", Value: fmt.Sprintf("%v", budgetyear.Value4)})
-			tr = append(tr, TableRow{Key: "Value5:", Value: fmt.Sprintf("%v", budgetyear.Value5)})
-			tr = append(tr, TableRow{Key: "Value6:", Value: fmt.Sprintf("%v", budgetyear.Value6)})
-			tr = append(tr, TableRow{Key: "Value7:", Value: fmt.Sprintf("%v", budgetyear.Value7)})
-			tr = append(tr, TableRow{Key: "Value8:", Value: fmt.Sprintf("%v", budgetyear.Value8)})
-			tr = append(tr, TableRow{Key: "Value9:", Value: fmt.Sprintf("%v", budgetyear.Value9)})
-			tr = append(tr, TableRow{Key: "Value10:", Value: fmt.Sprintf("%v", budgetyear.Value10)})
-			tr = append(tr, TableRow{Key: "Value11:", Value: fmt.Sprintf("%v", budgetyear.Value11)})
-			tr = append(tr, TableRow{Key: "Value12:", Value: fmt.Sprintf("%v", budgetyear.Value12)})
-			tr = append(tr, TableRow{Key: "Value13:", Value: fmt.Sprintf("%v", budgetyear.Value13)})
-			tr = append(tr, TableRow{Key: "Value14:", Value: fmt.Sprintf("%v", budgetyear.Value14)})
-			tr = append(tr, TableRow{Key: "Value15:", Value: fmt.Sprintf("%v", budgetyear.Value15)})
-			tr = append(tr, TableRow{Key: "Value16:", Value: fmt.Sprintf("%v", budgetyear.Value16)})
-			tr = append(tr, TableRow{Key: "Value17:", Value: fmt.Sprintf("%v", budgetyear.Value17)})
-			tr = append(tr, TableRow{Key: "Value18:", Value: fmt.Sprintf("%v", budgetyear.Value18)})
-			tr = append(tr, TableRow{Key: "Value19:", Value: fmt.Sprintf("%v", budgetyear.Value19)})
-			tr = append(tr, TableRow{Key: "Value20:", Value: fmt.Sprintf("%v", budgetyear.Value20)})
-			tr = append(tr, TableRow{Key: "Value21:", Value: fmt.Sprintf("%v", budgetyear.Value21)})
-			tr = append(tr, TableRow{Key: "Value22:", Value: fmt.Sprintf("%v", budgetyear.Value22)})
-			tr = append(tr, TableRow{Key: "Value23:", Value: fmt.Sprintf("%v", budgetyear.Value23)})
-			tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", budgetyear.Value24)})
-			tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", budgetyear.Value25)})
+			for _, value := range budgetyear.Values {
+				tr = append(tr, TableRow{Key: "Value1:", Value: fmt.Sprintf("%v", value.Value1)})
+				tr = append(tr, TableRow{Key: "Value2:", Value: fmt.Sprintf("%v", value.Value2)})
+				tr = append(tr, TableRow{Key: "Value3:", Value: fmt.Sprintf("%v", value.Value3)})
+				tr = append(tr, TableRow{Key: "Value4:", Value: fmt.Sprintf("%v", value.Value4)})
+				tr = append(tr, TableRow{Key: "Value5:", Value: fmt.Sprintf("%v", value.Value5)})
+				tr = append(tr, TableRow{Key: "Value6:", Value: fmt.Sprintf("%v", value.Value6)})
+				tr = append(tr, TableRow{Key: "Value7:", Value: fmt.Sprintf("%v", value.Value7)})
+				tr = append(tr, TableRow{Key: "Value8:", Value: fmt.Sprintf("%v", value.Value8)})
+				tr = append(tr, TableRow{Key: "Value9:", Value: fmt.Sprintf("%v", value.Value9)})
+				tr = append(tr, TableRow{Key: "Value10:", Value: fmt.Sprintf("%v", value.Value10)})
+				tr = append(tr, TableRow{Key: "Value11:", Value: fmt.Sprintf("%v", value.Value11)})
+				tr = append(tr, TableRow{Key: "Value12:", Value: fmt.Sprintf("%v", value.Value12)})
+				tr = append(tr, TableRow{Key: "Value13:", Value: fmt.Sprintf("%v", value.Value13)})
+				tr = append(tr, TableRow{Key: "Value14:", Value: fmt.Sprintf("%v", value.Value14)})
+				tr = append(tr, TableRow{Key: "Value15:", Value: fmt.Sprintf("%v", value.Value15)})
+				tr = append(tr, TableRow{Key: "Value16:", Value: fmt.Sprintf("%v", value.Value16)})
+				tr = append(tr, TableRow{Key: "Value17:", Value: fmt.Sprintf("%v", value.Value17)})
+				tr = append(tr, TableRow{Key: "Value18:", Value: fmt.Sprintf("%v", value.Value18)})
+				tr = append(tr, TableRow{Key: "Value19:", Value: fmt.Sprintf("%v", value.Value19)})
+				tr = append(tr, TableRow{Key: "Value20:", Value: fmt.Sprintf("%v", value.Value20)})
+				tr = append(tr, TableRow{Key: "Value21:", Value: fmt.Sprintf("%v", value.Value21)})
+				tr = append(tr, TableRow{Key: "Value22:", Value: fmt.Sprintf("%v", value.Value22)})
+				tr = append(tr, TableRow{Key: "Value23:", Value: fmt.Sprintf("%v", value.Value23)})
+				tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", value.Value24)})
+				tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", value.Value25)})
+			}
+
 		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
@@ -519,23 +523,32 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 	return pdf
 }
 
-func fixBudgetRows(l1 []models.BudgetYear) {
+func fixBudgetRows(budgets []models.BudgetYear) {
 
 	type Row struct {
-		Year1   int
-		Year2   int
-		Value12 float32
-		Value22 float32
+		Year    int
+		ValueC1 float32
+		ValueC2 float32
 	}
-	length := len(l1)
-	var r1 []Row
-	make([]models.PersonalEconomyType, 2, 2)
-	for _, budgetyear := range l1 {
-		switch length {
-		case 1:
-			r1.Year1 = budgetyear.BudgetYear
-			r1.Value12 = budgetyear.Value1
-		case 2:
+	//length := len(l1)
+	//var rows []Row
+	//var r1 Row
+	rows := make([]Row, 2, 2)
+	index := 1
+	//
+	for _, budget := range budgets {
+		fmt.Println(fmt.Sprintf("%v", budget.BudgetYear))
+		for _, v := range budget.Values {
+			if index == 1 {
+				rows[0].ValueC1 = v.Value1
+			} else if index == 2 {
+				rows[0].ValueC2 = v.Value1
+			}
 		}
+		index++
+	}
+	for _, row := range rows {
+		fmt.Println(fmt.Sprintf("year1: %v ValueC1: %v ValueC2: %v",
+			row.Year, row.ValueC1, row.ValueC2))
 	}
 }

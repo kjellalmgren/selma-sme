@@ -562,8 +562,9 @@ func fixBudgetRows(budgets []models.BudgetYear) {
 		index++
 	}
 	fmt.Println(len(row[0].ValuesC1))
+
 	for x := 0; x <= len(row[0].ValuesC1); x++ {
-		fmt.Println(fmt.Sprintf("Text: %s C1: %v C2: %v", row[0].TextValues[x], row[x].ValuesC1[x], row[0].ValuesC2[x]))
+		fmt.Println(fmt.Sprintf("Text: %s C1: %v C2: %v", row[0].TextValues[x], row[x].ValuesC1, row[0].ValuesC2))
 	}
 
 	// row.ValuesC1 = valC1

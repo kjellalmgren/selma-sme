@@ -22,6 +22,11 @@ type HeaderRow struct {
 	Value string
 }
 
+type Value struct {
+	//Year  int
+	Value float32
+}
+
 // CreatePdfDocument documentation
 func CreatePdfDocument(processid string) models.MessageBody {
 
@@ -523,32 +528,135 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 	return pdf
 }
 
+// fixBudgetRows documentation
 func fixBudgetRows(budgets []models.BudgetYear) {
 
 	type Row struct {
-		Year    int
-		ValueC1 float32
-		ValueC2 float32
+		Year1      int
+		Year2      int
+		TextValues []models.TextValue
+		ValuesC1   []models.ValueType
+		ValuesC2   []models.ValueType
 	}
-	//length := len(l1)
-	//var rows []Row
-	//var r1 Row
-	rows := make([]Row, 2, 2)
-	index := 1
 	//
+	//row := []Row{}
+	//var row []Row
+	//var valC1 []models.ValueType
+	//var valC2 []models.ValueType
+	//valC1 := []models.ValueType{}
+	//valC2 := []models.ValueType{}
+
+	row := make([]Row, 1, 2)
+	index := 1
 	for _, budget := range budgets {
-		fmt.Println(fmt.Sprintf("%v", budget.BudgetYear))
-		for _, v := range budget.Values {
-			if index == 1 {
-				rows[0].ValueC1 = v.Value1
-			} else if index == 2 {
-				rows[0].ValueC2 = v.Value1
-			}
+		if index == 1 {
+			row[0].Year1 = budget.BudgetYear
+			row[0].ValuesC1 = getValueForYear(budget.BudgetYear, budgets)
+			row[0].TextValues = getTextForValues()
+		} else if index == 2 {
+			row[0].Year2 = budget.BudgetYear
+			row[0].ValuesC2 = getValueForYear(budget.BudgetYear, budgets)
+			row[0].TextValues = getTextForValues()
 		}
+		fmt.Println(fmt.Sprintf("%v", budget.BudgetYear))
 		index++
 	}
-	for _, row := range rows {
-		fmt.Println(fmt.Sprintf("year1: %v ValueC1: %v ValueC2: %v",
-			row.Year, row.ValueC1, row.ValueC2))
+	fmt.Println(len(row[0].ValuesC1))
+	for x := 0; x <= len(row[0].ValuesC1); x++ {
+		fmt.Println(fmt.Sprintf("Text: %s C1: %v C2: %v", row[0].TextValues[x], row[x].ValuesC1[x], row[0].ValuesC2[x]))
 	}
+
+	// row.ValuesC1 = valC1
+	// row.ValuesC2 = valC2
+	// //
+	// for _, row := range rows {
+	// 	fmt.Println(fmt.Sprintf("Year: %v", row.Year))
+	// 	for _, v := range row.Values {
+	// 		fmt.Println(fmt.Sprintf("Text1: %s ValueC1: %v ValueC2: %v", v.Text, v.ValueC1, v.ValueC2))
+	// 	}
+
+	// }
+}
+
+// getValueForYear
+func getValueForYear(year int, budgets []models.BudgetYear) []models.ValueType {
+
+	//value := []Value{}
+	var value []models.ValueType
+
+	for _, budget := range budgets {
+		if budget.BudgetYear == year {
+			value = budget.Values
+			//value = append(value, budget.Values)
+		}
+	}
+	return value
+
+}
+func getTextForValues() []models.TextValue {
+
+	//tr = append(tr, TableRow{Key: "Stakeholder:", Value: applicant.StakeholderType})
+	//var text []models.TextValue
+	//text := make([]models.TextValue, 25)
+	//text[0] = string("skog")
+	//s := make([]string, 25)
+	//text = append(text, models.TextValue{[]"skog", []"lisa"})
+
+	text := []models.TextValue{
+		{"Skog"},
+		{"Växtodling"},
+		{"EU-stöd"},
+		{"Övrig djurproduktion"},
+		{"Förändring av lager produktion"},
+		{"Mjölk"},
+		{"Övriga intäkter"},
+		{"Övriga intäkter"},
+		{"Summa(1-7)"},
+		{"Inköp (Råvaror och förnödenheter)"},
+		{"Arrendekostnader"},
+		{"Övriga rörelsekostnader"},
+		{"S:a kostnader (summa value9-12)"},
+		{"Resultat före avskrivningar (value8 + (-value13))"},
+		{"Avskrivning inventarier (exkl. byggnadsinventerier)"},
+		{"Övriga avskrivningar"},
+		{"S:a avskrivningar (-value15) + (-value16)"},
+		{"Resultat före avskrivningar value14 + (-value17)"},
+		{"Finansiella intäkter"},
+		{"Finansiella konstnader"},
+		{"Resultat finansiella poster (value18) + value19 + (-value20)"},
+		{"Extraordinärar intäkter och kostnader"},
+		{"Bokslutsdispositioner"},
+		{"Skatt (ägaruttag prognosår EF)"},
+		{"Åretsresultat (value21) sum (value22+value23+value24)"},
+	}
+
+	return text
+
+	/*
+				value1; Resultaträkning; Skog
+		      value2; Resultaträkning; Växtodling
+		      value3; Resultaträkning; EU-stöd
+		      value4; Resultaträkning; Övrig djurproduktion
+		      value5; Resultaträkning; Förändring av lager produktion
+		      value6; Resultaträkning; Mjölk
+		      value7; Resultaträkning; Övriga intäkter
+		      value8; Omsättning totalt (Totala intäkter) summa value1-7
+		      value9; Inköp (Råvaror och förnödenheter)
+		      value10; Arrendekostnader
+		      value11; Personalkostnader
+		      value12; Övriga rörelsekostnader
+		      value13; S:a kostnader (summa value9-12)
+		      value14; Resultat före avskrivningar (value8 + (-value13))
+		      value15; Avskrivning inventarier (exkl. byggnadsinventerier)
+		      value16; Övriga avskrivningar
+		      value17; S:a avskrivningar (-value15) + (-value16)
+		      value18; Resultat före avskrivningar value14 + (-value17)
+		      value19; Finansiella intäkter
+		      value20; Finansiella konstnader
+		      value21; Resultat finansiella poster (value18) + value19 + (-value20)
+		      value22; Extraordinärar intäkter och kostnader
+		      value23; Bokslutsdispositioner
+		      value24; Skatt (ägaruttag prognosår EF)
+			  value25; Åretsresultat (value21) sum (value22+value23+value24)
+	*/
 }

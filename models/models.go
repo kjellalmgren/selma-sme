@@ -311,6 +311,10 @@ type ProcessAllType struct {
 	Budgets           []BudgetType
 }
 
+type TextValue struct {
+	Text string
+}
+
 //
 // BudgetID documentation
 //type BudgetID struct {

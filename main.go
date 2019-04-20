@@ -180,7 +180,14 @@ func main() {
 	fmt.Printf(":8443\r\n")
 	color.Unset()
 	//err := http.ListenAndServe(":8400", router)
+	//server := &http.Server{
+	//	Addr:         ":8443",
+	//	ReadTimeout:  time.Second * 30,
+	//	WriteTimeout: time.Second * 30,
+	//	IdleTimeout:  time.Second * 30,
+	//}
 	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
+	//err := server.ListenAndServeTLS("cert.pem", "key.pem", router)
 	if err != nil {
 		fmt.Printf("ListenAndServeTLS Error: %s", err.Error())
 		log.Fatal(err)

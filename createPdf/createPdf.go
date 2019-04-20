@@ -17,11 +17,12 @@ type TableRow struct {
 	Value string
 }
 
-// HeaderRow
+// HeaderRow documentation
 type HeaderRow struct {
 	Value string
 }
 
+// Value docuemntation
 type Value struct {
 	//Year  int
 	Value float32
@@ -204,16 +205,9 @@ func CreatePdfDocument(processid string) models.MessageBody {
 				tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", value.Value24)})
 				tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", value.Value25)})
 			}
-
 		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
-	//
-
-	//
-	//
-	//
-
 	//
 	// Save pdf file to a local destination
 	//
@@ -531,77 +525,185 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 // fixBudgetRows documentation
 func fixBudgetRows(budgets []models.BudgetYear) {
 
-	type Row struct {
-		Year1      int
-		Year2      int
-		TextValues []models.TextValue
-		ValuesC1   []models.ValueType
-		ValuesC2   []models.ValueType
+	// BRow documentation
+	type BRow struct {
+		Year    int
+		Text    string
+		ValueC1 float32
+		ValueC2 float32
+	}
+	fmt.Println(fmt.Sprintf("%v", getColumnText(24)))
+	//BRows := []BRow{}
+	//j := 0
+	//BRows = make([]BRow, 0, 25)
+	var BRows []BRow
+	var brow BRow
+	//Flytta ut år 1 samt år 2 till variabler och hämta år 1 samt år två i loopen 0 - 24
+	// Första loopen ska alltså försvinna
+	y1 := 0
+	y2 := 0
+	i := 0
+	for _, budget := range budgets {
+		if i == 0 {
+			y1 = budget.BudgetYear
+		} else {
+			y2 = budget.BudgetYear
+		}
+		i++
+	}
+	fmt.Println(fmt.Sprintf("Len:%v", len(budgets)))
+	for j := 0; j <= 24; j++ {
+		//fmt.Println(fmt.Sprintf("Antal #: %v", x))
+		brow.Year = y1
+		brow.Text = getColumnText(j)
+		brow.ValueC1 = getColumn1Value(j, y1, budgets)
+		brow.ValueC2 = getColumn2Value(j, y2, budgets)
+		BRows = append(BRows, brow)
 	}
 	//
-	//row := []Row{}
-	//var row []Row
-	//var valC1 []models.ValueType
-	//var valC2 []models.ValueType
-	//valC1 := []models.ValueType{}
-	//valC2 := []models.ValueType{}
-
-	row := make([]Row, 1, 2)
-	index := 1
-	for _, budget := range budgets {
-		if index == 1 {
-			row[0].Year1 = budget.BudgetYear
-			row[0].ValuesC1 = getValueForYear(budget.BudgetYear, budgets)
-			row[0].TextValues = getTextForValues()
-		} else if index == 2 {
-			row[0].Year2 = budget.BudgetYear
-			row[0].ValuesC2 = getValueForYear(budget.BudgetYear, budgets)
-			row[0].TextValues = getTextForValues()
-		}
-		fmt.Println(fmt.Sprintf("%v", budget.BudgetYear))
-		index++
+	for _, br := range BRows {
+		fmt.Println(fmt.Sprintf("Year: %v - Text: %s C1: %v C2: %v", br.Year, br.Text, br.ValueC1, br.ValueC2))
 	}
-	fmt.Println(len(row[0].ValuesC1))
-
-	for x := 0; x <= len(row[0].ValuesC1); x++ {
-		fmt.Println(fmt.Sprintf("Text: %s C1: %v C2: %v", row[0].TextValues[x], row[x].ValuesC1, row[0].ValuesC2))
-	}
-
-	// row.ValuesC1 = valC1
-	// row.ValuesC2 = valC2
-	// //
-	// for _, row := range rows {
-	// 	fmt.Println(fmt.Sprintf("Year: %v", row.Year))
-	// 	for _, v := range row.Values {
-	// 		fmt.Println(fmt.Sprintf("Text1: %s ValueC1: %v ValueC2: %v", v.Text, v.ValueC1, v.ValueC2))
-	// 	}
-
-	// }
 }
 
-// getValueForYear
-func getValueForYear(year int, budgets []models.BudgetYear) []models.ValueType {
+// getColumn1Value documentation
+func getColumn1Value(index int, year int, budgets []models.BudgetYear) float32 {
 
-	//value := []Value{}
-	var value []models.ValueType
-
+	var retval float32
+	//i := 0
 	for _, budget := range budgets {
 		if budget.BudgetYear == year {
-			value = budget.Values
-			//value = append(value, budget.Values)
+			//i = 0
+			for _, val := range budget.Values {
+				switch index {
+				case 0:
+					retval = val.Value1
+				case 1:
+					retval = val.Value2
+				case 2:
+					retval = val.Value3
+				case 3:
+					retval = val.Value4
+				case 4:
+					retval = val.Value5
+				case 5:
+					retval = val.Value6
+				case 6:
+					retval = val.Value7
+				case 7:
+					retval = val.Value8
+				case 8:
+					retval = val.Value9
+				case 9:
+					retval = val.Value10
+				case 10:
+					retval = val.Value11
+				case 11:
+					retval = val.Value12
+				case 12:
+					retval = val.Value13
+				case 13:
+					retval = val.Value14
+				case 14:
+					retval = val.Value15
+				case 15:
+					retval = val.Value16
+				case 16:
+					retval = val.Value17
+				case 17:
+					retval = val.Value18
+				case 18:
+					retval = val.Value19
+				case 19:
+					retval = val.Value20
+				case 20:
+					retval = val.Value21
+				case 21:
+					retval = val.Value22
+				case 22:
+					retval = val.Value23
+				case 23:
+					retval = val.Value24
+				case 24:
+					retval = val.Value25
+				}
+				//i++
+			}
 		}
 	}
-	return value
-
+	return retval
 }
-func getTextForValues() []models.TextValue {
 
-	//tr = append(tr, TableRow{Key: "Stakeholder:", Value: applicant.StakeholderType})
-	//var text []models.TextValue
-	//text := make([]models.TextValue, 25)
-	//text[0] = string("skog")
-	//s := make([]string, 25)
-	//text = append(text, models.TextValue{[]"skog", []"lisa"})
+// getColumn2Value documentation
+func getColumn2Value(index int, year int, budgets []models.BudgetYear) float32 {
+
+	var retval float32
+	//i := 0
+	for _, budget := range budgets {
+		if budget.BudgetYear == year {
+			//i = 0
+			for _, val := range budget.Values {
+				switch index {
+				case 0:
+					retval = val.Value1
+				case 1:
+					retval = val.Value2
+				case 2:
+					retval = val.Value3
+				case 3:
+					retval = val.Value4
+				case 4:
+					retval = val.Value5
+				case 5:
+					retval = val.Value6
+				case 6:
+					retval = val.Value7
+				case 7:
+					retval = val.Value8
+				case 8:
+					retval = val.Value9
+				case 9:
+					retval = val.Value10
+				case 10:
+					retval = val.Value11
+				case 11:
+					retval = val.Value12
+				case 12:
+					retval = val.Value13
+				case 13:
+					retval = val.Value14
+				case 14:
+					retval = val.Value15
+				case 15:
+					retval = val.Value16
+				case 16:
+					retval = val.Value17
+				case 17:
+					retval = val.Value18
+				case 18:
+					retval = val.Value19
+				case 19:
+					retval = val.Value20
+				case 20:
+					retval = val.Value21
+				case 21:
+					retval = val.Value22
+				case 22:
+					retval = val.Value23
+				case 23:
+					retval = val.Value24
+				case 24:
+					retval = val.Value25
+				}
+				//i++
+			}
+		}
+	}
+	return retval
+}
+
+// getColumnText documentation
+func getColumnText(index int) string {
 
 	text := []models.TextValue{
 		{"Skog"},
@@ -628,36 +730,35 @@ func getTextForValues() []models.TextValue {
 		{"Extraordinärar intäkter och kostnader"},
 		{"Bokslutsdispositioner"},
 		{"Skatt (ägaruttag prognosår EF)"},
-		{"Åretsresultat (value21) sum (value22+value23+value24)"},
+		{"Åretsresultat (value25) sum (value22+value23+value24)"},
 	}
-
-	return text
-
-	/*
-				value1; Resultaträkning; Skog
-		      value2; Resultaträkning; Växtodling
-		      value3; Resultaträkning; EU-stöd
-		      value4; Resultaträkning; Övrig djurproduktion
-		      value5; Resultaträkning; Förändring av lager produktion
-		      value6; Resultaträkning; Mjölk
-		      value7; Resultaträkning; Övriga intäkter
-		      value8; Omsättning totalt (Totala intäkter) summa value1-7
-		      value9; Inköp (Råvaror och förnödenheter)
-		      value10; Arrendekostnader
-		      value11; Personalkostnader
-		      value12; Övriga rörelsekostnader
-		      value13; S:a kostnader (summa value9-12)
-		      value14; Resultat före avskrivningar (value8 + (-value13))
-		      value15; Avskrivning inventarier (exkl. byggnadsinventerier)
-		      value16; Övriga avskrivningar
-		      value17; S:a avskrivningar (-value15) + (-value16)
-		      value18; Resultat före avskrivningar value14 + (-value17)
-		      value19; Finansiella intäkter
-		      value20; Finansiella konstnader
-		      value21; Resultat finansiella poster (value18) + value19 + (-value20)
-		      value22; Extraordinärar intäkter och kostnader
-		      value23; Bokslutsdispositioner
-		      value24; Skatt (ägaruttag prognosår EF)
-			  value25; Åretsresultat (value21) sum (value22+value23+value24)
-	*/
+	return text[index].Text
 }
+
+/*
+			value1; Resultaträkning; Skog
+	      value2; Resultaträkning; Växtodling
+	      value3; Resultaträkning; EU-stöd
+	      value4; Resultaträkning; Övrig djurproduktion
+	      value5; Resultaträkning; Förändring av lager produktion
+	      value6; Resultaträkning; Mjölk
+	      value7; Resultaträkning; Övriga intäkter
+	      value8; Omsättning totalt (Totala intäkter) summa value1-7
+	      value9; Inköp (Råvaror och förnödenheter)
+	      value10; Arrendekostnader
+	      value11; Personalkostnader
+	      value12; Övriga rörelsekostnader
+	      value13; S:a kostnader (summa value9-12)
+	      value14; Resultat före avskrivningar (value8 + (-value13))
+	      value15; Avskrivning inventarier (exkl. byggnadsinventerier)
+	      value16; Övriga avskrivningar
+	      value17; S:a avskrivningar (-value15) + (-value16)
+	      value18; Resultat före avskrivningar value14 + (-value17)
+	      value19; Finansiella intäkter
+	      value20; Finansiella konstnader
+	      value21; Resultat finansiella poster (value18) + value19 + (-value20)
+	      value22; Extraordinärar intäkter och kostnader
+	      value23; Bokslutsdispositioner
+	      value24; Skatt (ägaruttag prognosår EF)
+		  value25; Åretsresultat (value21) sum (value22+value23+value24)
+*/

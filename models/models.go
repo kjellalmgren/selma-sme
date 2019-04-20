@@ -311,6 +311,7 @@ type ProcessAllType struct {
 	Budgets           []BudgetType
 }
 
+// TextValue documentation
 type TextValue struct {
 	Text string
 }

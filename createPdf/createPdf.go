@@ -17,6 +17,13 @@ type TableRow struct {
 	Value string
 }
 
+type BudgetTableRow struct {
+	Key     string
+	Text    string
+	ValueC1 string
+	ValueC2 string
+}
+
 // HeaderRow documentation
 type HeaderRow struct {
 	Value string
@@ -26,6 +33,14 @@ type HeaderRow struct {
 type Value struct {
 	//Year  int
 	Value float32
+}
+
+// BRow documentation
+type BRow struct {
+	Year    int
+	Text    string
+	ValueC1 float32
+	ValueC2 float32
 }
 
 // CreatePdfDocument documentation
@@ -165,49 +180,80 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//
 	// Budget
 	//
+	y1 := 0
+	y2 := 0
+	i := 0
+	//
 	hr = HeaderRow{}
 	hr.Value = "Budget"
+	trb := []BudgetTableRow{} // Initiate table on page one
+	brows := []BRow{}
 	for _, budget := range budgets {
-		tr = []TableRow{}
-		pdf.AddPage()
-		pdf.SetFont("Arial", "B", 16)
-		pdf = header1(pdf, hr.Value)
-		pdf.SetFont("Arial", "B", 11)
-		tr = append(tr, TableRow{Key: "CompanyID:", Value: budget.CompanyEconomyID})
-		fixBudgetRows(budget.BudgetYears)
-		fmt.Println("#: %v", len(budget.BudgetYears))
-		for _, budgetyear := range budget.BudgetYears {
-			tr = append(tr, TableRow{Key: "Year:", Value: fmt.Sprintf("%v", budgetyear.BudgetYear)})
-			for _, value := range budgetyear.Values {
-				tr = append(tr, TableRow{Key: "Value1:", Value: fmt.Sprintf("%v", value.Value1)})
-				tr = append(tr, TableRow{Key: "Value2:", Value: fmt.Sprintf("%v", value.Value2)})
-				tr = append(tr, TableRow{Key: "Value3:", Value: fmt.Sprintf("%v", value.Value3)})
-				tr = append(tr, TableRow{Key: "Value4:", Value: fmt.Sprintf("%v", value.Value4)})
-				tr = append(tr, TableRow{Key: "Value5:", Value: fmt.Sprintf("%v", value.Value5)})
-				tr = append(tr, TableRow{Key: "Value6:", Value: fmt.Sprintf("%v", value.Value6)})
-				tr = append(tr, TableRow{Key: "Value7:", Value: fmt.Sprintf("%v", value.Value7)})
-				tr = append(tr, TableRow{Key: "Value8:", Value: fmt.Sprintf("%v", value.Value8)})
-				tr = append(tr, TableRow{Key: "Value9:", Value: fmt.Sprintf("%v", value.Value9)})
-				tr = append(tr, TableRow{Key: "Value10:", Value: fmt.Sprintf("%v", value.Value10)})
-				tr = append(tr, TableRow{Key: "Value11:", Value: fmt.Sprintf("%v", value.Value11)})
-				tr = append(tr, TableRow{Key: "Value12:", Value: fmt.Sprintf("%v", value.Value12)})
-				tr = append(tr, TableRow{Key: "Value13:", Value: fmt.Sprintf("%v", value.Value13)})
-				tr = append(tr, TableRow{Key: "Value14:", Value: fmt.Sprintf("%v", value.Value14)})
-				tr = append(tr, TableRow{Key: "Value15:", Value: fmt.Sprintf("%v", value.Value15)})
-				tr = append(tr, TableRow{Key: "Value16:", Value: fmt.Sprintf("%v", value.Value16)})
-				tr = append(tr, TableRow{Key: "Value17:", Value: fmt.Sprintf("%v", value.Value17)})
-				tr = append(tr, TableRow{Key: "Value18:", Value: fmt.Sprintf("%v", value.Value18)})
-				tr = append(tr, TableRow{Key: "Value19:", Value: fmt.Sprintf("%v", value.Value19)})
-				tr = append(tr, TableRow{Key: "Value20:", Value: fmt.Sprintf("%v", value.Value20)})
-				tr = append(tr, TableRow{Key: "Value21:", Value: fmt.Sprintf("%v", value.Value21)})
-				tr = append(tr, TableRow{Key: "Value22:", Value: fmt.Sprintf("%v", value.Value22)})
-				tr = append(tr, TableRow{Key: "Value23:", Value: fmt.Sprintf("%v", value.Value23)})
-				tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", value.Value24)})
-				tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", value.Value25)})
-			}
+		if i == 0 {
+			pdf.AddPage()
+			pdf.SetFont("Arial", "B", 16)
+			pdf = header1(pdf, hr.Value)
+			pdf.SetFont("Arial", "B", 11)
+			brows = fixBudgetRows(budget.BudgetYears)
+			//y1 = budget.BudgetYear
+		} else {
+			//y2 = budget.BudgetYears
+			//brows = fixBudgetRows(budget.BudgetYears)
 		}
-		pdf = table1(pdf, tr) // add table to page current page
+		trb = append(trb, BudgetTableRow{Key: "CompanyID:", Text: budget.CompanyEconomyID})
+		i++
 	}
+
+	//
+	j := 0
+	trb = append(trb, BudgetTableRow{
+		//Key:     fmt.Sprintf("%d", i),
+		//Text:    fmt.Sprintf("%s", br.Text),
+		ValueC1: fmt.Sprintf("%v", y1),
+		ValueC2: fmt.Sprintf("%v", y2)})
+	for _, br := range brows {
+		fmt.Println(fmt.Sprintf("- Text: %s C1: %v C2: %v", br.Text, br.ValueC1, br.ValueC2))
+		trb = append(trb, BudgetTableRow{
+			Key:     fmt.Sprintf("%d", i),
+			Text:    fmt.Sprintf("%s", br.Text),
+			ValueC1: fmt.Sprintf("%v", br.ValueC1),
+			ValueC2: fmt.Sprintf("%v", br.ValueC2)})
+		j++
+	}
+	//
+
+	// for _, budgetyear := range budget.BudgetYears {
+	// 	tr = append(tr, TableRow{Key: "Year:", Value: fmt.Sprintf("%v", budgetyear.BudgetYear)})
+	// 	for _, value := range budgetyear.Values {
+	// 		tr = append(tr, TableRow{Key: "Value1:", Value: fmt.Sprintf("%v", value.Value1)})
+	// 		tr = append(tr, TableRow{Key: "Value2:", Value: fmt.Sprintf("%v", value.Value2)})
+	// 		tr = append(tr, TableRow{Key: "Value3:", Value: fmt.Sprintf("%v", value.Value3)})
+	// 		tr = append(tr, TableRow{Key: "Value4:", Value: fmt.Sprintf("%v", value.Value4)})
+	// 		tr = append(tr, TableRow{Key: "Value5:", Value: fmt.Sprintf("%v", value.Value5)})
+	// 		tr = append(tr, TableRow{Key: "Value6:", Value: fmt.Sprintf("%v", value.Value6)})
+	// 		tr = append(tr, TableRow{Key: "Value7:", Value: fmt.Sprintf("%v", value.Value7)})
+	// 		tr = append(tr, TableRow{Key: "Value8:", Value: fmt.Sprintf("%v", value.Value8)})
+	// 		tr = append(tr, TableRow{Key: "Value9:", Value: fmt.Sprintf("%v", value.Value9)})
+	// 		tr = append(tr, TableRow{Key: "Value10:", Value: fmt.Sprintf("%v", value.Value10)})
+	// 		tr = append(tr, TableRow{Key: "Value11:", Value: fmt.Sprintf("%v", value.Value11)})
+	// 		tr = append(tr, TableRow{Key: "Value12:", Value: fmt.Sprintf("%v", value.Value12)})
+	// 		tr = append(tr, TableRow{Key: "Value13:", Value: fmt.Sprintf("%v", value.Value13)})
+	// 		tr = append(tr, TableRow{Key: "Value14:", Value: fmt.Sprintf("%v", value.Value14)})
+	// 		tr = append(tr, TableRow{Key: "Value15:", Value: fmt.Sprintf("%v", value.Value15)})
+	// 		tr = append(tr, TableRow{Key: "Value16:", Value: fmt.Sprintf("%v", value.Value16)})
+	// 		tr = append(tr, TableRow{Key: "Value17:", Value: fmt.Sprintf("%v", value.Value17)})
+	// 		tr = append(tr, TableRow{Key: "Value18:", Value: fmt.Sprintf("%v", value.Value18)})
+	// 		tr = append(tr, TableRow{Key: "Value19:", Value: fmt.Sprintf("%v", value.Value19)})
+	// 		tr = append(tr, TableRow{Key: "Value20:", Value: fmt.Sprintf("%v", value.Value20)})
+	// 		tr = append(tr, TableRow{Key: "Value21:", Value: fmt.Sprintf("%v", value.Value21)})
+	// 		tr = append(tr, TableRow{Key: "Value22:", Value: fmt.Sprintf("%v", value.Value22)})
+	// 		tr = append(tr, TableRow{Key: "Value23:", Value: fmt.Sprintf("%v", value.Value23)})
+	// 		tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", value.Value24)})
+	// 		tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", value.Value25)})
+	// 	}
+	// }
+	pdf = tablebudget(pdf, trb) // add table to page current page
+	//}
 	//
 	// Save pdf file to a local destination
 	//
@@ -514,6 +560,22 @@ func table1(pdf *gofpdf.Fpdf, tbl []TableRow) *gofpdf.Fpdf {
 	}
 	return pdf
 }
+func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
+	// Reset font and fill color.
+	pdf.SetFont("Arial", "", 12)
+	pdf.SetFillColor(255, 255, 255)
+	// Every column gets aligned according to its contents.
+	//align := []string{"L", "C", "L", "R", "R", "R"}
+	for _, line := range tbl {
+		pdf.CellFormat(20, 10, line.Key, "1", 0, "L", false, 0, "")
+		pdf.CellFormat(120, 10, line.Text, "1", 0, "L", false, 0, "")
+		pdf.CellFormat(20, 10, line.ValueC1, "1", 0, "R", false, 0, "")
+		pdf.CellFormat(20, 10, line.ValueC2, "1", 0, "R", false, 0, "")
+
+		pdf.Ln(-1)
+	}
+	return pdf
+}
 
 // image documentation
 func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
@@ -523,15 +585,10 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 }
 
 // fixBudgetRows documentation
-func fixBudgetRows(budgets []models.BudgetYear) {
+func fixBudgetRows(budgets []models.BudgetYear) []BRow {
 
 	// BRow documentation
-	type BRow struct {
-		Year    int
-		Text    string
-		ValueC1 float32
-		ValueC2 float32
-	}
+
 	fmt.Println(fmt.Sprintf("%v", getColumnText(24)))
 	//BRows := []BRow{}
 	//j := 0
@@ -553,7 +610,13 @@ func fixBudgetRows(budgets []models.BudgetYear) {
 	}
 	fmt.Println(fmt.Sprintf("Len:%v", len(budgets)))
 	for j := 0; j <= 24; j++ {
-		//fmt.Println(fmt.Sprintf("Antal #: %v", x))
+		if j == 0 {
+			//brow.Year = y1
+			//brow.Text = "Year"
+			//brow.ValueC1 = y1
+			//brow.ValueC2 = y2
+			//Brows = append(BRows, brow)
+		}
 		brow.Year = y1
 		brow.Text = getColumnText(j)
 		brow.ValueC1 = getColumn1Value(j, y1, budgets)
@@ -561,9 +624,11 @@ func fixBudgetRows(budgets []models.BudgetYear) {
 		BRows = append(BRows, brow)
 	}
 	//
-	for _, br := range BRows {
-		fmt.Println(fmt.Sprintf("Year: %v - Text: %s C1: %v C2: %v", br.Year, br.Text, br.ValueC1, br.ValueC2))
-	}
+	// fmt.Println(fmt.Sprintf("\t\t%v\t\t%v", y1, y2))
+	// for _, br := range BRows {
+	// 	fmt.Println(fmt.Sprintf("- Text: %s\t\t\tC1: %v\tC2: %v", br.Text, br.ValueC1, br.ValueC2))
+	// }
+	return BRows
 }
 
 // getColumn1Value documentation

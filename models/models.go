@@ -151,6 +151,8 @@ type CompanyType struct {
 	CompanyID       string `json:"companyId"`
 	OrgNumber       string `json:"orgNr"`
 	CompanyName     string `json:"companyName"`
+	StatusCode      string `json:"stsatusCode"`
+	StatusTextHigh  string `json:"statusTextHigh"`
 	Created         string `json:"created"`
 	BusinessFocus   string `json:"businessFocus"`
 	IndustriCode    string `json:"industriCode"` // SNI-kod

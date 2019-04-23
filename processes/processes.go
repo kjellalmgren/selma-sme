@@ -171,6 +171,21 @@ func UpdateProcess(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+func SaveProcessAll(w http.ResponseWriter, r *http.Request) {
+
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("SaveProcessAll executed, processid: %s...\r\n", processid)
+	//
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
+	//
+	w.WriteHeader(http.StatusOK)
+	//
+}
+
 // GetProcessAll documentation
 func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	//

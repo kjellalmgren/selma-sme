@@ -100,6 +100,7 @@ func main() {
 	//
 	router.HandleFunc("/v1/getprocesses", processes.GetProcesses).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getprocess", processes.GetProcessAll).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/saveprocess", processes.SaveProcessAll).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/deleteprocess", processes.DeleteProcess).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/updateprocessstatus", processes.UpdateProcess).Methods("PATCH", "OPTIONS")
 	router.HandleFunc("/v1/addprocess", processes.AddProcess).Methods("PUT", "OPTIONS") // addProcess

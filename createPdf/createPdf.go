@@ -203,7 +203,6 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		trb = append(trb, BudgetTableRow{Key: "CompanyID:", Text: budget.CompanyEconomyID})
 		i++
 	}
-
 	//
 	j := 0
 	trb = append(trb, BudgetTableRow{
@@ -212,46 +211,15 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		ValueC1: fmt.Sprintf("%v", y1),
 		ValueC2: fmt.Sprintf("%v", y2)})
 	for _, br := range brows {
-		fmt.Println(fmt.Sprintf("- Text: %s C1: %v C2: %v", br.Text, br.ValueC1, br.ValueC2))
+		fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
 		trb = append(trb, BudgetTableRow{
-			Key:     fmt.Sprintf("%d", i),
+			Key:     fmt.Sprintf("%d", j+1),
 			Text:    fmt.Sprintf("%s", br.Text),
 			ValueC1: fmt.Sprintf("%v", br.ValueC1),
 			ValueC2: fmt.Sprintf("%v", br.ValueC2)})
 		j++
 	}
 	//
-
-	// for _, budgetyear := range budget.BudgetYears {
-	// 	tr = append(tr, TableRow{Key: "Year:", Value: fmt.Sprintf("%v", budgetyear.BudgetYear)})
-	// 	for _, value := range budgetyear.Values {
-	// 		tr = append(tr, TableRow{Key: "Value1:", Value: fmt.Sprintf("%v", value.Value1)})
-	// 		tr = append(tr, TableRow{Key: "Value2:", Value: fmt.Sprintf("%v", value.Value2)})
-	// 		tr = append(tr, TableRow{Key: "Value3:", Value: fmt.Sprintf("%v", value.Value3)})
-	// 		tr = append(tr, TableRow{Key: "Value4:", Value: fmt.Sprintf("%v", value.Value4)})
-	// 		tr = append(tr, TableRow{Key: "Value5:", Value: fmt.Sprintf("%v", value.Value5)})
-	// 		tr = append(tr, TableRow{Key: "Value6:", Value: fmt.Sprintf("%v", value.Value6)})
-	// 		tr = append(tr, TableRow{Key: "Value7:", Value: fmt.Sprintf("%v", value.Value7)})
-	// 		tr = append(tr, TableRow{Key: "Value8:", Value: fmt.Sprintf("%v", value.Value8)})
-	// 		tr = append(tr, TableRow{Key: "Value9:", Value: fmt.Sprintf("%v", value.Value9)})
-	// 		tr = append(tr, TableRow{Key: "Value10:", Value: fmt.Sprintf("%v", value.Value10)})
-	// 		tr = append(tr, TableRow{Key: "Value11:", Value: fmt.Sprintf("%v", value.Value11)})
-	// 		tr = append(tr, TableRow{Key: "Value12:", Value: fmt.Sprintf("%v", value.Value12)})
-	// 		tr = append(tr, TableRow{Key: "Value13:", Value: fmt.Sprintf("%v", value.Value13)})
-	// 		tr = append(tr, TableRow{Key: "Value14:", Value: fmt.Sprintf("%v", value.Value14)})
-	// 		tr = append(tr, TableRow{Key: "Value15:", Value: fmt.Sprintf("%v", value.Value15)})
-	// 		tr = append(tr, TableRow{Key: "Value16:", Value: fmt.Sprintf("%v", value.Value16)})
-	// 		tr = append(tr, TableRow{Key: "Value17:", Value: fmt.Sprintf("%v", value.Value17)})
-	// 		tr = append(tr, TableRow{Key: "Value18:", Value: fmt.Sprintf("%v", value.Value18)})
-	// 		tr = append(tr, TableRow{Key: "Value19:", Value: fmt.Sprintf("%v", value.Value19)})
-	// 		tr = append(tr, TableRow{Key: "Value20:", Value: fmt.Sprintf("%v", value.Value20)})
-	// 		tr = append(tr, TableRow{Key: "Value21:", Value: fmt.Sprintf("%v", value.Value21)})
-	// 		tr = append(tr, TableRow{Key: "Value22:", Value: fmt.Sprintf("%v", value.Value22)})
-	// 		tr = append(tr, TableRow{Key: "Value23:", Value: fmt.Sprintf("%v", value.Value23)})
-	// 		tr = append(tr, TableRow{Key: "Value24:", Value: fmt.Sprintf("%v", value.Value24)})
-	// 		tr = append(tr, TableRow{Key: "Value25:", Value: fmt.Sprintf("%v", value.Value25)})
-	// 	}
-	// }
 	pdf = tablebudget(pdf, trb) // add table to page current page
 	//}
 	//
@@ -571,7 +539,6 @@ func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
 		pdf.CellFormat(120, 10, line.Text, "1", 0, "L", false, 0, "")
 		pdf.CellFormat(20, 10, line.ValueC1, "1", 0, "R", false, 0, "")
 		pdf.CellFormat(20, 10, line.ValueC2, "1", 0, "R", false, 0, "")
-
 		pdf.Ln(-1)
 	}
 	return pdf
@@ -588,7 +555,6 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 func fixBudgetRows(budgets []models.BudgetYear) []BRow {
 
 	// BRow documentation
-
 	fmt.Println(fmt.Sprintf("%v", getColumnText(24)))
 	//BRows := []BRow{}
 	//j := 0
@@ -691,8 +657,7 @@ func getColumn1Value(index int, year int, budgets []models.BudgetYear) float32 {
 					retval = val.Value24
 				case 24:
 					retval = val.Value25
-				}
-				//i++
+				} //i++
 			}
 		}
 	}
@@ -778,10 +743,10 @@ func getColumnText(index int) string {
 		{"Förändring av lager produktion"},
 		{"Mjölk"},
 		{"Övriga intäkter"},
-		{"Övriga intäkter"},
-		{"Summa(1-7)"},
+		{"Omsättning totalt"},
 		{"Inköp (Råvaror och förnödenheter)"},
 		{"Arrendekostnader"},
+		{"Personalkostnader"},
 		{"Övriga rörelsekostnader"},
 		{"S:a kostnader (summa value9-12)"},
 		{"Resultat före avskrivningar (value8 + (-value13))"},
@@ -790,7 +755,7 @@ func getColumnText(index int) string {
 		{"S:a avskrivningar (-value15) + (-value16)"},
 		{"Resultat före avskrivningar value14 + (-value17)"},
 		{"Finansiella intäkter"},
-		{"Finansiella konstnader"},
+		{"Finansiella kostnader"},
 		{"Resultat finansiella poster (value18) + value19 + (-value20)"},
 		{"Extraordinärar intäkter och kostnader"},
 		{"Bokslutsdispositioner"},

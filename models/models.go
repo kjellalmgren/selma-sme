@@ -151,7 +151,7 @@ type CompanyType struct {
 	CompanyID       string `json:"companyId"`
 	OrgNumber       string `json:"orgNr"`
 	CompanyName     string `json:"companyName"`
-	StatusCode      string `json:"stsatusCode"`
+	StatusCode      string `json:"statusCode"`
 	StatusTextHigh  string `json:"statusTextHigh"`
 	Created         string `json:"created"`
 	BusinessFocus   string `json:"businessFocus"`
@@ -301,7 +301,7 @@ type MessageBody struct {
 // ProcessAllType documentation
 type ProcessAllType struct {
 	Processes         []ProcessType
-	Applicans         []ApplicantType
+	Applicants        []ApplicantType
 	Loans             []LoanType
 	ExtLoans          []ExtLoanType
 	Households        []HouseholdType
@@ -325,19 +325,19 @@ type TextValue struct {
 //}
 
 // XAll documentation
-type XAll struct {
-	Persons []Person
-	Animals []Animal
-}
+//type XAll struct {
+//	Persons []Person
+//	Animals []Animal
+//}
 
 // Person documentation
-type Person struct {
-	Name   string
-	Mobile string
-}
+//type Person struct {
+//	Name   string
+//	Mobile string
+//}
 
 // Animal documentation
-type Animal struct {
-	AnimalID string
-	Animal   string
-}
+//type Animal struct {
+//	AnimalID string
+//	Animal   string
+//

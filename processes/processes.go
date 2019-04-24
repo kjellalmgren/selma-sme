@@ -171,6 +171,7 @@ func UpdateProcess(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// SaveProcessAll documentation
 func SaveProcessAll(w http.ResponseWriter, r *http.Request) {
 
 	processid := r.Header.Get("X-process-Id")
@@ -181,6 +182,20 @@ func SaveProcessAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, caseIdStatus")
+	//
+	var data models.ProcessAllType
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	//
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	fmt.Println(fmt.Sprintf("# of Applicant:%v", len(data.Applicants)))
 	//
 	w.WriteHeader(http.StatusOK)
 	//
@@ -202,11 +217,11 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	collaterals := []models.CollateralType{}
 	budgets := []models.BudgetType{}
 	//
-	var d models.XAll
-	var p models.Person
-	p.Name = "Kjell Almgren"
-	p.Mobile = "0733981482"
-	d.Persons = append(d.Persons, p)
+	//var d models.XAll
+	//var p models.Person
+	//p.Name = "Kjell Almgren"
+	//p.Mobile = "0733981482"
+	//d.Persons = append(d.Persons, p)
 	//
 	processid := r.Header.Get("X-process-Id")
 	fmt.Printf("GetProcessAll executed, processid: %s...\r\n", processid)
@@ -295,7 +310,7 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal([]byte(file), &kycinformations)
 	//
-	processall.Applicans = append(applicants)
+	processall.Applicants = append(applicants)
 	processall.Processes = append(processes)
 	processall.Loans = append(loans)
 	processall.ExtLoans = append(extloans)

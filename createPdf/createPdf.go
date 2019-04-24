@@ -62,7 +62,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	budgets := getBudgets(processid)
 	//
 	processall.Processes = append(processes)
-	processall.Applicans = append(applicants)
+	processall.Applicants = append(applicants)
 	processall.Companies = append(companies)
 	processall.Collaterals = append(collaterals)
 	processall.Loans = append(loans)

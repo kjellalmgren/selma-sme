@@ -40,8 +40,17 @@ TBD: can we remove customerId from ExtLoanType or do we need it for KALP. ExtLoa
 	We probaly don´t need customerId in type of collateral
 	
 ## Processes
-addProcess
+**addProcess**
+
 När en ny process startas ska ska ProcessId, CustomerId samt CaseID reservras i Loan Process.
+
+**getprocessall**
+
+Hämta hela modellen för ett givet processid
+
+**saveprocessall**
+
+Spara hela modellen för ett givet processid
 
 ## Applicant
 **addApplicant**

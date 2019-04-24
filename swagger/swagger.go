@@ -26,5 +26,5 @@ func Swagger(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(file)
 	w.WriteHeader(http.StatusOK)
-	//fmt.Fprint(os.Stderr, fmt.Sprintf("selma-en-v0.5.8"))
+	//fmt.Fprint(os.Stderr, fmt.Sprintf("selma-en-v0.5.9"))
 }

@@ -249,6 +249,7 @@ type BudgetYear struct {
 	Values     []ValueType
 }
 
+// ValueType documentation
 type ValueType struct {
 	Value1  float32 `json:"value1"`
 	Value2  float32 `json:"value2"`

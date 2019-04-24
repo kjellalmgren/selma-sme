@@ -590,10 +590,6 @@ func fixBudgetRows(budgets []models.BudgetYear) []BRow {
 		BRows = append(BRows, brow)
 	}
 	//
-	// fmt.Println(fmt.Sprintf("\t\t%v\t\t%v", y1, y2))
-	// for _, br := range BRows {
-	// 	fmt.Println(fmt.Sprintf("- Text: %s\t\t\tC1: %v\tC2: %v", br.Text, br.ValueC1, br.ValueC2))
-	// }
 	return BRows
 }
 

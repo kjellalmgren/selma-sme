@@ -1,6 +1,8 @@
 # Selma-SME
 
-
+## webb-server
+    $ live-server index.html
+    
 ## Static REST-API
 
 ##build container

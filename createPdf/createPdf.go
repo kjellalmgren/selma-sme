@@ -130,7 +130,6 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	}
 	//
 	// Companies
-	//
 	hr = HeaderRow{}
 	hr.Value = "Companies"
 	for _, company := range companies {
@@ -176,7 +175,26 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
-
+	//
+	// Loans
+	//
+	hr = HeaderRow{}
+	hr.Value = "Loans"
+	for _, loan := range loans {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
+		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
+		tr = append(tr, TableRow{Key: "LoanNumber:", Value: loan.LoanNumber})
+		tr = append(tr, TableRow{Key: "Purpose:", Value: loan.PurposeOfLoan})
+		tr = append(tr, TableRow{Key: "Amount:", Value: fmt.Sprintf("%.2f", loan.LoanAmount)})
+		for _, aim := range loan.Aims {
+			tr = append(tr, TableRow{Key: "\tAim:", Value: aim.AimText})
+			tr = append(tr, TableRow{Key: "LoanAmountPart:", Value: fmt.Sprintf("%.2f", aim.LoanAmountPart)})
+		}
+		pdf = table1(pdf, tr) // add table to page current page
+	}
 	//
 	// Budget
 	//

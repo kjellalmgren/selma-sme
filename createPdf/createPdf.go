@@ -801,31 +801,3 @@ func getColumnText(index int) string {
 	}
 	return text[index].Text
 }
-
-/*
-			value1; Resultaträkning; Skog
-	      value2; Resultaträkning; Växtodling
-	      value3; Resultaträkning; EU-stöd
-	      value4; Resultaträkning; Övrig djurproduktion
-	      value5; Resultaträkning; Förändring av lager produktion
-	      value6; Resultaträkning; Mjölk
-	      value7; Resultaträkning; Övriga intäkter
-	      value8; Omsättning totalt (Totala intäkter) summa value1-7
-	      value9; Inköp (Råvaror och förnödenheter)
-	      value10; Arrendekostnader
-	      value11; Personalkostnader
-	      value12; Övriga rörelsekostnader
-	      value13; S:a kostnader (summa value9-12)
-	      value14; Resultat före avskrivningar (value8 + (-value13))
-	      value15; Avskrivning inventarier (exkl. byggnadsinventerier)
-	      value16; Övriga avskrivningar
-	      value17; S:a avskrivningar (-value15) + (-value16)
-	      value18; Resultat före avskrivningar value14 + (-value17)
-	      value19; Finansiella intäkter
-	      value20; Finansiella konstnader
-	      value21; Resultat finansiella poster (value18) + value19 + (-value20)
-	      value22; Extraordinärar intäkter och kostnader
-	      value23; Bokslutsdispositioner
-	      value24; Skatt (ägaruttag prognosår EF)
-		  value25; Åretsresultat (value21) sum (value22+value23+value24)
-*/

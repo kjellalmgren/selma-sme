@@ -196,6 +196,27 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//
+	// ExtLoans
+	//
+	hr = HeaderRow{}
+	hr.Value = "ExtLoans"
+	for _, extloan := range extloans {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
+		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
+		tr = append(tr, TableRow{Key: "extCreditInstitut:", Value: extloan.ExtCreditInstitut})
+		tr = append(tr, TableRow{Key: "Clearing:", Value: extloan.ExtLoanClearing})
+		tr = append(tr, TableRow{Key: "Loan#:", Value: extloan.ExtLoanNumber})
+		tr = append(tr, TableRow{Key: "Amount:", Value: fmt.Sprintf("%.2f", extloan.ExtLoanAmount)})
+		tr = append(tr, TableRow{Key: "Lösen:", Value: fmt.Sprintf("%v", extloan.ExtRedeemLoan)})
+		for _, owner := range extloan.ExtLoanOwners {
+			tr = append(tr, TableRow{Key: "\tÄgare:", Value: owner.CustomerID})
+		}
+		pdf = table1(pdf, tr) // add table to page current page
+	}
+	//
 	// Budget
 	//
 	y1 := 0
@@ -546,6 +567,8 @@ func table1(pdf *gofpdf.Fpdf, tbl []TableRow) *gofpdf.Fpdf {
 	}
 	return pdf
 }
+
+// tablebudget documentation
 func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
 	// Reset font and fill color.
 	pdf.SetFont("Arial", "", 12)

@@ -9,7 +9,7 @@
 *.test
 .DS_Store
 /temp-folders
-/json/*.json
+#/json/*.json
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 *.pdf

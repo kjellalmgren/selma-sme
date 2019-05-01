@@ -1,6 +1,6 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  version: '0.7.0'
+  version: "0.7.0"
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -117,17 +117,17 @@ info:
   #
   ###########################################################################################
   title: "Selma SME Light Project"
-  description: "This definition is the API between customer SME-Gui and the persistence framework based on Activiti to be decided where this should be connected (Sökande/Medsökande) When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM."
+  description: "This definition is the API between customer SME-Gui and the persistence framework based on Activiti to be decided where this should be connected (Sökande/Medsökande) When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we dont have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM."
   #  
-  termsOfService: 'http://www.landshypotek.se/sme/terms'
+  termsOfService: "http://www.landshypotek.se/sme/terms"
   license:
     name: MIT
     url: http://opensource.org/licenses/MIT
   contact:
-    name: API v1 for SME initiative
+    name: APISMEV1
     url: api.landshypotek.se/v1/sme
     email: developer@landshypotek.se
-host: 'localhost:8443'
+host: "localhost:8443"
 #host: 'localhost:8400'
 basePath: /
 tags:
@@ -178,61 +178,61 @@ paths:
       operationId: getCompanyEconomies
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCompanylEconomies request
         - $ref: '#/parameters/X-process-ID'
       responses:
-        200:
+        "200":
           description: "Successful"
           schema:
-            $ref: '#/definitions/CompanyEconomies'
-        400:
+            $ref: "#/definitions/CompanyEconomy"
+        "400":
           description: "Bad request" 
           schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
+            $ref: "#/definitions/ErrorModel"        
+        "401":
+          description: "Unauthorized"       
           schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
+            $ref: "#/definitions/ErrorModel"   
+        "403":
+          description: "Forbidden"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "Not found"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
+            $ref: "#/definitions/ErrorModel"
+        "405":
+          description: "Method Not Allowed"
           schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
+            $ref: "#/definitions/ErrorModel"         
+        "406":
+          description: "Not Acceptable"
           schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
+            $ref: "#/definitions/ErrorModel"     
+        "408":
+          description: "Request Timeout"
           schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
+            $ref: "#/definitions/ErrorModel"      
+        "415":
+          description: "Unsupported media type"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
+            $ref: "#/definitions/ErrorModel"
+        "429":
+          description: "Too many requests"        
           schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Internal server error"          
           schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
+            $ref: "#/definitions/ErrorModel"
+        "503":
+          description: "Service unavailable"    
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: "#/definitions/ErrorModel"
   #
   ###############################################
   # CompanyEconomy
@@ -246,9 +246,9 @@ paths:
       operationId: getCompanyEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCompanyEconomy request
         - $ref: '#/parameters/X-process-ID'
@@ -257,54 +257,54 @@ paths:
           schema:
             $ref: '#/definitions/companyEconomyId'
       responses:
-        200:
+        "200":
           description: "Successful"
           schema:
-            $ref: '#/definitions/CompanyEconomy'
-        400:
-          description: 'Bad request'  
+            $ref: "#/definitions/CompanyEconomy"
+        "400":
+          description: "Bad request" 
           schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
+            $ref: "#/definitions/ErrorModel"        
+        "401":
+          description: "Unauthorized"       
           schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
+            $ref: "#/definitions/ErrorModel"   
+        "403":
+          description: "Forbidden"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "Not found"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
+            $ref: "#/definitions/ErrorModel"
+        "405":
+          description: "Method Not Allowed"
           schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
+            $ref: "#/definitions/ErrorModel"         
+        "406":
+          description: "Not Acceptable"
           schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
+            $ref: "#/definitions/ErrorModel"     
+        "408":
+          description: "Request Timeout"
           schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
+            $ref: "#/definitions/ErrorModel"      
+        "415":
+          description: "Unsupported media type"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
+            $ref: "#/definitions/ErrorModel"
+        "429":
+          description: "Too many requests"        
           schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Internal server error"          
           schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
+            $ref: "#/definitions/ErrorModel"
+        "503":
+          description: "Service unavailable"    
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: "#/definitions/ErrorModel"
   #
   
   ####################################################################
@@ -319,9 +319,9 @@ paths:
       operationId: updateCompanyEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a CompanyEconomy in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -330,54 +330,54 @@ paths:
           schema:
             $ref: '#/definitions/updateCompanyEconomyType'
       responses:
-        200:
+        "200":
           description: "Successful"
           schema:
-            $ref: '#/definitions/updateCompanyEconomyType'
-        400:
-          description: 'Bad request'  
+            $ref: "#/definitions/updateCompanyEconomyType"
+        "400":
+          description: "Bad request" 
           schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
+            $ref: "#/definitions/ErrorModel"        
+        "401":
+          description: "Unauthorized"       
           schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
+            $ref: "#/definitions/ErrorModel"   
+        "403":
+          description: "Forbidden"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "Not found"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
+            $ref: "#/definitions/ErrorModel"
+        "405":
+          description: "Method Not Allowed"
           schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
+            $ref: "#/definitions/ErrorModel"         
+        "406":
+          description: "Not Acceptable"
           schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
+            $ref: "#/definitions/ErrorModel"     
+        "408":
+          description: "Request Timeout"
           schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
+            $ref: "#/definitions/ErrorModel"      
+        "415":
+          description: "Unsupported media type"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
+            $ref: "#/definitions/ErrorModel"
+        "429":
+          description: "Too many requests"        
           schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Internal server error"          
           schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
+            $ref: "#/definitions/ErrorModel"
+        "503":
+          description: "Service unavailable"    
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: "#/definitions/ErrorModel"
   #
   ####################################################################
   # Delete a specific CompanyEconomy
@@ -392,9 +392,9 @@ paths:
       operationId: deleteCompanyEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -403,52 +403,54 @@ paths:
           schema:
             $ref: '#/definitions/companyEconomyId'
       responses:
-        200:
-          $ref: '#/definitions/200OK'
-        400:
-          description: 'Bad request'  
+        "200":
+          description: "200 OK"
           schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
+            $ref: '#/definitions/200OK'
+        "400":
+          description: "Bad request" 
           schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
+            $ref: "#/definitions/ErrorModel"        
+        "401":
+          description: "Unauthorized"       
           schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
+            $ref: "#/definitions/ErrorModel"   
+        "403":
+          description: "Forbidden"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "Not found"
           schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
+            $ref: "#/definitions/ErrorModel"
+        "405":
+          description: "Method Not Allowed"
           schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
+            $ref: "#/definitions/ErrorModel"         
+        "406":
+          description: "Not Acceptable"
           schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
+            $ref: "#/definitions/ErrorModel"     
+        "408":
+          description: "Request Timeout"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
+            $ref: "#/definitions/ErrorModel"      
+        "415":
+          description: "Unsupported media type"
           schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
+            $ref: "#/definitions/ErrorModel"
+        "429":
+          description: "Too many requests"        
           schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Internal server error"          
           schema:
-            $ref: '#/definitions/ErrorModel'
+            $ref: "#/definitions/ErrorModel"
+        "503":
+          description: "Service unavailable"    
+          schema:
+            $ref: "#/definitions/ErrorModel"
   #
 ###############################################################
 ###############################################################
@@ -507,7 +509,7 @@ definitions:
   processCreatedDate:
     description: "Activiti processId created date"
     type: string
-    example: '2019-03-01'
+    example: '{"processCreatedDate": "2019-03-01"}'
   #
   lastAccessed:
     description: "updated timestamp when customer login to the site"
@@ -518,8 +520,8 @@ definitions:
   # Companies
   ###############################
   companyId:
-    type: string
     description: "generated guid in the model"
+    type: string
     format: uuid
     example: '{"companyId": "461460c2-3d14-11e9-b210-d663bd873d93"}'
   #
@@ -616,7 +618,7 @@ definitions:
     description: "Företagets omsättning för året angivet i revenueYear (3 år)"
     type: number
     format: float
-    example: 2000000
+    example: '{"revenue": "2000000"}'
   #
   #################################################################
   # START Response definitions
@@ -646,30 +648,30 @@ definitions:
     type: object
     properties:
       processId:
-        $ref: '#/definitions/processId'
+        $ref: "#/definitions/processId"
       companyId:
-        $ref: '#/definitions/companyId'
+        $ref: "#/definitions/companyId"
       companyEconomyId:
-        $ref: '#/definitions/companyEconomyId'
+        $ref: "#/definitions/companyEconomyId"
       revenues:
-        $ref: '#/definitions/revenues'
+        $ref: "#/definitions/revenues"
       customerCategory:
-        $ref: '#/definitions/customerCategory'
+        $ref: "#/definitions/customerCategory"
   #
   CompanyEconomy:
-    $ref: '#/definitions/companyEconomyType'
+    $ref: "#/definitions/companyEconomyType"
   #
   CompanyEconomies:
     type: array
     description: "Type definition for company economies, returns array of CompanyEconomyType"
     items:
-      $ref: '#/definitions/companyEconomyType'
+      $ref: "#/definitions/companyEconomyType"
   #
   revenues:
     description: "a List of revenueType"
     type: array
     items:
-      $ref: '#/definitions/revenueType'
+      $ref: "#/definitions/revenueType"
   #
   ##################################################
   # RevenueType
@@ -682,9 +684,9 @@ definitions:
     type: object
     properties:
       revenueYear:
-        $ref: '#/definitions/revenueYear'
+        $ref: "#/definitions/revenueYear"
       revenue:
-        $ref: '#/definitions/revenue'
+        $ref: "#/definitions/revenue"
   #
   ##################################################
   # TBD; Se över vilka fält som ska kunna uppdateras
@@ -697,15 +699,15 @@ definitions:
     type: object
     properties:
       processId:
-        $ref: '#/definitions/processId'
+        $ref: "#/definitions/processId"
       companyId:
-        $ref: '#/definitions/companyId'
+        $ref: "#/definitions/companyId"
       companyEconomyId:
-        $ref: '#/definitions/companyEconomyId'
+        $ref: "#/definitions/companyEconomyId"
       revenues:
-        $ref: '#/definitions/revenueType'
+        $ref: "#/definitions/revenueType"
       customerCategory:
-        $ref: '#/definitions/customerCategory'
+        $ref: "#/definitions/customerCategory"
   #
 ####################################################################################
 ####################################################################################
@@ -733,17 +735,16 @@ parameters:
   #
   caseIdStatus:
     description: "Will be used when a applicant want to start an application (**STARTEDBYAPPLICANT**) or when a applicant want to close un application. In this case the applicant set status **CLOSEDBYAPPLICANT**. When this application is sent to Landshypotek the status will be set to **READYFOROFFICER**"
-      
     name: caseIdStatus
     required: true
     in: header
     type: string
     enum:
-      - CLOSEDBYAPPLICANT   # Kund har aktivt avböjt ansökan
-      - STARTEDBYAPPLICANT  # Kund har startat en ansökan
-      - CLOSEDBYOFFICER     # av handläggare
-      - CLOSEDBYTHINNING    # Gallring?
-      - READYFOROFFICER     # Applicant has submitted the application
+      - "CLOSEDBYAPPLICANT"   # Kund har aktivt avböjt ansökan
+      - "STARTEDBYAPPLICANT"  # Kund har startat en ansökan
+      - "CLOSEDBYOFFICER"     # av handläggare
+      - "CLOSEDBYTHINNING"    # Gallring?
+      - "READYFOROFFICER"     # Applicant has submitted the application
   #
   #X-customer-ID:
   #  description: TBD

@@ -190,6 +190,7 @@ paths:
     get:
       summary: Server example operation
       description: This is an example opeartion to show how security is applied to the call.
+      operationId: example
       responses:
         200:
           description: OK
@@ -203,8 +204,9 @@ paths:
       # We want to require no security schemes and override the globally define security scheme.
       # To do that, we simply provide an empty array to the 'security' property.
       security: [ ]
+      operationId: ping
       produces:
-      - application/json
+        - application/json
       responses:
         200:
           description: OK
@@ -220,7 +222,7 @@ paths:
       operationId: fileUpload
       summary: Uploads a file.
       consumes:
-      - multipart/form-data
+        - multipart/form-data
       parameters:
       - in: formData
         name: upfile
@@ -232,7 +234,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
   #
   ##############################################################
   # Processes
@@ -246,9 +248,9 @@ paths:
       operationId: getProcesses
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: customerId
@@ -317,9 +319,9 @@ paths:
       description: Return all data for all object in the activiti process regardless if the contains any information, empty objects will return null
       operationId: getProcessAll
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
       responses:
@@ -343,9 +345,9 @@ paths:
       description: TBD
       operationId: saveProcessAll
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: processSaveAll
@@ -356,7 +358,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
              #$ref: '#/definitions/LinksAll'
         404:
           description: 'Not found'
@@ -374,9 +376,9 @@ paths:
       description: This operation will return a processid that has to be used i header X-process-ID for all other requests in all APIs. As parameter we will allways be using STARTEDBYAPPLICANT
       operationId: updateProcess
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/caseIdStatus'
         - name: customerId
@@ -401,9 +403,9 @@ paths:
       operationId: deleteProcess
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - $ref: '#/definitions/caseIdStatus'
@@ -411,7 +413,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -474,9 +476,9 @@ paths:
       operationId: reserveCaseId
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - $ref: '#/parameters/caseIdStatus'
@@ -547,9 +549,9 @@ paths:
       operationId: updateProcessStatus
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - $ref: '#/parameters/caseIdStatus'
@@ -562,7 +564,7 @@ paths:
           description: Successful
           schema:
             # This has to be defined in a different way
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -620,9 +622,9 @@ paths:
       operationId: getApplicants
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getApplicants request
         - $ref: '#/parameters/X-process-ID'
@@ -688,9 +690,9 @@ paths:
       operationId: getApplicant
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: customerId
@@ -702,7 +704,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Applicant'
+            $ref: '#/definitions/applicantType'
         400:
           description: 'Bad request'  
           schema:
@@ -761,9 +763,9 @@ paths:
       operationId: deleteApplicant
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # required parameters to delete a customer in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -775,7 +777,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -833,9 +835,9 @@ paths:
       operationId: updateApplicant
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a applicant in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -907,21 +909,21 @@ paths:
       operationId: AddApplicant
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a applicant in Activiti
         - $ref: '#/parameters/X-process-ID'
         - name: Applicant
           in: body
           schema:
-            $ref: '#/definitions/Applicant'
+            $ref: '#/definitions/applicantType'
       responses:
         201:
           description: Successfully added
           schema:
-            $ref: '#/definitions/Applicant'
+            $ref: '#/definitions/applicantType'
         400:
           description: 'Bad request'  
           schema:
@@ -979,9 +981,9 @@ paths:
       operationId: getCompanies
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCompanies request
         - $ref: '#/parameters/X-process-ID'
@@ -1048,9 +1050,9 @@ paths:
       operationId: getCompany
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCompany request
         - $ref: '#/parameters/X-process-ID'
@@ -1062,7 +1064,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Company'
+            $ref: '#/definitions/companyType'
         400:
           description: 'Bad request'  
           schema:
@@ -1121,9 +1123,9 @@ paths:
       operationId: updateCompany
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a customer in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -1193,16 +1195,16 @@ paths:
       operationId: AddCompany
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a customer in Activiti
         - $ref: '#/parameters/X-process-ID'
         - name: AddCompany
           in: body
           schema:
-            $ref: '#/definitions/Company'
+            $ref: '#/definitions/companyType'
       responses:
         200:
           description: Successful
@@ -1264,9 +1266,9 @@ paths:
       operationId: deleteCompany
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a customer in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -1278,7 +1280,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -1336,9 +1338,9 @@ paths:
       operationId: getHouseholds
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getHouseholds request
         - $ref: '#/parameters/X-process-ID'
@@ -1404,21 +1406,21 @@ paths:
       operationId: addHousehold
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # parameters required for getHouseholds request
         - $ref: '#/parameters/X-process-ID'
         - name: addHousehold
           in: body
           schema:
-            $ref: '#/definitions/Household'
+            $ref: '#/definitions/householdType'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Household'
+            $ref: '#/definitions/householdType'
         400:
           description: 'Bad request'  
           schema:
@@ -1476,9 +1478,9 @@ paths:
       operationId: getHousehold
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCustomer request
         - $ref: '#/parameters/X-process-ID'
@@ -1490,7 +1492,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Household'
+            $ref: '#/definitions/householdType'
         400:
           description: 'Bad request'  
           schema:
@@ -1549,9 +1551,9 @@ paths:
       operationId: updateHousehold
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a household in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -1563,7 +1565,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Household'
+            $ref: '#/definitions/householdType'
         400:
           description: 'Bad request'  
           schema:
@@ -1622,9 +1624,9 @@ paths:
       operationId: deleteHousehold
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # required parameters to delete a household in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -1636,7 +1638,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -1693,9 +1695,9 @@ paths:
       description: remove a specific child in a household
       operationId: deleteChildInHousehold
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: householdIdChildIdType
@@ -1706,7 +1708,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -1763,9 +1765,9 @@ paths:
       description: TBD
       operationId: addChildInHousehold
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: householdIdChildIdType
@@ -1776,7 +1778,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Child'
+            $ref: '#/definitions/childType'
         400:
           description: 'Bad request'  
           schema:
@@ -1834,9 +1836,9 @@ paths:
       operationId: deleteHouseholdMember
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: householdIdhouseholdMemberIdType
@@ -1847,7 +1849,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/200OK'
+            $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -1905,9 +1907,9 @@ paths:
       operationId: addHouseholdMember
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: householdIdhouseholdMemberType
@@ -1976,9 +1978,9 @@ paths:
       operationId: getCollaterals
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCollaterals request
         - $ref: '#/parameters/X-process-ID'
@@ -2044,9 +2046,9 @@ paths:
       operationId: getColleteral
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getColleteral request
         - $ref: '#/parameters/X-process-ID'
@@ -2058,7 +2060,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Collateral'
+            $ref: '#/definitions/collateralType'
         400:
           description: 'Bad request'  
           schema:
@@ -2116,21 +2118,21 @@ paths:
       operationId: updateCollateral
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a colleteral in Activiti
         - $ref: '#/parameters/X-process-ID'
         - name: updateCollateralType
           in: body
           schema:
-            $ref: '#/definitions/Collateral'
+            $ref: '#/definitions/collateralType'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Collateral'
+            $ref: '#/definitions/collateralType'
         400:
           description: 'Bad request'  
           schema:
@@ -2189,9 +2191,9 @@ paths:
       operationId: deleteCollateral
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a colleteral in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -2259,9 +2261,9 @@ paths:
       operationId: getLoans
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getHouseholds request
         - $ref: '#/parameters/X-process-ID'
@@ -2327,9 +2329,9 @@ paths:
       operationId: getLoan
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCustomer request
         - $ref: '#/parameters/X-process-ID'
@@ -2341,7 +2343,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Loan'
+            $ref: '#/definitions/loanType'
         400:
           description: 'Bad request'  
           schema:
@@ -2400,9 +2402,9 @@ paths:
       operationId: updateLoan
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a customer in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -2473,9 +2475,9 @@ paths:
       operationId: deleteLoan
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -2543,9 +2545,9 @@ paths:
       operationId: getExtLoans
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getExtLoans request
         #- $ref: '#/components/parameters/processId'
@@ -2612,9 +2614,9 @@ paths:
       operationId: getExtLoan
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getExtLoan request
         #- $ref: '#/components/parameters/processId'
@@ -2628,7 +2630,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/ExtLoan'
+            $ref: '#/definitions/extLoanType'
         400:
           description: 'Bad request'  
           schema:
@@ -2688,9 +2690,9 @@ paths:
       operationId: updateExtLoan
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a extLoan in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -2761,9 +2763,9 @@ paths:
       operationId: deleteExtLoan
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         #- $ref: '#/components/parameters/processId'
@@ -2835,9 +2837,9 @@ paths:
       operationId: getPersonalEconomies
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getPersonalEconomies request
         #- $ref: '#/components/parameters/processId'
@@ -2905,9 +2907,9 @@ paths:
       operationId: getPersonalEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getPersonalEconomy request
         - $ref: '#/parameters/X-process-ID'
@@ -2919,7 +2921,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/PersonalEconomy'
+            $ref: '#/definitions/personalEconomyType'
         400:
           description: 'Bad request'  
           schema:
@@ -2978,9 +2980,9 @@ paths:
       operationId: updatePersonalEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a PersonalEconomy in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -3051,9 +3053,9 @@ paths:
       operationId: deletePersonalEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -3122,9 +3124,9 @@ paths:
       operationId: getCompanyEconomies
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCompanylEconomies request
         - $ref: '#/parameters/X-process-ID'
@@ -3190,9 +3192,9 @@ paths:
       operationId: getCompanyEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getCompanyEconomy request
         - $ref: '#/parameters/X-process-ID'
@@ -3204,7 +3206,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/CompanyEconomy'
+            $ref: '#/definitions/companyEconomyType'
         400:
           description: 'Bad request'  
           schema:
@@ -3263,9 +3265,9 @@ paths:
       operationId: updateCompanyEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a CompanyEconomy in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -3336,9 +3338,9 @@ paths:
       operationId: deleteCompanyEconomy
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a loan in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -3348,7 +3350,7 @@ paths:
             $ref: '#/definitions/companyEconomyId'
       responses:
         200:
-          $ref: '#/definitions/200OK'
+          $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -3406,9 +3408,9 @@ paths:
       operationId: getBudgets
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getBudgets request
         - $ref: '#/parameters/X-process-ID'
@@ -3475,9 +3477,9 @@ paths:
       operationId: getBudget
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a Budget in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -3490,7 +3492,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/Budget'
+            $ref: '#/definitions/budgetType'
         400:
           description: 'Bad request'  
           schema:
@@ -3549,9 +3551,9 @@ paths:
       operationId: deleteBudget
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a budget in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -3619,9 +3621,9 @@ paths:
       operationId: getKycInformations
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getBudgets request
         - $ref: '#/parameters/X-process-ID'
@@ -3687,9 +3689,9 @@ paths:
       operationId: getKycInformation
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         # parameters required for getKycInformations request
         - $ref: '#/parameters/X-process-ID'
@@ -3701,7 +3703,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/KycInformation'
+            $ref: '#/definitions/kycInformationType'
         400:
           description: 'Bad request'  
           schema:
@@ -3760,21 +3762,21 @@ paths:
       operationId: updateKycInformation
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to update a Budget in Activiti
         - $ref: '#/parameters/X-process-ID'
         - name: updateKyc
           in: body
           schema:
-            $ref: '#/definitions/KycInformation'
+            $ref: '#/definitions/kycInformationType'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/KycInformation'
+            $ref: '#/definitions/kycInformationType'
         400:
           description: 'Bad request'  
           schema:
@@ -3833,9 +3835,9 @@ paths:
       operationId: deleteKycInformation
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
       # required parameters to delete a budget in Activiti
         - $ref: '#/parameters/X-process-ID'
@@ -3845,7 +3847,7 @@ paths:
             $ref: '#/definitions/kycId'
       responses:
         200:
-          $ref: '#/definitions/200OK'
+          $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -3903,9 +3905,9 @@ paths:
       operationId: submitApplication
       # The method will handle the following MIME/Types
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
         - name: submit
@@ -3973,9 +3975,9 @@ paths:
       description: Get all available loans based on header parameter X-process-ID
       operationId: GetLoansx
       produces:
-      - application/json
+        - application/json
       consumes:
-      - application/json
+        - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
       responses:
@@ -4049,7 +4051,7 @@ paths:
             $ref: '#/definitions/updateLoanType'
       responses:
         200:
-          $ref: '#/definitions/Loan'
+          $ref: '#/definitions/loanType'
         400:
           description: 'Bad request'  
           schema:
@@ -4118,7 +4120,7 @@ paths:
             $ref: '#/definitions/loanId'
       responses:
         200:
-          $ref: '#/definitions/200OK'
+          $ref: '#/definitions/OK200'
         400:
           description: 'Bad request'  
           schema:
@@ -4185,7 +4187,7 @@ paths:
   #      - $ref: '#/parameters/keyId'
   #    responses:
   #      200:
-  #        $ref: '#/definitions/200OK'
+  #        $ref: '#/definitions/OK200'
   #      401:
   #        $ref: '#/definitions/UnauthorizedError'
   #      403:
@@ -4235,7 +4237,6 @@ definitions:
   caseId:
     description: reserved caseId in Loan Process
     type: string
-    example: '{"caseId": "106800"}'
   #
   submitApplication:
     description: Jag försäkrar att lämnade uppgifter är korrekta. Denna måste vara satt till true, annars kan inte ansökan skickas in till LP. Sökande ska klicka i detta val. Om vi tycker att sökande behöver fylla i mer för att skicka in ansökan ska denna inte gå att sätta till true.
@@ -4255,11 +4256,11 @@ definitions:
     description: Set status on the caseId
     example: CLOSEDBYAPPLICANT
     enum:
-    - CLOSEDBYAPPLICANT
-    - STARTEDBYAPPLICANT
-    - CLOSEDBYOFFICER
-    - CLOSEDBYTHINNING
-    - READYFOROFFICER
+    - "CLOSEDBYAPPLICANT"
+    - "STARTEDBYAPPLICANT"
+    - "CLOSEDBYOFFICER"
+    - "CLOSEDBYTHINNING"
+    - "READYFOROFFICER"
   #
   processId:
     type: string
@@ -4285,7 +4286,7 @@ definitions:
   householdMember:
     description: Member in a household
     type: string
-    example: '19640120-3887' # Anna Andersson
+    #example: '19640120-3887' # Anna Andersson
   #
   householdMembers:
     description: This holds a array of one to many Applicant/make/maka in a household
@@ -4298,7 +4299,7 @@ definitions:
   customerId:
     type: string
     description: customerId is swedish ssn or corporate organisation number
-    example: '{ "customerId": "19640120-3887"}'  # Anna Andersson
+    #example: '{ "customerId": "19640120-3887"}'  # Anna Andersson
   #
   applicantId:
     type: string
@@ -4325,16 +4326,16 @@ definitions:
     description: <h3>StakeholderType</h3><br>Maps to Loan Process stakeholders<br><b>'Borgensman'<br>'Driftbolag'<br>'Maka/Make/regpartner'<br>'sambo'<br>'ägarandel i pant'<br>'ägare juridiskt över 50%'<br>'övriga med ekonomisk intressegemenskap'<br>'SOKANDE'</b> - betyder att de är en sökande på lånet.<br>
     type: string
     enum:
-    - SOKANDE
-    - INTRESSENT
-    - BORGENSMAN
-    - DRIFTBOLAG
-    - MAKEMAKAREGPART
-    - AGAREJURIDIKO50
-    - AGARANDELIPANT
-    - SAMBO
-    - EKONOMISKINTRESSEGEMENSKAP
-    example: 'SOKANDE'
+    - "SOKANDE"
+    - "INTRESSENT"
+    - "BORGENSMAN"
+    - "DRIFTBOLAG"
+    - "MAKEMAKAREGPART"
+    - "AGAREJURIDIKO50"
+    - "AGARANDELIPANT"
+    - "SAMBO"
+    - "EKONOMISKINTRESSEGEMENSKAP"
+    example: "SOKANDE"
   #
   applicantEmail:
     type: string
@@ -4412,7 +4413,6 @@ definitions:
     description: Full name of the company from external services or BusinessName in SAP.
     type: string
     example: 'Anna Andersson Mjölkproduktion'
-  #
   #
   statusCode:
     description: Status code from roaring API
@@ -4947,7 +4947,7 @@ definitions:
   #################################################################
   # START Response definitions
   #################################################################
-  200OK:
+  OK200:
     description: Successful
   UnauthorizedError:
     description: Access token is missing or invalid
@@ -4998,8 +4998,8 @@ definitions:
       applicantByeMail:
         $ref: '#/definitions/applicantByeMail'
   #
-  Applicant:
-    $ref: '#/definitions/applicantType'
+  #Applicant:
+  #  $ref: '#/definitions/applicantType'
   #
   Applicants:
     type: array
@@ -5062,8 +5062,8 @@ definitions:
       selectedCompany:
         $ref: '#/definitions/selectedCompany'
   #
-  Company:
-    $ref: '#/definitions/companyType'
+  #Company:
+  #  $ref: '#/definitions/companyType'
   #
   Companies:
     type: array
@@ -5145,8 +5145,8 @@ definitions:
       childMaintenaceCost:
         $ref: '#/definitions/childMaintenanceCost'
   #
-  Household:
-    $ref: '#/definitions/householdType'
+  #Household:
+  #  $ref: '#/definitions/householdType'
   #
   Households:
     type: array
@@ -5170,8 +5170,8 @@ definitions:
       partInHousehold:
         $ref: '#/definitions/partInHousehold'
   #
-  Child:
-    $ref: '#/definitions/childType'
+  #Child:
+  #  $ref: '#/definitions/childType'
   #
   Childs:
     description: holds all child in a household
@@ -5201,8 +5201,8 @@ definitions:
       aims:
         $ref: '#/definitions/aimType'
   #
-  Loan:
-    $ref: '#/definitions/loanType'
+  #Loan:
+  #  $ref: '#/definitions/loanType'
   #
   Loans:
     type: array
@@ -5266,8 +5266,8 @@ definitions:
       extRedeemLoan:
         $ref: '#/definitions/extRedeemLoan'
   #
-  ExtLoan:
-    $ref: '#/definitions/extLoanType'
+  #ExtLoan:
+  #  $ref: '#/definitions/extLoanType'
   #
   ExtLoans:
     type: array
@@ -5338,8 +5338,8 @@ definitions:
       buyCollateral:
         $ref: '#/definitions/buyCollateral'
   #
-  Collateral:
-    $ref: '#/definitions/collateralType'
+  #Collateral:
+  #  $ref: '#/definitions/collateralType'
   #
   Collaterals:
     type: array
@@ -5362,8 +5362,8 @@ definitions:
       taxedOwner:
         $ref: '#/definitions/taxedOwner'
   #
-  TaxedOwner:
-    $ref: '#/definitions/taxedOwnerType'
+  #TaxedOwner:
+  #  $ref: '#/definitions/taxedOwnerType'
   #
   TaxedOwners:
     description: En lista av taxerade fastighetsägare
@@ -5410,8 +5410,8 @@ definitions:
       yearOfEmployment:
         $ref: '#/definitions/yearOfEmployment'
   #
-  PersonalEconomy:
-    $ref: '#/definitions/personalEconomyType'
+  #PersonalEconomy:
+  #  $ref: '#/definitions/personalEconomyType'
   #
   PersonalEconomies:
     type: array
@@ -5470,8 +5470,8 @@ definitions:
       customerCategory:
         $ref: '#/definitions/customerCategory'
   #
-  CompanyEconomy:
-    $ref: '#/definitions/companyEconomyType'
+  #CompanyEconomy:
+  #  $ref: '#/definitions/companyEconomyType'
   #
   CompanyEconomies:
     type: array
@@ -5480,7 +5480,7 @@ definitions:
       $ref: '#/definitions/companyEconomyType'
   #
   revenueType:
-    description: Omsättning sker på föråegående år och tre år tillbaka
+    description: Omsättning sker på föråegående år och två år tillbaka
     required:
     - revenueId
     - revenueYear
@@ -5531,8 +5531,8 @@ definitions:
       budgetYears:
         $ref: '#/definitions/budgetYear'
   #
-  Budget:
-    $ref: '#/definitions/budgetType'
+  #Budget:
+  #  $ref: '#/definitions/budgetType'
   #
   Budgets:
     description: Return an array of type budgetType
@@ -5641,8 +5641,8 @@ definitions:
       lastAccessed:
         $ref: '#/definitions/lastAccessed'
   #
-  Process:
-    $ref: '#/definitions/processType'
+  #Process:
+  #  $ref: '#/definitions/processType'
   #
   Processes:
     description: Return a list of type processType
@@ -5698,8 +5698,8 @@ definitions:
       kycHighRiskIndustry:
         $ref: '#/definitions/kycHighRiskIndustry'
   #
-  KycInformation:
-    $ref: '#/definitions/kycInformationType'
+  #KycInformation:
+  #  $ref: '#/definitions/kycInformationType'
   #
   KycInformations:
     description: Return a list of type kycInformationType
@@ -5717,6 +5717,22 @@ definitions:
         $ref: '#/definitions/Applicants'
       loans:
         $ref: '#/definitions/Loans'
+      extloans:
+        $ref: '#/definitions/ExtLoans'
+      companies:
+        $ref: '#/definitions/Companies'
+      households:
+        $ref: '#/definitions/Households'
+      collaterals:
+        $ref: '#/definitions/Collaterals'
+      personaleconomies:
+        $ref: '#/definitions/PersonalEconomies'
+      companyeconomies:
+        $ref: '#/definitions/CompanyEconomies'
+      budgets:
+        $ref: '#/definitions/Budgets'
+      kycinformations:
+        $ref: '#/definitions/KycInformations'
   #
   hrefType:
       description: Link to a resource

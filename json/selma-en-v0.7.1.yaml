@@ -1,0 +1,225 @@
+---
+swagger: "2.0"
+info:
+  description: This definition is the API between customer SME-Gui and the persistence framework based on Activiti to be decided where this should be connected (Sökande/Medsökande) When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we dont have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+  version: 0.7.0
+  title: Selma SME Light Project
+  termsOfService: http://www.landshypotek.se/sme/terms
+  contact:
+    name: APISMEV1
+    url: api.landshypotek.se/v1/sme
+    email: developer@landshypotek.se
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+host: localhost:8443
+basePath: /
+tags:
+- name: SelmaEN
+  description: Access layer to the process engine (Activiti)
+schemes:
+- https
+- http
+security:
+- application:
+  - read
+  - write
+paths:
+  /v1/getcompanyeconomies:
+    get:
+      tags:
+      - CompanyEconomies
+      summary: get a list of available CompanyEconomies
+      description: Get a list of available CompanyEconomies by ProcessId and companyEconomyId
+      operationId: getCompanyEconomies
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: X-process-ID
+        in: header
+        description: unique identifier in workflow engine Activiti
+        required: true
+        type: string
+        format: uuid
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/CompanyEconomy'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  /v1/getcompanyeconomy:
+    post:
+      tags:
+      - CompanyEconomies
+      summary: Get a specific CompanyEconomy by processId
+      description: Get a specific CompanyEconomy from the process layer
+      operationId: getCompanyEconomy
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: X-process-ID
+        in: header
+        description: unique identifier in workflow engine Activiti
+        required: true
+        type: string
+        format: uuid
+      - in: body
+        name: companyEconomyId
+        required: false
+        schema:
+          $ref: '#/definitions/companyEconomyId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/CompanyEconomy'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+securityDefinitions:
+  application:
+    type: oauth2
+    tokenUrl: http://landshypotek.se/oauth/token
+    flow: application
+    scopes:
+      write: allows modifying resources
+      read: allows reading resources
+  apiKeyAuth:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  ErrorModel:
+    type: object
+    required:
+    - message
+    - status
+    properties:
+      status:
+        type: integer
+        format: integer
+        description: HTTP error code
+      error:
+        type: string
+        description: HTTP error text
+        maxLength: 140
+      message:
+        type: string
+        description: HTTP textual reason phrase
+        maxLength: 140
+    description: Generic error report structure
+  processId:
+    type: string
+    format: uuid
+    description: Activiti framework unique identification
+  companyId:
+    type: string
+    format: uuid
+    description: generated guid in the model
+    example: '{"companyId": "461460c2-3d14-11e9-b210-d663bd873d93"}'
+  companyName:
+    type: string
+    description: Full name of the company from external services or BusinessName in SAP.
+  industriCode:
+    type: string
+    description: SNI-code from eternal company service
+    example: "41200"
+  industriText:
+    type: string
+    description: SNI-Text from external company service, catagory text
+    example: Byggentreprenör
+  selectedCompany:
+    type: boolean
+    description: Customer has selected this company for the loan to apply for
+    example: true
+    enum:
+    - "false"
+    - "true"
+  customerCategory:
+    type: integer
+    description: Customer category return by SAS
+    example: 1
+  companyEconomyId:
+    type: string
+    format: uuid
+    description: Type definition for company economy
+    example: '{ "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93"}'
+  revenueYear:
+    type: integer
+    description: year of revenue, föregående år och 2 år tillbaka. Även om resultat inte fastställt så ber vi kunden registrera uppskattat. När vi väl kommer till LP så kommer handläggaren ändå verifiera bokslutet. Detta fält är read-only i användargränssnittet
+  revenue:
+    type: number
+    format: float
+    description: Företagets omsättning för året angivet i revenueYear (3 år)
+    example: '{"revenue": "2000000"}'
+  200OK:
+    description: Successful
+  companyEconomyType:
+    type: object
+    required:
+    - companyEconomyId
+    - companyId
+    - processId
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      companyId:
+        $ref: '#/definitions/companyId'
+      companyEconomyId:
+        $ref: '#/definitions/companyEconomyId'
+      revenues:
+        $ref: '#/definitions/revenues'
+      customerCategory:
+        $ref: '#/definitions/customerCategory'
+    description: Type definition for company economy
+  CompanyEconomy:
+    $ref: '#/definitions/companyEconomyType'
+  CompanyEconomies:
+    type: array
+    description: Type definition for company economies, returns array of CompanyEconomyType
+    items:
+      $ref: '#/definitions/companyEconomyType'
+  revenues:
+    type: array
+    description: a List of revenueType
+    items:
+      $ref: '#/definitions/revenueType'
+  revenueType:
+    type: object
+    required:
+    - revenue
+    - revenueYear
+    properties:
+      revenueYear:
+        $ref: '#/definitions/revenueYear'
+      revenue:
+        $ref: '#/definitions/revenue'
+    description: Omsättning sker på föregående år och tre år tillbaka
+parameters:
+  X-process-ID:
+    name: X-process-ID
+    in: header
+    description: unique identifier in workflow engine Activiti
+    required: true
+    type: string
+    format: uuid
+  caseIdStatus:
+    name: caseIdStatus
+    in: header
+    description: Will be used when a applicant want to start an application (**STARTEDBYAPPLICANT**) or when a applicant want to close un application. In this case the applicant set status **CLOSEDBYAPPLICANT**. When this application is sent to Landshypotek the status will be set to **READYFOROFFICER**
+    required: true
+    type: string
+    enum:
+    - CLOSEDBYAPPLICANT
+    - STARTEDBYAPPLICANT
+    - CLOSEDBYOFFICER
+    - CLOSEDBYTHINNING
+    - READYFOROFFICER

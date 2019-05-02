@@ -1,0 +1,326 @@
+swagger: "2.0"
+info:
+  version: "0.7.2"
+  ############################################################################################
+  # 2019-02-10 0.2.0 kal Initial version
+  ###########################################################################################
+  title: "Selma SME Light Project"
+  description: "This definition is the API between customer SME-Gui and the persistence framework based on Activiti to be decided where this should be connected (Sökande/Medsökande) When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we dont have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM."
+  #  
+  termsOfService: "http://www.landshypotek.se/sme/terms"
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  contact:
+    name: APISMEV1
+    url: api.landshypotek.se/v1/sme
+    email: developer@landshypotek.se
+host: "localhost:8443"
+#host: "localhost:8400"
+basePath: /
+tags:
+  - name: SelmaEN
+    description: "Access layer to the process engine (Activiti)"
+schemes:
+  - https
+  - http
+# Under securityDefinitions we declare which security schemes can be used.
+# These definitions do not affect to the operations, but can be applied
+# using the 'security' key at the global level or the operation level.
+# In this sample, we'll see how to apply the security definition globally,
+# and override it at the operation level.
+#
+# Note that for Application Flow, you must provide the Token URL.
+securityDefinitions:
+  application:
+    type: oauth2
+    # This should be updated to the Token URL of your OAuth provider.
+    tokenUrl: http://landshypotek.se/oauth/token
+    flow: application
+    scopes:
+      write: allows modifying resources
+      read: allows reading resources
+  apiKeyAuth:
+    type: apiKey
+    name: api_key
+    in: header
+#
+# Here we apply the security flow called 'application' globally to all the opeartions in the spec. 
+# This security scheme is defined above in the 'securityDefinitions' section.
+# Global security can be overriden an operation level as seen in the example below
+security:
+  - application:
+    - read
+    - write
+paths:
+  ################################################################################
+  # Get a list of available CompanyEconomies for a given processId
+  # in Activiti
+  ################################################################################
+  /v1/getcompanyeconomies:
+    get:
+      tags:
+        - CompanyEconomies
+      summary: "get a list of available CompanyEconomies"
+      description: "Get a list of available CompanyEconomies by ProcessId and companyEconomyId"
+      operationId: getCompanyEconomies
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        # parameters required for getCompanylEconomies request
+        - $ref: '#/parameters/X-process-ID'
+      responses:
+        "200":
+          description: "Successful"
+          schema:
+            $ref: "#/definitions/CompanyEconomiesType"
+        "500":
+          description: "Internal server error"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  #
+  ###############################################
+  # CompanyEconomy
+  ###############################################
+  /v1/getcompanyeconomy:
+    post:
+      tags:
+        - CompanyEconomies
+      summary: "Get a specific CompanyEconomy by processId"
+      description: "Get a specific CompanyEconomy from the process layer"
+      operationId: getCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        # parameters required for getCompanyEconomy request
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyEconomyId
+          in: body
+          schema:
+            $ref: '#/definitions/companyEconomyId'
+      responses:
+        "200":
+          description: "Successful"
+          schema:
+            $ref: "#/definitions/CompanyEconomy"
+        "500":
+          description: "Internal server error"          
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  #
+###############################################################
+###############################################################
+# Definitions
+###############################################################
+###############################################################
+definitions:
+########################################
+# ErrorModel object
+########################################
+  ErrorModel:
+    description: "Generic error report structure"
+    type: object
+    required:
+    - message
+    - status
+    properties:     
+      status:
+        type: integer
+        format: integer
+        description: "HTTP error code"
+      error:
+        type: string
+        description: "HTTP error text"
+        maxLength: 140
+      message:
+        type: string
+        description: "HTTP textual reason phrase"
+        maxLength: 140
+#
+########################################
+# Request definitions
+########################################
+  #
+  processId:
+    type: string
+    description: "Activiti framework unique identification"
+    format: uuid
+  #
+  ###############################
+  # Companies
+  ###############################
+  companyId:
+    description: "generated guid in the model"
+    type: string
+    format: uuid
+    example: '{"companyId": "461460c2-3d14-11e9-b210-d663bd873d93"}'
+  #
+  companyName:
+    description: "Full name of the company from external services or BusinessName in SAP."
+    type: string
+  #
+  industriCode:
+    description: "SNI-code from eternal company service"
+    type: string
+    example: "41200"
+  #
+  industriText:
+    description: "SNI-Text from external company service, catagory text"
+    type: string
+    example: "Byggentreprenör"
+  #
+  selectedCompany:
+    description: "Customer has selected this company for the loan to apply for"
+    type: boolean
+    enum:
+    - false
+    - true
+    example: true
+  #
+  customerCategory:
+    description: "Customer category return by SAS"
+    type: integer
+    example: 1
+  #
+  ###################################
+  # CompanyEconomies
+  ###################################
+  companyEconomyId:
+    type: string
+    description: "Type definition for company economy"
+    format: uuid
+    example: '{ "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93"}'
+  #
+  ####################################
+  # revenueType
+  ####################################
+  #revenueId:
+  #  description: Unique identity key
+  #  type: string
+  #  format: uuid
+  #  example: 'd85fa472-3f31-11e9-b210-d663bd873d93'
+  revenueYear:
+    description: "year of revenue, föregående år och 2 år tillbaka. Även om resultat inte fastställt så ber vi kunden registrera uppskattat. När vi väl kommer till LP så kommer handläggaren ändå verifiera bokslutet. Detta fält är read-only i användargränssnittet"
+    type: integer
+  revenue:
+    description: "Företagets omsättning för året angivet i revenueYear (3 år)"
+    type: number
+    format: float
+    example: '{"revenue": "2000000"}'
+  #
+  #################################################################
+  # START Response definitions
+  #################################################################
+  200OK:
+    description: "Successful"
+  #################################################################
+  #################################################################
+  # START Type defintions
+  ################################################
+  # Definition companyEconomyType
+  ################################################
+  companyEconomyType:
+    description: "Type definition for company economy"
+    required:
+    - processId
+    - companyId
+    - companyEconomyId
+    type: object
+    properties:
+      processId:
+        $ref: "#/definitions/processId"
+      companyId:
+        $ref: "#/definitions/companyId"
+      companyEconomyId:
+        $ref: "#/definitions/companyEconomyId"
+      revenues:
+        $ref: "#/definitions/revenues"
+      customerCategory:
+        $ref: "#/definitions/customerCategory"
+  #
+  CompanyEconomiesType:
+    description: Array of CompanyEconomyType
+    type: object
+    properties:
+      companyeconomies:
+        $ref: '#/definitions/CompanyEconomies'
+  #
+  CompanyEconomy:
+    $ref: "#/definitions/companyEconomyType"
+  #
+  CompanyEconomies:
+    type: array
+    description: "Type definition for company economies, returns array of CompanyEconomyType"
+    items:
+      $ref: "#/definitions/companyEconomyType"
+  #
+  revenues:
+    description: "a List of revenueType"
+    type: array
+    items:
+      $ref: "#/definitions/revenueType"
+  #
+  ##################################################
+  # RevenueType
+  ##################################################
+  revenueType:
+    description: "Omsättning sker på föregående år och tre år tillbaka"
+    required:
+    - revenueYear
+    - revenue
+    type: object
+    properties:
+      revenueYear:
+        $ref: "#/definitions/revenueYear"
+      revenue:
+        $ref: "#/definitions/revenue"
+  #
+####################################################################################
+# END Type definitions
+####################################################################################
+# END header definitions
+####################################################################################
+# Parameters (has been removed from this API, we use header and in body data
+# in request)
+####################################################################################
+parameters:
+  ############################
+  # Header definitions
+  ############################
+  X-process-ID:
+    description: "unique identifier in workflow engine Activiti"
+    name: X-process-ID
+    in: header
+    required: true
+    type: string
+    format: uuid
+  #
+  caseIdStatus:
+    description: "Will be used when a applicant want to start an application (**STARTEDBYAPPLICANT**) or when a applicant want to close un application. In this case the applicant set status **CLOSEDBYAPPLICANT**. When this application is sent to Landshypotek the status will be set to **READYFOROFFICER**"
+    name: caseIdStatus
+    required: true
+    in: header
+    type: string
+    enum:
+      - "CLOSEDBYAPPLICANT"   # Kund har aktivt avböjt ansökan
+      - "STARTEDBYAPPLICANT"  # Kund har startat en ansökan
+      - "CLOSEDBYOFFICER"     # av handläggare
+      - "CLOSEDBYTHINNING"    # Gallring?
+      - "READYFOROFFICER"     # Applicant has submitted the application
+  #
+  #X-customer-ID:
+  #  description: TBD
+  #  name: X-customer-ID
+  #  in: header
+  #  required: true
+  #  type: string
+#
+####################################################################################
+# END Parameters
+####################################################################################

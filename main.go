@@ -213,6 +213,10 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	processid := r.Header.Get("X-process-Id")
+	if processid == "" {
+		processid = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
+	}
 	fmt.Fprintf(w, "Upload file\n")
 	// 1. parse input, type multipart/form-data
 	r.ParseMultipartForm(10 << 20)
@@ -224,11 +228,13 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
+	fn := fmt.Sprintf("%s-%v", processid, handler.Filename)
 	fmt.Printf("Uploaded file: %+v\n", handler.Filename)
 	fmt.Printf("File Size file: %+v\n", handler.Size)
 	fmt.Printf("MIME Header %+v\n", handler.Header)
 	// 3.
-	tempFile, err := ioutil.TempFile("temp-folders", "upload-*.pdf")
+	fmt.Printf("New filename: %s", fn)
+	tempFile, err := ioutil.TempFile("temp-folders/", fmt.Sprintf("%s", fn))
 	if err != nil {
 		fmt.Println(err)
 		return

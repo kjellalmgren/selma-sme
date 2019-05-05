@@ -95,6 +95,7 @@ info:
   # 2019-04-23 0.5.9 kal Add statusCode and statusTextHigh too Company object, this value
   #                      is collected from the roaring API
   # 2019-05-04 0.6.0 kal Changed all Get with a new Type for generate code thru (openapi)
+  # 2019-05-05 0.6.0 kal Added method for all objects
   ###########################################################################################
   title: Selma SME Light Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -114,7 +115,7 @@ host: 'localhost:8443'
 basePath: /
 tags:
   - name: Selma SME(EN) API Definitions
-    description: Access layer to the process engine (Activiti)
+    description: Access layer to the process persitence layer (application)
 schemes:
   - https
 # Under securityDefinitions we declare which security schemes can be used.
@@ -202,9 +203,11 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/OK200'
+        201:
+          description: Successfully added
   #
   ##############################################################
-  # Processes
+  # getProcesses
   ##############################################################
   /v1/getprocesses:
     post:
@@ -365,7 +368,7 @@ paths:
     delete:
       tags:
       - Processes
-      summary: Set status CLOSEDBYAPPLICANT at the X-process-ID in Activiti 
+      summary: Set status CLOSEDBYAPPLICANT at the X-process-ID in the model 
       description: The customer has choice to end the application process, the whole X-process-ID will be CLOSEDBYAPPLICANT and will be removed during the batch thinning process in Loan Process. A call to LP is required to set ststus on the reserved caseid.
       operationId: deleteProcess
       # The method will handle the following MIME/Types
@@ -871,7 +874,7 @@ paths:
     put:
       tags:
         - Applicants
-      summary: add a specific applicant in Activiti if not present
+      summary: add a specific applicant in the model if not present
       description: Only add an Appliant if not exists.
       operationId: AddApplicant
       # The method will handle the following MIME/Types
@@ -1084,7 +1087,7 @@ paths:
     patch:
       tags:
         - Companies
-      summary: update a specific company in Activiti
+      summary: update a specific company in the model
       description: >-
         Update a specific company, only the elements allowed to be changed, see definition of updateCompanyType
       operationId: updateCompany
@@ -1292,6 +1295,56 @@ paths:
           description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
+  #
+  ########################################################
+  # Add a businessCategory
+  ########################################################
+  /v1/addbusinesscategory:
+    put:
+      tags:
+        - Companies
+      summary: Add a business category to the model
+      description: Add a business category, huvudrubrik för driftinriktning
+      operationId: addBusinessCategory
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: businessCategory
+          in: body
+          schema:
+            $ref: '#/definitions/businessCategoryType'
+      responses:
+        201:
+          description: Successfully added
+  #
+  ########################################################
+  # Delete a businessCategory
+  ########################################################
+  /v1/deletebusinesscategory:
+    delete:
+      tags:
+        - Companies
+      summary: Delete a business category to the model
+      description: Delete a business category, huvudrubrik för driftinriktning
+      operationId: deleteBusinessCategory
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: businessCategory
+          in: body
+          schema:
+            $ref: '#/definitions/businessCategoryType'
+      responses:
+        200:
+          description: successful
+          schema:
+            $ref: '#/definitions/OK200'
   #
   #####################################################################################
   # Get a list of available households for a given processId  in Activiti
@@ -1512,7 +1565,7 @@ paths:
     patch:
       tags:
         - Households
-      summary: update a specific household in Activiti
+      summary: update a specific household in the model
       description: >-
         TBD
       operationId: updateHousehold
@@ -1522,7 +1575,7 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to update a household in Activiti
+      # required parameters to update a household in the model
         - $ref: '#/parameters/X-process-ID'
         - name: householdId
           in: body
@@ -2081,7 +2134,7 @@ paths:
       tags:
         - Collaterals
       summary: update a specific collateral in Activiti
-      description: Add or update a specific collateral in the model, connects to a external service provider of LMV/Metria
+      description: update a specific collateral in the model, connects to a external service provider of LMV/Metria
       operationId: updateCollateral
       # The method will handle the following MIME/Types
       produces:
@@ -2161,12 +2214,12 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to update a colleteral in Activiti
+      # required parameters to update a colleteral in the model
         - $ref: '#/parameters/X-process-ID'
-        #- name: updateCollateralType
-          #in: body
-          #schema:
-            #$ref: '#/definitions/collateralType'
+        - name: collateral
+          in: body
+          schema:
+            $ref: '#/definitions/collateralType'
       responses:
         201:
           description: Successfully created
@@ -2435,7 +2488,7 @@ paths:
     patch:
       tags:
         - Loans
-      summary: update a specific loan in Activiti
+      summary: update a specific loan in the model
       description: >-
         TBD; we have to discuss if we need a method addLoanAim and deleteLoanAim or if just updateLoanType should handle this. Will result in a more heavy disc io
       operationId: updateLoan
@@ -2445,7 +2498,7 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to update a customer in Activiti
+      # required parameters to update a customer in the model
         - $ref: '#/parameters/X-process-ID'
         - name: loanId
           in: body
@@ -2519,10 +2572,10 @@ paths:
       parameters:
       # required parameters to update a customer in Activiti
         - $ref: '#/parameters/X-process-ID'
-        #- name: loanId
-        #  in: body
-        #  schema:
-        #    $ref: '#/definitions/updateLoanType'
+        - name: loan
+          in: body
+          schema:
+            $ref: '#/definitions/loanType'
       responses:
         201:
           description: Successfully created
@@ -2881,10 +2934,10 @@ paths:
       parameters:
       # required parameters to update a extLoan in Activiti
         - $ref: '#/parameters/X-process-ID'
-        #- name: extloanId
-        #  in: body
-        #  schema:
-        #    $ref: '#/definitions/updateExtLoanType'
+        - name: extloan
+          in: body
+          schema:
+            $ref: '#/definitions/extLoanType'
       responses:
         201:
           description: Successfully created
@@ -3225,6 +3278,79 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  #######################################################################
+  # Add of a specific PersonalEconomy
+  #######################################################################
+  /v1/addpersonaleconomy:
+    put:
+      tags:
+        - PersonalEconomies
+      summary: add a specific PersonalEconomy to the model
+      description: >-
+        TBD
+      operationId: addPersonalEconomy
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to update a PersonalEconomy in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: personalEconomyId
+          in: body
+          schema:
+            $ref: '#/definitions/personalEconomyType'
+      responses:
+        201:
+          description: Successfully added
+          schema:
+            $ref: '#/definitions/personalEconomyType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   ######################################################################
   # Delete a specific PersonalEconomy
   ######################################################################
@@ -3465,6 +3591,78 @@ paths:
           description: Successful
           schema:
             $ref: '#/definitions/updateCompanyEconomyType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  ####################################################################
+  # Add of a specific CompanyEconomy
+  ####################################################################
+  /v1/addcompanyeconomy:
+    put:
+      tags:
+        - CompanyEconomies
+      summary: add a specific CompanyEconomy to the model
+      description: add economy on a specific company, if revenue for any year is changed we have to post a request to SAS (CustCategory) to receive a new customerCategory
+      operationId: addCompanyEconomy
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to update a CompanyEconomy in the model
+        - $ref: '#/parameters/X-process-ID'
+        - name: companyEconomy
+          in: body
+          schema:
+            $ref: '#/definitions/companyEconomyType'
+      responses:
+        201:
+          description: Successfully added
+          schema:
+            $ref: '#/definitions/companyEconomyType'
         400:
           description: 'Bad request'  
           schema:
@@ -3794,6 +3992,150 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  ############################################################
+  # Add a specific Budget
+  ############################################################
+  /v1/addbudget:
+    put:
+      tags:
+        - Budgets
+      summary: Add a specific Budget to the model
+      description: >-
+        TBD
+      operationId: addBudget
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to delete a budget in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: budget
+          in: body
+          schema:
+            $ref: '#/definitions/budgetType'
+      responses:
+        201:
+          description: Successfully added
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  ############################################################
+  # Update a specific Budget
+  ############################################################
+  /v1/updatebudget:
+    patch:
+      tags:
+        - Budgets
+      summary: Add a specific Budget to the model
+      description: >-
+        TBD
+      operationId: updateBudget
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to delete a budget in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: budget
+          in: body
+          schema:
+            $ref: '#/definitions/budgetType'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/budgetType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   #########################################
   # KycInformations
   #########################################
@@ -4030,6 +4372,77 @@ paths:
           in: body
           schema:
             $ref: '#/definitions/kycId'
+      responses:
+        200:
+          $ref: '#/definitions/OK200'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # Add a specific KycInformation
+  #########################################################
+  /v1/addkycinformation:
+    put:
+      tags:
+        - KycInformations
+      summary: Add a specific KycInformation to the model
+      description: >-
+        TBD
+      operationId: addKycInformation
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to delete a budget in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: kycInformation
+          in: body
+          schema:
+            $ref: '#/definitions/kycInformationType'
       responses:
         200:
           $ref: '#/definitions/OK200'
@@ -4378,28 +4791,23 @@ definitions:
       customer in SAP'
     example: '2012-01-01'
   #
-  businessFocus:
-    description: Huvudsaklig verksamhetsinriktning (kan vi få den via extern tjänst)
+  businessId:
+    description: unique identity for businessCategoryType
     type: string
-    enum:
-    - 'Jordbruksväxter'
-    - 'Trädgårdsväxter'
-    - 'Nötkreatur'
-    - 'Får och getter'
-    - 'Svinproduktion'
-    - 'Fjäderfäskötsel'
-    - 'Hästverksamhet'
-    - 'Annan djurskötsel'
-    - 'Produktion av skog'
-    - 'Förädling av skog'
-    - 'Övrig skogsverksamhet'
-    - 'Maskinenteprenad'
-    - 'Lokaler'
-    - 'Turism'
-    - 'Tillverkning'
-    - 'Tjänst-, konsultverksamhet'
-    - 'Övrig *tas bort*'
+    format: uuid
+    example: '5c497a6e-3a5b-44a8-8302-21012cad32a2'
+  businessCategory:
+    description: Huvudrubrik för driftinriktning (se BusinessDirections.json)
+    type: string
     example: 'Jordbruksväxter'
+  businessDirection:
+    description: Underrubrik till huvudrubrik av driftinriktning (se BusinessDirections.json)
+    type: string
+    example: 'Spanmål & oljeväxt.'
+  businessPart:
+    description: Del av huvudsaklig driftinriktning
+    type: integer
+    example: 100
   #
   industriCode:
     description: SNI-code from external company service roaring.io
@@ -5004,8 +5412,8 @@ definitions:
         $ref: '#/definitions/statusTextHigh'
       created:
         $ref: '#/definitions/companyCreated'
-      businessFocus:
-        $ref: '#/definitions/businessFocus'
+      businessFocuses:
+        $ref: '#/definitions/businessCategories'
       industriCode:
         $ref: '#/definitions/industriCode'
       industriText:
@@ -5022,12 +5430,31 @@ definitions:
     items:
       $ref: '#/definitions/companyType'
   #
-  updateCompanyType:
+  businessCategories:
+    description: Driftinriktning
+    type: array
+    items:
+      $ref: '#/definitions/businessCategoryType'
+  #
+  businessCategoryType:
     description: TBD
     type: object
     properties:
+      businessId:
+        $ref: '#/definitions/businessId'
+      businessCategory:
+        $ref: '#/definitions/businessCategory'
+      businessDirection:
+        $ref: '#/definitions/businessDirection'
+      businessPart:
+        $ref: '#/definitions/businessPart'
+  #
+  updateCompanyType:
+    description: Update of businessCategories (driftinriktning)
+    type: object
+    properties:
       businessFocus:
-        $ref: '#/definitions/businessFocus'
+        $ref: '#/definitions/businessCategories'
   #
   ##########################################
   # HouseholdMemberType

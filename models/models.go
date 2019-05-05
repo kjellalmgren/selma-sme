@@ -154,10 +154,18 @@ type CompanyType struct {
 	StatusCode      string `json:"statusCode"`
 	StatusTextHigh  string `json:"statusTextHigh"`
 	Created         string `json:"created"`
+	BusinessFocuses []BusinessFocusType
 	BusinessFocus   string `json:"businessFocus"`
 	IndustriCode    string `json:"industriCode"` // SNI-kod
 	IndustriText    string `json:"industriText"` // SNI-Text, kategori
 	SelectedCompany bool   `json:"selectedCompany"`
+}
+
+type BusinessFocusType struct {
+	BusinessID        string `json:"businessId"`
+	BusinessCategory  string `json:"businessCategory"`
+	BusinessDirection string `json:"businessDirection"`
+	BusinessPart      int    `json:"businessPart"`
 }
 
 // UpdateCompanyType documentation

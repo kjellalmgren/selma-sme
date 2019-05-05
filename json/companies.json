@@ -7,7 +7,14 @@
     "statusTextHigh": "Aktivt",
     "companyName": "Anna Andersson Skog och djurhållning",
     "created": "2012-01-01",
-    "businessFocus": "(Huvudinriktning)",
+    "businessFocuses": [
+      {
+        "businessId": "5c497a6e-3a5b-44a8-8302-21012cad32a2",
+        "businessCategory": "Jordbruksväxter",
+        "businessDirection": "Spanmål & oljeväxt.",
+        "businessPart": 100
+      }
+    ],
     "industriCode": "28300",
     "industriText": "Manufacture of agricultural and forestry machinery",
     "selectedCompany": true

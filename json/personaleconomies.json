@@ -7,7 +7,8 @@
     "income": 0,
     "typeOfEmployeement": "Tillsvidare",
     "employeer": "Anna Andersson Skog och djurhållning",
-    "yearOfEmployment": "2012"
+    "yearOfEmployment": "2012",
+    "mounthOfEmployment": "10"
   },
   {
     "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
@@ -17,6 +18,7 @@
     "income": 460000,
     "typeOfEmployeement": "Tillsvidare",
     "employeer": "Katrineholm Revision AB",
-    "yearOfEmployment": "2009"
+    "yearOfEmployment": "2009",
+    "mounthOfEmployment": "11"
   }
 ]

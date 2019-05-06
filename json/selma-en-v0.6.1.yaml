@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.0'
+  version: '0.6.1'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -96,6 +96,10 @@ info:
   #                      is collected from the roaring API
   # 2019-05-04 0.6.0 kal Changed all Get with a new Type for generate code thru (openapi)
   # 2019-05-05 0.6.0 kal Added method for all objects
+  # 2019-05-06 0.6.1 kal downPaymentAmount, kontantinsats på Loan
+  # 2019-05-06 0.6.1 kal Loan has been exapnded with downPaymentType, downPaymentOther.
+  # 2019-05-06 0.6.1 kal monthOfEmployment has been added to PersonalEconomy
+  # 2019-05-06 0.6.1 kal loanTakeOver has been added in Loan (Övertag från annan bank)
   ###########################################################################################
   title: Selma SME Light Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -139,7 +143,7 @@ securityDefinitions:
     name: api_key
     in: header
 #
-# Here we apply the security flow called 'application' globally to all the opeartions in the spec. 
+# Here we apply the security flow called 'application' globally to all the operations in the spec. 
 # This security scheme is defined above in the 'securityDefinitions' section.
 # Global security can be overriden an operation level as seen in the example below
 security:
@@ -4888,20 +4892,44 @@ definitions:
     description: This will only be a temporary loanNumber, when can we reserve a loan number in SAP
     type: string
     example: '9397000010'
+  loanTakeOver:
+    description: Övertag från annan bank, fix för att övertag inte finns i LP
+    type: boolean
+    enum:
+      - true
+      - false
+    example: false
   loanAmount:
     description: Applicants want to loan this amount
     type: number
     format: float
     example: 2500000.00
+  downPaymentType:
+    description: type of downpayment 'Övrigt', 'Försäljning bostad', 'Blanco', 'Sparande'
+    type: string
+    enum:
+      - "Övrigt"
+      - "Försäljning bostad"
+      - "Blanco"
+      - "Sparande"
+  downPaymentOther:
+    description: Om val Övrigt på downPaymentType ska text anges i GUI och hamn i detta fält.
+    type: string
+    example: 'The mob'
   #
+  downPaymentAmount:
+    description: Kontantinsats
+    type: number
+    format: float
+    example: 300000.00
   aimId:
-    description: TBD
+    description: Unique identity for aims
     type: string
     format: uuid
     example: '607db102-4af7-11e9-8646-d663bd873d93'
   #
   loanAmountPart:
-    description: TBD
+    description: Lånebelopp för part
     type: number
     format: float
     example: 200000.00
@@ -5046,6 +5074,10 @@ definitions:
     type: string
     description: Anställd sedan år
     example: '2009'
+  monthOfEmployment:
+    type: string
+    description: anställd i månad, om anställningen < 2 år.
+    example: '10'
   #
   #######################################
   # mainPurpose
@@ -5580,10 +5612,18 @@ definitions:
         $ref: '#/definitions/loanId'
       loanNumber:
         $ref: '#/definitions/loanNumber'
+      loanTakeOver:
+        $ref: '#/definitions/loanTakeOver'
       purposeOfLoan:
         $ref: '#/definitions/mainPurposes'
       loanAmount:
         $ref: '#/definitions/loanAmount'
+      downPaymentType:
+        $ref: '#/definitions/downPaymentType'
+      downPaymentOther:
+        $ref: '#/definitions/downPaymentOther'
+      downPaymentAmount:
+        $ref: '#/definitions/downPaymentAmount'
       aims:
         $ref: '#/definitions/aimType'
   #
@@ -5604,7 +5644,7 @@ definitions:
       $ref: '#/definitions/loanType'
   #
   aimType:
-    description: TBD
+    description: Syfte med respektive lånebelopp
     required:
     - aimId
     type: object
@@ -5818,6 +5858,8 @@ definitions:
         $ref: '#/definitions/employeer'
       yearOfEmployment:
         $ref: '#/definitions/yearOfEmployment'
+      monthOfEmployment:
+        $ref: '#/definitions/monthOfEmployment'
   #
   #PersonalEconomy:
   #  $ref: '#/definitions/personalEconomyType'
@@ -5991,7 +6033,7 @@ definitions:
       value17; S:a avskrivningar (-value15) + (-value16)
       value18; Resultat före avskrivningar value14 + (-value17)
       value19; Finansiella intäkter
-      value20; Finansiella konstnader
+      value20; Finansiellakonstnader
       value21; Resultat finansiella poster (value18) + value19 + (-value20)
       value22; Extraordinärar intäkter och kostnader
       value23; Bokslutsdispositioner

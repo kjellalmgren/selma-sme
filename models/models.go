@@ -81,12 +81,16 @@ type ContactInformationType struct {
 
 // Loan documentation
 type LoanType struct {
-	ProcessID     string  `json:"processId"`
-	LoanID        string  `json:"loanId"`
-	LoanNumber    string  `json:"loanNumber"`
-	LoanAmount    float32 `json:"loanAmount"`
-	PurposeOfLoan string  `json:"purposeOfLoan"`
-	Aims          []AimType
+	ProcessID         string  `json:"processId"`
+	LoanID            string  `json:"loanId"`
+	LoanNumber        string  `json:"loanNumber"`
+	LoanTakeOver      bool    `json:"loanTakeOver"`
+	LoanAmount        float32 `json:"loanAmount"`
+	DownPaymentType   string  `json:"downPaymentType"`
+	DownPaymentOther  string  `json:"downPaymentOther"`
+	DownPaymentAmount float32 `json:"downPaymentAmount"`
+	PurposeOfLoan     string  `json:"purposeOfLoan"`
+	Aims              []AimType
 }
 
 // AimType documentation
@@ -188,6 +192,7 @@ type PersonalEconomyType struct {
 	TypeOfEmployeement string  `json:"typeOfEmployeement"`
 	Employeer          string  `json:"employeer"`
 	EmployeedFromYear  string  `json:"yearOfEmployment"`
+	EmployeedFromMonth string  `json:"monthOfEmployment"`
 }
 
 // PersonalEconomyID documentation

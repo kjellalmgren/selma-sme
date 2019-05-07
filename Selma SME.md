@@ -427,4 +427,3 @@ Efter vi har fått CustomerID via BankID kommer vi anropa addApplicant med Perso
   	}
   	
  
-	

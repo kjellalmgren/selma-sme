@@ -69,7 +69,7 @@ Change OperationId på /addprocess, flytta in caseIdStatus som headerparameter. 
 **V2**
 När en ny process startas ska ska ProcessId, CustomerId samt CaseID reservras i Loan Process.
 
-## getprocessall
+### getprocessall
 
 Hämta hela modellen för ett givet processid
 
@@ -391,7 +391,7 @@ Efter vi har fått CustomerID via BankID kommer vi anropa addApplicant med Perso
             	"value23": 20000,
             	"value24": 20000,
             	"value25": 20000
-          	}
+          }
         	]
       	}
     	] 

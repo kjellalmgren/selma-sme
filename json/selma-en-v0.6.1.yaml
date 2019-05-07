@@ -100,6 +100,7 @@ info:
   # 2019-05-06 0.6.1 kal Loan has been exapnded with downPaymentType, downPaymentOther.
   # 2019-05-06 0.6.1 kal monthOfEmployment has been added to PersonalEconomy
   # 2019-05-06 0.6.1 kal loanTakeOver has been added in Loan (Övertag från annan bank)
+  # 2019-05-07 0.6.1 kal Added EU-Support and Guarantor (Borgensman)
   ###########################################################################################
   title: Selma SME Light Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -733,7 +734,7 @@ paths:
     delete:
       tags:
         - Applicants
-      summary: Delete a specific applicant in Activiti
+      summary: Delete a specific applicant in the model
       description: >-
         TBD
       operationId: deleteApplicant
@@ -806,7 +807,7 @@ paths:
     patch:
       tags:
         - Applicants
-      summary: update a specific applicant in Activiti
+      summary: update a specific applicant in the model
       description: Only update the values that the customer is allowed på update, it´s a subset of Applicant, see updateApplicantType definitions.
       operationId: updateApplicant
       # The method will handle the following MIME/Types
@@ -1237,7 +1238,7 @@ paths:
       deprecated: true
       tags:
         - Companies
-      summary: Delete a specific company in Activiti
+      summary: Delete a specific company in the model
       description: This should probably not be possibly, we are using a external service provider
       operationId: deleteCompany
       # The method will handle the following MIME/Types
@@ -1644,7 +1645,7 @@ paths:
     delete:
       tags:
         - Households
-      summary: Delete a specific household in Activiti
+      summary: Delete a specific household in the model
       description: >-
         TBD
       operationId: deleteHousehold
@@ -2139,7 +2140,7 @@ paths:
     patch:
       tags:
         - Collaterals
-      summary: update a specific collateral in Activiti
+      summary: update a specific collateral in the model
       description: update a specific collateral in the model, connects to a external service provider of LMV/Metria
       operationId: updateCollateral
       # The method will handle the following MIME/Types
@@ -2283,7 +2284,7 @@ paths:
     delete:
       tags:
         - Collaterals
-      summary: Delete a specific collateral in Activiti
+      summary: Delete a specific collateral in the model
       description: >-
         Will remove a specific collaterals from the model in Activiti
       operationId: deleteCollateral
@@ -2566,7 +2567,7 @@ paths:
     put:
       tags:
         - Loans
-      summary: update a specific loan in Activiti
+      summary: update a specific loan in the model
       description: >-
         TBD; we have to discuss if we need a method addLoanAim and deleteLoanAim or if just updateLoanType should handle this. Will result in a more heavy disc io
       operationId: addLoan
@@ -2640,7 +2641,7 @@ paths:
     delete:
       tags:
         - Loans
-      summary: Delete a specific loan on a customer in Activiti
+      summary: Delete a specific loan on a customer in the model
       description: >-
         This will delete the hole loan with all aimType
       operationId: deleteLoan
@@ -2855,7 +2856,7 @@ paths:
     patch:
       tags:
         - ExtLoans
-      summary: update a specific extloan in Activiti
+      summary: update a specific extloan in the model
       description: >-
         TBD
       operationId: updateExtLoan
@@ -2928,7 +2929,7 @@ paths:
     put:
       tags:
         - ExtLoans
-      summary: Add a specific extloan in Activiti
+      summary: Add a specific extloan in the model
       description: >-
         TBD
       operationId: addExtLoan
@@ -3001,7 +3002,7 @@ paths:
     delete:
       tags:
         - ExtLoans
-      summary: Delete a specific extloan in Activiti
+      summary: Delete a specific extloan in the model
       description: >-
         TBD
       operationId: deleteExtLoan
@@ -3218,7 +3219,7 @@ paths:
     patch:
       tags:
         - PersonalEconomies
-      summary: update a specific PersonalEconomy in Activiti
+      summary: update a specific PersonalEconomy in the model
       description: >-
         TBD
       operationId: updatePersonalEconomy
@@ -3228,7 +3229,7 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to update a PersonalEconomy in Activiti
+      # required parameters to update a PersonalEconomy in the model
         - $ref: '#/parameters/X-process-ID'
         - name: personalEconomyId
           in: body
@@ -3364,7 +3365,7 @@ paths:
     delete:
       tags:
         - PersonalEconomies
-      summary: Delete a specific PersonalEconomy in Activiti
+      summary: Delete a specific PersonalEconomy in the model
       description: >-
         TBD
       operationId: deletePersonalEconomy
@@ -3721,7 +3722,7 @@ paths:
     delete:
       tags:
         - CompanyEconomies
-      summary: Delete a specific CompanyEconomy on a companyId in Activiti
+      summary: Delete a specific CompanyEconomy on a companyId in the model
       description: >-
         TBD
       operationId: deleteCompanyEconomy
@@ -3860,7 +3861,7 @@ paths:
     post:
       tags:
         - Budgets
-      summary: get a specific Budget to a company Economy in Activiti
+      summary: get a specific Budget to a company Economy in the model
       description: >-
         TBD
       operationId: getBudget
@@ -3934,7 +3935,7 @@ paths:
     delete:
       tags:
         - Budgets
-      summary: Delete a specific Budget in Activiti
+      summary: Delete a specific Budget in the model
       description: >-
         TBD
       operationId: deleteBudget
@@ -4289,7 +4290,7 @@ paths:
     patch:
       tags:
         - KycInformations
-      summary: update a specific KycInformation in Activiti
+      summary: update a specific KycInformation in the model
       description: >-
         TBD
       operationId: updateKycInformation
@@ -4362,7 +4363,7 @@ paths:
     delete:
       tags:
         - KycInformations
-      summary: Delete a specific KycInformation in Activiti
+      summary: Delete a specific KycInformation in the model
       description: >-
         TBD
       operationId: deleteKycInformation
@@ -4496,6 +4497,627 @@ paths:
           description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # GetGuarantors
+  #########################################################
+  /v1/getguarantors:
+    post:
+      tags:
+        - Guarantors
+      summary: Guarantors (borgensman)
+      description: TBD
+      operationId: getGuarantors
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/GuarantorsType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # GetGuarantor
+  #########################################################
+  /v1/getguarantor:
+    post:
+      tags:
+        - Guarantors
+      summary: Guarantors (borgensman)
+      description: TBD
+      operationId: getGuarantor
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: guarantorId
+          in: body
+          schema:
+            $ref: '#/definitions/guarantorId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/GuarantorType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # DeleteGuarantor
+  #########################################################
+  /v1/deleteguarantor:
+    delete:
+      tags:
+        - Guarantors
+      summary: Guarantors (borgensman)
+      description: TBD
+      operationId: deleteGuarantor
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: guarantorId
+          in: body
+          schema:
+            $ref: '#/definitions/guarantorId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/OK200'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # AddGuarantor
+  #########################################################
+  /v1/addguarantor:
+    post:
+      tags:
+        - Guarantors
+      summary: Guarantors (borgensman)
+      description: TBD
+      operationId: addGuarantor
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: guarantor
+          in: body
+          schema:
+            $ref: '#/definitions/GuarantorType'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/OK200'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+   #########################################################
+  # UpdateGuarantor
+  #########################################################
+  /v1/updateguarantor:
+    post:
+      tags:
+        - Guarantors
+      summary: Guarantors (borgensman)
+      description: TBD
+      operationId: updateGuarantor
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: guarantor
+          in: body
+          schema:
+            $ref: '#/definitions/GuarantorType'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/GuarantorType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #################################################
+  # geteusupports
+  #################################################
+  /v1/geteusupports:
+     post:
+      tags:
+        - EUSupports
+      summary: EU-stöd
+      description: EU-stöd
+      operationId: getEUSupports
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/EUSupportsType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # geteusupport
+  #########################################################
+  /v1/geteusupport:
+    post:
+      tags:
+        - EUSupports
+      summary: EUSupport (EU-stöd)
+      description: TBD
+      operationId: geteusupport
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: euId
+          in: body
+          schema:
+            $ref: '#/definitions/euId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/EUSupportType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # AddEUSupport
+  #########################################################
+  /v1/addeusupport:
+    put:
+      tags:
+        - EUSupports
+      summary: EUSupport (EU-stöd)
+      description: TBD
+      operationId: addEUSupport
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: guarantor
+          in: body
+          schema:
+            $ref: '#/definitions/EUSupportType'
+      responses:
+        201:
+          description: Successfully added
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #########################################################
+  # DeleteEUSupport
+  #########################################################
+  /v1/deleteeusupport:
+    delete:
+      tags:
+        - EUSupports
+      summary: EUSupport (säkerhet EU-Stöd)
+      description: TBD
+      operationId: deleteEUSupport
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: euId
+          in: body
+          schema:
+            $ref: '#/definitions/euId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/OK200'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   #
   #################################################
   # Submit Application
@@ -4837,6 +5459,126 @@ definitions:
     description: Customer category return by SAS (kundklass Not V1)
     type: integer
     example: 1
+  #
+  ###################################
+  # Guarantor
+  ###################################
+  GuarantorType:
+    description: Type of Guarantor instance
+    required:
+    - processId
+    - guarantorId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      gaurantorId:
+        $ref: '#/definitions/guarantorId'
+      gaurantorName:
+        $ref: '#/definitions/guarantorName'
+      gaurantorPhone:
+        $ref: '#/definitions/guarantorPhone'
+      gaurantorCustomerId:
+        $ref: '#/definitions/guarantorCustomerId'
+  #
+  GuarantorsType:
+    description: TBD
+    type: object
+    properties:
+      guarantors:
+        $ref: '#/definitions/Guarantors'
+  Guarantors:
+    description: TBD
+    type: array
+    items:
+      $ref: '#/definitions/GuarantorType'
+  #
+  #Guarantor:
+  #  description: TBD
+  #  schema:
+  #    $ref: '#/definitions/GuarantorType'
+  #
+  guarantorId:
+    description: TBD
+    type: string
+    format: uuid
+    example: ''
+  guarantorName:
+    description: TBD
+    type: string
+    example: 'Anna Andersson'
+  guarantorCustomerId:
+    description: TBD
+    type: string
+    example: '19640120-3887'
+  guarantorPhone:
+    description: TBD
+    type: string
+    example: '07012332144'
+  #
+  ###################################
+  # EUSupport
+  ###################################
+  EUSupportType:
+    description: Type of EUSupport instance
+    required:
+    - processId
+    - euId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      euId:
+        $ref: '#/definitions/euId'
+      euType:
+        $ref: '#/definitions/EUType'
+      supportAmount:
+        $ref: '#/definitions/EUSupportAmount'
+      supportYear:
+        $ref: '#/definitions/EUSupportYear'
+  #
+  EUSupportsType:
+    description: TBD
+    type: object
+    properties:
+      eusupports:
+        $ref: '#/definitions/EUSupports'
+  #
+  EUSupports:
+    description: TBD
+    type: array
+    items:
+      $ref: '#/definitions/EUSupportType'
+  #
+  ###################################
+  # EUSupport
+  ###################################
+  euId:
+    description: Unique identifier for EUS-Support
+    type: string
+    format: uuid
+    example: '20083dfd-b3c0-4cd4-ad26-47421124a8f6'
+  #
+  EUType:
+    description: Typ av eu-stöd
+    type: string
+    enum:
+      - "EU-stöd"
+      - "EU-stöd och nationellt stöd"
+      - "EU-stöd och nationellt stöd, utan mjölk"
+      - "Nationell stöd, utan mjölk"
+    example: 'EU-stöd och nationellt stöd'
+  #
+  EUSupportAmount:
+    description: summerat EU-stöd
+    type: number
+    format: float
+    example: 850000.00
+  #
+  EUSupportYear:
+    description: EU-stödet gäller år
+    type: string
+    example: '2019'
   #
   ###################################  
   # Household
@@ -5393,7 +6135,6 @@ definitions:
   #Applicant:
   #  $ref: '#/definitions/applicantType'
   #
-  
   Applicants:
     type: array
     description: List of applicantType

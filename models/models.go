@@ -334,12 +334,21 @@ type TextValue struct {
 	Text string
 }
 
+// EUID documentation
+type EUID struct {
+	EUID string `json:"euId"`
+}
+
 // EUSupportType documentation
 type EUSupportType struct {
 	EUID          string  `json:"euId"`
 	EUType        string  `json:"EUType"`
 	SupportAmount float32 `json:"supportAmount"`
 	SupportYear   string  `json:"supportYear"`
+}
+
+type GuarantorID struct {
+	GuarantorID string `json:"guarantorId"`
 }
 
 // GuarantorType documentation

@@ -29,6 +29,8 @@ import (
 	"selmasme/budgets"
 	"selmasme/cases"
 	"selmasme/collaterals"
+	"selmasme/eusupports"
+	"selmasme/guarantors"
 	submitapplication "selmasme/submitapplications"
 	"selmasme/swagger"
 
@@ -166,6 +168,18 @@ func main() {
 	router.HandleFunc("/v1/getxloans", loans.GetLoansx).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/getxloan", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/deletexloan", loans.DeleteLoanx).Methods("DELETE", "OPTIONS")
+	//
+	// eusupports.go
+	router.HandleFunc("/v1/geteusupports", eusupports.GetEUSupports).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/geteusupport", eusupports.GetEUSupport).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/deleteeusupport", eusupports.DeleteEUSupport).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/adeusupport", eusupports.AddEUSupport).Methods("PUT", "OPTIONS")
+	//
+	// guarantors.go
+	router.HandleFunc("/v1/getguarantors", guarantors.GetGuarantors).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/getguarantor", guarantors.GetGuarantor).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/addguarantor", guarantors.AddGuarantor).Methods("PUT", "GET", "OPTIONS")
+	router.HandleFunc("/v1/deleteguarantor", guarantors.DeleteGuarantor).Methods("DELETE", "GET", "OPTIONS")
 	//
 	// submitApplication.go
 	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "OPTIONS")

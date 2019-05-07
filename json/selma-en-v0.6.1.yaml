@@ -367,6 +367,50 @@ paths:
           description: process has been created
           schema:
             $ref: '#/definitions/processIdCaseIdType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ####################################################
   # Delete Process
@@ -1326,6 +1370,50 @@ paths:
       responses:
         201:
           description: Successfully added
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'     
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ########################################################
   # Delete a businessCategory
@@ -1352,6 +1440,50 @@ paths:
           description: successful
           schema:
             $ref: '#/definitions/OK200'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'     
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #####################################################################################
   # Get a list of available households for a given processId  in Activiti
@@ -1944,8 +2076,8 @@ paths:
           schema:
             $ref: '#/definitions/householdIdHouseholdMemberIdType'
       responses:
-        200:
-          description: Successful
+        201:
+          description: Successfully created
           schema:
             $ref: '#/definitions/householdMember'
         400:
@@ -3667,7 +3799,7 @@ paths:
             $ref: '#/definitions/companyEconomyType'
       responses:
         201:
-          description: Successfully added
+          description: Successfully created
           schema:
             $ref: '#/definitions/companyEconomyType'
         400:
@@ -4024,7 +4156,7 @@ paths:
             $ref: '#/definitions/budgetType'
       responses:
         201:
-          description: Successfully added
+          description: Successfully created
         400:
           description: 'Bad request'  
           schema:
@@ -4708,7 +4840,7 @@ paths:
   # AddGuarantor
   #########################################################
   /v1/addguarantor:
-    post:
+    put:
       tags:
         - Guarantors
       summary: Guarantors (borgensman)
@@ -4725,8 +4857,8 @@ paths:
           schema:
             $ref: '#/definitions/GuarantorType'
       responses:
-        200:
-          description: Successful
+        201:
+          description: Successfully created
           schema:
             $ref: '#/definitions/OK200'
         400:
@@ -5002,7 +5134,7 @@ paths:
             $ref: '#/definitions/EUSupportType'
       responses:
         201:
-          description: Successfully added
+          description: Successfully created
         400:
           description: 'Bad request'  
           schema:
@@ -5492,11 +5624,6 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/GuarantorType'
-  #
-  #Guarantor:
-  #  description: TBD
-  #  schema:
-  #    $ref: '#/definitions/GuarantorType'
   #
   guarantorId:
     description: TBD
@@ -6918,9 +7045,6 @@ definitions:
       kycHighRiskIndustry:
         $ref: '#/definitions/kycHighRiskIndustry'
   #
-  #KycInformation:
-  #  $ref: '#/definitions/kycInformationType'
-  #
   KycInformationsType:
     description: Array of KycInformationsType
     type: object
@@ -7002,7 +7126,6 @@ parameters:
   #  enum:
   #  - true
   #  - false
-  #
   ############################
   # Header definitions
   ############################

@@ -35,7 +35,9 @@ COPY json/loans.json /selmasme/json
 COPY json/personaleconomies.json /selmasme/json
 COPY json/companies.json /selmasme/json
 COPY json/kycinformations.json /selmasme/json
-COPY json/selma-en-v0.5.9.yaml /selmasme/json
+COPY json/euspports.json /selmasme/json
+COPY json/guarantors.json /selmasme/json
+COPY json/selma-en-v0.6.1.yaml /selmasme/json
 # COPY executable ./selma-sme
 COPY selmasme /selmasme
 #

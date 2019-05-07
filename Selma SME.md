@@ -397,3 +397,34 @@ Efter vi har fått CustomerID via BankID kommer vi anropa addApplicant med Perso
     	] 
   	}
 	]
+	
+## EUSupports
+
+	{
+  	"eusupports": [
+    	{
+      		"processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+      		"euId": "20083dfd-b3c0-4cd4-ad26-47421124a8f6",
+      		"euType": "EU-stöd och nationellt stöd",
+      		"supportAmount": 850000.00,
+      		"supportYear": "2019"
+    	}
+  	]
+	}
+	
+## Guarantors
+
+	{
+    	"eusupports": [
+      	{
+        	"processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+        	"euId": "20083dfd-b3c0-4cd4-ad26-47421124a8f6",
+        	"euType": "EU-stöd och nationellt stöd",
+        	"supportAmount": 850000,
+        	"supportYear": "2019"
+      	}
+    	]
+  	}
+  	
+ 
+	

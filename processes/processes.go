@@ -216,6 +216,8 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	kycinformations := []models.KycInformationType{}
 	collaterals := []models.CollateralType{}
 	budgets := []models.BudgetType{}
+	eusupports := []models.EUSupportType{}
+	Gaurantors := []models.GuarantorType{}
 	//
 	//var d models.XAll
 	//var p models.Person
@@ -321,6 +323,8 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	processall.KycInformations = append(kycinformations)
 	processall.Collaterals = append(collaterals)
 	processall.Budgets = append(budgets)
+	processall.EUSupports = append(eusupports)
+	processall.Guarantors = append(Gaurantors)
 	//
 	if err := json.NewEncoder(w).Encode(processall); err != nil {
 		w.WriteHeader(http.StatusNotFound)

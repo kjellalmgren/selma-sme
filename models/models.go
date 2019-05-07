@@ -325,6 +325,8 @@ type ProcessAllType struct {
 	Collaterals       []CollateralType
 	KycInformations   []KycInformationType
 	Budgets           []BudgetType
+	EUSupports        []EUSupportType
+	Guarantors        []GuarantorType
 }
 
 // TextValue documentation
@@ -332,26 +334,18 @@ type TextValue struct {
 	Text string
 }
 
-//
-// BudgetID documentation
-//type BudgetID struct {
-//	CompanyEconomyID string `json:"companyEconomyId"`
-//}
+// EUSupportType documentation
+type EUSupportType struct {
+	EUID          string  `json:"euId"`
+	EUType        string  `json:"EUType"`
+	SupportAmount float32 `json:"supportAmount"`
+	SupportYear   string  `json:"supportYear"`
+}
 
-// XAll documentation
-//type XAll struct {
-//	Persons []Person
-//	Animals []Animal
-//}
-
-// Person documentation
-//type Person struct {
-//	Name   string
-//	Mobile string
-//}
-
-// Animal documentation
-//type Animal struct {
-//	AnimalID string
-//	Animal   string
-//
+// GuarantorType documentation
+type GuarantorType struct {
+	GuarantorID         string `json:"guarantorId"`
+	GuarantorName       string `json:"guarantorName"`
+	GuarantorPhone      string `json:"guarantorPhone"`
+	GuarantorCustomerID string `json:"guarantorCustomerId"`
+}

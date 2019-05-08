@@ -60,6 +60,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	personaleconomies := getPersonalEconomies(processid)
 	kycinformations := getKycInformations(processid)
 	budgets := getBudgets(processid)
+	eusupports := getEUSupports(processid)
 	//
 	processall.Processes = append(processes)
 	processall.Applicants = append(applicants)
@@ -72,6 +73,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	processall.PersonalEconomies = append(personaleconomies)
 	processall.KycInformations = append(kycinformations)
 	processall.Budgets = append(budgets)
+	processall.EUSupports = append(eusupports)
 	//
 	// ##########################################
 	// # Create the actual pdf document
@@ -536,6 +538,29 @@ func getBudgets(processid string) []models.BudgetType {
 		}
 	}
 	return budret
+}
+
+// GetEUSupports documentation
+func getEUSupports(processid string) []models.EUSupportType {
+
+	//message := models.MessageBody{}
+	eusupports := []models.EUSupportType{}
+	//budret := make([]models.BudgetType, 2, 2)
+	var euret []models.EUSupportType
+	//
+	file, err := ioutil.ReadFile("json/eusupports.json")
+	if err != nil {
+		fmt.Println("Error reading eusupports.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &eusupports)
+	//
+	for _, eusupport := range eusupports {
+		if eusupport.ProcessID == processid {
+			//budret[j] = budget
+			euret = append(euret, eusupport)
+		}
+	}
+	return euret
 }
 
 // savePDF documentation

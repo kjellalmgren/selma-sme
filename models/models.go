@@ -327,6 +327,7 @@ type ProcessAllType struct {
 	Budgets           []BudgetType
 	EUSupports        []EUSupportType
 	Guarantors        []GuarantorType
+	MaintenanceCosts  []MaintenanceCostType
 }
 
 // TextValue documentation
@@ -341,6 +342,7 @@ type EUID struct {
 
 // EUSupportType documentation
 type EUSupportType struct {
+	ProcessID     string  `json:"processId"`
 	EUID          string  `json:"euId"`
 	EUType        string  `json:"EUType"`
 	SupportAmount float32 `json:"supportAmount"`
@@ -361,6 +363,7 @@ type GuarantorType struct {
 
 // maintenanceCostType documentation
 type MaintenanceCostType struct {
+	ProcessID         string `json:"processId"`
 	MaintenanceCostID string `json:"maintenaceCostId"`
 	TypeOfHouses      []TypeOfHouse
 }

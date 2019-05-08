@@ -1,4 +1,4 @@
-package submitapplication
+package submitapplications
 
 import (
 	"bytes"

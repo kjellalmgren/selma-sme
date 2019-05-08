@@ -31,6 +31,7 @@ import (
 	"selmasme/collaterals"
 	"selmasme/eusupports"
 	"selmasme/guarantors"
+	"selmasme/maintenancecosts"
 	submitapplication "selmasme/submitapplications"
 	"selmasme/swagger"
 
@@ -180,6 +181,8 @@ func main() {
 	router.HandleFunc("/v1/getguarantor", guarantors.GetGuarantor).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/addguarantor", guarantors.AddGuarantor).Methods("PUT", "GET", "OPTIONS")
 	router.HandleFunc("/v1/deleteguarantor", guarantors.DeleteGuarantor).Methods("DELETE", "GET", "OPTIONS")
+	//
+	router.HandleFunc("/v1/maintenancecosts", maintenancecosts.GetMaintenanceCosts).Methods("POST", "GET", "OPTIONS")
 	//
 	// submitApplication.go
 	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "OPTIONS")

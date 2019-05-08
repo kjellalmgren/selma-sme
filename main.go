@@ -183,6 +183,9 @@ func main() {
 	router.HandleFunc("/v1/deleteguarantor", guarantors.DeleteGuarantor).Methods("DELETE", "GET", "OPTIONS")
 	//
 	router.HandleFunc("/v1/maintenancecosts", maintenancecosts.GetMaintenanceCosts).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/maintenancecost", maintenancecosts.GetMaintenanceCost).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/addmaintenancecost", maintenancecosts.AddMaintenanceCost).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/v1/deletemaintenancecost", maintenancecosts.DeleteMaintenanceCost).Methods("DELETE", "OPTIONS")
 	//
 	// submitApplication.go
 	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "OPTIONS")

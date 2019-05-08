@@ -355,6 +355,7 @@ type GuarantorID struct {
 
 // GuarantorType documentation
 type GuarantorType struct {
+	ProcessID           string `json:"processId"`
 	GuarantorID         string `json:"guarantorId"`
 	GuarantorName       string `json:"guarantorName"`
 	GuarantorPhone      string `json:"guarantorPhone"`

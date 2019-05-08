@@ -61,6 +61,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	kycinformations := getKycInformations(processid)
 	budgets := getBudgets(processid)
 	eusupports := getEUSupports(processid)
+	guarantors := getGuarantors(processid)
+	maintenancecosts := getMaintenanceCosts(processid)
 	//
 	processall.Processes = append(processes)
 	processall.Applicants = append(applicants)
@@ -74,6 +76,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	processall.KycInformations = append(kycinformations)
 	processall.Budgets = append(budgets)
 	processall.EUSupports = append(eusupports)
+	processall.Guarantors = append(guarantors)
+	processall.MaintenanceCosts = append(maintenancecosts)
 	//
 	// ##########################################
 	// # Create the actual pdf document
@@ -561,6 +565,52 @@ func getEUSupports(processid string) []models.EUSupportType {
 		}
 	}
 	return euret
+}
+
+// getGuarantors documentation
+func getGuarantors(processid string) []models.GuarantorType {
+
+	//message := models.MessageBody{}
+	guarantors := []models.GuarantorType{}
+	//budret := make([]models.BudgetType, 2, 2)
+	var guaret []models.GuarantorType
+	//
+	file, err := ioutil.ReadFile("json/guarantors.json")
+	if err != nil {
+		fmt.Println("Error reading guarantors.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &guarantors)
+	//
+	for _, guarantor := range guarantors {
+		if guarantor.ProcessID == processid {
+			//budret[j] = budget
+			guaret = append(guaret, guarantor)
+		}
+	}
+	return guaret
+}
+
+// getMaintenanceCosts documentation
+func getMaintenanceCosts(processid string) []models.MaintenanceCostType {
+
+	//message := models.MessageBody{}
+	maintenancecosts := []models.MaintenanceCostType{}
+	//budret := make([]models.BudgetType, 2, 2)
+	var mainret []models.MaintenanceCostType
+	//
+	file, err := ioutil.ReadFile("json/maintenancecosts.json")
+	if err != nil {
+		fmt.Println("Error reading maintenancecosts.json - %s", err)
+	}
+	_ = json.Unmarshal([]byte(file), &maintenancecosts)
+	//
+	for _, maintenancecost := range maintenancecosts {
+		if maintenancecost.ProcessID == processid {
+			//budret[j] = budget
+			mainret = append(mainret, maintenancecost)
+		}
+	}
+	return mainret
 }
 
 // savePDF documentation

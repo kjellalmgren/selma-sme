@@ -1,0 +1,14 @@
+{
+  "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+  "maintenancecostid": "9e45fa0f-641a-4302-b236-c3b9df4de086",
+  "typeofhouses": [
+    {
+      "keepHouse": true,
+      "loanInOtherInstitut": true,
+      "redeemLoan": true,
+      "loanOwner": "Anna Andersson",
+      "houseLoanAmount": 850000,
+      "maintenanceCost": 4500
+    }
+  ]
+}

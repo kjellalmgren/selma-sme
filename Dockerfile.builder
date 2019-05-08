@@ -37,6 +37,7 @@ COPY json/companies.json /selmasme/json
 COPY json/kycinformations.json /selmasme/json
 COPY json/eusupports.json /selmasme/json
 COPY json/guarantors.json /selmasme/json
+COPY json/maintenancecosts.json /selma/json
 COPY json/selma-en-v0.6.1.yaml /selmasme/json
 # COPY executable ./selma-sme
 COPY selmasme /selmasme

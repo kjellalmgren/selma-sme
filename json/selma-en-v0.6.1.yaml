@@ -212,6 +212,50 @@ paths:
             $ref: '#/definitions/OK200'
         201:
           description: Successfully added
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   ##############################################################
   # getProcesses
@@ -292,7 +336,7 @@ paths:
     post:
       tags:
       - Processes
-      summary: Return all data for a given processid
+      summary: Return all information object for a given processid
       description: Return all data for all object in the activiti process regardless if the contains any information, empty objects will return null
       operationId: getProcessAll
       produces:
@@ -306,8 +350,48 @@ paths:
           description: Successful
           schema:
              $ref: '#/definitions/LinksAll'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
           description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
   #
@@ -318,8 +402,8 @@ paths:
     post:
       tags:
       - Processes
-      summary: Save all data for a given processid
-      description: TBD
+      summary: Save all information object for a given processid
+      description: To be able to implement a service that save all information object
       operationId: saveProcessAll
       produces:
         - application/json
@@ -337,11 +421,51 @@ paths:
           schema:
             $ref: '#/definitions/OK200'
              #$ref: '#/definitions/LinksAll'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
         404:
           description: 'Not found'
           schema:
             $ref: '#/definitions/ErrorModel'
-      
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   ####################################################
   # addProcess
   ####################################################
@@ -5250,6 +5374,279 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   #
+  #################################################
+  # GetMaintenanceCosts
+  #################################################
+  /v1/getmaintenancecosts:
+     post:
+      tags:
+        - MaintenanceCosts
+      summary: Driftkostander på andra boenden
+      description: Driftkostnader på ansra boenden
+      operationId: getMaintenanceCosts
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/MaintenanceCostsType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #################################################
+  # GetMaintenanceCost
+  #################################################
+  /v1/getmaintenancecost:
+     post:
+      tags:
+        - MaintenanceCosts
+      summary: Driftkostander på andra boenden
+      description: Driftkostnader på ansra boenden
+      operationId: getMaintenanceCost
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: maintancecostid
+          in: body
+          schema:
+            $ref: '#/definitions/maintenanceCostId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/MaintenanceCostType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #################################################
+  # DeleteMaintenanceCost
+  #################################################
+  /v1/deletemaintenancecost:
+     delete:
+      tags:
+        - MaintenanceCosts
+      summary: Driftkostander på andra boenden
+      description: Driftkostnader på ansra boenden
+      operationId: deleteMaintenanceCost
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: maintancecostid
+          in: body
+          schema:
+            $ref: '#/definitions/maintenanceCostId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/OK200'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #################################################
+  # AddMaintenanceCost
+  #################################################
+  /v1/addmaintenancecost:
+     put:
+      tags:
+        - MaintenanceCosts
+      summary: Lägg till driftkostander på andra boenden
+      description: Driftkostnader på andra boenden
+      operationId: addMaintenanceCost
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: maintancecost
+          in: body
+          schema:
+            $ref: '#/definitions/MaintenanceCostType'
+      responses:
+        201:
+          description: Successfully created
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'      
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
   #
   #################################################
   # Submit Application
@@ -5644,7 +6041,7 @@ definitions:
     example: '07012332144'
   #
   ###################################
-  # EUSupport
+  # EUSupportType
   ###################################
   EUSupportType:
     description: Type of EUSupport instance
@@ -5665,7 +6062,7 @@ definitions:
         $ref: '#/definitions/EUSupportYear'
   #
   EUSupportsType:
-    description: TBD
+    description: Lista av EU-stöd
     type: object
     properties:
       eusupports:
@@ -5681,7 +6078,7 @@ definitions:
   # EUSupport
   ###################################
   euId:
-    description: Unique identifier for EUS-Support
+    description: Unique identifier for EU-Support
     type: string
     format: uuid
     example: '20083dfd-b3c0-4cd4-ad26-47421124a8f6'
@@ -5706,6 +6103,118 @@ definitions:
     description: EU-stödet gäller år
     type: string
     example: '2019'
+  #
+  ###################################
+  # MaintenanceCostType
+  ###################################
+  MaintenanceCostType:
+    description: Driftkostnader i övriga boenden
+    required:
+    - processId
+    - maintenanceCostId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      maintenancecostid:
+        $ref: '#/definitions/maintenanceCostId'
+      typeofhouses:
+        $ref: '#/definitions/TypeOfHouses'
+  #
+  MaintenanceHouseType:
+    description: TBD
+    type: object
+    properties:
+      typeOfHouse:
+        $ref: '#/definitions/typeOfHouse'
+      keepHouse:
+        $ref: '#/definitions/keepHouse'
+      loanInOtherInstitut:
+        $ref: '#/definitions/loanInOtherInstitut'
+      redeemLoan:
+        $ref: '#/definitions/redeemLoan'
+      loanOwner:
+        $ref: '#/definitions/loanOwner'
+      houseLoanAmount:
+        $ref: '#/definitions/houseLoanAmount'
+      maintenanceCost:
+        $ref: '#/definitions/maintenanceCost'
+  #
+  MaintenanceCostsType:
+    description: Lista av driftkostnader
+    type: object
+    properties:
+      maintenancecosts:
+        $ref: '#/definitions/MaintenanceCosts'
+  #
+  MaintenanceCosts:
+    description: TBD
+    type: array
+    items:
+      $ref: '#/definitions/MaintenanceCostType'
+  #
+  TypeOfHouses:
+    description: TBD
+    type: array
+    items:
+      $ref: '#/definitions/MaintenanceHouseType'
+  #
+  ###################################
+  # MaintenanceCost
+  ###################################
+  maintenanceCostId:
+    description: Unique identifier for maintenace cost
+    type: string
+    format: uuid
+    example: '9e45fa0f-641a-4302-b236-c3b9df4de086'
+  #
+  typeOfHouse:
+    description: typ av annat boende
+    type: string
+    enum:
+      - "Villa"
+      - "Hyresrätt"
+      - "Övrigt Boende"
+      - "Landbruksfastighet"
+      - "Bostadsrätt"
+      - "Fritidshus"
+    example: 'Lantbruksfastighet'
+  #
+  keepHouse:
+    description: Avser att behålla huset
+    type: boolean
+    enum:
+      - true
+      - false
+  #
+  loanInOtherInstitut:
+    description: Avser att behålla huset
+    type: boolean
+    enum:
+      - true
+      - false
+  #
+  redeemLoan:
+    description: Lösa lånet
+    type: boolean
+    enum:
+      - true
+      - false
+  loanOwner:
+    description: Lånet står på person
+    type: string
+    example: 'Anna Andersson'
+  #
+  houseLoanAmount:
+    description: Lånet är på belopp
+    type: number
+    format: float
+    example: 850000.00
+  maintenanceCost:
+    description: Driftkostnad
+    type: number
+    format: float
+    example: 4500.00
   #
   ###################################  
   # Household
@@ -7059,7 +7568,7 @@ definitions:
       $ref: '#/definitions/kycInformationType'
   #
   LinksAll:
-    description: TBD
+    description: Used for getprocessall and saveprocessall
     type: object
     properties:
       processes:
@@ -7084,6 +7593,12 @@ definitions:
         $ref: '#/definitions/Budgets'
       kycinformations:
         $ref: '#/definitions/KycInformations'
+      guarantors:
+        $ref: '#/definitions/Guarantors'
+      eusupports:
+        $ref: '#/definitions/EUSupports'
+      maintenancecosts:
+        $ref: '#/definitions/MaintenanceCosts'
   #
   hrefType:
       description: Link to a resource

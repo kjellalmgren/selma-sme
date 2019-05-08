@@ -358,3 +358,21 @@ type GuarantorType struct {
 	GuarantorPhone      string `json:"guarantorPhone"`
 	GuarantorCustomerID string `json:"guarantorCustomerId"`
 }
+
+// maintenanceCostType documentation
+type MaintenanceCostType struct {
+	MaintenanceCostID string `json:"maintenaceCostId"`
+	TypeOfHouses      []TypeOfHouse
+}
+
+// TypeOfHouse (driftkostnad på andra boenden)
+type TypeOfHouse struct {
+	HouseID             string  `json:"houseId"`
+	TypeOfHouse         string  `json:"typeOfHouse"`
+	KeepHouse           bool    `json:"keepHouse"`
+	LoanInOtherInstitut bool    `json:"loanInOtherInstitut"`
+	RedeemLoan          bool    `json:"redeemLoan"`
+	LoanOwner           string  `json:"loanOwner"`
+	MaintenanceCost     float32 `json:"maintenanceCost"`
+	LoanAmount          float32 `json:"loanAmount"`
+}

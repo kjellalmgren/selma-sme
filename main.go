@@ -3,7 +3,7 @@ package main
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
-	Date: 2019-04-23
+	Date: 2019-05-09
 	Description: Service to feed Selma-SME UX, just for test purpose
 	Architecture:
 	win32: GOOS=windows GOARCH=386 go build -v
@@ -179,8 +179,8 @@ func main() {
 	// guarantors.go
 	router.HandleFunc("/v1/getguarantors", guarantors.GetGuarantors).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/getguarantor", guarantors.GetGuarantor).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/addguarantor", guarantors.AddGuarantor).Methods("PUT", "GET", "OPTIONS")
-	router.HandleFunc("/v1/deleteguarantor", guarantors.DeleteGuarantor).Methods("DELETE", "GET", "OPTIONS")
+	router.HandleFunc("/v1/addguarantor", guarantors.AddGuarantor).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/v1/deleteguarantor", guarantors.DeleteGuarantor).Methods("DELETE", "OPTIONS")
 	//
 	router.HandleFunc("/v1/maintenancecosts", maintenancecosts.GetMaintenanceCosts).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/maintenancecost", maintenancecosts.GetMaintenanceCost).Methods("POST", "GET", "OPTIONS")

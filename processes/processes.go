@@ -217,7 +217,8 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	collaterals := []models.CollateralType{}
 	budgets := []models.BudgetType{}
 	eusupports := []models.EUSupportType{}
-	Gaurantors := []models.GuarantorType{}
+	guarantors := []models.GuarantorType{}
+	maintenancecosts := []models.MaintenanceCostType{}
 	//
 	//var d models.XAll
 	//var p models.Person
@@ -312,6 +313,27 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal([]byte(file), &kycinformations)
 	//
+	file, err = ioutil.ReadFile("json/eusupports.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading eusupports.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &eusupports)
+	//
+	file, err = ioutil.ReadFile("json/guarantors.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading guarantors.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &guarantors)
+	//
+	file, err = ioutil.ReadFile("json/mainteancecosts.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading mainteancecosts.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	_ = json.Unmarshal([]byte(file), &maintenancecosts)
+	//
 	processall.Applicants = append(applicants)
 	processall.Processes = append(processes)
 	processall.Loans = append(loans)
@@ -324,7 +346,8 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	processall.Collaterals = append(collaterals)
 	processall.Budgets = append(budgets)
 	processall.EUSupports = append(eusupports)
-	processall.Guarantors = append(Gaurantors)
+	processall.Guarantors = append(guarantors)
+	processall.MaintenanceCosts = append(maintenancecosts)
 	//
 	if err := json.NewEncoder(w).Encode(processall); err != nil {
 		w.WriteHeader(http.StatusNotFound)

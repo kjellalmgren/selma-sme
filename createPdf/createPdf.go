@@ -223,6 +223,24 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//
+	// EU-Support
+	//
+	hr = HeaderRow{}
+	hr.Value = "EU-Stöd"
+	for _, eusupport := range eusupports {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
+		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
+		tr = append(tr, TableRow{Key: "ProcessID:", Value: eusupport.ProcessID})
+		tr = append(tr, TableRow{Key: "EUID:", Value: eusupport.EUID})
+		tr = append(tr, TableRow{Key: "EU-Typ:", Value: eusupport.EUType})
+		tr = append(tr, TableRow{Key: "År:", Value: eusupport.SupportYear})
+		tr = append(tr, TableRow{Key: "Stöd:", Value: fmt.Sprintf("%.2f", eusupport.SupportAmount)})
+		pdf = table1(pdf, tr) // add table to page current page
+	}
+	//
 	// Budget
 	//
 	y1 := 0
@@ -255,6 +273,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		//Text:    fmt.Sprintf("%s", br.Text),
 		ValueC1: fmt.Sprintf("%v", y1),
 		ValueC2: fmt.Sprintf("%v", y2)})
+	//
 	for _, br := range brows {
 		fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
 		trb = append(trb, BudgetTableRow{
@@ -267,6 +286,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//
 	pdf = tablebudget(pdf, trb) // add table to page current page
 	//}
+	//pdf = table1(pdf, tr) // add table to page current page
 	//
 	// Save pdf file to a local destination
 	//

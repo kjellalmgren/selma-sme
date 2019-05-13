@@ -109,7 +109,6 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		}
 		pdf = table1(pdf, tr) // add table to page
 	}
-
 	// Applicants
 	hr = HeaderRow{}
 	hr.Value = "Applicants"
@@ -154,7 +153,6 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "Selected:", Value: fmt.Sprintf("%v", company.SelectedCompany)})
 		pdf = table1(pdf, tr) // add table to page current page
 	}
-
 	//
 	// Collaterals
 	//
@@ -227,6 +225,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//
 	hr = HeaderRow{}
 	hr.Value = "EU-Stöd"
+	//
 	for _, eusupport := range eusupports {
 		tr = []TableRow{}
 		pdf.AddPage()
@@ -238,6 +237,52 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "EU-Typ:", Value: eusupport.EUType})
 		tr = append(tr, TableRow{Key: "År:", Value: eusupport.SupportYear})
 		tr = append(tr, TableRow{Key: "Stöd:", Value: fmt.Sprintf("%.2f", eusupport.SupportAmount)})
+		pdf = table1(pdf, tr) // add table to page current page
+	}
+	//
+	// Borgensmän
+	//
+	hr = HeaderRow{}
+	hr.Value = "Borgensman"
+	//
+	for _, guarantor := range guarantors {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
+		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
+		tr = append(tr, TableRow{Key: "ProcessID:", Value: guarantor.ProcessID})
+		tr = append(tr, TableRow{Key: "BorgensamnId:", Value: guarantor.GuarantorID})
+		tr = append(tr, TableRow{Key: "Phone:", Value: guarantor.GuarantorCustomerID})
+		tr = append(tr, TableRow{Key: "Namn:", Value: guarantor.GuarantorName})
+		tr = append(tr, TableRow{Key: "Phone:", Value: guarantor.GuarantorPhone})
+
+		pdf = table1(pdf, tr) // add table to page current page
+	}
+	//
+	// MainteanceCosts
+	//
+	hr = HeaderRow{}
+	hr.Value = "Driftkostander"
+	//
+	for _, maintenancecost := range maintenancecosts {
+		tr = []TableRow{}
+		pdf.AddPage()
+		pdf.SetFont("Arial", "B", 16)
+		pdf = header1(pdf, hr.Value)
+		pdf.SetFont("Arial", "B", 11)
+		tr = append(tr, TableRow{Key: "ProcessID:", Value: maintenancecost.ProcessID})
+		tr = append(tr, TableRow{Key: "BorgensamnId:", Value: maintenancecost.MaintenanceCostID})
+
+		for _, typeofhouse := range maintenancecost.TypeOfHouses {
+			tr = append(tr, TableRow{Key: "HouseId:", Value: typeofhouse.HouseID})
+			tr = append(tr, TableRow{Key: "loanInOtherInstitut:", Value: fmt.Sprintf("%v", typeofhouse.LoanInOtherInstitut)})
+			tr = append(tr, TableRow{Key: "Lösa lån:", Value: fmt.Sprintf("%v", typeofhouse.RedeemLoan)})
+			tr = append(tr, TableRow{Key: "Owner:", Value: typeofhouse.LoanOwner})
+			tr = append(tr, TableRow{Key: "Stöd:", Value: fmt.Sprintf("%.2f", typeofhouse.LoanAmount)})
+			tr = append(tr, TableRow{Key: "Kostnad:", Value: fmt.Sprintf("%.2f", typeofhouse.MaintenanceCost)})
+
+		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//
@@ -275,7 +320,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		ValueC2: fmt.Sprintf("%v", y2)})
 	//
 	for _, br := range brows {
-		fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
+		//fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
 		trb = append(trb, BudgetTableRow{
 			Key:     fmt.Sprintf("%d", j+1),
 			Text:    fmt.Sprintf("%s", br.Text),
@@ -569,7 +614,7 @@ func getEUSupports(processid string) []models.EUSupportType {
 
 	//message := models.MessageBody{}
 	eusupports := []models.EUSupportType{}
-	//budret := make([]models.BudgetType, 2, 2)
+	//euret := make([]models.EUSupportType, 1, 1)
 	var euret []models.EUSupportType
 	//
 	file, err := ioutil.ReadFile("json/eusupports.json")
@@ -580,7 +625,7 @@ func getEUSupports(processid string) []models.EUSupportType {
 	//
 	for _, eusupport := range eusupports {
 		if eusupport.ProcessID == processid {
-			//budret[j] = budget
+			//fmt.Println("Id: %s", fmt.Sprintf("%v", eusupport.SupportAmount))
 			euret = append(euret, eusupport)
 		}
 	}

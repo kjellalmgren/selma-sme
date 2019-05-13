@@ -182,8 +182,8 @@ func main() {
 	router.HandleFunc("/v1/addguarantor", guarantors.AddGuarantor).Methods("PUT", "OPTIONS")
 	router.HandleFunc("/v1/deleteguarantor", guarantors.DeleteGuarantor).Methods("DELETE", "OPTIONS")
 	//
-	router.HandleFunc("/v1/maintenancecosts", maintenancecosts.GetMaintenanceCosts).Methods("POST", "GET", "OPTIONS")
-	router.HandleFunc("/v1/maintenancecost", maintenancecosts.GetMaintenanceCost).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/getmaintenancecosts", maintenancecosts.GetMaintenanceCosts).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/getmaintenancecost", maintenancecosts.GetMaintenanceCost).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/addmaintenancecost", maintenancecosts.AddMaintenanceCost).Methods("PUT", "OPTIONS")
 	router.HandleFunc("/v1/deletemaintenancecost", maintenancecosts.DeleteMaintenanceCost).Methods("DELETE", "OPTIONS")
 	//

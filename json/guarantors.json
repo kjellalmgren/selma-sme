@@ -1,11 +1,9 @@
-{
-    "guarantors": [
-      {
-        "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-        "gaurantorId": "",
-        "gaurantorName": "Anna Andersson",
-        "gaurantorPhone": "07012332144",
-        "gaurantorCustomerId": "19640120-3887"
-      }
-    ]
+[
+  {
+    "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+    "guarantorId": "1e938826-cda3-49d7-93b5-06dc87ba627b",
+    "guarantorName": "Anna Andersson",
+    "guarantorPhone": "07012332144",
+    "guarantorCustomerId": "19640120-3887"
   }
+]

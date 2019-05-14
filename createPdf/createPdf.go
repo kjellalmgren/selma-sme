@@ -91,10 +91,13 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//
 	// Create a new documents to receive customer data
 	pdf := gofpdf.New("P", "mm", "A4", "")
+
 	hr := HeaderRow{}
 	// Processes
+	// tr := pdf.UnicodeTranslatorFromDescriptor("")
 	hr.Value = "Processes"
 	tr := []TableRow{} // Initiate table on page one
+	//tr = pdf.UnicodeTranslatorFromDescriptor("")
 	for _, process := range processes {
 		pdf.AddPage()
 		tr = []TableRow{}

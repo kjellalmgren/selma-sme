@@ -43,7 +43,7 @@ func GetMaintenanceCosts(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// GetMaintenanceCosts
+// GetMaintenanceCost documentation
 func GetMaintenanceCost(w http.ResponseWriter, r *http.Request) {
 
 	//var loans []models.Loan

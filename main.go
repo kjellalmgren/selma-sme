@@ -175,7 +175,7 @@ func main() {
 	router.HandleFunc("/v1/geteusupports", eusupports.GetEUSupports).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/geteusupport", eusupports.GetEUSupport).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/deleteeusupport", eusupports.DeleteEUSupport).Methods("DELETE", "OPTIONS")
-	router.HandleFunc("/v1/adeusupport", eusupports.AddEUSupport).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/v1/addeusupport", eusupports.AddEUSupport).Methods("PUT", "OPTIONS")
 	//
 	// guarantors.go
 	router.HandleFunc("/v1/getguarantors", guarantors.GetGuarantors).Methods("POST", "GET", "OPTIONS")

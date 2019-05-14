@@ -6122,7 +6122,7 @@ definitions:
     properties:
       processId:
         $ref: '#/definitions/processId'
-      maintenancecostid:
+      maintenanceCostId:
         $ref: '#/definitions/maintenanceCostId'
       typeofhouses:
         $ref: '#/definitions/TypeOfHouses'
@@ -6172,7 +6172,7 @@ definitions:
     description: Unique identifier for maintenace cost
     type: string
     format: uuid
-    example: '9e45fa0f-641a-4302-b236-c3b9df4de086'
+    example: '{"maintenanceCostId": "9e45fa0f-641a-4302-b236-c3b9df4de086"}'
   #
   typeOfHouse:
     description: typ av annat boende

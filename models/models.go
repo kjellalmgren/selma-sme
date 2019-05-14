@@ -364,13 +364,13 @@ type GuarantorType struct {
 
 // mainttenanceCostID
 type MaintenanceCostID struct {
-	MaintenanceCostID string `json:"maintenaceCostId"`
+	MaintenanceCostID string `json:"maintenanceCostId"`
 }
 
 // maintenanceCostType documentation
 type MaintenanceCostType struct {
 	ProcessID         string `json:"processId"`
-	MaintenanceCostID string `json:"maintenaceCostId"`
+	MaintenanceCostID string `json:"maintenanceCostId"`
 	TypeOfHouses      []TypeOfHouse
 }
 

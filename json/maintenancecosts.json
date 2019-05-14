@@ -1,17 +1,18 @@
 [
   {
     "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-    "maintenancecostid": "9e45fa0f-641a-4302-b236-c3b9df4de086",
+    "maintenanceCostId": "9e45fa0f-641a-4302-b236-c3b9df4de086",
     "typeofhouses": [
       {
+         "houseId": "c805ff3d-357e-476e-ac4a-f9b0fdbdd4fa",
          "typeOfHouse": "Lantbruksfastighet",
          "keepHouse": true,
          "loanInOtherInstitut": true,
          "redeemLoan": true,
          "loanOwner": "Anna Andersson",
-         "houseLoanAmount": 850000.00,
+         "loanAmount": 850000.00,
          "maintenanceCost": 4500.00
-       }
+      }
     ]
   }
 ]

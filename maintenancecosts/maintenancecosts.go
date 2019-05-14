@@ -65,7 +65,7 @@ func GetMaintenanceCost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
-	fmt.Printf("getMaintenanceCostID executed: processId: %s/MaintenanceCostID: %s...\r\n", processid, data.MaintenanceCostID)
+	fmt.Printf("getMaintenanceCostID executed: processId: %s /MaintenanceCostID: %s...\r\n", processid, data.MaintenanceCostID)
 
 	file, err := ioutil.ReadFile("json/maintenancecosts.json")
 	if err != nil {
@@ -73,14 +73,14 @@ func GetMaintenanceCost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	maintenancecosts := []models.MaintenanceCostType{}
-	//appret[0] := []models.Applicant{}
+	//mainret[0] := []models.MaintenanceCostType{}
 	mainret := make([]models.MaintenanceCostType, 1, 1)
 	_ = json.Unmarshal([]byte(file), &maintenancecosts)
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		for i := 0; i < len(maintenancecosts); i++ {
-			maintenancecosts := []models.MaintenanceCostType{}
+			//maintenancecosts := []models.MaintenanceCostType{}
 			if maintenancecosts[i].MaintenanceCostID == data.MaintenanceCostID {
 				mainret[0] = maintenancecosts[i]
 			}

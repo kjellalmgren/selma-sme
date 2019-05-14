@@ -1,6 +1,7 @@
 package maintenancecosts
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -56,7 +57,45 @@ func GetMaintenanceCost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	w.WriteHeader(http.StatusOK)
+	var data models.MaintenanceCostID
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "Error read r.Body - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	fmt.Printf("getMaintenanceCostID executed: processId: %s/MaintenanceCostID: %s...\r\n", processid, data.MaintenanceCostID)
+
+	file, err := ioutil.ReadFile("json/maintenancecosts.json")
+	if err != nil {
+		fmt.Fprintf(w, "Error reading maintenancecosts.json - %s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	maintenancecosts := []models.MaintenanceCostType{}
+	//appret[0] := []models.Applicant{}
+	mainret := make([]models.MaintenanceCostType, 1, 1)
+	_ = json.Unmarshal([]byte(file), &maintenancecosts)
+	//
+	switch processid {
+	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
+		for i := 0; i < len(maintenancecosts); i++ {
+			maintenancecosts := []models.MaintenanceCostType{}
+			if maintenancecosts[i].MaintenanceCostID == data.MaintenanceCostID {
+				mainret[0] = maintenancecosts[i]
+			}
+		}
+	}
+	//
+	if mainret[0].MaintenanceCostID == data.MaintenanceCostID {
+		if err := json.NewEncoder(w).Encode(mainret); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			//panic(err)
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		http.Error(w, "Mainrenancecost not Found", http.StatusNotFound)
+	}
 }
 
 // AddMaintenanceCost documentation

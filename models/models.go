@@ -362,6 +362,11 @@ type GuarantorType struct {
 	GuarantorCustomerID string `json:"guarantorCustomerId"`
 }
 
+// mainttenanceCostID
+type MaintenanceCostID struct {
+	MaintenanceCostID string `json:"maintenaceCostId"`
+}
+
 // maintenanceCostType documentation
 type MaintenanceCostType struct {
 	ProcessID         string `json:"processId"`

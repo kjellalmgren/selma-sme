@@ -263,7 +263,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	// MainteanceCosts
 	//
 	hr = HeaderRow{}
-	hr.Value = "Driftkostander"
+	hr.Value = "Driftkostnader"
 	//
 	for _, maintenancecost := range maintenancecosts {
 		tr = []TableRow{}
@@ -273,14 +273,14 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "ProcessID:", Value: maintenancecost.ProcessID})
 		tr = append(tr, TableRow{Key: "BorgensamnId:", Value: maintenancecost.MaintenanceCostID})
-
+		//
 		for _, typeofhouse := range maintenancecost.TypeOfHouses {
 			tr = append(tr, TableRow{Key: "HouseId:", Value: typeofhouse.HouseID})
 			tr = append(tr, TableRow{Key: "loanInOtherInstitut:", Value: fmt.Sprintf("%v", typeofhouse.LoanInOtherInstitut)})
 			tr = append(tr, TableRow{Key: "Lösa lån:", Value: fmt.Sprintf("%v", typeofhouse.RedeemLoan)})
 			tr = append(tr, TableRow{Key: "Owner:", Value: typeofhouse.LoanOwner})
 			tr = append(tr, TableRow{Key: "Stöd:", Value: fmt.Sprintf("%.2f", typeofhouse.LoanAmount)})
-			tr = append(tr, TableRow{Key: "Kostnad:", Value: fmt.Sprintf("%.2f", typeofhouse.MaintenanceCost)})
+			tr = append(tr, TableRow{Key: "Driftkostnad:", Value: fmt.Sprintf("%.2f", typeofhouse.MaintenanceCost)})
 
 		}
 		pdf = table1(pdf, tr) // add table to page current page

@@ -99,8 +99,8 @@ func main() {
 	router.HandleFunc("/", Index)
 	router.HandleFunc("/v1/swagger", swagger.Swagger).Methods("GET", "POST", "OPTIONS")
 	router.HandleFunc("/v1/upload", Upload).Methods("GET", "POST", "OPTIONS")
-	// processes.go
 	//
+	// processes.go
 	router.HandleFunc("/v1/getprocesses", processes.GetProcesses).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getprocess", processes.GetProcessAll).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/saveprocess", processes.SaveProcessAll).Methods("POST", "OPTIONS")
@@ -148,6 +148,7 @@ func main() {
 	// households.go
 	router.HandleFunc("/v1/gethouseholds", households.GetHouseholds).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/gethousehold", households.GetHousehold).Methods("POST", "OPTIONS")
+	//
 	// personalEconomies
 	router.HandleFunc("/v1/getpersonaleconomies", personaleconomies.GetPersonalEconomies).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getpersonaleconomy", personaleconomies.GetPersonalEconomy).Methods("POST", "OPTIONS")

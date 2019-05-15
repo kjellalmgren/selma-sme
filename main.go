@@ -190,6 +190,8 @@ func main() {
 	//
 	// submitApplication.go
 	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "OPTIONS")
+	// roaring.go
+	router.HandleFunc("/v1/getaccesstoken", roaring.GetAccesToken).Methods("POST", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	color.Set(color.FgHiRed)

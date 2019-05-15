@@ -6,7 +6,7 @@
     "applicantName": "Anna Andersson",
     "applicantAddress": "Stora vägen 1",
     "applicantPostAddress": "420 20 Katrineholm",
-    "stakeholderType": "",
+    "stakeholderType": "Sökande",
     "ContactInformation": [
       {
         "applicantByeMail": "anna.andersson@gmail.com",
@@ -26,7 +26,7 @@
     "applicantName": "Patrik Andersson",
     "applicantAddress": "Stora vägen 1",
     "applicantPostAddress": "420 20 Katrineholm",
-    "stakeholderType": "",
+    "stakeholderType": "Sökande",
     "ContactInformation": [
       {
         "applicantByeMail": "patrik.andersson@katrineholmrevision.se",

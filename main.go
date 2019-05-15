@@ -43,6 +43,7 @@ import (
 	"selmasme/loans"
 	"selmasme/personaleconomies"
 	"selmasme/processes"
+	"selmasme/roaring"
 	"selmasme/version"
 
 	"github.com/fatih/color"
@@ -191,7 +192,7 @@ func main() {
 	// submitApplication.go
 	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "OPTIONS")
 	// roaring.go
-	router.HandleFunc("/v1/getaccesstoken", roaring.GetAccesToken).Methods("POST", "OPTIONS")
+	//router.HandleFunc("/v1/getaccesstoken", roaring.GetAccesToken).Methods("POST", "OPTIONS")
 	// Healt services local
 	router.HandleFunc("/v1/ping", HealthCheckHandler).Methods("GET")
 	color.Set(color.FgHiRed)
@@ -210,6 +211,12 @@ func main() {
 	//	WriteTimeout: time.Second * 30,
 	//	IdleTimeout:  time.Second * 30,
 	//}
+	//var header Header
+	header := roaring.GetRoaringAccessToken()
+	fmt.Println(header.AccessToken)
+	log.Println(header.AccessToken)
+	fmt.Println(header.TokenType)
+	log.Println(header.TokenType)
 	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
 	//err := server.ListenAndServeTLS("cert.pem", "key.pem", router)
 	if err != nil {

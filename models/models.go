@@ -21,13 +21,14 @@ type CustomerID struct {
 
 // Household documentation
 type HouseholdType struct {
-	ProcessID            string `json:"processId"`
-	HouseholdID          string `json:"householdId"`
-	HouseholdMembers     []HouseholdMemberType
-	NumberOfChildsAtHome int `json:"numberOfChildsAtHome"`
-	Childs               []ChildType
-	NumberOfCars         int     `json:"numberOfCars"`
-	ChildMaintenanceCost float32 `json:"childMaintenanceCost"`
+	ProcessID                    string `json:"processId"`
+	HouseholdID                  string `json:"householdId"`
+	HouseholdMembers             []HouseholdMemberType
+	NumberOfChildsAtHome         int `json:"numberOfChildsAtHome"`
+	Childs                       []ChildType
+	NumberOfCars                 int     `json:"numberOfCars"`
+	ChildMaintenanceCost         float32 `json:"childMaintenanceCost"`
+	ReceivedChildMaintenanceCost float32 `json:"receivedchildMaintenanceCost"`
 }
 
 // HouseholdMemberType documentation
@@ -384,4 +385,13 @@ type TypeOfHouse struct {
 	LoanOwner           string  `json:"loanOwner"`
 	MaintenanceCost     float32 `json:"maintenanceCost"`
 	LoanAmount          float32 `json:"loanAmount"`
+}
+
+// ***************************
+// Header struct documentation
+type Header struct {
+	AccessToken string
+	TokenType   string
+	Scope       string
+	ExpiresIn   string
 }

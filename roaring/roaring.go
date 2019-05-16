@@ -45,22 +45,30 @@ func GetRoaringAccessToken() models.Header {
 	client := http.Client{
 		Timeout: timeout,
 	}
+
 	request, err := http.NewRequest("POST", "https://api.roaring.io/token", bytes.NewBuffer(requestBody))
 
-	request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
-	request.Header.Set("Access-Control-Allow-Credentials", "true")
-	request.Header.Set("Content-Type", "application/json;charset=UTF-8")
+	//request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	//ßrequest.Header.Set("Access-Control-Allow-Credentials", "true")
+	request.Header.Set("Content-Type", "application/josn;charset=UTF-8")
+	//request.Header.Set("Accept-Encoding", "gzip")
 	request.Header.Set("Authorization", fmt.Sprintf("Basic %s", getEncodedString()))
-	request.Header.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, access_token, access_type, expires_in, scope")
+	fmt.Println(fmt.Sprintf("%v", request.Header.Get("Authorization")))
+	//request.Header.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, access_token, access_type, expires_in, scope")
+	fmt.Println(fmt.Sprintf("%v", request))
+
 	if err != nil {
 		log.Fatalln(err)
+		fmt.Println(err)
 	}
 	//
 	resp, err := client.Do(request)
 	if err != nil {
+		fmt.Println(err)
 		log.Fatalln(err)
 	}
-	//defer resp.Body.Close()
+	fmt.Println(fmt.Sprintf("%v", resp.Status))
+	defer resp.Body.Close()
 	//body, err := ioutil.ReadAll(resp.Body)
 	//if err != nil {
 	//	log.Fatalln(err)

@@ -372,6 +372,7 @@ type MaintenanceCostID struct {
 type MaintenanceCostType struct {
 	ProcessID         string `json:"processId"`
 	MaintenanceCostID string `json:"maintenanceCostId"`
+	CustomerID        string `json:"customerId"`
 	TypeOfHouses      []TypeOfHouse
 }
 
@@ -390,8 +391,9 @@ type TypeOfHouse struct {
 // ***************************
 // Header struct documentation
 type Header struct {
-	AccessToken string
-	TokenType   string
-	Scope       string
-	ExpiresIn   string
+	AccessToken   string
+	TokenType     string
+	Scope         string
+	ExpiresIn     string
+	Authorization string
 }

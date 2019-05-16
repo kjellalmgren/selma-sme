@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.2'
+  version: '0.6.3'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -102,9 +102,12 @@ info:
   # 2019-05-06 0.6.1 kal loanTakeOver has been added in Loan (Övertag från annan bank)
   # 2019-05-07 0.6.1 kal Added EU-Support and Guarantor (Borgensman)
   # 2019-05-12 0.6.2 kal Added timestamp for each customer in a application (customerCreated)
-  #
+  # 2019-05-16 0.6.2 kal Added receivedMaintanceCost in householdType
+  # 2019-05-16 0.6.2 kal Changed type boolean, remove enum: - true - false
+  # 2019-05-16 0.6.3 kal New version after deploy to Limetta
+  # 2019-05-16 0.6.3 kal MaintenanceCost has been added with customerId to show up on household
   ###########################################################################################
-  title: Selma SME Light Project
+  title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
     NOT FOR V1
     When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
@@ -5450,7 +5453,7 @@ paths:
       tags:
         - MaintenanceCosts
       summary: Driftkostander på andra boenden
-      description: Driftkostnader på ansra boenden
+      description: Driftkostnader på andra boenden
       operationId: getMaintenanceCost
       produces:
         - application/json
@@ -5763,9 +5766,6 @@ definitions:
   submitApplication:
     description: Jag försäkrar att lämnade uppgifter är korrekta. Denna måste vara satt till true, annars kan inte ansökan skickas in till LP. Sökande ska klicka i detta val. Om vi tycker att sökande behöver fylla i mer för att skicka in ansökan ska denna inte gå att sätta till true.
     type: boolean
-    enum:
-    - true
-    - false
     example: '{"submitApplication": true}'
   #
   submitReadyness:
@@ -5810,7 +5810,7 @@ definitions:
     example: '{"householdMemberId": "a3196b54-4ae9-11e9-8646-d663bd873d93"}'
   #
   householdMember:
-    description: Member in a household
+    description: Member in a household (customerId) personnummer
     type: string
     #example: '19640120-3887' # Anna Andersson
   #
@@ -5876,9 +5876,6 @@ definitions:
   applicantMember:
     type: boolean
     description: Member in Landshypotek Ekonomiska förening (true/false)
-    enum:
-    - true
-    - false
     example: true
   #
   applicantEmployeed:
@@ -5915,9 +5912,6 @@ definitions:
   applicantByeMail:
     description: Applicant want to be notified by eMail (true/false)
     type: boolean
-    enum:
-    - true
-    - false
     example: true
   #
   ###############################
@@ -5985,9 +5979,6 @@ definitions:
   selectedCompany:
     description: Customer has selected this company for the loan to apply for
     type: boolean
-    enum:
-    - false
-    - true
     example: true
   #
   customerCategory:
@@ -6124,6 +6115,8 @@ definitions:
         $ref: '#/definitions/processId'
       maintenanceCostId:
         $ref: '#/definitions/maintenanceCostId'
+      customerId:
+        $ref: '#/definitions/customerId'
       typeofhouses:
         $ref: '#/definitions/TypeOfHouses'
   #
@@ -6189,23 +6182,14 @@ definitions:
   keepHouse:
     description: Avser att behålla huset
     type: boolean
-    enum:
-      - true
-      - false
   #
   loanInOtherInstitut:
     description: Avser att behålla huset
     type: boolean
-    enum:
-      - true
-      - false
   #
   redeemLoan:
     description: Lösa lånet
     type: boolean
-    enum:
-      - true
-      - false
   loanOwner:
     description: Lånet står på person
     type: string
@@ -6235,14 +6219,19 @@ definitions:
     description: Number of child in this household
     example: 2
   numberOfCars:
-    description: number of cars in this houshold (Will probably be removed for SME-companies)
+    description: number of cars in this houshold.
     type: integer
     example: 2
   childMaintenanceCost:
-    description: Underhållskostnad för barn i annat hushåll Underhållskostander barn
+    description: Underhållskostnad för barn i annat hushåll betalande, underhållskostander barn
     type: number
     format: float
-    example: 2000
+    example: 2000.00
+  receivedChildMaintenanceCost:
+    description: Erhållen underhållskostnad för barn, erhållen underhållskostnad
+    type: number
+    format: float
+    example: 2000.00
   #
   ##################################
   # Child
@@ -6259,9 +6248,6 @@ definitions:
   partInHousehold:
     description: barnet bor i hushållet heltid/deltid (true/false)
     type: boolean
-    enum:
-    - true
-    - false
     example: true
   #
   ##################################
@@ -6279,9 +6265,6 @@ definitions:
   loanTakeOver:
     description: Övertag från annan bank, fix för att övertag inte finns i LP
     type: boolean
-    enum:
-      - true
-      - false
     example: false
   loanAmount:
     description: Applicants want to loan this amount
@@ -6374,17 +6357,11 @@ definitions:
   useAsCollateral:
     description: Use this collateral as security in this application
     type: boolean
-    enum:
-    - true
-    - false
     example: false
   #
   buyCollateral:
     description: Applicant has intention to by this collateral
     type: boolean
-    enum:
-    - true
-    - false
     example: true
   ##################################
   # ExtLoans
@@ -6418,9 +6395,6 @@ definitions:
   extRedeemLoan:
     description: Redeem loans - Lösa lånet i annan bank
     type: boolean
-    enum:
-    - true
-    - false
     example: true
   #
   #####################################
@@ -6681,44 +6655,26 @@ definitions:
   AcceptUC:
     type: boolean
     description: Jag är medveten om att Landshypotek Bank inhämtar en kreditupplysning på mig och att det sker när jag går vidare från denna sida i nästa steg i ansökan.
-    enum:
-    - true
-    - false
     example: false
   AcceptGDPR:
     type: boolean
     description: Jag är medveten om att Landshypotek Bank behandlar mina personuppgifter i och med ansökan och att jag kan läsa mer om Landshypotek Banks personuppgiftsbehandling.
-    enum:
-    - true
-    - false
     example: false
   UCAware:
     type: boolean
     description: Jag är medveten om att de uppgifter jag lämnar och resultatet av kreditansökan även visas för medsökande, om en sådan läggs till senare i ansökan. Om jag äger andra fastigheter, som banken hämtar uppgifter om från externa källor, visas även de uppgifterna för medsökande.
-    enum:
-    - true
-    - false
     example: false
   kycPublicFunction:
     type: boolean
     description: Innehar eller har du de 18 senaste månaderna innehaft en viktig offentlig funnktion?
-    enum:
-    - true
-    - false
     example: false
   kycRelatedPublicFunction:
     description: Är du familjemedlem eller medarbetare till en person som har, eller som under de senaste 18 månaderna innehaft en viktig offentlig funktion?
     type: boolean
-    enum:
-    - true
-    - false
     example: false
   kycHighRiskIndustry:
     description: High risk industry, högriskbransch (true/false)
     type: boolean
-    enum:
-    - true
-    - false
   #
   #################################################################
   # START Response definitions
@@ -6939,6 +6895,8 @@ definitions:
         $ref: '#/definitions/numberOfCars'
       childMaintenaceCost:
         $ref: '#/definitions/childMaintenanceCost'
+      receiveChildMaintenanceCost:
+        $ref: '#/definitions/receivedChildMaintenanceCost'
   #
   #Household:
   #  $ref: '#/definitions/householdType'
@@ -7099,7 +7057,7 @@ definitions:
       $ref: '#/definitions/extLoanType'
   #
   extLoanOwner:
-    description: A list of external loan owners
+    description: A list of external loan owners (cusotmerId)
     type: array
     items:
       $ref: '#/definitions/customerId'
@@ -7646,9 +7604,6 @@ parameters:
   #  in: path
   #  required: true
   #  type: boolean
-  #  enum:
-  #  - true
-  #  - false
   ############################
   # Header definitions
   ############################
@@ -7661,7 +7616,7 @@ parameters:
     format: uuid
   #
   X-AttachmentType:
-    description: Type of attachment to be used in filename
+    description: Type of attachment to be used in filename and as type
     name: X-attachmentType
     in: header
     type: string
@@ -7677,11 +7632,11 @@ parameters:
     in: header
     type: string
     enum:
-      - CLOSEDBYAPPLICANT   # Kund har aktivt avböjt ansökan
-      - STARTEDBYAPPLICANT  # Kund har startat en ansökan
-      - CLOSEDBYOFFICER     # av handläggare
-      - CLOSEDBYTHINNING    # Gallring?
-      - READYFOROFFICER     # Applicant has submitted the application
+      - "CLOSEDBYAPPLICANT"   # Kund har aktivt avböjt ansökan
+      - "STARTEDBYAPPLICANT"  # Kund har startat en ansökan
+      - "CLOSEDBYOFFICER"     # av handläggare
+      - "CLOSEDBYTHINNING"    # Gallring?
+      - "READYFOROFFICER"     # Applicant has submitted the application
   #
   #X-customer-ID:
   #  description: TBD

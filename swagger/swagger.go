@@ -19,9 +19,9 @@ func Swagger(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
-	file, err := ioutil.ReadFile("json/selma-en-v0.6.2.yaml")
+	file, err := ioutil.ReadFile("json/selma-en-v0.6.3.yaml")
 	if err != nil {
-		fmt.Fprintf(w, "Error reading selma-en-v0.6.2.json - %s", err)
+		fmt.Fprintf(w, "Error reading selma-en-v0.6.3.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	w.Write(file)

@@ -213,10 +213,11 @@ func main() {
 	//}
 	//var header Header
 	header := roaring.GetRoaringAccessToken()
-	fmt.Println(header.AccessToken)
-	log.Println(header.AccessToken)
-	fmt.Println(header.TokenType)
-	log.Println(header.TokenType)
+	//fmt.Println(header)
+	fmt.Println(fmt.Sprintf("1:%v", string(header.AccessToken)))
+	fmt.Println(fmt.Sprintf("2:%s", string(header.TokenType)))
+	fmt.Println(string(header.TokenType))
+
 	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
 	//err := server.ListenAndServeTLS("cert.pem", "key.pem", router)
 	if err != nil {

@@ -133,7 +133,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "Intresenttyp:", Value: cp(applicant.StakeholderType)})
 		tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
 		tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
-		tr = append(tr, TableRow{Key: cp("Anställd:"), Value: fmt.Sprintf("%v", applicant.ApplicantEmployeed)})
+		tr = append(tr, TableRow{Key: cp("Anställd:"), Value: fmt.Sprintf("%v", applicant.ApplicantEmployed)})
 		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//

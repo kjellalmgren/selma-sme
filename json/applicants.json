@@ -13,7 +13,7 @@
         "applicantBySms": "07344455666"
       }
     ],
-    "applicantEmployeed": false,
+    "applicantEmployed": false,
     "applicantLPEmployment": "PERMANENT",
     "applicantMember": false,
     "applicantBySms": true,
@@ -33,7 +33,7 @@
         "applicantBySms": "07335533777"
       }
     ],
-    "applicantEmployeed": false,
+    "applicantEmployed": false,
     "applicantLPEmployment": "PERMANENT",
     "applicantMember": false,
     "applicantBySms": true,

@@ -56,10 +56,11 @@ type ApplicantType struct {
 	ApplicantID           string `json:"applicantId"`
 	ApplicantName         string `json:"applicantName"`
 	ApplicantAddress      string `json:"applicantAddress"`
+	ApplicantPostalCode   string `json:"applicantPostalCode"`
 	ApplicantPostAddress  string `json:"applicantPostAddress"`
 	StakeholderType       string `json:"stakeholderType"`
 	ContactInformation    []ContactInformationType
-	ApplicantEmployeed    bool   `json:"applicantEmployeed"`
+	ApplicantEmployed     bool   `json:"applicantEmployed"`
 	ApplicantLPEmployment string `json:"applicantLPEmployment"`
 	ApplicantMember       bool   `json:"applicantMember"`
 	ApplicantBySms        bool   `json:"applicantBySms"`

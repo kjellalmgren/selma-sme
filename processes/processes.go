@@ -40,8 +40,8 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, X-customer-ID")
 	//
-	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("getProcesses executed, processid: %s...\r\n", processid)
+	//processid := r.Header.Get("X-process-Id")
+	//fmt.Printf("getProcesses executed, processid: %s...\r\n", processid)
 	//
 	//var data customerID
 	//customerid := r.Header.Get("X-customer-Id")

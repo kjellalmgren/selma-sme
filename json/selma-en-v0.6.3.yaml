@@ -106,6 +106,11 @@ info:
   # 2019-05-16 0.6.2 kal Changed type boolean, remove enum: - true - false
   # 2019-05-16 0.6.3 kal New version after deploy to Limetta
   # 2019-05-16 0.6.3 kal MaintenanceCost has been added with customerId to show up on household
+  # 2019-05-19 0.6.3 kal applicantPostalCode has been added to Applicant
+  # 2019-05-19 0.6.3 kal applicantEmployed, speeling has been corrected
+  # 2019-05-19 0.6.3 kal typeOfEmployeement has got enum
+  # 2019-05-19 0.6.3 kal Aims in loans missing array of aimType
+  # 2019-05-19 0.6.3 kal X-process-ID has been removed from getProcesses and SaveProcess
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -278,7 +283,7 @@ paths:
       consumes:
         - application/json
       parameters:
-        - $ref: '#/parameters/X-process-ID'
+        #- $ref: '#/parameters/X-process-ID'
         - name: customerId
           in: body
           required: true
@@ -415,7 +420,7 @@ paths:
       consumes:
         - application/json
       parameters:
-        - $ref: '#/parameters/X-process-ID'
+        #- $ref: '#/parameters/X-process-ID'
         - name: processSaveAll
           in: body
           schema:
@@ -5843,10 +5848,15 @@ definitions:
     description: Street address of Applicant
     example: 'Stora vägen 1'
   #
+  applicantPostalCode:
+    description: Postal code
+    type: string
+    example: '420 20'
+  #
   applicantPostAddress:
     type: string
-    description: Postal number and postal city
-    example: '420 20 Katrineholm'
+    description: Postal city
+    example: 'Katrineholm'
   #
   stakeholderType:
     description: <h3>StakeholderType</h3><br>Maps to Loan Process stakeholders<br><b>'Borgensman'<br>'Driftbolag'<br>'Maka/Make/regpartner'<br>'sambo'<br>'ägarandel i pant'<br>'ägare juridiskt över 50%'<br>'övriga med ekonomisk intressegemenskap'<br>'SOKANDE'</b> - betyder att de är en sökande på lånet.<br>
@@ -5875,10 +5885,10 @@ definitions:
   #
   applicantMember:
     type: boolean
-    description: Member in Landshypotek Ekonomiska förening (true/false)
-    example: true
+    description: Member in Landshypotek Ekonomiska förening (true/false). Tänkt som befitlig medlem, behöver koppling till SAP.
+    example: false
   #
-  applicantEmployeed:
+  applicantEmployed:
     description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer.
       employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
     type: string
@@ -6108,6 +6118,7 @@ definitions:
     description: Driftkostnader i övriga boenden
     required:
     - processId
+    - customerId
     - maintenanceCostId
     type: object
     properties:
@@ -6419,9 +6430,18 @@ definitions:
     example: 40000
   #
   typeOfEmployeement:
-    description: TBD Förmodligen ska vi göra en enum här
+    description: Employeed or Not Employeed, from SAP on existing customer and from UC? or entered by customer.
+      employment mapping to Loan Process PERMANENT - Anställd, tills-vidare-anställd TEMPORARY - Tidbegränsad anställning PROBATIONARY - Provanställning UNEMPLOYMENT_INSURANCE - Arbetslöshetskassa SELF_EMPLOYED - Eget företag STUDENT_AID - Studiestöd PENSION - Inkomst av pension
     type: string
-    example: 'Tillsvidare'
+    enum:
+    - 'PERMANENT'
+    - 'TEMPORARY'
+    - 'PROBATIONARY'
+    - 'UNEMPLOYMENT_INSURANCE'
+    - 'SELF_EMPLOYED'
+    - 'STUDENT_AID'
+    - 'PENSION'
+    example: 'PERMANENT'
   #
   employeer:
     type: string
@@ -6713,14 +6733,16 @@ definitions:
         $ref: '#/definitions/applicantName'
       applicantAddress:
         $ref: '#/definitions/applicantAddress'
+      applicantPostalCode:
+        $ref: '#/definitions/applicantPostalCode'
       applicantPostAddress:
         $ref: '#/definitions/applicantPostAddress'
       stakeholderType:
         $ref: '#/definitions/stakeholderType'
       contactInformation:
         $ref: '#/definitions/ContactInformationType'
-      applicantEmployeed:
-        $ref: '#/definitions/applicantEmployeed'
+      applicantEmployed:
+        $ref: '#/definitions/applicantEmployed'
       applicantLPEmployment:
         $ref: '#/definitions/applicantLPEmployment'
       applicantMember:
@@ -6966,7 +6988,7 @@ definitions:
       downPaymentAmount:
         $ref: '#/definitions/downPaymentAmount'
       aims:
-        $ref: '#/definitions/aimType'
+        $ref: '#/definitions/Aims'
   #
   #Loan:
   #  $ref: '#/definitions/loanType'
@@ -6983,6 +7005,12 @@ definitions:
     description: Array list of loanType (Loan)
     items:
       $ref: '#/definitions/loanType'
+  #
+  Aims:
+    description: Each loan can have it's own aim.
+    type: array
+    items:
+      $ref: '#/definitions/aimType'
   #
   aimType:
     description: Syfte med respektive lånebelopp

@@ -5,6 +5,7 @@ import (
 	b64 "encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"selmasme/models"
@@ -35,9 +36,24 @@ func getEncodedString() string {
 
 // GetRoaringAccessToken Documentation
 func GetRoaringAccessToken() models.Header {
-	requestBody, err := json.Marshal(map[string]string{
-		"grant_type": "client_credentials",
-	})
+	//requestBody, err := json.Marshal(map[string]string{
+	//	"grant_type": "client_credentials",
+	//})
+	//
+	file, err := ioutil.ReadFile("json/get_access_token.json")
+	if err != nil {
+		log.Fatalln("Error reading get_access_token.json")
+		//fmt.Fprintf(w, "Error reading get_access_token.json - %s", err)
+		//w.WriteHeader(http.StatusNotFound)
+	}
+	grant_type := []models.Get_Access_Token{}
+	//appret[0] := []models.Applicant{}
+	//grantret := make([]models.Get_Access_Token, 1, 1)
+	_ = json.Unmarshal([]byte(file), &grant_type)
+	//
+
+	//str := "{grant_type: client_credentials}"
+	requestBody, err := json.Marshal(grant_type)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -47,14 +63,14 @@ func GetRoaringAccessToken() models.Header {
 	}
 
 	request, err := http.NewRequest("POST", "https://api.roaring.io/token", bytes.NewBuffer(requestBody))
-
-	//request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
-	//ßrequest.Header.Set("Access-Control-Allow-Credentials", "true")
-	request.Header.Set("Content-Type", "application/josn;charset=UTF-8")
-	//request.Header.Set("Accept-Encoding", "gzip")
+	request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	request.Header.Set("Access-Control-Allow-Credentials", "true")
+	request.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	request.Header.Set("Accept-Encoding", "gzip")
+	request.Header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	request.Header.Set("Authorization", fmt.Sprintf("Basic %s", getEncodedString()))
 	fmt.Println(fmt.Sprintf("%v", request.Header.Get("Authorization")))
-	//request.Header.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, access_token, access_type, expires_in, scope")
+	request.Header.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, access_token, access_type, expires_in, scope")
 	fmt.Println(fmt.Sprintf("%v", request))
 
 	if err != nil {

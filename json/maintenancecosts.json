@@ -5,14 +5,17 @@
     "customerId": "19640120-3887",
     "typeofhouses": [
       {
-         "houseId": "c805ff3d-357e-476e-ac4a-f9b0fdbdd4fa",
-         "typeOfHouse": "Lantbruksfastighet",
-         "keepHouse": true,
-         "loanInOtherInstitut": true,
-         "redeemLoan": true,
-         "loanOwner": "Anna Andersson",
-         "loanAmount": 850000.00,
-         "maintenanceCost": 4500.00
+        "houseId": "c805ff3d-357e-476e-ac4a-f9b0fdbdd4fa",
+        "typeOfHouse": "Lantbruksfastighet",
+        "keepHouse": true,
+        "loanInOtherInstitut": true,
+        "redeemLoan": true,
+        "CreditInstitut": "SEB",
+        "LoanClearing": "5270",
+        "InstitutLoanNumber": "0028600",
+        "loanOwner": "Anna Andersson",
+        "loanAmount": 850000.00,
+        "maintenanceCost": 4500.00
       }
     ]
   }

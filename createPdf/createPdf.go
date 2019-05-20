@@ -272,7 +272,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	// MainteanceCosts
 	//
 	hr = HeaderRow{}
-	hr.Value = "Driftkostnader"
+	hr.Value = "Driftkostnader/Andra boenden"
 	//
 	for _, maintenancecost := range maintenancecosts {
 		tr = []TableRow{}
@@ -287,6 +287,9 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "HouseId:", Value: typeofhouse.HouseID})
 			tr = append(tr, TableRow{Key: "loanInOtherInstitut:", Value: fmt.Sprintf("%v", typeofhouse.LoanInOtherInstitut)})
 			tr = append(tr, TableRow{Key: cp("Lösa lån:"), Value: fmt.Sprintf("%v", typeofhouse.RedeemLoan)})
+			tr = append(tr, TableRow{Key: "Kreditinstitut", Value: cp(typeofhouse.CreditInstitut)})
+			tr = append(tr, TableRow{Key: "Clearing", Value: cp(typeofhouse.LoanClearing)})
+			tr = append(tr, TableRow{Key: "Lånenummer", Value: cp(typeofhouse.InstitutLoanNumber)})
 			tr = append(tr, TableRow{Key: cp("Ägare:"), Value: cp(typeofhouse.LoanOwner)})
 			tr = append(tr, TableRow{Key: cp("Stöd:"), Value: fmt.Sprintf("%.2f", typeofhouse.LoanAmount)})
 			tr = append(tr, TableRow{Key: cp("Driftkostnad:"), Value: fmt.Sprintf("%.2f", typeofhouse.MaintenanceCost)})

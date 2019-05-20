@@ -48,7 +48,7 @@ func GetKycInformations(w http.ResponseWriter, r *http.Request) {
 	//
 	file, err := ioutil.ReadFile("json/kycinformations.json")
 	if err != nil {
-		fmt.Fprintf(w, "Error reading kycinformtions.json - %s", err)
+		fmt.Fprintf(w, "Error reading kycinformations.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	kycinformations := []models.KycInformationType{}

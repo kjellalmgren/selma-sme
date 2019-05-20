@@ -384,10 +384,15 @@ type TypeOfHouse struct {
 	KeepHouse           bool    `json:"keepHouse"`
 	LoanInOtherInstitut bool    `json:"loanInOtherInstitut"`
 	RedeemLoan          bool    `json:"redeemLoan"`
+	CreditInstitut      string  `json:"creditInstitut"`
+	LoanClearing        string  `json:"loanClearing"`
+	InstitutLoanNumber  string  `json:"institutLoanNumber"`
 	LoanOwner           string  `json:"loanOwner"`
 	MaintenanceCost     float32 `json:"maintenanceCost"`
 	LoanAmount          float32 `json:"loanAmount"`
 }
+
+//
 
 // ***************************
 // Header struct documentation
@@ -397,4 +402,9 @@ type Header struct {
 	Scope         string
 	ExpiresIn     string
 	Authorization string
+}
+
+// Get_Access_Token documentation
+type Get_Access_Token struct {
+	Grant_Type string `json:"grant_type"`
 }

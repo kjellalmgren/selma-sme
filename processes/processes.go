@@ -334,8 +334,8 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal([]byte(file), &maintenancecosts)
 	//
-	processall.Applicants = append(applicants)
 	processall.Processes = append(processes)
+	processall.Applicants = append(applicants)
 	processall.Loans = append(loans)
 	processall.ExtLoans = append(extloans)
 	processall.Households = append(households)

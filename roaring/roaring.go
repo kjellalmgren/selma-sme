@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/http/httputil"
 	"selmasme/models"
 	"time"
 )
@@ -51,7 +52,6 @@ func GetRoaringAccessToken() models.Header {
 	//grantret := make([]models.Get_Access_Token, 1, 1)
 	_ = json.Unmarshal([]byte(file), &grant_type)
 	//
-
 	//str := "{grant_type: client_credentials}"
 	requestBody, err := json.Marshal(grant_type)
 	if err != nil {
@@ -63,16 +63,26 @@ func GetRoaringAccessToken() models.Header {
 	}
 
 	request, err := http.NewRequest("POST", "https://api.roaring.io/token", bytes.NewBuffer(requestBody))
-	request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	//request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	request.Header.Set("Access-Control-Allow-Credentials", "true")
 	request.Header.Set("Content-Type", "application/json; charset=UTF-8")
-	request.Header.Set("Accept-Encoding", "gzip")
-	request.Header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	//
+	//request.Header.Set("Accept-Encoding", "gzip")
+	request.Header.Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	request.Header.Set("Authorization", fmt.Sprintf("Basic %s", getEncodedString()))
-	fmt.Println(fmt.Sprintf("%v", request.Header.Get("Authorization")))
+	//fmt.Println(fmt.Sprintf("%v", request.Header.Get("Authorization")))
 	request.Header.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, access_token, access_type, expires_in, scope")
-	fmt.Println(fmt.Sprintf("%v", request))
+	//fmt.Println(fmt.Sprintf("%v", request))
+	//
+	//dump := func(request *http.Request) {
+	output, err := httputil.DumpRequest(request, true)
+	if err != nil {
+		fmt.Println("Error dumping request:", err)
+		//return
+	}
+	fmt.Println(fmt.Sprintf("%s", string(output)))
 
+	//
 	if err != nil {
 		log.Fatalln(err)
 		fmt.Println(err)

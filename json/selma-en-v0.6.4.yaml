@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.3'
+  version: '0.6.4'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -112,7 +112,10 @@ info:
   # 2019-05-19 0.6.3 kal Aims in loans missing array of aimType
   # 2019-05-19 0.6.3 kal X-process-ID has been removed from getProcesses and SaveProcess
   # 2019-05-20 0.6.4 kal Added CreditInstitut, LoanClearing and InstitutLoanNumber to MaintenanceCosts
-  # 2019-05-20 0.6.4 kal 
+  # 2019-05-22 0.6.4 kal Added legalGroupCode and legalGroupText for type of company, source is roaring.io
+  # 2019-05-22 0.6.4 kal CaseId and CaseIdStatus has been added to ProcessType
+  # 2019-05-22 0.6.4 kal processIdCaseIdType has been removed and replace by processType
+  # 2019-05-22 0.6.4 kal AddProcess has been change to contain processType as Body param
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -493,16 +496,16 @@ paths:
       consumes:
         - application/json
       parameters:
-        - $ref: '#/parameters/caseIdStatus'
-        - name: customerId
+        #- $ref: '#/parameters/caseIdStatus'
+        - name: processtype
           in: body
           schema:
-            $ref: '#/definitions/customerId'
+            $ref: '#/definitions/processType'
       responses:
         201:
           description: process has been created
           schema:
-            $ref: '#/definitions/processIdCaseIdType'
+            $ref: '#/definitions/OK201'
         400:
           description: 'Bad request'  
           schema:
@@ -5988,6 +5991,18 @@ definitions:
     type: string
     example: 'Byggentreprenör'
   #
+  legalGroupCode:
+    description: Legal Group code, available Legal Group codes for a company. The information is displayed as a code with a descriptive text. Source is roaring.io
+      OVR	Övriga	Other
+      HB/KB	Handelsbolag	Trading company
+      AB	Privat aktiebolag	Limited company
+      EF	Enskild firma	Sole proprietorship
+    type: string
+    example: 'EF'
+  legalGroupText:
+    description: Legal Group Text, descriptive text
+    type: string
+    example: 'Enskild firma'
   selectedCompany:
     description: Customer has selected this company for the loan to apply for
     type: boolean
@@ -6726,6 +6741,8 @@ definitions:
   #################################################################
   OK200:
     description: Successful
+  OK201:
+    description: Resource successfully added
   UnauthorizedError:
     description: Access token is missing or invalid
   ForbiddenError:
@@ -6838,6 +6855,10 @@ definitions:
         $ref: '#/definitions/industriCode'
       industriText:
         $ref: '#/definitions/industriText'
+      leagalGroupCode:
+        $ref: '#/definitions/legalGroupCode'
+      legalGroupText:
+        $ref: '#/definitions/legalGroupText'
       selectedCompany:
         $ref: '#/definitions/selectedCompany'
   #
@@ -7502,6 +7523,10 @@ definitions:
         $ref: '#/definitions/processId'
       customerId:
         $ref: '#/definitions/customerIdType'
+      caseId:
+        $ref: '#/definitions/caseId'
+      caseIdStatus:
+        $ref: '#/definitions/caseIdStatus'
       processCreatedDate:
         $ref: '#/definitions/processCreatedDate'
       lastAccessed:
@@ -7532,17 +7557,17 @@ definitions:
       customerAdded:
         $ref: '#/definitions/customerCreated'
   #
-  processIdCaseIdType:
-    description: return value after addProcess and caseid reservation i Loan Process
-    required:
-      - processId
-      - caseId
-    type: object
-    properties:
-      processId:
-        $ref: '#/definitions/processId'
-      caseId:
-        $ref: '#/definitions/caseId'
+  #processIdCaseIdType:
+  #  description: return value after addProcess and caseid reservation i Loan Process
+  #  required:
+  #    - processId
+  #    - caseId
+  #  type: object
+  #  properties:
+  #    processId:
+  #      $ref: '#/definitions/processId'
+  #    caseId:
+  #      $ref: '#/definitions/caseId'
   #
   #################################################
   # Definition KycInformationType

@@ -41,38 +41,44 @@ func GetRoaringAccessToken() models.Header {
 	//	"grant_type": "client_credentials",
 	//})
 	//
-	file, err := ioutil.ReadFile("json/get_access_token.json")
-	if err != nil {
-		log.Fatalln("Error reading get_access_token.json")
-		//fmt.Fprintf(w, "Error reading get_access_token.json - %s", err)
-		//w.WriteHeader(http.StatusNotFound)
-	}
-	grant_type := []models.Get_Access_Token{}
+	//file, err := ioutil.ReadFile("json/get_access_token.json")
+	//if err != nil {
+	//	log.Fatalln("Error reading get_access_token.json")
+	//fmt.Fprintf(w, "Error reading get_access_token.json - %s", err)
+	//w.WriteHeader(http.StatusNotFound)
+	//}
+	//grant_type := []models.Get_Access_Token{}
+	var grant_type models.Get_Access_Token
 	//appret[0] := []models.Applicant{}
 	//grantret := make([]models.Get_Access_Token, 1, 1)
-	_ = json.Unmarshal([]byte(file), &grant_type)
+	grant_type.Credentials = "client_credentials"
+	h := json.RawMessage(`{"grant_type": "client_credentials"}`)
+	//_ = json.Unmarshal([]byte(file), &grant_type)
 	//
-	//str := "{grant_type: client_credentials}"
-	requestBody, err := json.Marshal(grant_type)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	//str := "grant_type: client_credentials"
+	//b, err := json.MarshalIndent(&h, "", "\t")
+	requestBody := h
+	//requestBody, err := json.Marshal(b)
+	//
+	//fmt.Println(fmt.Sprintf("grant_type: %s", grant_type.Grant_Type))
+	//fmt.Println(fmt.Sprintf("grant_type: %v", grant_type))
+	//if err != nil {
+	//	log.Fatalln(err)
+	//}
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
 	}
-
+	//
 	request, err := http.NewRequest("POST", "https://api.roaring.io/token", bytes.NewBuffer(requestBody))
 	//request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	request.Header.Set("Access-Control-Allow-Credentials", "true")
-	request.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	//
 	//request.Header.Set("Accept-Encoding", "gzip")
 	request.Header.Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	request.Header.Set("Authorization", fmt.Sprintf("Basic %s", getEncodedString()))
-	//fmt.Println(fmt.Sprintf("%v", request.Header.Get("Authorization")))
 	request.Header.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID, access_token, access_type, expires_in, scope")
-	//fmt.Println(fmt.Sprintf("%v", request))
 	//
 	//dump := func(request *http.Request) {
 	output, err := httputil.DumpRequest(request, true)
@@ -81,7 +87,6 @@ func GetRoaringAccessToken() models.Header {
 		//return
 	}
 	fmt.Println(fmt.Sprintf("%s", string(output)))
-
 	//
 	if err != nil {
 		log.Fatalln(err)
@@ -93,12 +98,14 @@ func GetRoaringAccessToken() models.Header {
 		fmt.Println(err)
 		log.Fatalln(err)
 	}
-	fmt.Println(fmt.Sprintf("%v", resp.Status))
+	fmt.Println(fmt.Sprintf("Status: %v", resp.Status))
 	defer resp.Body.Close()
-	//body, err := ioutil.ReadAll(resp.Body)
-	//if err != nil {
-	//	log.Fatalln(err)
-	//}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println(fmt.Sprintf("%s", string(body)))
+	//
 	var header models.Header
 	header.AccessToken = resp.Header.Get("access_token")
 	header.TokenType = resp.Header.Get("access_type")

@@ -124,16 +124,28 @@ func AddProcess(w http.ResponseWriter, r *http.Request) {
 
 	// *** Status has to be setr i production ***
 	//caseidstatus := r.Header.Get("caseIdStatus")
-	processidcaseid := models.ProcessIDCaseID{}
+	processtype := models.ProcessType{}
+	//	customerIDs := []models.CustomerID{}
+
+	customerIDs := make([]models.CustomerID, 1, 1)
+
+	customerIDs[0].CustomerID = "19640120-3887"
+
+	processtype.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
+	processtype.CaseIDStatus = "STARTEDBYAPPLICANT"
+	processtype.CustomerID = customerIDs
+	processtype.ProcessCreatedDate = "2019-05-22T09:00:00"
+	processtype.LastAccessed = "2019-05-22T09:00:00"
+	processtype.CaseID = "100666"
 	//
-	processidcaseid.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
-	processidcaseid.CaseID = "106100"
+	//processidcaseid.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
+	//processidcaseid.CaseID = "106100"
 	//
-	if err := json.NewEncoder(w).Encode(processidcaseid); err != nil {
+	if err := json.NewEncoder(w).Encode(processtype); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		panic(err)
 	}
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusAccepted)
 }
 
 // UpdateProcess documentation
@@ -327,9 +339,9 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal([]byte(file), &guarantors)
 	//
-	file, err = ioutil.ReadFile("json/mainteancecosts.json")
+	file, err = ioutil.ReadFile("json/maintenancecosts.json")
 	if err != nil {
-		fmt.Fprintf(w, "Error reading mainteancecosts.json - %s", err)
+		fmt.Fprintf(w, "Error reading maintenancecosts.json - %s", err)
 		w.WriteHeader(http.StatusNotFound)
 	}
 	_ = json.Unmarshal([]byte(file), &maintenancecosts)

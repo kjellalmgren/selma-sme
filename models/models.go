@@ -4,6 +4,8 @@ package models
 type ProcessType struct {
 	ProcessID          string `json:"processId"`
 	CustomerID         []CustomerID
+	CaseID             string `json:"caseId"`
+	CaseIDStatus       string `json:"caseIdStatus"`
 	ProcessCreatedDate string `json:"processCreatedDate"`
 	LastAccessed       string `json:"lastAccessed"`
 }
@@ -19,7 +21,7 @@ type CustomerID struct {
 	CustomerID string `json:"customerId"`
 }
 
-// Household documentation
+// HouseholdType documentation
 type HouseholdType struct {
 	ProcessID                    string `json:"processId"`
 	HouseholdID                  string `json:"householdId"`
@@ -406,5 +408,5 @@ type Header struct {
 
 // Get_Access_Token documentation
 type Get_Access_Token struct {
-	Grant_Type string `json:"grant_type"`
+	Credentials string `json:"grant_type"`
 }

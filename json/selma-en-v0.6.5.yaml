@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.4'
+  version: '0.6.5'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -116,6 +116,8 @@ info:
   # 2019-05-22 0.6.4 kal CaseId and CaseIdStatus has been added to ProcessType
   # 2019-05-22 0.6.4 kal processIdCaseIdType has been removed and replace by processType
   # 2019-05-22 0.6.4 kal AddProcess has been change to contain processType as Body param
+  # 2019-05-22 0.6.5 kal Started a new version
+  # 2019-05-22 0.6.5 kal Name of base url /v1/getExtloan: has changed to lower case
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -497,7 +499,7 @@ paths:
         - application/json
       parameters:
         #- $ref: '#/parameters/caseIdStatus'
-        - name: processtype
+        - name: process
           in: body
           schema:
             $ref: '#/definitions/processType'
@@ -505,7 +507,7 @@ paths:
         201:
           description: process has been created
           schema:
-            $ref: '#/definitions/OK201'
+            $ref: '#/definitions/processType'
         400:
           description: 'Bad request'  
           schema:
@@ -1368,6 +1370,8 @@ paths:
       responses:
         201:
           description: Successfully created
+          schema:
+            $ref: '#/definitions/companyType'
         400:
           description: 'Bad request'  
           schema:
@@ -1509,6 +1513,8 @@ paths:
       responses:
         201:
           description: Successfully added
+          schema:
+            $ref: '#/definitions/businessCategoryType'
         400:
           description: 'Bad request'  
           schema:
@@ -2858,7 +2864,7 @@ paths:
         201:
           description: Successfully created
           schema:
-            $ref: '#/definitions/updateLoanType'
+            $ref: '#/definitions/loanType'
         400:
           description: 'Bad request'  
           schema:
@@ -3048,7 +3054,7 @@ paths:
   ##################################################
   # get a specific extloan
   ##################################################
-  /v1/getExtloan:
+  /v1/getextloan:
     post:
       tags:
         - ExtLoans
@@ -4296,6 +4302,8 @@ paths:
       responses:
         201:
           description: Successfully created
+          schema:
+            $ref: '#/definitions/budgetType'
         400:
           description: 'Bad request'  
           schema:
@@ -4724,6 +4732,10 @@ paths:
       responses:
         200:
           $ref: '#/definitions/OK200'
+        201:
+          description: successfully added
+          schema:
+            $ref: '#/definitions/kycInformationType'
         400:
           description: 'Bad request'  
           schema:
@@ -4999,7 +5011,7 @@ paths:
         201:
           description: Successfully created
           schema:
-            $ref: '#/definitions/OK200'
+            $ref: '#/definitions/GuarantorType'
         400:
           description: 'Bad request'  
           schema:
@@ -5274,6 +5286,8 @@ paths:
       responses:
         201:
           description: Successfully created
+          schema:
+            $ref: '#/definitions/EUSupportType'
         400:
           description: 'Bad request'  
           schema:
@@ -5618,6 +5632,8 @@ paths:
       responses:
         201:
           description: Successfully created
+          schema:
+            $ref: '#/definitions/MaintenanceCostType'
         400:
           description: 'Bad request'  
           schema:
@@ -5993,10 +6009,10 @@ definitions:
   #
   legalGroupCode:
     description: Legal Group code, available Legal Group codes for a company. The information is displayed as a code with a descriptive text. Source is roaring.io
-      OVR	Övriga	Other
-      HB/KB	Handelsbolag	Trading company
-      AB	Privat aktiebolag	Limited company
-      EF	Enskild firma	Sole proprietorship
+      OVR  Övriga  Other
+      HB/KB  Handelsbolag  Trading company
+      AB  Privat aktiebolag  Limited company
+      EF  Enskild firma  Sole proprietorship
     type: string
     example: 'EF'
   legalGroupText:

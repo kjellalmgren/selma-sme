@@ -9,10 +9,10 @@ func ServerVersion() string {
 
 // ModelVersion (Open API version)
 func ModelVersion() string {
-	return "v0.6.5"
+	return "v0.6.6"
 }
 
 // ModelDate change date
 func ModelDate() string {
-	return "2019-05-22"
+	return "2019-05-23"
 }

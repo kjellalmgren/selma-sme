@@ -13,7 +13,11 @@
         "CreditInstitut": "SEB",
         "LoanClearing": "5270",
         "InstitutLoanNumber": "0028600",
-        "loanOwner": "Anna Andersson",
+        "loanOwners": [
+          {
+            "customerId": "19640120-3887"
+          }
+        ],
         "loanAmount": 850000.00,
         "maintenanceCost": 4500.00
       }

@@ -17,6 +17,12 @@
     ],
     "industriCode": "28300",
     "industriText": "Manufacture of agricultural and forestry machinery",
-    "selectedCompany": true
+    "selectedCompany": true,
+    "principals": [
+      {
+        "customerId": "19640120-3887",
+        "principalName": "Karin Karinsson"
+      }
+    ]
   }
 ]

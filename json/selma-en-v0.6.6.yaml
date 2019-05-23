@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.5'
+  version: '0.6.6'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -118,6 +118,8 @@ info:
   # 2019-05-22 0.6.4 kal AddProcess has been change to contain processType as Body param
   # 2019-05-22 0.6.5 kal Started a new version
   # 2019-05-22 0.6.5 kal Name of base url /v1/getExtloan: has changed to lower case
+  # 2019-05-22 0.6.5 kal All add-method has been unified, allways return it's type
+  # 2019-05-23 0.6.5 kal Principals has been added to Companies
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -6028,6 +6030,10 @@ definitions:
     description: Customer category return by SAS (kundklass Not V1)
     type: integer
     example: 1
+  principalName:
+    description: name of princple (huvudman i företaget)
+    type: string
+    example: 'Karin Karinsson'
   #
   ###################################
   # Guarantor
@@ -6182,12 +6188,25 @@ definitions:
         $ref: '#/definitions/loanClearing'
       institutLoanNumber:
         $ref: '#/definitions/institutLoanNumber'
-      loanOwner:
-        $ref: '#/definitions/loanOwner'
+      loanOwners:
+        $ref: '#/definitions/loanOwners'
       houseLoanAmount:
         $ref: '#/definitions/houseLoanAmount'
       maintenanceCost:
         $ref: '#/definitions/maintenanceCost'
+  #
+  loanOwners:
+    description: list of customerId
+    type: array
+    items:
+      $ref: '#/definitions/loanOwnerType'
+  #
+  loanOwnerType:
+    description: loanOwnerType
+    type: object
+    properties:
+      customerId:
+        $ref: '#/definitions/customerId'
   #
   MaintenanceCostsType:
     description: Lista av driftkostnader
@@ -6877,6 +6896,8 @@ definitions:
         $ref: '#/definitions/legalGroupText'
       selectedCompany:
         $ref: '#/definitions/selectedCompany'
+      principals:
+        $ref: '#/definitions/principals'
   #
   #Company:
   #  $ref: '#/definitions/companyType'
@@ -6906,6 +6927,20 @@ definitions:
       businessPart:
         $ref: '#/definitions/businessPart'
   #
+  principals:
+    description: list of huvudmän
+    type: array
+    items:
+      $ref: '#/definitions/principalType'
+  #
+  principalType:
+    description: huvudmän
+    type: object
+    properties:
+      customerId:
+        $ref: '#/definitions/customerId'
+      principalName:
+        $ref: '#/definitions/principalName'
   updateCompanyType:
     description: Update of businessCategories (driftinriktning)
     type: object

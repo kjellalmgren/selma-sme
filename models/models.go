@@ -167,6 +167,12 @@ type CompanyType struct {
 	IndustriCode    string `json:"industriCode"` // SNI-kod
 	IndustriText    string `json:"industriText"` // SNI-Text, kategori
 	SelectedCompany bool   `json:"selectedCompany"`
+	Principals      []PrincipalType
+}
+
+type PrincipalType struct {
+	CustomerID    string `json:"customerId"`
+	PrincipalName string `json:"principalName"`
 }
 
 type BusinessFocusType struct {
@@ -381,17 +387,22 @@ type MaintenanceCostType struct {
 
 // TypeOfHouse (driftkostnad på andra boenden)
 type TypeOfHouse struct {
-	HouseID             string  `json:"houseId"`
-	TypeOfHouse         string  `json:"typeOfHouse"`
-	KeepHouse           bool    `json:"keepHouse"`
-	LoanInOtherInstitut bool    `json:"loanInOtherInstitut"`
-	RedeemLoan          bool    `json:"redeemLoan"`
-	CreditInstitut      string  `json:"creditInstitut"`
-	LoanClearing        string  `json:"loanClearing"`
-	InstitutLoanNumber  string  `json:"institutLoanNumber"`
-	LoanOwner           string  `json:"loanOwner"`
+	HouseID             string `json:"houseId"`
+	TypeOfHouse         string `json:"typeOfHouse"`
+	KeepHouse           bool   `json:"keepHouse"`
+	LoanInOtherInstitut bool   `json:"loanInOtherInstitut"`
+	RedeemLoan          bool   `json:"redeemLoan"`
+	CreditInstitut      string `json:"creditInstitut"`
+	LoanClearing        string `json:"loanClearing"`
+	InstitutLoanNumber  string `json:"institutLoanNumber"`
+	LoanOwners          []LoanOwnerType
 	MaintenanceCost     float32 `json:"maintenanceCost"`
 	LoanAmount          float32 `json:"loanAmount"`
+}
+
+// LoanOwnerType documentation
+type LoanOwnerType struct {
+	CustomerID string `json:"customerId"`
 }
 
 //

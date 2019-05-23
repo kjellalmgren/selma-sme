@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"selmasme/models"
+	"time"
 )
 
 //
@@ -171,12 +172,27 @@ func UpdateProcess(w http.ResponseWriter, r *http.Request) {
 
 	// *** Status has to be setr i production ***
 	//caseidstatus := r.Header.Get("caseIdStatus")
-	processidcaseid := models.ProcessIDCaseID{}
+	processtype := models.ProcessType{}
+	//	customerIDs := []models.CustomerID{}
+
+	customerIDs := make([]models.CustomerID, 1, 1)
+
+	customerIDs[0].CustomerID = "19640120-3887"
+
+	processtype.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
+	processtype.CaseIDStatus = "STARTEDBYAPPLICANT"
+	processtype.CustomerID = customerIDs
+	processtype.ProcessCreatedDate = "2019-05-22T09:00:00"
+	t := time.Now()
+	//fmt.Println(t.String())
+	//fmt.Println(t.Format("2006-01-02 15:04:05"))
+	processtype.LastAccessed = t.Format("2006-01-02 15:04:05")
+	processtype.CaseID = "100666"
 	//
-	processidcaseid.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
-	processidcaseid.CaseID = "106100"
+	//processidcaseid.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
+	//processidcaseid.CaseID = "106100"
 	//
-	if err := json.NewEncoder(w).Encode(processidcaseid); err != nil {
+	if err := json.NewEncoder(w).Encode(processtype); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		panic(err)
 	}

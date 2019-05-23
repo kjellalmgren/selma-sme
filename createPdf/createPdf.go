@@ -160,6 +160,10 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "SNI-code:", Value: company.IndustriCode})
 		tr = append(tr, TableRow{Key: "SNI-Text:", Value: cp(company.IndustriText)})
 		tr = append(tr, TableRow{Key: "Selected:", Value: fmt.Sprintf("%v", company.SelectedCompany)})
+		for _, pr := range company.Principals {
+			tr = append(tr, TableRow{Key: "PersNr:", Value: pr.CustomerID})
+			tr = append(tr, TableRow{Key: "Huvudman:", Value: pr.PrincipalName})
+		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//
@@ -272,7 +276,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	// MainteanceCosts
 	//
 	hr = HeaderRow{}
-	hr.Value = "Driftkostnader/Andra boenden"
+	hr.Value = "Andra boenden"
 	//
 	for _, maintenancecost := range maintenancecosts {
 		tr = []TableRow{}
@@ -289,8 +293,11 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: cp("Lösa lån:"), Value: fmt.Sprintf("%v", typeofhouse.RedeemLoan)})
 			tr = append(tr, TableRow{Key: "Kreditinstitut", Value: cp(typeofhouse.CreditInstitut)})
 			tr = append(tr, TableRow{Key: "Clearing", Value: cp(typeofhouse.LoanClearing)})
-			tr = append(tr, TableRow{Key: "Lånenummer", Value: cp(typeofhouse.InstitutLoanNumber)})
-			tr = append(tr, TableRow{Key: cp("Ägare:"), Value: cp(typeofhouse.LoanOwner)})
+			tr = append(tr, TableRow{Key: cp("Lånenummer"), Value: cp(typeofhouse.InstitutLoanNumber)})
+			//tr = append(tr, TableRow{Key: cp("Ägare:"), Value: cp(typeofhouse.LoanOwner)})
+			for _, loanOwner := range typeofhouse.LoanOwners {
+				tr = append(tr, TableRow{Key: "HouseId:", Value: loanOwner.CustomerID})
+			}
 			tr = append(tr, TableRow{Key: cp("Stöd:"), Value: fmt.Sprintf("%.2f", typeofhouse.LoanAmount)})
 			tr = append(tr, TableRow{Key: cp("Driftkostnad:"), Value: fmt.Sprintf("%.2f", typeofhouse.MaintenanceCost)})
 

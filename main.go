@@ -3,7 +3,7 @@ package main
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
-	Date: 2019-05-09
+	Date: 2019-05-23
 	Description: Service to feed Selma-SME UX, just for test purpose
 	Architecture:
 	win32: GOOS=windows GOARCH=386 go build -v
@@ -43,7 +43,6 @@ import (
 	"selmasme/loans"
 	"selmasme/personaleconomies"
 	"selmasme/processes"
-	"selmasme/roaring"
 	"selmasme/version"
 
 	"github.com/fatih/color"
@@ -212,11 +211,12 @@ func main() {
 	//	IdleTimeout:  time.Second * 30,
 	//}
 	//var header Header
-	header := roaring.GetRoaringAccessToken()
-	//fmt.Println(header)
-	fmt.Println(fmt.Sprintf("1:%v", string(header.AccessToken)))
-	fmt.Println(fmt.Sprintf("2:%s", string(header.TokenType)))
-	fmt.Println(string(header.TokenType))
+	// ***
+	// header := roaring.GetRoaringAccessToken()
+	// fmt.Println(fmt.Sprintf("1:%v", string(header.AccessToken)))
+	// fmt.Println(fmt.Sprintf("2:%s", string(header.TokenType)))
+	// fmt.Println(string(header.TokenType))
+	// ***
 
 	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
 	//err := server.ListenAndServeTLS("cert.pem", "key.pem", router)

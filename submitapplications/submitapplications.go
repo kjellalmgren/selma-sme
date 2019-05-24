@@ -55,7 +55,6 @@ func Submit(w http.ResponseWriter, r *http.Request) {
 				//panic(err)
 			}
 		}
-
 		//fmt.Fprintf(w, "pdf document has been created - %s", sfile)
 		w.WriteHeader(http.StatusOK)
 		//

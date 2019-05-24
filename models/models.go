@@ -1,6 +1,6 @@
 package models
 
-// Process documentation
+// ProcessType documentation
 type ProcessType struct {
 	ProcessID          string `json:"processId"`
 	CustomerID         []CustomerID
@@ -405,9 +405,6 @@ type LoanOwnerType struct {
 	CustomerID string `json:"customerId"`
 }
 
-//
-
-// ***************************
 // Header struct documentation
 type Header struct {
 	AccessToken   string
@@ -415,9 +412,4 @@ type Header struct {
 	Scope         string
 	ExpiresIn     string
 	Authorization string
-}
-
-// Get_Access_Token documentation
-type Get_Access_Token struct {
-	Credentials string `json:"grant_type"`
 }

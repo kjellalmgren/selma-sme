@@ -3,7 +3,6 @@ package roaring
 import (
 	"bytes"
 	b64 "encoding/base64"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -37,41 +36,14 @@ func getEncodedString() string {
 
 // GetRoaringAccessToken Documentation
 func GetRoaringAccessToken() models.Header {
-	//requestBody, err := json.Marshal(map[string]string{
-	//	"grant_type": "client_credentials",
-	//})
 	//
-	//file, err := ioutil.ReadFile("json/get_access_token.json")
-	//if err != nil {
-	//	log.Fatalln("Error reading get_access_token.json")
-	//fmt.Fprintf(w, "Error reading get_access_token.json - %s", err)
-	//w.WriteHeader(http.StatusNotFound)
-	//}
-	//grant_type := []models.Get_Access_Token{}
-	var grant_type models.Get_Access_Token
-	//appret[0] := []models.Applicant{}
-	//grantret := make([]models.Get_Access_Token, 1, 1)
-	grant_type.Credentials = "client_credentials"
-	h := json.RawMessage(`{"grant_type": "client_credentials"}`)
-	//_ = json.Unmarshal([]byte(file), &grant_type)
-	//
-	//str := "grant_type: client_credentials"
-	//b, err := json.MarshalIndent(&h, "", "\t")
-	requestBody := h
-	//requestBody, err := json.Marshal(b)
-	//
-	//fmt.Println(fmt.Sprintf("grant_type: %s", grant_type.Grant_Type))
-	//fmt.Println(fmt.Sprintf("grant_type: %v", grant_type))
-	//if err != nil {
-	//	log.Fatalln(err)
-	//}
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
 	}
 	//
-	request, err := http.NewRequest("POST", "https://api.roaring.io/token", bytes.NewBuffer(requestBody))
-	//request.Header.Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	bodystring := []byte("grant_type=client_credentials")
+	request, err := http.NewRequest("POST", "https://api.roaring.io/token", bytes.NewBuffer(bodystring))
 	request.Header.Set("Access-Control-Allow-Credentials", "true")
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	//

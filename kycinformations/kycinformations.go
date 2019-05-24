@@ -116,9 +116,8 @@ func GetKycInformation(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// deleteKycInformation documentation
+// DeleteKycInformation documentation
 func DeleteKycInformation(w http.ResponseWriter, r *http.Request) {
-
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
@@ -132,7 +131,7 @@ func DeleteKycInformation(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// addKycInformation documentation
+// AddKycInformation documentation
 func AddKycInformation(w http.ResponseWriter, r *http.Request) {
 
 	//
@@ -148,7 +147,7 @@ func AddKycInformation(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// updateKycInformation documentation
+// UpdateKycInformation documentation
 func UpdateKycInformation(w http.ResponseWriter, r *http.Request) {
 
 	//

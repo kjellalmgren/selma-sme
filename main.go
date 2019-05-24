@@ -32,6 +32,7 @@ import (
 	"selmasme/eusupports"
 	"selmasme/guarantors"
 	"selmasme/maintenancecosts"
+	"selmasme/roaring"
 	submitapplication "selmasme/submitapplications"
 	"selmasme/swagger"
 
@@ -212,10 +213,10 @@ func main() {
 	//}
 	//var header Header
 	// ***
-	// header := roaring.GetRoaringAccessToken()
-	// fmt.Println(fmt.Sprintf("1:%v", string(header.AccessToken)))
-	// fmt.Println(fmt.Sprintf("2:%s", string(header.TokenType)))
-	// fmt.Println(string(header.TokenType))
+	header := roaring.GetRoaringAccessToken()
+	fmt.Println(fmt.Sprintf("1:%v", string(header.AccessToken)))
+	fmt.Println(fmt.Sprintf("2:%s", string(header.TokenType)))
+	fmt.Println(string(header.TokenType))
 	// ***
 
 	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)

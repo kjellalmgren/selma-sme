@@ -71,7 +71,6 @@ func GetProcesses(w http.ResponseWriter, r *http.Request) {
 	processes := []models.ProcessType{}
 	_ = json.Unmarshal([]byte(file), &processes)
 	//
-	//
 	//for i, p := range processes {
 	//	fmt.Println(i, p.ProcessID, p.CustomerID)
 	//}

@@ -17,6 +17,8 @@
     ],
     "industriCode": "28300",
     "industriText": "Manufacture of agricultural and forestry machinery",
+    "legalGroupCode": "AB",
+    "legalGroupText": "Aktiebolag",
     "selectedCompany": true,
     "principals": [
       {

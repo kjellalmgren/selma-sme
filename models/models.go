@@ -153,7 +153,7 @@ type CompanyEconomyID struct {
 	CompanyEconomyID string `json:"companyEconomyId"`
 }
 
-// Company documentation
+// CompanyType documentation
 type CompanyType struct {
 	ProcessID       string `json:"processId"`
 	CompanyID       string `json:"companyId"`
@@ -166,15 +166,19 @@ type CompanyType struct {
 	BusinessFocus   string `json:"businessFocus"`
 	IndustriCode    string `json:"industriCode"` // SNI-kod
 	IndustriText    string `json:"industriText"` // SNI-Text, kategori
+	LegalGroupCode  string `json:"legalGroupCode"`
+	LegalGroupText  string `json:"legalGroupText"`
 	SelectedCompany bool   `json:"selectedCompany"`
 	Principals      []PrincipalType
 }
 
+// PrincipalType documentation
 type PrincipalType struct {
 	CustomerID    string `json:"customerId"`
 	PrincipalName string `json:"principalName"`
 }
 
+// BusinessFocusType documentation
 type BusinessFocusType struct {
 	BusinessID        string `json:"businessId"`
 	BusinessCategory  string `json:"businessCategory"`

@@ -103,7 +103,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = []TableRow{}
 		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
-		pdf.SetFont("Arial", "B", 11)
+		pdf.SetFont("Arial", "B", 10)
 		tr = append(tr, TableRow{Key: "ProcessID:", Value: cp(process.ProcessID)})
 		tr = append(tr, TableRow{Key: "Created date:", Value: process.ProcessCreatedDate})
 		tr = append(tr, TableRow{Key: "Last Accessed:", Value: process.LastAccessed})
@@ -123,7 +123,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf.AddPage()
 		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
-		pdf.SetFont("Arial", "B", 11)
+		pdf.SetFont("Arial", "B", 10)
 		tr = append(tr, TableRow{Key: "customerId:", Value: applicant.CustomerID})
 		tr = append(tr, TableRow{Key: "name:", Value: cp(applicant.ApplicantName)})
 		tr = append(tr, TableRow{Key: "Adress:", Value: cp(applicant.ApplicantAddress)})
@@ -131,9 +131,10 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("Kontaktinformation:*"), Value: ""})
 		for _, ci := range applicant.ContactInformation {
 			//log.Printf("eMail: %s - MobileNumber: %s", ci.ApplicantEmail, ci.ApplicantMobileNumber)
-			tr = append(tr, TableRow{Key: "\teMail:", Value: cp(ci.ApplicantEmail)})
-			tr = append(tr, TableRow{Key: "\tphone:", Value: ci.ApplicantMobileNumber})
+			tr = append(tr, TableRow{Key: "\teMail:", Value: "\t\t" + cp(ci.ApplicantEmail)})
+			tr = append(tr, TableRow{Key: "\tphone:", Value: "\t\t" + ci.ApplicantMobileNumber})
 		}
+		tr = append(tr, TableRow{Key: "", Value: ""})
 		tr = append(tr, TableRow{Key: "Intresenttyp:", Value: cp(applicant.StakeholderType)})
 		tr = append(tr, TableRow{Key: "Kontakt via sms:", Value: fmt.Sprintf("%v", applicant.ApplicantBySms)})
 		tr = append(tr, TableRow{Key: "Kontakt via eMail:", Value: fmt.Sprintf("%v", applicant.ApplicantByeMail)})
@@ -149,26 +150,29 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = []TableRow{}
 		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
-		pdf.SetFont("Arial", "B", 11)
+		pdf.SetFont("Arial", "B", 10)
 		tr = append(tr, TableRow{Key: "companyId:", Value: company.CompanyID})
 		tr = append(tr, TableRow{Key: "OrgNr:", Value: company.OrgNumber})
 		tr = append(tr, TableRow{Key: "CompanyName:", Value: cp(company.CompanyName)})
 		tr = append(tr, TableRow{Key: "BusinessFocus:", Value: cp(company.BusinessFocus)})
-		tr = append(tr, TableRow{Key: cp("Affärsinriktning"), Value: ""})
+		pdf.SetFont("Arial", "B", 16)
+		tr = append(tr, TableRow{Key: cp("Affärsinriktning:"), Value: ""})
+		pdf.SetFont("Arial", "B", 10)
 		for _, bf := range company.BusinessFocuses {
-			tr = append(tr, TableRow{Key: "\tID:*", Value: bf.BusinessID})
-			tr = append(tr, TableRow{Key: "\tCategori:*", Value: cp(bf.BusinessCategory)})
-			tr = append(tr, TableRow{Key: "\tInriktning:*", Value: cp(bf.BusinessDirection)})
-			tr = append(tr, TableRow{Key: "\t%-andel:*", Value: fmt.Sprintf("%v", bf.BusinessPart)})
+			tr = append(tr, TableRow{Key: "\tID:*", Value: "\t" + bf.BusinessID})
+			tr = append(tr, TableRow{Key: "\tKategori:*", Value: "\t" + cp(bf.BusinessCategory)})
+			tr = append(tr, TableRow{Key: "\tInriktning:*", Value: "\t" + cp(bf.BusinessDirection)})
+			tr = append(tr, TableRow{Key: "\t%-andel:*", Value: fmt.Sprintf("\t%v", bf.BusinessPart)})
 		}
+		tr = append(tr, TableRow{Key: "", Value: ""})
 		tr = append(tr, TableRow{Key: "Created:", Value: company.Created})
 		tr = append(tr, TableRow{Key: "SNI-code:", Value: company.IndustriCode})
 		tr = append(tr, TableRow{Key: "SNI-Text:", Value: cp(company.IndustriText)})
 		tr = append(tr, TableRow{Key: "Selected:", Value: fmt.Sprintf("%v", company.SelectedCompany)})
 		tr = append(tr, TableRow{Key: cp("Huvudmän"), Value: ""})
 		for _, pr := range company.Principals {
-			tr = append(tr, TableRow{Key: "\tPersNr:*", Value: pr.CustomerID})
-			tr = append(tr, TableRow{Key: "\tNamn:*", Value: pr.PrincipalName})
+			tr = append(tr, TableRow{Key: "\tPersNr:*", Value: "\t" + pr.CustomerID})
+			tr = append(tr, TableRow{Key: "\tNamn:*", Value: "\t" + pr.PrincipalName})
 		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
@@ -182,7 +186,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf.AddPage()
 		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
-		pdf.SetFont("Arial", "B", 11)
+		pdf.SetFont("Arial", "B", 10)
 		tr = append(tr, TableRow{Key: "collateralID:", Value: collateral.CollateralID})
 		tr = append(tr, TableRow{Key: "Fastighetskod:", Value: collateral.CollateralCode})
 		tr = append(tr, TableRow{Key: "CustomerID:", Value: collateral.CustomerID})
@@ -194,8 +198,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("Köpa säkerhet:"), Value: fmt.Sprintf("%v", collateral.BuyCollateral)})
 		tr = append(tr, TableRow{Key: cp("Taxeringsägare"), Value: ""})
 		for _, taxedOwner := range collateral.TaxedOwners {
-			tr = append(tr, TableRow{Key: "\tTaxedID:*", Value: taxedOwner.TaxedID})
-			tr = append(tr, TableRow{Key: cp("\tÄgare:*"), Value: cp(taxedOwner.TaxedOwner)})
+			tr = append(tr, TableRow{Key: "\tTaxedID:*", Value: "\t" + taxedOwner.TaxedID})
+			tr = append(tr, TableRow{Key: cp("\tÄgare:*"), Value: "\t" + cp(taxedOwner.TaxedOwner)})
 		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
@@ -215,8 +219,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("Lånebelopp:"), Value: fmt.Sprintf("%.2f", loan.LoanAmount)})
 		tr = append(tr, TableRow{Key: cp("Syfte respektive lån"), Value: ""})
 		for _, aim := range loan.Aims {
-			tr = append(tr, TableRow{Key: "\tSyfte:*", Value: cp(aim.AimText)})
-			tr = append(tr, TableRow{Key: cp("\tLånebelopp:"), Value: fmt.Sprintf("%.2f", aim.LoanAmountPart)})
+			tr = append(tr, TableRow{Key: "\tSyfte:*", Value: "\t" + cp(aim.AimText)})
+			tr = append(tr, TableRow{Key: cp("\tLånebelopp:"), Value: fmt.Sprintf("\t%.2f", aim.LoanAmountPart)})
 		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
@@ -231,14 +235,14 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf.SetFont("Arial", "B", 16)
 		pdf = header1(pdf, hr.Value)
 		pdf.SetFont("Arial", "B", 11)
-		tr = append(tr, TableRow{Key: "Institut:", Value: cp(extloan.ExtCreditInstitut)})
-		tr = append(tr, TableRow{Key: "Clearing:", Value: extloan.ExtLoanClearing})
+		tr = append(tr, TableRow{Key: cp("Institut:"), Value: cp(extloan.ExtCreditInstitut)})
+		tr = append(tr, TableRow{Key: cp("Clearing:"), Value: extloan.ExtLoanClearing})
 		tr = append(tr, TableRow{Key: cp("Lånenummer:"), Value: extloan.ExtLoanNumber})
-		tr = append(tr, TableRow{Key: "Belopp:", Value: fmt.Sprintf("%.2f", extloan.ExtLoanAmount)})
+		tr = append(tr, TableRow{Key: cp("Belopp:"), Value: fmt.Sprintf("%.2f", extloan.ExtLoanAmount)})
 		tr = append(tr, TableRow{Key: cp("Lösa lån:"), Value: fmt.Sprintf("%v", extloan.ExtRedeemLoan)})
 		tr = append(tr, TableRow{Key: cp("Lånet står på"), Value: ""})
 		for _, owner := range extloan.ExtLoanOwners {
-			tr = append(tr, TableRow{Key: cp("\tPersonnummer:*"), Value: owner.CustomerID})
+			tr = append(tr, TableRow{Key: cp("\tPersonnummer:*"), Value: "\t" + owner.CustomerID})
 		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
@@ -275,7 +279,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		pdf.SetFont("Arial", "B", 11)
 		tr = append(tr, TableRow{Key: "ProcessID:", Value: guarantor.ProcessID})
 		tr = append(tr, TableRow{Key: "BorgensmanId:", Value: guarantor.GuarantorID})
-		tr = append(tr, TableRow{Key: "Phone:", Value: guarantor.GuarantorCustomerID})
+		tr = append(tr, TableRow{Key: "CustomerId:", Value: guarantor.GuarantorCustomerID})
 		tr = append(tr, TableRow{Key: "Namn:", Value: cp(guarantor.GuarantorName)})
 		tr = append(tr, TableRow{Key: "Phone:", Value: guarantor.GuarantorPhone})
 
@@ -298,19 +302,20 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		//
 		tr = append(tr, TableRow{Key: cp("Hushåll"), Value: ""})
 		for _, typeofhouse := range maintenancecost.TypeOfHouses {
-			tr = append(tr, TableRow{Key: "\tHouseId:*", Value: typeofhouse.HouseID})
-			tr = append(tr, TableRow{Key: cp("\tLån i annan bank:*"), Value: fmt.Sprintf("%v", typeofhouse.LoanInOtherInstitut)})
-			tr = append(tr, TableRow{Key: cp("\tLösa lån:"), Value: fmt.Sprintf("%v", typeofhouse.RedeemLoan)})
-			tr = append(tr, TableRow{Key: "\tKreditinstitut:*", Value: cp(typeofhouse.CreditInstitut)})
-			tr = append(tr, TableRow{Key: "\tClearing:*", Value: cp(typeofhouse.LoanClearing)})
-			tr = append(tr, TableRow{Key: cp("\tLånenummer:*"), Value: cp(typeofhouse.InstitutLoanNumber)})
+			tr = append(tr, TableRow{Key: "\tHouseId:*", Value: "\t" + typeofhouse.HouseID})
+			tr = append(tr, TableRow{Key: cp("\tLån i annan bank:*"), Value: fmt.Sprintf("\t%v", typeofhouse.LoanInOtherInstitut)})
+			tr = append(tr, TableRow{Key: cp("\tLösa lån:"), Value: fmt.Sprintf("\t%v", typeofhouse.RedeemLoan)})
+			tr = append(tr, TableRow{Key: "\tKreditinstitut:*", Value: "\t" + cp(typeofhouse.CreditInstitut)})
+			tr = append(tr, TableRow{Key: "\tClearing:*", Value: "\t" + cp(typeofhouse.LoanClearing)})
+			tr = append(tr, TableRow{Key: cp("\tLånenummer:*"), Value: "\t" + cp(typeofhouse.InstitutLoanNumber)})
 			//tr = append(tr, TableRow{Key: cp("Ägare:"), Value: cp(typeofhouse.LoanOwner)})
 			tr = append(tr, TableRow{Key: cp("Ägare"), Value: ""})
 			for _, loanOwner := range typeofhouse.LoanOwners {
-				tr = append(tr, TableRow{Key: "\t\tKund:*", Value: loanOwner.CustomerID})
+				tr = append(tr, TableRow{Key: "\t\tKund:*", Value: "\t\t" + loanOwner.CustomerID})
 			}
-			tr = append(tr, TableRow{Key: cp("\tStöd:"), Value: fmt.Sprintf("%.2f", typeofhouse.LoanAmount)})
-			tr = append(tr, TableRow{Key: cp("\tDriftkostnad:"), Value: fmt.Sprintf("%.2f", typeofhouse.MaintenanceCost)})
+			tr = append(tr, TableRow{Key: "", Value: ""})
+			tr = append(tr, TableRow{Key: cp("\tStöd:"), Value: fmt.Sprintf("\t%.2f", typeofhouse.LoanAmount)})
+			tr = append(tr, TableRow{Key: cp("\tDriftkostnad:"), Value: fmt.Sprintf("\t%.2f", typeofhouse.MaintenanceCost)})
 
 		}
 		pdf = table1(pdf, tr) // add table to page current page

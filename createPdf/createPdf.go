@@ -198,6 +198,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "Kommun:", Value: cp(collateral.CollateralMunicipality)})
 		tr = append(tr, TableRow{Key: "fastighetsnamn", Value: cp(collateral.CollateralName)})
 		tr = append(tr, TableRow{Key: "Gata:", Value: cp(collateral.CollateralStreet)})
+		tr = append(tr, TableRow{Key: cp("Areal:"), Value: fmt.Sprintf("%v", collateral.CollateralAreal)})
+		tr = append(tr, TableRow{Key: cp("Areal:"), Value: fmt.Sprintf("%v", cp(collateral.CollateralAge))})
 		tr = append(tr, TableRow{Key: cp("Använd säkerhet:"), Value: fmt.Sprintf("%t", collateral.UseAsCollateral)})
 		tr = append(tr, TableRow{Key: cp("Köpa säkerhet:"), Value: fmt.Sprintf("%t", collateral.BuyCollateral)})
 		tr = append(tr, TableRow{Key: cp("Taxeringsägare"), Value: ""})
@@ -406,7 +408,7 @@ func savePDF(filename string, pdf *gofpdf.Fpdf) error {
 func header1(pdf *gofpdf.Fpdf, hdr string) *gofpdf.Fpdf {
 	pdf.SetFont("Arial", "B", 12)
 	pdf.SetFillColor(230, 230, 230)
-	pdf.CellFormat(185, 7, hdr, "1", 0, "", true, 0, "")
+	pdf.CellFormat(185, 10, hdr, "1", 0, "", true, 0, "")
 	pdf.Ln(-1)
 	return pdf
 }
@@ -422,13 +424,13 @@ func table1(pdf *gofpdf.Fpdf, tbl []TableRow) *gofpdf.Fpdf {
 		if line.Value == "" {
 			pdf.SetFillColor(230, 230, 230)
 			pdf.SetFont("Arial", "B", 10)
-			pdf.CellFormat(60, 10, line.Key, "1", 0, "L", true, 0, "")
+			pdf.CellFormat(60, 6, line.Key, "1", 0, "L", true, 0, "")
 			pdf.SetFillColor(255, 255, 255)
-			pdf.CellFormat(125, 10, line.Value, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(125, 6, line.Value, "1", 0, "L", false, 0, "")
 			pdf.SetFont("Arial", "", 10)
 		} else {
-			pdf.CellFormat(60, 10, line.Key, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(125, 10, line.Value, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(60, 6, line.Key, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(125, 6, line.Value, "1", 0, "L", false, 0, "")
 		}
 		pdf.Ln(-1)
 	}
@@ -447,17 +449,17 @@ func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
 		if j == 8 || j == 13 || j == 17 || j == 18 || j == 21 || j == 25 {
 			pdf.SetFillColor(230, 230, 230)
 			pdf.SetFont("Arial", "B", 10)
-			pdf.CellFormat(25, 10, line.Key, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(110, 10, line.Text, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(25, 10, line.ValueC1, "1", 0, "R", false, 0, "")
-			pdf.CellFormat(25, 10, line.ValueC2, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 6, line.Key, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(110, 6, line.Text, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC1, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC2, "1", 0, "R", false, 0, "")
 		} else {
 			pdf.SetFillColor(255, 255, 255)
 			pdf.SetFont("Arial", "", 10)
-			pdf.CellFormat(25, 10, line.Key, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(110, 10, line.Text, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(25, 10, line.ValueC1, "1", 0, "R", false, 0, "")
-			pdf.CellFormat(25, 10, line.ValueC2, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 6, line.Key, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(110, 6, line.Text, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC1, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC2, "1", 0, "R", false, 0, "")
 		}
 		pdf.Ln(-1)
 		j++

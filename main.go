@@ -129,10 +129,10 @@ func main() {
 	router.HandleFunc("/v1/getextloan", extloans.GetExtLoan).Methods("POST", "OPTIONS")
 	//
 	// collaterals.go
-	router.HandleFunc("/v1/getCollaterals", collaterals.GetCollaterals).Methods("POST", "OPTIONS")
-	router.HandleFunc("/v1/getCollateral", collaterals.GetCollateral).Methods("POST", "OPTIONS")
-	router.HandleFunc("/v1/updateCollateral", collaterals.UpdateCollateral).Methods("PATCH", "OPTIONS")
-	router.HandleFunc("/v1/deleteCollateral", collaterals.DeleteCollateral).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/getcollaterals", collaterals.GetCollaterals).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/getcollateral", collaterals.GetCollateral).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/updatecollateral", collaterals.UpdateCollateral).Methods("PATCH", "OPTIONS")
+	router.HandleFunc("/v1/deletecollateral", collaterals.DeleteCollateral).Methods("DELETE", "OPTIONS")
 	//
 	// companies.go
 	router.HandleFunc("/v1/getcompanies", companies.GetCompanies).Methods("POST", "OPTIONS")

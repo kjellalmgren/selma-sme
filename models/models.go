@@ -230,6 +230,8 @@ type CollateralType struct {
 	TaxedOwners            []TaxedOwnerType
 	CollateralMunicipality string `json:"collateralMunicipality"`
 	CollateralStreet       string `json:"collateralStreet"`
+	CollateralAreal        int    `json:"collateralAreal"`
+	CollateralAge          string `json:"collateralAge"`
 	UseAsCollateral        bool   `json:"useAsCollateral"`
 	BuyCollateral          bool   `json:"buyCollateral"`
 }

@@ -14,6 +14,8 @@
     ],
     "collateralMunicipality": "ENKÖPING",
     "collateralStreet": "Bergsgatan 12",
+    "collateralAreal": 54,
+    "collateralAge": "0-20 år",
     "useAsCollateral": false,
     "buyCollateral": true
   }

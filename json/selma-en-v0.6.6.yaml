@@ -125,6 +125,9 @@ info:
   # 2019-05-26 0.6.6 kal spelling error on Guarantor (Borgensman)
   # 2019-05-26 0.6.6 kal Speeling error regarding institute, has been changed in some places
   # 2019-05-26 0.6.6 kal monthOfEmployement and yearOfEmployment has changed to integer type
+  # 2019-05-26 0.6.6 kal collateralAreal has changed to type of integer
+  # 2019-05-26 0.6.6 kal Budgets has been fixed, type order
+  # 2019-05-26 0.6.6 kal Revenues was missing items of array types
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -6432,8 +6435,8 @@ definitions:
   #
   collateralAreal:
     description: Areal för skogen
-    type: string
-    example: '12'
+    type: integer
+    example: 12
   #
   collateralAge:
     description: Ålder på skogen för säkerheten
@@ -7401,13 +7404,17 @@ definitions:
         $ref: '#/definitions/companyId'
       companyEconomyId:
         $ref: '#/definitions/companyEconomyId'
-      revenues:
-        $ref: '#/definitions/revenueType'
       customerCategory:
         $ref: '#/definitions/customerCategory'
+      Revenues:
+        $ref: '#/definitions/Revenues'
+      
   #
-  #CompanyEconomy:
-  #  $ref: '#/definitions/companyEconomyType'
+  Revenues:
+    description: Årsomsättning
+    type: array
+    items:
+      $ref: '#/definitions/revenueType'
   #
   CompanyEconomiesType:
     description: Array of CompanyEconomyType
@@ -7472,25 +7479,24 @@ definitions:
       companyEconomyId:
         $ref: '#/definitions/companyEconomyId'
       budgetYears:
-        $ref: '#/definitions/budgetYear'
-  #
-  #Budget:
-  #  $ref: '#/definitions/budgetType'
+        $ref: '#/definitions/BudgetsType'
   #
   BudgetsType:
     description: Array of BudgetType
     type: object
     properties:
-      budgets:
-        $ref: '#/definitions/Budgets'
+      budgetYear:
+        $ref: '#/definitions/budgetYear'
+      values:
+        $ref: '#/definitions/budgetYearType'
   #
   Budgets:
     description: Return an array of type budgetType
     type: array
     items:
-      $ref: '#/definitions/budgetType'
+      $ref: '#/definitions/budgetYearType'
   #
-  BudgetYear:
+  budgetYearType:
     description: Budget records, minusposter registreras som minusposter
       value1; Resultaträkning; Skog
       value2; Resultaträkning; Växtodling
@@ -7519,8 +7525,6 @@ definitions:
       value25; Åretsresultat (value21) sum (value22+value23+value24)
     type: object
     properties:
-      budgetYear:
-        $ref: '#/definitions/budgetYear'
       value1:
         $ref: '#/definitions/value1'
       value2:

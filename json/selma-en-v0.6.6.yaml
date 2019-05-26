@@ -120,6 +120,11 @@ info:
   # 2019-05-22 0.6.5 kal Name of base url /v1/getExtloan: has changed to lower case
   # 2019-05-22 0.6.5 kal All add-method has been unified, allways return it's type
   # 2019-05-23 0.6.5 kal Principals has been added to Companies
+  # 2019-05-23 0.6.6 kal Started a new version
+  # 2019-05-23 0.6.6 kal added example for caseId
+  # 2019-05-26 0.6.6 kal spelling error on Guarantor (Borgensman)
+  # 2019-05-26 0.6.6 kal Speeling error regarding institute, has been changed in some places
+  # 2019-05-26 0.6.6 kal monthOfEmployement and yearOfEmployment has changed to integer type
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -5790,6 +5795,7 @@ definitions:
   caseId:
     description: reserved caseId in Loan Process (ignoreras i V1)
     type: string
+    example: '106666'
   #
   submitApplication:
     description: Jag försäkrar att lämnade uppgifter är korrekta. Denna måste vara satt till true, annars kan inte ansökan skickas in till LP. Sökande ska klicka i detta val. Om vi tycker att sökande behöver fylla i mer för att skicka in ansökan ska denna inte gå att sätta till true.
@@ -6047,13 +6053,13 @@ definitions:
     properties:
       processId:
         $ref: '#/definitions/processId'
-      gaurantorId:
+      guarantorId:
         $ref: '#/definitions/guarantorId'
-      gaurantorName:
+      guarantorName:
         $ref: '#/definitions/guarantorName'
-      gaurantorPhone:
+      guarantorPhone:
         $ref: '#/definitions/guarantorPhone'
-      gaurantorCustomerId:
+      guarantorCustomerId:
         $ref: '#/definitions/guarantorCustomerId'
   #
   GuarantorsType:
@@ -6178,16 +6184,16 @@ definitions:
         $ref: '#/definitions/typeOfHouse'
       keepHouse:
         $ref: '#/definitions/keepHouse'
-      loanInOtherInstitut:
-        $ref: '#/definitions/loanInOtherInstitut'
+      loanInOtherInstitute:
+        $ref: '#/definitions/loanInOtherInstitute'
       redeemLoan:
         $ref: '#/definitions/redeemLoan'
-      creditInstitut:
-        $ref: '#/definitions/creditInstitut'
+      creditInstitute:
+        $ref: '#/definitions/creditInstitute'
       loanClearing:
         $ref: '#/definitions/loanClearing'
-      institutLoanNumber:
-        $ref: '#/definitions/institutLoanNumber'
+      instituteLoanNumber:
+        $ref: '#/definitions/instituteLoanNumber'
       loanOwners:
         $ref: '#/definitions/loanOwners'
       houseLoanAmount:
@@ -6252,7 +6258,7 @@ definitions:
     description: Avser att behålla huset
     type: boolean
   #
-  loanInOtherInstitut:
+  loanInOtherInstitute:
     description: Avser att behålla huset
     type: boolean
   #
@@ -6261,7 +6267,7 @@ definitions:
     type: boolean
     example: true
   #
-  creditInstitut:
+  creditInstitute:
     description: Lånet är hos kredit institut
     type: string
     example: 'SEB'
@@ -6271,7 +6277,7 @@ definitions:
     type: string
     example: '5270'
   #
-  institutLoanNumber:
+  instituteLoanNumber:
     description: Lånenummer hos de kredit institut där lånet ska lösas
     type: string
     example: '0028600'
@@ -6457,13 +6463,13 @@ definitions:
     type: string
     format: uuid
     example: '{"extloanId": "5aa735e8-3cbd-11e9-b210-d663bd873d93"}'
-  extCreditInstitut:
-    description: Kreditinstitut, Bank
+  extCreditInstitute:
+    description: Kreditinstitut, Bank, Loan originator
     type: string
     example: 'SEB'
   #
   extloanNumber:
-    description: Loan originator
+    description: Loan number
     type: string
     example: '0028600'
   #
@@ -6524,13 +6530,13 @@ definitions:
     example: 'Skatteverket'
   #
   yearOfEmployment:
-    type: string
+    type: integer
     description: Anställd sedan år
-    example: '2009'
+    example: 2009
   monthOfEmployment:
-    type: string
+    type: integer
     description: anställd i månad, om anställningen < 2 år.
-    example: '10'
+    example: 10
   #
   #######################################
   # mainPurpose
@@ -6955,8 +6961,8 @@ definitions:
     description: Member in a household
     type: object
     properties:
-      householdMemberId:
-        $ref: '#/definitions/householdMemberId'
+      #householdMemberId:
+      #  $ref: '#/definitions/householdMemberId'
       householdMember:
         $ref: '#/definitions/householdMember'
   #
@@ -7005,11 +7011,11 @@ definitions:
       householdId:
         $ref: '#/definitions/householdId'
       householdMembers:
-        $ref: '#/definitions/householdMemberType'
+        $ref: '#/definitions/HouseholdMembers'
       numberOfChildsAtHome:
         $ref: '#/definitions/numberOfChildsAtHome'  # antal hemmavarande barn
       childs:
-        $ref: '#/definitions/childType'
+        $ref: '#/definitions/Childs'
       numberOfCars:
         $ref: '#/definitions/numberOfCars'
       childMaintenaceCost:
@@ -7031,6 +7037,12 @@ definitions:
     description: return all available households for a customer
     items:
       $ref: '#/definitions/householdType'
+  #
+  HouseholdMembers:
+    description: array of householdmembers
+    type: array
+    items:
+      $ref: '#/definitions/householdMemberType'
   #
   #########################################
   # Definition ChildType
@@ -7154,8 +7166,8 @@ definitions:
         $ref: '#/definitions/extLoanOwner'
       extloanId:
         $ref: '#/definitions/extloanId'
-      extCreditInstitut:
-        $ref: '#/definitions/extCreditInstitut'
+      extCreditInstitute:
+        $ref: '#/definitions/extCreditInstitute'
       extloanClearing:
         $ref: '#/definitions/extloanClearing'
       extloanNumber:
@@ -7199,8 +7211,8 @@ definitions:
         $ref: '#/definitions/extLoanOwner'
       extloanId:
         $ref: '#/definitions/extloanId'
-      extCreditInstitut:
-        $ref: '#/definitions/extCreditInstitut'
+      extCreditInstitute:
+        $ref: '#/definitions/extCreditInstitute'
       extloanClearing:
         $ref: '#/definitions/extloanClearing'
       extloanNumber:

@@ -8,11 +8,11 @@
         "houseId": "c805ff3d-357e-476e-ac4a-f9b0fdbdd4fa",
         "typeOfHouse": "Lantbruksfastighet",
         "keepHouse": true,
-        "loanInOtherInstitut": true,
+        "loanInOtherInstitute": true,
         "redeemLoan": true,
-        "CreditInstitut": "SEB",
+        "CreditInstitute": "SEB",
         "LoanClearing": "5270",
-        "InstitutLoanNumber": "0028600",
+        "InstituteLoanNumber": "0028600",
         "loanOwners": [
           {
             "customerId": "19640120-3887"

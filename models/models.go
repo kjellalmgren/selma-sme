@@ -111,14 +111,14 @@ type LoanID struct {
 
 // ExtLoan documentation
 type ExtLoanType struct {
-	ProcessID         string `json:"processId"`
-	ExtLoanID         string `json:"extloanId"`
-	ExtLoanOwners     []ExtLoanOwner
-	ExtCreditInstitut string  `json:"extCreditInstitut"`
-	ExtLoanClearing   string  `json:"extLoanClearing"`
-	ExtLoanNumber     string  `json:"extloanNumber"`
-	ExtLoanAmount     float32 `json:"extLoanAmount"`
-	ExtRedeemLoan     bool    `json:"extRedeemLoan"`
+	ProcessID          string `json:"processId"`
+	ExtLoanID          string `json:"extloanId"`
+	ExtLoanOwners      []ExtLoanOwner
+	ExtCreditInstitute string  `json:"extCreditInstitute"`
+	ExtLoanClearing    string  `json:"extLoanClearing"`
+	ExtLoanNumber      string  `json:"extloanNumber"`
+	ExtLoanAmount      float32 `json:"extLoanAmount"`
+	ExtRedeemLoan      bool    `json:"extRedeemLoan"`
 }
 
 //
@@ -205,8 +205,8 @@ type PersonalEconomyType struct {
 	Income             float32 `json:"income"`
 	TypeOfEmployeement string  `json:"typeOfEmployeement"`
 	Employeer          string  `json:"employeer"`
-	EmployeedFromYear  string  `json:"yearOfEmployment"`
-	EmployeedFromMonth string  `json:"monthOfEmployment"`
+	EmployeedFromYear  int     `json:"yearOfEmployment"`
+	EmployeedFromMonth int     `json:"monthOfEmployment"`
 }
 
 // PersonalEconomyID documentation
@@ -391,17 +391,17 @@ type MaintenanceCostType struct {
 
 // TypeOfHouse (driftkostnad på andra boenden)
 type TypeOfHouse struct {
-	HouseID             string `json:"houseId"`
-	TypeOfHouse         string `json:"typeOfHouse"`
-	KeepHouse           bool   `json:"keepHouse"`
-	LoanInOtherInstitut bool   `json:"loanInOtherInstitut"`
-	RedeemLoan          bool   `json:"redeemLoan"`
-	CreditInstitut      string `json:"creditInstitut"`
-	LoanClearing        string `json:"loanClearing"`
-	InstitutLoanNumber  string `json:"institutLoanNumber"`
-	LoanOwners          []LoanOwnerType
-	MaintenanceCost     float32 `json:"maintenanceCost"`
-	LoanAmount          float32 `json:"loanAmount"`
+	HouseID              string `json:"houseId"`
+	TypeOfHouse          string `json:"typeOfHouse"`
+	KeepHouse            bool   `json:"keepHouse"`
+	LoanInOtherInstitute bool   `json:"loanInOtherInstitute"`
+	RedeemLoan           bool   `json:"redeemLoan"`
+	CreditInstitute      string `json:"creditInstitute"`
+	LoanClearing         string `json:"loanClearing"`
+	InstituteLoanNumber  string `json:"instituteLoanNumber"`
+	LoanOwners           []LoanOwnerType
+	MaintenanceCost      float32 `json:"maintenanceCost"`
+	LoanAmount           float32 `json:"loanAmount"`
 }
 
 // LoanOwnerType documentation

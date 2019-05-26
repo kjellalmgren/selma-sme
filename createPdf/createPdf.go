@@ -335,8 +335,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//
 	// Budget
 	//
-	y1 := 0
-	y2 := 0
+	//y1 := 0
+	//y2 := 0
 	i := 0
 	//
 	hr = HeaderRow{}
@@ -348,23 +348,22 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			pdf.AddPage()
 			pdf.SetFont("Arial", "B", 16)
 			pdf = header1(pdf, hr.Value)
-			pdf.SetFont("Arial", "B", 11)
+			pdf.SetFont("Arial", "", 10)
 			brows = fixBudgetRows(budget.BudgetYears)
 			//y1 = budget.BudgetYear
 		} else {
 			//y2 = budget.BudgetYears
 			//brows = fixBudgetRows(budget.BudgetYears)
 		}
-		trb = append(trb, BudgetTableRow{Key: cp("CompanyID:"), Text: budget.CompanyEconomyID})
+		trb = append(trb, BudgetTableRow{Key: cp("CE-ID:"), Text: budget.CompanyEconomyID,
+			ValueC1: "SEK", ValueC2: "SEK"})
 		i++
 	}
 	//
 	j := 0
-	trb = append(trb, BudgetTableRow{
-		//Key:     fmt.Sprintf("%d", i),
-		//Text:    fmt.Sprintf("%s", br.Text),
-		ValueC1: fmt.Sprintf("%v", y1),
-		ValueC2: fmt.Sprintf("%v", y2)})
+	//trb = append(trb, BudgetTableRow{
+	//	ValueC1: fmt.Sprintf("%v", y1),
+	//	ValueC2: fmt.Sprintf("%v", y2)})
 	//
 	for _, br := range brows {
 		//fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
@@ -397,6 +396,282 @@ func CreatePdfDocument(processid string) models.MessageBody {
 }
 
 //
+
+// savePDF documentation
+func savePDF(filename string, pdf *gofpdf.Fpdf) error {
+	return pdf.OutputFileAndClose(filename)
+}
+
+// header documentation
+func header1(pdf *gofpdf.Fpdf, hdr string) *gofpdf.Fpdf {
+	pdf.SetFont("Arial", "B", 12)
+	pdf.SetFillColor(230, 230, 230)
+	pdf.CellFormat(185, 7, hdr, "1", 0, "", true, 0, "")
+	pdf.Ln(-1)
+	return pdf
+}
+
+// table1 documentation
+func table1(pdf *gofpdf.Fpdf, tbl []TableRow) *gofpdf.Fpdf {
+	// Reset font and fill color.
+	pdf.SetFont("Arial", "", 11)
+	pdf.SetFillColor(255, 255, 255)
+	// Every column gets aligned according to its contents.
+	//align := []string{"L", "C", "L", "R", "R", "R"}
+	for _, line := range tbl {
+		if line.Value == "" {
+			pdf.SetFillColor(230, 230, 230)
+			pdf.SetFont("Arial", "B", 10)
+			pdf.CellFormat(60, 10, line.Key, "1", 0, "L", true, 0, "")
+			pdf.SetFillColor(255, 255, 255)
+			pdf.CellFormat(125, 10, line.Value, "1", 0, "L", false, 0, "")
+			pdf.SetFont("Arial", "", 10)
+		} else {
+			pdf.CellFormat(60, 10, line.Key, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(125, 10, line.Value, "1", 0, "L", false, 0, "")
+		}
+		pdf.Ln(-1)
+	}
+	return pdf
+}
+
+// tablebudget documentation
+func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
+	// Reset font and fill color.
+	pdf.SetFont("Arial", "", 11)
+	pdf.SetFillColor(255, 255, 255)
+	// Every column gets aligned according to its contents.
+	// align := []string{"L", "C", "L", "R", "R", "R"}
+	j := 0 // counter
+	for _, line := range tbl {
+		if j == 8 || j == 13 || j == 17 || j == 18 || j == 21 || j == 25 {
+			pdf.SetFillColor(230, 230, 230)
+			pdf.SetFont("Arial", "B", 10)
+			pdf.CellFormat(25, 10, line.Key, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(110, 10, line.Text, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(25, 10, line.ValueC1, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 10, line.ValueC2, "1", 0, "R", false, 0, "")
+		} else {
+			pdf.SetFillColor(255, 255, 255)
+			pdf.SetFont("Arial", "", 10)
+			pdf.CellFormat(25, 10, line.Key, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(110, 10, line.Text, "1", 0, "L", false, 0, "")
+			pdf.CellFormat(25, 10, line.ValueC1, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 10, line.ValueC2, "1", 0, "R", false, 0, "")
+		}
+		pdf.Ln(-1)
+		j++
+	}
+	return pdf
+}
+
+// image documentation
+func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
+	//The ImageOptions method takes a file path, x, y, width, and height parameters, and an ImageOptions struct to specify a couple of options.
+	pdf.ImageOptions("stats.png", 225, 10, 25, 25, false, gofpdf.ImageOptions{ImageType: "PNG", ReadDpi: true}, 0, "")
+	return pdf
+}
+
+// fixBudgetRows documentation
+func fixBudgetRows(budgets []models.BudgetYear) []BRow {
+
+	// BRow documentation
+	//fmt.Println(fmt.Sprintf("%v", getColumnText(24)))
+	//BRows := []BRow{}
+	//j := 0
+	//BRows = make([]BRow, 0, 25)
+	var BRows []BRow
+	var brow BRow
+	//Flytta ut år 1 samt år 2 till variabler och hämta år 1 samt år två i loopen 0 - 24
+	// Första loopen ska alltså försvinna
+	y1 := 0
+	y2 := 0
+	i := 0
+	for _, budget := range budgets {
+		if i == 0 {
+			y1 = budget.BudgetYear
+		} else {
+			y2 = budget.BudgetYear
+		}
+		i++
+	}
+	//fmt.Println(fmt.Sprintf("Len:%v", len(budgets)))
+	for j := 0; j <= 24; j++ {
+		brow.Year = y1
+		brow.Text = getColumnText(j)
+		brow.ValueC1 = getColumn1Value(j, y1, budgets)
+		brow.ValueC2 = getColumn2Value(j, y2, budgets)
+		BRows = append(BRows, brow)
+	}
+	//
+	return BRows
+}
+
+// getColumn1Value documentation
+func getColumn1Value(index int, year int, budgets []models.BudgetYear) float32 {
+
+	var retval float32
+	for _, budget := range budgets {
+		if budget.BudgetYear == year {
+			for _, val := range budget.Values {
+				switch index {
+				case 0:
+					retval = val.Value1
+				case 1:
+					retval = val.Value2
+				case 2:
+					retval = val.Value3
+				case 3:
+					retval = val.Value4
+				case 4:
+					retval = val.Value5
+				case 5:
+					retval = val.Value6
+				case 6:
+					retval = val.Value7
+				case 7:
+					retval = val.Value8
+				case 8:
+					retval = val.Value9
+				case 9:
+					retval = val.Value10
+				case 10:
+					retval = val.Value11
+				case 11:
+					retval = val.Value12
+				case 12:
+					retval = val.Value13
+				case 13:
+					retval = val.Value14
+				case 14:
+					retval = val.Value15
+				case 15:
+					retval = val.Value16
+				case 16:
+					retval = val.Value17
+				case 17:
+					retval = val.Value18
+				case 18:
+					retval = val.Value19
+				case 19:
+					retval = val.Value20
+				case 20:
+					retval = val.Value21
+				case 21:
+					retval = val.Value22
+				case 22:
+					retval = val.Value23
+				case 23:
+					retval = val.Value24
+				case 24:
+					retval = val.Value25
+				} //i++
+			}
+		}
+	}
+	return retval
+}
+
+// getColumn2Value documentation
+func getColumn2Value(index int, year int, budgets []models.BudgetYear) float32 {
+
+	var retval float32
+	//i := 0
+	for _, budget := range budgets {
+		if budget.BudgetYear == year {
+			//i = 0
+			for _, val := range budget.Values {
+				switch index {
+				case 0:
+					retval = val.Value1
+				case 1:
+					retval = val.Value2
+				case 2:
+					retval = val.Value3
+				case 3:
+					retval = val.Value4
+				case 4:
+					retval = val.Value5
+				case 5:
+					retval = val.Value6
+				case 6:
+					retval = val.Value7
+				case 7:
+					retval = val.Value8
+				case 8:
+					retval = val.Value9
+				case 9:
+					retval = val.Value10
+				case 10:
+					retval = val.Value11
+				case 11:
+					retval = val.Value12
+				case 12:
+					retval = val.Value13
+				case 13:
+					retval = val.Value14
+				case 14:
+					retval = val.Value15
+				case 15:
+					retval = val.Value16
+				case 16:
+					retval = val.Value17
+				case 17:
+					retval = val.Value18
+				case 18:
+					retval = val.Value19
+				case 19:
+					retval = val.Value20
+				case 20:
+					retval = val.Value21
+				case 21:
+					retval = val.Value22
+				case 22:
+					retval = val.Value23
+				case 23:
+					retval = val.Value24
+				case 24:
+					retval = val.Value25
+				}
+			}
+		}
+	}
+	return retval
+}
+
+// getColumnText documentation
+func getColumnText(index int) string {
+
+	text := []models.TextValue{
+		{"Skog"},
+		{"Växtodling"},
+		{"EU-stöd"},
+		{"Övrig djurproduktion"},
+		{"Förändring av lager produktion"},
+		{"Mjölk"},
+		{"Övriga intäkter"},
+		{"Omsättning totalt"},
+		{"Inköp (Råvaror och förnödenheter)"},
+		{"Arrendekostnader"},
+		{"Personalkostnader"},
+		{"Övriga rörelsekostnader"},
+		{"S:a kostnader (summa value9-12)"},
+		{"Resultat före avskrivningar (value8+(-value13))"},
+		{"Avskrivning inventarier (exkl. byggnadsinventerier)"},
+		{"Övriga avskrivningar"},
+		{"S:a avskrivningar (-value15)+(-value16)"},
+		{"Resultat före avskrivningar value14+(-value17)"},
+		{"Finansiella intäkter"},
+		{"Finansiella kostnader"},
+		{"Resultat finansiella poster (value18)+value19+(-value20)"},
+		{"Extraordinärar intäkter och kostnader"},
+		{"Bokslutsdispositioner"},
+		{"Skatt (ägaruttag prognosår EF)"},
+		{"Åretsresultat(value25) sum(value22+value23+value24)"},
+	}
+	return text[index].Text
+}
+
 // getProcesses documentation
 func getProcesses(processid string) []models.ProcessType {
 
@@ -723,271 +998,4 @@ func getMaintenanceCosts(processid string) []models.MaintenanceCostType {
 		}
 	}
 	return mainret
-}
-
-// savePDF documentation
-func savePDF(filename string, pdf *gofpdf.Fpdf) error {
-	return pdf.OutputFileAndClose(filename)
-}
-
-// header documentation
-func header1(pdf *gofpdf.Fpdf, hdr string) *gofpdf.Fpdf {
-	pdf.SetFont("Arial", "B", 12)
-	pdf.SetFillColor(230, 230, 230)
-	pdf.CellFormat(185, 7, hdr, "1", 0, "", true, 0, "")
-	pdf.Ln(-1)
-	return pdf
-}
-
-// table1 documentation
-func table1(pdf *gofpdf.Fpdf, tbl []TableRow) *gofpdf.Fpdf {
-	// Reset font and fill color.
-	pdf.SetFont("Arial", "", 12)
-	pdf.SetFillColor(255, 255, 255)
-	// Every column gets aligned according to its contents.
-	//align := []string{"L", "C", "L", "R", "R", "R"}
-	for _, line := range tbl {
-		if line.Value == "" {
-			pdf.SetFillColor(230, 230, 230)
-			pdf.SetFont("Arial", "B", 12)
-			pdf.CellFormat(60, 10, line.Key, "1", 0, "L", true, 0, "")
-			pdf.SetFillColor(255, 255, 255)
-			pdf.CellFormat(125, 10, line.Value, "1", 0, "L", false, 0, "")
-			pdf.SetFont("Arial", "", 12)
-		} else {
-			pdf.CellFormat(60, 10, line.Key, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(125, 10, line.Value, "1", 0, "L", false, 0, "")
-		}
-
-		pdf.Ln(-1)
-	}
-	return pdf
-}
-
-// tablebudget documentation
-func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
-	// Reset font and fill color.
-	pdf.SetFont("Arial", "", 12)
-	pdf.SetFillColor(255, 255, 255)
-	// Every column gets aligned according to its contents.
-	//align := []string{"L", "C", "L", "R", "R", "R"}
-	for _, line := range tbl {
-		pdf.CellFormat(25, 10, line.Key, "1", 0, "L", false, 0, "")
-		pdf.CellFormat(110, 10, line.Text, "1", 0, "L", false, 0, "")
-		pdf.CellFormat(25, 10, line.ValueC1, "1", 0, "R", false, 0, "")
-		pdf.CellFormat(25, 10, line.ValueC2, "1", 0, "R", false, 0, "")
-		pdf.Ln(-1)
-	}
-	return pdf
-}
-
-// image documentation
-func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
-	//The ImageOptions method takes a file path, x, y, width, and height parameters, and an ImageOptions struct to specify a couple of options.
-	pdf.ImageOptions("stats.png", 225, 10, 25, 25, false, gofpdf.ImageOptions{ImageType: "PNG", ReadDpi: true}, 0, "")
-	return pdf
-}
-
-// fixBudgetRows documentation
-func fixBudgetRows(budgets []models.BudgetYear) []BRow {
-
-	// BRow documentation
-	fmt.Println(fmt.Sprintf("%v", getColumnText(24)))
-	//BRows := []BRow{}
-	//j := 0
-	//BRows = make([]BRow, 0, 25)
-	var BRows []BRow
-	var brow BRow
-	//Flytta ut år 1 samt år 2 till variabler och hämta år 1 samt år två i loopen 0 - 24
-	// Första loopen ska alltså försvinna
-	y1 := 0
-	y2 := 0
-	i := 0
-	for _, budget := range budgets {
-		if i == 0 {
-			y1 = budget.BudgetYear
-		} else {
-			y2 = budget.BudgetYear
-		}
-		i++
-	}
-	//fmt.Println(fmt.Sprintf("Len:%v", len(budgets)))
-	for j := 0; j <= 24; j++ {
-		if j == 0 {
-			//brow.Year = y1
-		}
-		brow.Year = y1
-		brow.Text = getColumnText(j)
-		brow.ValueC1 = getColumn1Value(j, y1, budgets)
-		brow.ValueC2 = getColumn2Value(j, y2, budgets)
-		BRows = append(BRows, brow)
-	}
-	//
-	return BRows
-}
-
-// getColumn1Value documentation
-func getColumn1Value(index int, year int, budgets []models.BudgetYear) float32 {
-
-	var retval float32
-	for _, budget := range budgets {
-		if budget.BudgetYear == year {
-			for _, val := range budget.Values {
-				switch index {
-				case 0:
-					retval = val.Value1
-				case 1:
-					retval = val.Value2
-				case 2:
-					retval = val.Value3
-				case 3:
-					retval = val.Value4
-				case 4:
-					retval = val.Value5
-				case 5:
-					retval = val.Value6
-				case 6:
-					retval = val.Value7
-				case 7:
-					retval = val.Value8
-				case 8:
-					retval = val.Value9
-				case 9:
-					retval = val.Value10
-				case 10:
-					retval = val.Value11
-				case 11:
-					retval = val.Value12
-				case 12:
-					retval = val.Value13
-				case 13:
-					retval = val.Value14
-				case 14:
-					retval = val.Value15
-				case 15:
-					retval = val.Value16
-				case 16:
-					retval = val.Value17
-				case 17:
-					retval = val.Value18
-				case 18:
-					retval = val.Value19
-				case 19:
-					retval = val.Value20
-				case 20:
-					retval = val.Value21
-				case 21:
-					retval = val.Value22
-				case 22:
-					retval = val.Value23
-				case 23:
-					retval = val.Value24
-				case 24:
-					retval = val.Value25
-				} //i++
-			}
-		}
-	}
-	return retval
-}
-
-// getColumn2Value documentation
-func getColumn2Value(index int, year int, budgets []models.BudgetYear) float32 {
-
-	var retval float32
-	//i := 0
-	for _, budget := range budgets {
-		if budget.BudgetYear == year {
-			//i = 0
-			for _, val := range budget.Values {
-				switch index {
-				case 0:
-					retval = val.Value1
-				case 1:
-					retval = val.Value2
-				case 2:
-					retval = val.Value3
-				case 3:
-					retval = val.Value4
-				case 4:
-					retval = val.Value5
-				case 5:
-					retval = val.Value6
-				case 6:
-					retval = val.Value7
-				case 7:
-					retval = val.Value8
-				case 8:
-					retval = val.Value9
-				case 9:
-					retval = val.Value10
-				case 10:
-					retval = val.Value11
-				case 11:
-					retval = val.Value12
-				case 12:
-					retval = val.Value13
-				case 13:
-					retval = val.Value14
-				case 14:
-					retval = val.Value15
-				case 15:
-					retval = val.Value16
-				case 16:
-					retval = val.Value17
-				case 17:
-					retval = val.Value18
-				case 18:
-					retval = val.Value19
-				case 19:
-					retval = val.Value20
-				case 20:
-					retval = val.Value21
-				case 21:
-					retval = val.Value22
-				case 22:
-					retval = val.Value23
-				case 23:
-					retval = val.Value24
-				case 24:
-					retval = val.Value25
-				}
-				//i++
-			}
-		}
-	}
-	return retval
-}
-
-// getColumnText documentation
-func getColumnText(index int) string {
-
-	text := []models.TextValue{
-		{"Skog"},
-		{"Växtodling"},
-		{"EU-stöd"},
-		{"Övrig djurproduktion"},
-		{"Förändring av lager produktion"},
-		{"Mjölk"},
-		{"Övriga intäkter"},
-		{"Omsättning totalt"},
-		{"Inköp (Råvaror och förnödenheter)"},
-		{"Arrendekostnader"},
-		{"Personalkostnader"},
-		{"Övriga rörelsekostnader"},
-		{"S:a kostnader (summa value9-12)"},
-		{"Resultat före avskrivningar (value8 + (-value13))"},
-		{"Avskrivning inventarier (exkl. byggnadsinventerier)"},
-		{"Övriga avskrivningar"},
-		{"S:a avskrivningar (-value15) + (-value16)"},
-		{"Resultat före avskrivningar value14 + (-value17)"},
-		{"Finansiella intäkter"},
-		{"Finansiella kostnader"},
-		{"Resultat finansiella poster (value18) + value19 + (-value20)"},
-		{"Extraordinärar intäkter och kostnader"},
-		{"Bokslutsdispositioner"},
-		{"Skatt (ägaruttag prognosår EF)"},
-		{"Åretsresultat (value25) sum (value22+value23+value24)"},
-	}
-	return text[index].Text
 }

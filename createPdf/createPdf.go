@@ -667,7 +667,7 @@ func getColumnText(index int) string {
 		{"Extraordinärar intäkter och kostnader"},
 		{"Bokslutsdispositioner"},
 		{"Skatt (ägaruttag prognosår EF)"},
-		{"Åretsresultat(value25) sum(value22+value23+value24)"},
+		{"Årets resultat(value25) sum(value22+value23+value24)"},
 	}
 	return text[index].Text
 }

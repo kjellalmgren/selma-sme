@@ -449,17 +449,17 @@ func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
 		if j == 8 || j == 13 || j == 17 || j == 18 || j == 21 || j == 25 {
 			pdf.SetFillColor(230, 230, 230)
 			pdf.SetFont("Arial", "B", 10)
-			pdf.CellFormat(25, 6, line.Key, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(110, 6, line.Text, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(25, 6, line.ValueC1, "1", 0, "R", false, 0, "")
-			pdf.CellFormat(25, 6, line.ValueC2, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 6, line.Key, "1", 0, "L", true, 0, "")
+			pdf.CellFormat(110, 6, line.Text, "1", 0, "L", true, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC1, "1", 0, "R", true, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC2, "1", 0, "R", true, 0, "")
 		} else {
 			pdf.SetFillColor(255, 255, 255)
 			pdf.SetFont("Arial", "", 10)
-			pdf.CellFormat(25, 6, line.Key, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(110, 6, line.Text, "1", 0, "L", false, 0, "")
-			pdf.CellFormat(25, 6, line.ValueC1, "1", 0, "R", false, 0, "")
-			pdf.CellFormat(25, 6, line.ValueC2, "1", 0, "R", false, 0, "")
+			pdf.CellFormat(25, 6, line.Key, "1", 0, "L", true, 0, "")
+			pdf.CellFormat(110, 6, line.Text, "1", 0, "L", true, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC1, "1", 0, "R", true, 0, "")
+			pdf.CellFormat(25, 6, line.ValueC2, "1", 0, "R", true, 0, "")
 		}
 		pdf.Ln(-1)
 		j++

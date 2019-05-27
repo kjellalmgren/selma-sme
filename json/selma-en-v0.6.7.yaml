@@ -7572,7 +7572,7 @@ definitions:
         $ref: '#/definitions/value25'
   #
   Budgets:
-    description: Return an array of type budgetType
+    description: Return an array of type budgetsType
     type: array
     items:
       $ref: '#/definitions/budgetType'

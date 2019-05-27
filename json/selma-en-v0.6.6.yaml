@@ -123,11 +123,13 @@ info:
   # 2019-05-23 0.6.6 kal Started a new version
   # 2019-05-23 0.6.6 kal added example for caseId
   # 2019-05-26 0.6.6 kal spelling error on Guarantor (Borgensman)
-  # 2019-05-26 0.6.6 kal Speeling error regarding institute, has been changed in some places
+  # 2019-05-26 0.6.6 kal Spelling error regarding institute, has been changed in some places
   # 2019-05-26 0.6.6 kal monthOfEmployement and yearOfEmployment has changed to integer type
   # 2019-05-26 0.6.6 kal collateralAreal has changed to type of integer
   # 2019-05-26 0.6.6 kal Budgets has been fixed, type order
   # 2019-05-26 0.6.6 kal Revenues was missing items of array types
+  # 2019-05-27 0.6.6 kal kycHighRiskIndustryText has been added to kycInformation
+  # 2019-05-27 0.6.6 kal /v1/deletekycinformation: spelling error corrected
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -4648,7 +4650,7 @@ paths:
   #########################################################
   # Delete a specific KycInformation
   #########################################################
-  /v1/deletekkycinformation:
+  /v1/deletekycinformation:
     delete:
       tags:
         - KycInformations
@@ -6780,6 +6782,11 @@ definitions:
     description: High risk industry, högriskbransch (true/false)
     type: boolean
   #
+  kycHighRiskIndustryText:
+    description: High risk industry entered by customer
+    type: string
+    example: 'Nej, Annan bransch'
+  #
   #################################################################
   # START Response definitions
   #################################################################
@@ -6795,6 +6802,7 @@ definitions:
     description: Invalid page
   PageNotFound:
     description: Page not found
+  #
   #################################################################
   #################################################################
   # START Type defintions
@@ -7664,6 +7672,8 @@ definitions:
         $ref: '#/definitions/kycRelatedPublicFunction'
       kycHighRiskIndustry:
         $ref: '#/definitions/kycHighRiskIndustry'
+      kycHighRiskIndustryText:
+        $ref: '#/definitions/kycHighRiskIndustryText'
   #
   KycInformationsType:
     description: Array of KycInformationsType

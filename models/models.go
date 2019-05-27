@@ -247,7 +247,7 @@ type CollateralID struct {
 	CollateralID string `json:"collateralId"`
 }
 
-// KycInformation documentation
+// KycInformationType documentation
 type KycInformationType struct {
 	ProcessID                string `json:"processId"`
 	CustomerID               string `json:"customerId"`
@@ -258,6 +258,7 @@ type KycInformationType struct {
 	KycPublicFunction        bool   `json:"kycPublicFunction"`
 	KycRelatedPublicFunction bool   `json:"kycRelatedPublicFunction"`
 	KycHighRiskIndustry      bool   `json:"kycHighRiskIndustry"`
+	KycHighRiskIndustryText  string `json:"kycHighRiskIndustryText"`
 }
 
 // KycID documentation

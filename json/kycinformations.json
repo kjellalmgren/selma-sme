@@ -8,6 +8,7 @@
     "kycUCAware": false,
     "kycPublicFunction": false,
     "kycRelatedPublicFunction": false,
-    "kycHighRiskIndustry": false
+    "kycHighRiskIndustry": false,
+    "kycHighRiskIndustryText": "Nej, Annan bransch"
   }
 ]

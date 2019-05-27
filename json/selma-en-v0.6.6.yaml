@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.6'
+  version: '0.6.7'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -6441,7 +6441,7 @@ definitions:
     example: 12
   #
   collateralAge:
-    description: Ålder på skogen för säkerheten
+    description: Ålder på skogen för säkerheten, behöver ses över, finns inte i GUI idag.
     type: string
     enum:
     - '0-20 år'
@@ -7490,22 +7490,7 @@ definitions:
         $ref: '#/definitions/BudgetsType'
   #
   BudgetsType:
-    description: Array of BudgetType
-    type: object
-    properties:
-      budgetYear:
-        $ref: '#/definitions/budgetYear'
-      values:
-        $ref: '#/definitions/budgetYearType'
-  #
-  Budgets:
-    description: Return an array of type budgetType
-    type: array
-    items:
-      $ref: '#/definitions/budgetYearType'
-  #
-  budgetYearType:
-    description: Budget records, minusposter registreras som minusposter
+    description: Array of BudgetType, Budget records, minusposter registreras som minusposter
       value1; Resultaträkning; Skog
       value2; Resultaträkning; Växtodling
       value3; Resultaträkning; EU-stöd
@@ -7533,6 +7518,8 @@ definitions:
       value25; Åretsresultat (value21) sum (value22+value23+value24)
     type: object
     properties:
+      budgetYear:
+        $ref: '#/definitions/budgetYear'
       value1:
         $ref: '#/definitions/value1'
       value2:
@@ -7583,6 +7570,12 @@ definitions:
         $ref: '#/definitions/value24'
       value25:
         $ref: '#/definitions/value25'
+  #
+  Budgets:
+    description: Return an array of type budgetType
+    type: array
+    items:
+      $ref: '#/definitions/budgetType'
   #
   ###############################################
   # Definition ProcessType

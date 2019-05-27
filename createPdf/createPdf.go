@@ -341,26 +341,35 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//y2 := 0
 	i := 0
 	//
+	//fmt.Println("Hallå1")
 	hr = HeaderRow{}
 	hr.Value = cp("Budget - (Budgets)")
 	trb := []BudgetTableRow{} // Initiate table on page one
 	brows := []BRow{}
+	//fmt.Println("Hallå2")
 	for _, budget := range budgets {
-		if i == 0 {
-			pdf.AddPage()
-			pdf.SetFont("Arial", "B", 16)
-			pdf = header1(pdf, hr.Value)
-			pdf.SetFont("Arial", "", 10)
-			brows = fixBudgetRows(budget.BudgetYears)
-			//y1 = budget.BudgetYear
-		} else {
-			//y2 = budget.BudgetYears
-			//brows = fixBudgetRows(budget.BudgetYears)
+		fmt.Println(fmt.Sprintf("ID=%v", budget.CompanyEconomyID))
+		fmt.Println(fmt.Sprintf("Len:=%v", len(budgets)))
+		for _, value := range budget.BudgetYears {
+			fmt.Println(fmt.Sprintf("År=%v", value.BudgetYear))
+			if i == 0 {
+				//fmt.Println(value.BudgetYear)
+				pdf.AddPage()
+				pdf.SetFont("Arial", "B", 16)
+				pdf = header1(pdf, hr.Value)
+				pdf.SetFont("Arial", "", 10)
+				//fmt.Println("Hallå4")
+			} else {
+				//fmt.Println("Hallå5")
+				brows = fixBudgetRows(budget.BudgetYears)
+				//fmt.Println(fmt.Sprintf("Len:%v", len(brows)))
+			}
+			i++
 		}
 		trb = append(trb, BudgetTableRow{Key: cp("CE-ID:"), Text: budget.CompanyEconomyID,
 			ValueC1: "SEK", ValueC2: "SEK"})
-		i++
 	}
+	//fmt.Println("Hallå3")
 	//
 	j := 0
 	//trb = append(trb, BudgetTableRow{
@@ -368,7 +377,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//	ValueC2: fmt.Sprintf("%v", y2)})
 	//
 	for _, br := range brows {
-		//fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
+		fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
 		trb = append(trb, BudgetTableRow{
 			Key:     fmt.Sprintf("%d", j+1),
 			Text:    fmt.Sprintf("%s", cp(br.Text)),
@@ -475,7 +484,7 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 }
 
 // fixBudgetRows documentation
-func fixBudgetRows(budgets []models.BudgetYear) []BRow {
+func fixBudgetRows(values []models.ValueType) []BRow {
 
 	// BRow documentation
 	//fmt.Println(fmt.Sprintf("%v", getColumnText(24)))
@@ -489,20 +498,24 @@ func fixBudgetRows(budgets []models.BudgetYear) []BRow {
 	y1 := 0
 	y2 := 0
 	i := 0
-	for _, budget := range budgets {
+	//
+	for _, value := range values {
 		if i == 0 {
-			y1 = budget.BudgetYear
+			y1 = value.BudgetYear
+			//fmt.Println(fmt.Sprintf("År:%v", value.BudgetYear))
 		} else {
-			y2 = budget.BudgetYear
+			//fmt.Println(fmt.Sprintf("År:%v", value.BudgetYear))
+			y2 = value.BudgetYear
 		}
 		i++
 	}
-	//fmt.Println(fmt.Sprintf("Len:%v", len(budgets)))
+	//
+	//fmt.Println(fmt.Sprintf("Len:%v", len(values)))
 	for j := 0; j <= 24; j++ {
 		brow.Year = y1
 		brow.Text = getColumnText(j)
-		brow.ValueC1 = getColumn1Value(j, y1, budgets)
-		brow.ValueC2 = getColumn2Value(j, y2, budgets)
+		brow.ValueC1 = getColumn1Value(j, y1, values)
+		brow.ValueC2 = getColumn2Value(j, y2, values)
 		BRows = append(BRows, brow)
 	}
 	//
@@ -510,132 +523,129 @@ func fixBudgetRows(budgets []models.BudgetYear) []BRow {
 }
 
 // getColumn1Value documentation
-func getColumn1Value(index int, year int, budgets []models.BudgetYear) float32 {
+func getColumn1Value(index int, _year int, values []models.ValueType) float32 {
 
 	var retval float32
-	for _, budget := range budgets {
-		if budget.BudgetYear == year {
-			for _, val := range budget.Values {
-				switch index {
-				case 0:
-					retval = val.Value1
-				case 1:
-					retval = val.Value2
-				case 2:
-					retval = val.Value3
-				case 3:
-					retval = val.Value4
-				case 4:
-					retval = val.Value5
-				case 5:
-					retval = val.Value6
-				case 6:
-					retval = val.Value7
-				case 7:
-					retval = val.Value8
-				case 8:
-					retval = val.Value9
-				case 9:
-					retval = val.Value10
-				case 10:
-					retval = val.Value11
-				case 11:
-					retval = val.Value12
-				case 12:
-					retval = val.Value13
-				case 13:
-					retval = val.Value14
-				case 14:
-					retval = val.Value15
-				case 15:
-					retval = val.Value16
-				case 16:
-					retval = val.Value17
-				case 17:
-					retval = val.Value18
-				case 18:
-					retval = val.Value19
-				case 19:
-					retval = val.Value20
-				case 20:
-					retval = val.Value21
-				case 21:
-					retval = val.Value22
-				case 22:
-					retval = val.Value23
-				case 23:
-					retval = val.Value24
-				case 24:
-					retval = val.Value25
-				} //i++
-			}
+
+	for _, value := range values {
+		if value.BudgetYear == _year {
+			switch index {
+			case 0:
+				retval = value.Value1
+			case 1:
+				retval = value.Value2
+			case 2:
+				retval = value.Value3
+			case 3:
+				retval = value.Value4
+			case 4:
+				retval = value.Value5
+			case 5:
+				retval = value.Value6
+			case 6:
+				retval = value.Value7
+			case 7:
+				retval = value.Value8
+			case 8:
+				retval = value.Value9
+			case 9:
+				retval = value.Value10
+			case 10:
+				retval = value.Value11
+			case 11:
+				retval = value.Value12
+			case 12:
+				retval = value.Value13
+			case 13:
+				retval = value.Value14
+			case 14:
+				retval = value.Value15
+			case 15:
+				retval = value.Value16
+			case 16:
+				retval = value.Value17
+			case 17:
+				retval = value.Value18
+			case 18:
+				retval = value.Value19
+			case 19:
+				retval = value.Value20
+			case 20:
+				retval = value.Value21
+			case 21:
+				retval = value.Value22
+			case 22:
+				retval = value.Value23
+			case 23:
+				retval = value.Value24
+			case 24:
+				retval = value.Value25
+			} //i++
 		}
 	}
 	return retval
 }
 
 // getColumn2Value documentation
-func getColumn2Value(index int, year int, budgets []models.BudgetYear) float32 {
+func getColumn2Value(index int, _year int, values []models.ValueType) float32 {
 
 	var retval float32
 	//i := 0
-	for _, budget := range budgets {
-		if budget.BudgetYear == year {
-			//i = 0
-			for _, val := range budget.Values {
-				switch index {
-				case 0:
-					retval = val.Value1
-				case 1:
-					retval = val.Value2
-				case 2:
-					retval = val.Value3
-				case 3:
-					retval = val.Value4
-				case 4:
-					retval = val.Value5
-				case 5:
-					retval = val.Value6
-				case 6:
-					retval = val.Value7
-				case 7:
-					retval = val.Value8
-				case 8:
-					retval = val.Value9
-				case 9:
-					retval = val.Value10
-				case 10:
-					retval = val.Value11
-				case 11:
-					retval = val.Value12
-				case 12:
-					retval = val.Value13
-				case 13:
-					retval = val.Value14
-				case 14:
-					retval = val.Value15
-				case 15:
-					retval = val.Value16
-				case 16:
-					retval = val.Value17
-				case 17:
-					retval = val.Value18
-				case 18:
-					retval = val.Value19
-				case 19:
-					retval = val.Value20
-				case 20:
-					retval = val.Value21
-				case 21:
-					retval = val.Value22
-				case 22:
-					retval = val.Value23
-				case 23:
-					retval = val.Value24
-				case 24:
-					retval = val.Value25
-				}
-			}
+
+	for _, value := range values {
+		if value.BudgetYear == _year {
+			switch index {
+			case 0:
+				retval = value.Value1
+			case 1:
+				retval = value.Value2
+			case 2:
+				retval = value.Value3
+			case 3:
+				retval = value.Value4
+			case 4:
+				retval = value.Value5
+			case 5:
+				retval = value.Value6
+			case 6:
+				retval = value.Value7
+			case 7:
+				retval = value.Value8
+			case 8:
+				retval = value.Value9
+			case 9:
+				retval = value.Value10
+			case 10:
+				retval = value.Value11
+			case 11:
+				retval = value.Value12
+			case 12:
+				retval = value.Value13
+			case 13:
+				retval = value.Value14
+			case 14:
+				retval = value.Value15
+			case 15:
+				retval = value.Value16
+			case 16:
+				retval = value.Value17
+			case 17:
+				retval = value.Value18
+			case 18:
+				retval = value.Value19
+			case 19:
+				retval = value.Value20
+			case 20:
+				retval = value.Value21
+			case 21:
+				retval = value.Value22
+			case 22:
+				retval = value.Value23
+			case 23:
+				retval = value.Value24
+			case 24:
+				retval = value.Value25
+			} //i++
 		}
 	}
 	return retval

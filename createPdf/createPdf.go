@@ -342,17 +342,13 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//y2 := 0
 	i := 0
 	//
-	//fmt.Println("Hallå1")
 	hr = HeaderRow{}
 	hr.Value = cp("Budget - (Budgets)")
 	trb := []BudgetTableRow{} // Initiate table on page one
 	brows := []BRow{}
 	y1 := 0
 	y2 := 0
-	//fmt.Println("Hallå2")
 	for _, budget := range budgets {
-		//fmt.Println(fmt.Sprintf("ID=%v", budget.CompanyEconomyID))
-		//fmt.Println(fmt.Sprintf("Len:=%v", len(budgets)))
 		for _, value := range budget.BudgetYears {
 			//fmt.Println(fmt.Sprintf("År=%v", value.BudgetYear))
 			if i == 0 {
@@ -372,7 +368,6 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		trb = append(trb, BudgetTableRow{Key: "", Text: cp("Avser år"),
 			ValueC1: fmt.Sprintf("%v", y1), ValueC2: fmt.Sprintf("%v", y2)})
 	}
-	//fmt.Println("Hallå3")
 	//
 	j := 0
 	//trb = append(trb, BudgetTableRow{

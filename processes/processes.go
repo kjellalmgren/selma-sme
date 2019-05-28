@@ -127,9 +127,10 @@ func AddProcess(w http.ResponseWriter, r *http.Request) {
 	processtype := models.ProcessType{}
 	//	customerIDs := []models.CustomerID{}
 
-	customerIDs := make([]models.CustomerID, 1, 1)
+	customerIDs := make([]models.CustomerIDType, 1, 1)
 
 	customerIDs[0].CustomerID = "19640120-3887"
+	customerIDs[0].CustomerAdded = "2019-06-01T06:04:00"
 
 	processtype.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
 	processtype.CaseIDStatus = "STARTEDBYAPPLICANT"
@@ -174,9 +175,10 @@ func UpdateProcess(w http.ResponseWriter, r *http.Request) {
 	processtype := models.ProcessType{}
 	//	customerIDs := []models.CustomerID{}
 
-	customerIDs := make([]models.CustomerID, 1, 1)
+	customerIDs := make([]models.CustomerIDType, 1, 1)
 
 	customerIDs[0].CustomerID = "19640120-3887"
+	customerIDs[0].CustomerAdded = "2019-06-01T06:05:00"
 
 	processtype.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
 	processtype.CaseIDStatus = "STARTEDBYAPPLICANT"

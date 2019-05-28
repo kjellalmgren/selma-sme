@@ -1,17 +1,20 @@
 [
   {
     "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-    "CustomerID": [
+    "Customers": [
       {
-        "customerId": "19640120-3887"
+        "customerId": "19640120-3887",
+        "customerAdded": "2019-06-01T12:02:00"
       },
       {
-        "customerId": "19650705-5579"
+        "customerId": "19650705-5579",
+        "customerAdded": "2019-06-01T12:03:00"
       }
     ],
     "caseId": "100666",
     "caseIdStatus": "CLOSEDBYAPPLICANT",
     "processCreatedDate": "2019-06-01T12:00:00",
-    "lastAccessed": "2019-06-10T14:20:30"
+    "lastAccessed": "2019-06-10T14:20:30",
+    "referenceId": 1000
   }
 ]

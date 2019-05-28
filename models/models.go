@@ -2,12 +2,13 @@ package models
 
 // ProcessType documentation
 type ProcessType struct {
-	ProcessID          string `json:"processId"`
-	CustomerID         []CustomerID
-	CaseID             string `json:"caseId"`
-	CaseIDStatus       string `json:"caseIdStatus"`
-	ProcessCreatedDate string `json:"processCreatedDate"`
-	LastAccessed       string `json:"lastAccessed"`
+	ProcessID          string           `json:"processId"`
+	CustomerID         []CustomerIDType `json:"Customers"`
+	CaseID             string           `json:"caseId"`
+	CaseIDStatus       string           `json:"caseIdStatus"`
+	ProcessCreatedDate string           `json:"processCreatedDate"`
+	LastAccessed       string           `json:"lastAccessed"`
+	ReferenceID        int              `json:"referenceId"`
 }
 
 // ProcessIDCaseID documentation
@@ -19,6 +20,12 @@ type ProcessIDCaseID struct {
 // CustomerID documentation
 type CustomerID struct {
 	CustomerID string `json:"customerId"`
+}
+
+// CustomerID documentation
+type CustomerIDType struct {
+	CustomerID    string `json:"customerId"`
+	CustomerAdded string `json:"customerAdded"`
 }
 
 // HouseholdType documentation

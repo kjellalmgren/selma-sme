@@ -130,6 +130,8 @@ info:
   # 2019-05-26 0.6.6 kal Revenues was missing items of array types
   # 2019-05-27 0.6.6 kal kycHighRiskIndustryText has been added to kycInformation
   # 2019-05-27 0.6.6 kal /v1/deletekycinformation: spelling error corrected
+  # 2019-05-27 0.6.7 kal Started a new version
+  # 2019-05-28 0.6.7 kal ProcessType has been corrected regarding Customers in a Application
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -5814,7 +5816,7 @@ definitions:
   #
   caseIdStatus:
     type: string
-    description: Set status on the caseId
+    description: Set status on the caseId or in the process (application)
     example: CLOSEDBYAPPLICANT
     enum:
     - "CLOSEDBYAPPLICANT"
@@ -5838,10 +5840,18 @@ definitions:
     description: updated timestamp when customer login to the site
     type: string
     example: '2019-04-17T12:42:22'
+  #
+  referenceId:
+    description: Unique identity for each application to be use for conversation LH-->customer
+      short number serie starting at 1000 and incrementing
+    type: integer
+    example: 1000
+  #
   customerCreated:
-    description: timestamp when cusotmer has been added to the application, to hold (huvudsökande)
+    description: timestamp when customer has been added to the application, to hold (huvudsökande, medsökande) order
     type: string
     example: '2019-05-12T16:22:00'
+  #
   householdMemberId:
     description: unique identification of a household member
     type: string
@@ -5858,6 +5868,7 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/householdMember'
+  #
   #####################################################
   # ApplicantType
   #####################################################
@@ -6596,24 +6607,13 @@ definitions:
   #  format: uuid
   #  example: 'd85fa472-3f31-11e9-b210-d663bd873d93'
   revenueYear:
-    description: year of revenue, föregående år och 2 år tillbaka. Även om resultat inte fastställt
-      så ber vi kunden registrera uppskattat. När vi väl kommer till LP så kommer handläggaren
-      ändå verifiera bokslutet. Detta fält är read-only i användargränssnittet
+    description: year of revenue (bruttoomsättning), föregående år och 2 år tillbaka. Även om resultat inte fastställt så ber vi kunden registrera uppskattat. När vi väl kommer till LP så kommer handläggaren ändå verifiera bokslutet. Detta fält är read-only i användargränssnittet
     type: integer
   revenue:
-    description: Företagets omsättning för året angivet i revenueYear (3 år)
+    description: Företagets bruttoomsättning för året angivet i revenueYear (2 år)
     type: number
     format: float
     example: 2000000
-  #
-  #######################################
-  # BudgetType
-  #######################################
-  #budgetId:
-  #  description: Type definition for company budget
-  #  type: string
-  #  format: uuid
-  #  example: '{"budgetId": "32084646-d030-4c51-a316-b1342c3551dc"}'
   #
   budgetId:
     description: unique identifier for a specifict budget
@@ -6660,7 +6660,7 @@ definitions:
     format: float
     example: 7000
   value8:
-    description: Omsättning totalt (totala intäkter)
+    description: Bruttoomsättning totalt (totala intäkter)
     type: number
     format: float
     example: 25000
@@ -6710,7 +6710,7 @@ definitions:
     format: float
     example: -650000
   value18:
-    description: Resultat efter avskrivmningar
+    description: Resultat efter avskrivningar
     type: number
     format: float
     example: 825000
@@ -7589,8 +7589,8 @@ definitions:
     properties:
       processId:
         $ref: '#/definitions/processId'
-      customerId:
-        $ref: '#/definitions/customerIdType'
+      Customers:
+        $ref: '#/definitions/Customers'
       caseId:
         $ref: '#/definitions/caseId'
       caseIdStatus:
@@ -7599,9 +7599,14 @@ definitions:
         $ref: '#/definitions/processCreatedDate'
       lastAccessed:
         $ref: '#/definitions/lastAccessed'
+      referenceId:
+        $ref: '#/definitions/referenceId'
   #
-  #Process:
-  #  $ref: '#/definitions/processType'
+  Customers:
+    description: Array of customer in a application (processid)
+    type: array
+    items:
+      $ref: '#/definitions/customerIdType'
   #
   Processes:
     description: Return a list of type processType
@@ -7624,18 +7629,6 @@ definitions:
         $ref: '#/definitions/customerId'
       customerAdded:
         $ref: '#/definitions/customerCreated'
-  #
-  #processIdCaseIdType:
-  #  description: return value after addProcess and caseid reservation i Loan Process
-  #  required:
-  #    - processId
-  #    - caseId
-  #  type: object
-  #  properties:
-  #    processId:
-  #      $ref: '#/definitions/processId'
-  #    caseId:
-  #      $ref: '#/definitions/caseId'
   #
   #################################################
   # Definition KycInformationType

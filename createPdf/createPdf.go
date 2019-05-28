@@ -114,6 +114,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("Kunder"), Value: ""})
 		for _, customerID := range process.CustomerID {
 			tr = append(tr, TableRow{Key: "\tKund:", Value: "\t\t" + customerID.CustomerID})
+			tr = append(tr, TableRow{Key: "\tSkapad:", Value: "\t\t" + customerID.CustomerAdded})
 		}
 		pdf = table1(pdf, tr) // add table to page
 	}
@@ -346,28 +347,30 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	hr.Value = cp("Budget - (Budgets)")
 	trb := []BudgetTableRow{} // Initiate table on page one
 	brows := []BRow{}
+	y1 := 0
+	y2 := 0
 	//fmt.Println("Hallå2")
 	for _, budget := range budgets {
-		fmt.Println(fmt.Sprintf("ID=%v", budget.CompanyEconomyID))
-		fmt.Println(fmt.Sprintf("Len:=%v", len(budgets)))
+		//fmt.Println(fmt.Sprintf("ID=%v", budget.CompanyEconomyID))
+		//fmt.Println(fmt.Sprintf("Len:=%v", len(budgets)))
 		for _, value := range budget.BudgetYears {
-			fmt.Println(fmt.Sprintf("År=%v", value.BudgetYear))
+			//fmt.Println(fmt.Sprintf("År=%v", value.BudgetYear))
 			if i == 0 {
-				//fmt.Println(value.BudgetYear)
 				pdf.AddPage()
 				pdf.SetFont("Arial", "B", 16)
 				pdf = header1(pdf, hr.Value)
 				pdf.SetFont("Arial", "", 10)
-				//fmt.Println("Hallå4")
+				y1 = value.BudgetYear
 			} else {
-				//fmt.Println("Hallå5")
 				brows = fixBudgetRows(budget.BudgetYears)
-				//fmt.Println(fmt.Sprintf("Len:%v", len(brows)))
+				y2 = value.BudgetYear
 			}
 			i++
 		}
 		trb = append(trb, BudgetTableRow{Key: cp("CE-ID:"), Text: budget.CompanyEconomyID,
 			ValueC1: "SEK", ValueC2: "SEK"})
+		trb = append(trb, BudgetTableRow{Key: "", Text: cp("Avser år"),
+			ValueC1: fmt.Sprintf("%v", y1), ValueC2: fmt.Sprintf("%v", y2)})
 	}
 	//fmt.Println("Hallå3")
 	//
@@ -377,7 +380,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 	//	ValueC2: fmt.Sprintf("%v", y2)})
 	//
 	for _, br := range brows {
-		fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
+		//fmt.Println(fmt.Sprintf("%d: - Text: %s C1: %v C2: %v", j+1, br.Text, br.ValueC1, br.ValueC2))
 		trb = append(trb, BudgetTableRow{
 			Key:     fmt.Sprintf("%d", j+1),
 			Text:    fmt.Sprintf("%s", cp(br.Text)),
@@ -455,7 +458,7 @@ func tablebudget(pdf *gofpdf.Fpdf, tbl []BudgetTableRow) *gofpdf.Fpdf {
 	// align := []string{"L", "C", "L", "R", "R", "R"}
 	j := 0 // counter
 	for _, line := range tbl {
-		if j == 8 || j == 13 || j == 17 || j == 18 || j == 21 || j == 25 {
+		if j == 9 || j == 14 || j == 15 || j == 18 || j == 19 || j == 22 || j == 26 {
 			pdf.SetFillColor(230, 230, 230)
 			pdf.SetFont("Arial", "B", 10)
 			pdf.CellFormat(25, 6, line.Key, "1", 0, "L", true, 0, "")
@@ -523,13 +526,13 @@ func fixBudgetRows(values []models.ValueType) []BRow {
 }
 
 // getColumn1Value documentation
-func getColumn1Value(index int, _year int, values []models.ValueType) float32 {
+func getColumn1Value(_index int, _year int, values []models.ValueType) float32 {
 
 	var retval float32
 
 	for _, value := range values {
 		if value.BudgetYear == _year {
-			switch index {
+			switch _index {
 			case 0:
 				retval = value.Value1
 			case 1:
@@ -587,14 +590,14 @@ func getColumn1Value(index int, _year int, values []models.ValueType) float32 {
 }
 
 // getColumn2Value documentation
-func getColumn2Value(index int, _year int, values []models.ValueType) float32 {
+func getColumn2Value(_index int, _year int, values []models.ValueType) float32 {
 
 	var retval float32
 	//i := 0
 
 	for _, value := range values {
 		if value.BudgetYear == _year {
-			switch index {
+			switch _index {
 			case 0:
 				retval = value.Value1
 			case 1:

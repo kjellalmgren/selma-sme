@@ -200,7 +200,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: "fastighetsnamn", Value: cp(collateral.CollateralName)})
 		tr = append(tr, TableRow{Key: "Gata:", Value: cp(collateral.CollateralStreet)})
 		tr = append(tr, TableRow{Key: cp("Areal:"), Value: fmt.Sprintf("%v", collateral.CollateralAreal)})
-		tr = append(tr, TableRow{Key: cp("Areal:"), Value: fmt.Sprintf("%v", cp(collateral.CollateralAge))})
+		tr = append(tr, TableRow{Key: cp("Ålder:"), Value: fmt.Sprintf("%v", cp(collateral.CollateralAge))})
 		tr = append(tr, TableRow{Key: cp("Använd säkerhet:"), Value: fmt.Sprintf("%t", collateral.UseAsCollateral)})
 		tr = append(tr, TableRow{Key: cp("Köpa säkerhet:"), Value: fmt.Sprintf("%t", collateral.BuyCollateral)})
 		tr = append(tr, TableRow{Key: cp("Taxeringsägare"), Value: ""})

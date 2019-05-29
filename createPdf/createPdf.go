@@ -116,6 +116,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "\tKund:", Value: "\t\t" + customerID.CustomerID})
 			tr = append(tr, TableRow{Key: "\tSkapad:", Value: "\t\t" + customerID.CustomerAdded})
 		}
+		tr = append(tr, TableRow{Key: "\tReferensid: ", Value: "\t\t" + fmt.Sprintf("%d", process.ReferenceID)})
 		pdf = table1(pdf, tr) // add table to page
 	}
 	// Applicants
@@ -691,7 +692,7 @@ func getProcesses(processid string) []models.ProcessType {
 
 	file, err := ioutil.ReadFile("json/processes.json")
 	if err != nil {
-		fmt.Println("Error reading processes.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading processes.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &processes)
 	//j := 0
@@ -717,7 +718,7 @@ func getApplicants(processid string) []models.ApplicantType {
 	//
 	file, err := ioutil.ReadFile("json/applicants.json")
 	if err != nil {
-		fmt.Println("Error reading applicants.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading applicants.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &applicants)
 	//
@@ -743,7 +744,7 @@ func getCompanies(processid string) []models.CompanyType {
 	//
 	file, err := ioutil.ReadFile("json/companies.json")
 	if err != nil {
-		fmt.Println("Error reading companies.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading companies.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &companies)
 	//
@@ -767,7 +768,7 @@ func getCollaterals(processid string) []models.CollateralType {
 	//
 	file, err := ioutil.ReadFile("json/collaterals.json")
 	if err != nil {
-		fmt.Println("Error reading collaterals.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading collaterals.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &collaterals)
 	//
@@ -790,7 +791,7 @@ func getLoans(processid string) []models.LoanType {
 	//
 	file, err := ioutil.ReadFile("json/loans.json")
 	if err != nil {
-		fmt.Println("Error reading loans.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading loans.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &loans)
 	//
@@ -813,7 +814,7 @@ func getExtLoans(processid string) []models.ExtLoanType {
 	//
 	file, err := ioutil.ReadFile("json/extloans.json")
 	if err != nil {
-		fmt.Println("Error reading extloans.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading extloans.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &extloans)
 	//
@@ -836,7 +837,7 @@ func getHouseholds(processid string) []models.HouseholdType {
 	//
 	file, err := ioutil.ReadFile("json/households.json")
 	if err != nil {
-		fmt.Println("Error reading households.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading households.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &households)
 	//
@@ -859,7 +860,7 @@ func getCompanyEconomies(processid string) []models.CompanyEconomyType {
 	//
 	file, err := ioutil.ReadFile("json/companyeconomies.json")
 	if err != nil {
-		fmt.Println("Error reading companyeconomies.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading companyeconomies.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &companyeconomies)
 	//
@@ -882,7 +883,7 @@ func getPersonalEconomies(processid string) []models.PersonalEconomyType {
 	//
 	file, err := ioutil.ReadFile("json/personaleconomies.json")
 	if err != nil {
-		fmt.Println("Error reading personaleconomies.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading personaleconomies.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &personaleconomies)
 	//
@@ -905,7 +906,7 @@ func getKycInformations(processid string) []models.KycInformationType {
 	//
 	file, err := ioutil.ReadFile("json/kycinformations.json")
 	if err != nil {
-		fmt.Println("Error reading kycinformations.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading kycinformations.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &kycinformations)
 	//
@@ -928,7 +929,7 @@ func getBudgets(processid string) []models.BudgetType {
 	//
 	file, err := ioutil.ReadFile("json/budgets.json")
 	if err != nil {
-		fmt.Println("Error reading budgets.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading budgets.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &budgets)
 	//
@@ -951,7 +952,7 @@ func getEUSupports(processid string) []models.EUSupportType {
 	//
 	file, err := ioutil.ReadFile("json/eusupports.json")
 	if err != nil {
-		fmt.Println("Error reading eusupports.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading eusupports.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &eusupports)
 	//
@@ -974,7 +975,7 @@ func getGuarantors(processid string) []models.GuarantorType {
 	//
 	file, err := ioutil.ReadFile("json/guarantors.json")
 	if err != nil {
-		fmt.Println("Error reading guarantors.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading guarantors.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &guarantors)
 	//
@@ -997,7 +998,7 @@ func getMaintenanceCosts(processid string) []models.MaintenanceCostType {
 	//
 	file, err := ioutil.ReadFile("json/maintenancecosts.json")
 	if err != nil {
-		fmt.Println("Error reading maintenancecosts.json - %s", err)
+		fmt.Println(fmt.Sprintf("Error reading maintenancecosts.json - %s", err))
 	}
 	_ = json.Unmarshal([]byte(file), &maintenancecosts)
 	//

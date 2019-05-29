@@ -1,0 +1,22 @@
+{
+    "companyId": "5562048438",
+    "changeDate": "2019-05-01",
+    "establishments": [
+      {
+        "companyEstablishmentNumber": "32083297",
+        "establishmentOfficeName": "Fascinex Fastighetsförvaltning AB",
+        "establishmentOfficeType": "Huvudkontor",
+        "establishmentAddress": "Box 4927",
+        "establishmentZipCode": "42144",
+        "establishmentTown": "Västra Frölunda",
+        "establishmentVisitAddress": "Testadress",
+        "establishmentVisitZipCode": "40959",
+        "establishmentVisitTown": "Västra Frölunda",
+        "phoneNumber": "0700-123456",
+        "industryCode": "77390",
+        "industryText": "Uthyrning och leasing av maskiner och utrustning",
+        "commercialBlockText": "N/A",
+        "numberEmployeesInterval": "5 anställda"
+      }
+    ]
+  }

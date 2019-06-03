@@ -210,13 +210,17 @@ func main() {
 	//	WriteTimeout: time.Second * 30,
 	//	IdleTimeout:  time.Second * 30,
 	//}
+	// ******* ROARING *******
 	//var header Header
-	// ***
 	//header := roaring.GetRoaringAccessToken()
 	//fmt.Println(fmt.Sprintf("1:%v", string(header.AccessToken)))
 	//fmt.Println(fmt.Sprintf("2:%s", string(header.TokenType)))
 	//fmt.Println(string(header.TokenType))
-	// ***
+	// ************************
+	// ******** BANKID ********
+	//ret := bankid.AuthenticatePerson("196010050190")
+	//fmt.Println(fmt.Sprintf("Return %d", ret))
+	// ************************
 
 	err := http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", router)
 	//err := server.ListenAndServeTLS("cert.pem", "key.pem", router)

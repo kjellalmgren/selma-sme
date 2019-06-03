@@ -1,0 +1,120 @@
+AKTIEBOLAG-FLÖDE:
+
+Request person 7407242218
+
+Response Body
+{
+  "posts": [
+    {
+      "nationalRegistryChangeDate": "?????",
+      "personalNumber": "197407242218",
+      "hasHistory": true,
+      "secrecyChangeDate": "?????",
+      "secrecyMarked": false,
+      "details": [
+        {
+          "dateFrom": "?????",
+          "dateTo": "9999-12-31T00:00",
+          "notificationName": "Krizmanic, Karl Gustav Martin",
+          "firstName": "Karl Gustav Martin",
+          "givenName": 20,
+          "middleName": "Karl Gustav",
+          "surName": "Krizmanic",
+          "gender": "F",
+          "birthDate": "1974-07-24T00:00"
+        }
+      ],
+      "address": {
+        "nationalRegistrationAddress": [
+          {
+            "dateFrom": "2015-12-18T00:00",
+            "dateTo": "9999-12-31T00:00",
+            "registrationDate": "2003-01-01T00:00",
+            "deliveryAddress2": "Snäckstigen 7",
+            "postalNumber": "62157",
+            "city": "Visby",
+            "districtCode": "215025",
+            "communeCode": "80",
+            "countyCode": "01"
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+Request Engagements 7407242218
+
+{
+  "hitCount": 1,
+  "personalNumber": "197407242218",
+  "firstName": "Martin",
+  "surName": "Krizmanic",
+  "engagements": [
+    {
+      "companyId": "5562048438",
+      "companyName": "Fascinex Fastighetsförvaltning AB",
+      "statusCode": 100,
+      "statusText": "Aktivt",
+      "roles": [
+        {
+          "roleCode": 10,
+          "roleName": "Ordinarie ledamot"
+        }
+      ],
+      "town": "VÄSTRA FRÖLUNDA"
+    }
+  ]
+}
+
+
+Request companyInformation 5562056738
+
+Response Body
+{
+  "companyId": "5562048438",
+  "changeDate": "????",
+  "establishments": [
+    {
+      "companyEstablishmentNumber": "32083297",
+      "establishmentOfficeName": "Fascinex Fastighetsförvaltning AB",
+      "establishmentOfficeType": "Huvudkontor",
+      "establishmentAddress": "Box 4927",
+      "establishmentZipCode": "42144",
+      "establishmentTown": "Västra Frölunda",
+      "establishmentVisitAddress": "Testadress",
+      "establishmentVisitZipCode": "40959",
+      "establishmentVisitTown": "Västra Frölunda",
+      "phoneNumber": "0700-123456",
+      "industryCode": "77390",
+      "industryText": "Uthyrning och leasing av maskiner och utrustning",
+      "commercialBlockText": "?????",
+      "numberEmployeesInterval": "5 anställda"
+    }
+  ]
+}
+
+
+Request Economy 5562056738
+
+Response Body
+{
+  "companyId": "5562048438",
+  "changeDate": "2016-12-10",
+  "bsShareCapital": "3 000 000",
+  "nbrOfEmployees": "5",
+  "nbrOfEmployeesInterval": "5 anställda",
+  "nbrOfEmployeesOfficeInterval": "Huvudkontor",
+  "netTurnover": "2 050 000",
+  "turnoverPerEmployee": "n/a",
+  "plOperatingProfit": "+2.172",
+  "plProfitLossAfterFinItems": "+2.172",
+  "plNetIncome": "+11.585",
+  "bsTotalEquity": "121",
+  "bsTotalAssets": "127",
+  "bsCashAndBankBalances": "41",
+  "kpiSolidityPercent": "95.3",
+  "kpiQuickRatioPercent": "2116.7",
+  "kpiNetMarginPercent": "0"
+}

@@ -96,5 +96,90 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Budget not Found", 404)
 		//w.WriteHeader(http.StatusNotFound)
 	}
+}
 
+// UpdateBudget documentation
+func UpdateBudget(w http.ResponseWriter, r *http.Request) {
+
+	var budgets []models.ValueYearType
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "PATCH, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
+	var data models.ValueYearType
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	for _, budget := range budgets {
+		if budget.BudgetID == data.BudgetID {
+			fmt.Println(fmt.Sprintf("update year: %d", budget.BudgetYear))
+		}
+	}
+	w.WriteHeader(http.StatusOK)
+
+}
+
+// DeleteBudget documentation
+func DeleteBudget(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
+	var data models.BudgetID
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	processid := r.Header.Get("X-process-Id")
+	fmt.Printf("DeleteBudget executed: processId: %s budgetId: %s...\r\n", processid, data.BudgetID)
+	w.WriteHeader(http.StatusOK)
+}
+
+// AddBudget documentation
+func AddBudget(w http.ResponseWriter, r *http.Request) {
+
+	var budgets []models.ValueYearType
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
+	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
+	var data models.ValueYearType
+	var r1 []byte
+	r1, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
+	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+	}
+	for _, budget := range budgets {
+		if budget.BudgetID == data.BudgetID {
+			fmt.Println(fmt.Sprintf("Add year: %d", budget.BudgetYear))
+		}
+	}
+	w.WriteHeader(http.StatusOK)
 }

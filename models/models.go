@@ -280,6 +280,11 @@ type BudgetType struct {
 	BudgetYears      []ValueYearType `json:"budgetYears"`
 }
 
+// BudgetID documentation
+type BudgetID struct {
+	BudgetID string `json:"budgetId"`
+}
+
 // ValueYearType documentation
 type ValueYearType struct {
 	BudgetID   string    `json:"budgetId"`

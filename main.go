@@ -144,6 +144,8 @@ func main() {
 	// Budgets.go
 	router.HandleFunc("/v1/getbudgets", budgets.GetBudgets).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/getbudget", budgets.GetBudget).Methods("POST", "GET", "OPTIONS")
+	router.HandleFunc("/v1/updatebudget", budgets.UpdateBudget).Methods("PATCH", "OPTIONS")
+	router.HandleFunc("/v1/deletebudget", budgets.DeleteBudget).Methods("DELETE", "OPTIONS")
 	//
 	// households.go
 	router.HandleFunc("/v1/gethouseholds", households.GetHouseholds).Methods("POST", "OPTIONS")

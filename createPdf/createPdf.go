@@ -483,7 +483,7 @@ func image(pdf *gofpdf.Fpdf) *gofpdf.Fpdf {
 }
 
 // fixBudgetRows documentation
-func fixBudgetRows(values []models.ValueType) []BRow {
+func fixBudgetRows(values []models.ValueYearType) []BRow {
 
 	// BRow documentation
 	//fmt.Println(fmt.Sprintf("%v", getColumnText(24)))
@@ -522,7 +522,7 @@ func fixBudgetRows(values []models.ValueType) []BRow {
 }
 
 // getColumn1Value documentation
-func getColumn1Value(_index int, _year int, values []models.ValueType) float32 {
+func getColumn1Value(_index int, _year int, values []models.ValueYearType) float32 {
 
 	var retval float32
 
@@ -530,55 +530,55 @@ func getColumn1Value(_index int, _year int, values []models.ValueType) float32 {
 		if value.BudgetYear == _year {
 			switch _index {
 			case 0:
-				retval = value.Value1
+				retval = value.Value.Value1
 			case 1:
-				retval = value.Value2
+				retval = value.Value.Value2
 			case 2:
-				retval = value.Value3
+				retval = value.Value.Value3
 			case 3:
-				retval = value.Value4
+				retval = value.Value.Value4
 			case 4:
-				retval = value.Value5
+				retval = value.Value.Value5
 			case 5:
-				retval = value.Value6
+				retval = value.Value.Value6
 			case 6:
-				retval = value.Value7
+				retval = value.Value.Value7
 			case 7:
-				retval = value.Value8
+				retval = value.Value.Value8
 			case 8:
-				retval = value.Value9
+				retval = value.Value.Value9
 			case 9:
-				retval = value.Value10
+				retval = value.Value.Value10
 			case 10:
-				retval = value.Value11
+				retval = value.Value.Value11
 			case 11:
-				retval = value.Value12
+				retval = value.Value.Value12
 			case 12:
-				retval = value.Value13
+				retval = value.Value.Value13
 			case 13:
-				retval = value.Value14
+				retval = value.Value.Value14
 			case 14:
-				retval = value.Value15
+				retval = value.Value.Value15
 			case 15:
-				retval = value.Value16
+				retval = value.Value.Value16
 			case 16:
-				retval = value.Value17
+				retval = value.Value.Value17
 			case 17:
-				retval = value.Value18
+				retval = value.Value.Value18
 			case 18:
-				retval = value.Value19
+				retval = value.Value.Value19
 			case 19:
-				retval = value.Value20
+				retval = value.Value.Value20
 			case 20:
-				retval = value.Value21
+				retval = value.Value.Value21
 			case 21:
-				retval = value.Value22
+				retval = value.Value.Value22
 			case 22:
-				retval = value.Value23
+				retval = value.Value.Value23
 			case 23:
-				retval = value.Value24
+				retval = value.Value.Value24
 			case 24:
-				retval = value.Value25
+				retval = value.Value.Value25
 			} //i++
 		}
 	}
@@ -586,7 +586,7 @@ func getColumn1Value(_index int, _year int, values []models.ValueType) float32 {
 }
 
 // getColumn2Value documentation
-func getColumn2Value(_index int, _year int, values []models.ValueType) float32 {
+func getColumn2Value(_index int, _year int, values []models.ValueYearType) float32 {
 
 	var retval float32
 	//i := 0
@@ -595,55 +595,55 @@ func getColumn2Value(_index int, _year int, values []models.ValueType) float32 {
 		if value.BudgetYear == _year {
 			switch _index {
 			case 0:
-				retval = value.Value1
+				retval = value.Value.Value1
 			case 1:
-				retval = value.Value2
+				retval = value.Value.Value2
 			case 2:
-				retval = value.Value3
+				retval = value.Value.Value3
 			case 3:
-				retval = value.Value4
+				retval = value.Value.Value4
 			case 4:
-				retval = value.Value5
+				retval = value.Value.Value5
 			case 5:
-				retval = value.Value6
+				retval = value.Value.Value6
 			case 6:
-				retval = value.Value7
+				retval = value.Value.Value7
 			case 7:
-				retval = value.Value8
+				retval = value.Value.Value8
 			case 8:
-				retval = value.Value9
+				retval = value.Value.Value9
 			case 9:
-				retval = value.Value10
+				retval = value.Value.Value10
 			case 10:
-				retval = value.Value11
+				retval = value.Value.Value11
 			case 11:
-				retval = value.Value12
+				retval = value.Value.Value12
 			case 12:
-				retval = value.Value13
+				retval = value.Value.Value13
 			case 13:
-				retval = value.Value14
+				retval = value.Value.Value14
 			case 14:
-				retval = value.Value15
+				retval = value.Value.Value15
 			case 15:
-				retval = value.Value16
+				retval = value.Value.Value16
 			case 16:
-				retval = value.Value17
+				retval = value.Value.Value17
 			case 17:
-				retval = value.Value18
+				retval = value.Value.Value18
 			case 18:
-				retval = value.Value19
+				retval = value.Value.Value19
 			case 19:
-				retval = value.Value20
+				retval = value.Value.Value20
 			case 20:
-				retval = value.Value21
+				retval = value.Value.Value21
 			case 21:
-				retval = value.Value22
+				retval = value.Value.Value22
 			case 22:
-				retval = value.Value23
+				retval = value.Value.Value23
 			case 23:
-				retval = value.Value24
+				retval = value.Value.Value24
 			case 24:
-				retval = value.Value25
+				retval = value.Value.Value25
 			} //i++
 		}
 	}

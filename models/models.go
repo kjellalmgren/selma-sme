@@ -275,39 +275,45 @@ type KycID struct {
 
 // BudgetType documentation
 type BudgetType struct {
-	ProcessID        string `json:"processId"`
-	CompanyEconomyID string `json:"companyEconomyId"`
-	BudgetYears      []ValueType
+	ProcessID        string          `json:"processId"`
+	CompanyEconomyID string          `json:"companyEconomyId"`
+	BudgetYears      []ValueYearType `json:"budgetYears"`
+}
+
+// ValueYearType documentation
+type ValueYearType struct {
+	BudgetID   string    `json:"budgetId"`
+	BudgetYear int       `json:"budgetYear"`
+	Value      ValueType `json:"value"`
 }
 
 // ValueType documentation
 type ValueType struct {
-	BudgetYear int     `json:"budgetYear"`
-	Value1     float32 `json:"value1"`
-	Value2     float32 `json:"value2"`
-	Value3     float32 `json:"value3"`
-	Value4     float32 `json:"value4"`
-	Value5     float32 `json:"value5"`
-	Value6     float32 `json:"value6"`
-	Value7     float32 `json:"value7"`
-	Value8     float32 `json:"value8"`
-	Value9     float32 `json:"value9"`
-	Value10    float32 `json:"value10"`
-	Value11    float32 `json:"value11"`
-	Value12    float32 `json:"value12"`
-	Value13    float32 `json:"value13"`
-	Value14    float32 `json:"value14"`
-	Value15    float32 `json:"value15"`
-	Value16    float32 `json:"value16"`
-	Value17    float32 `json:"value17"`
-	Value18    float32 `json:"value18"`
-	Value19    float32 `json:"value19"`
-	Value20    float32 `json:"value20"`
-	Value21    float32 `json:"value21"`
-	Value22    float32 `json:"value22"`
-	Value23    float32 `json:"value23"`
-	Value24    float32 `json:"value24"`
-	Value25    float32 `json:"value25"`
+	Value1  float32 `json:"value1"`
+	Value2  float32 `json:"value2"`
+	Value3  float32 `json:"value3"`
+	Value4  float32 `json:"value4"`
+	Value5  float32 `json:"value5"`
+	Value6  float32 `json:"value6"`
+	Value7  float32 `json:"value7"`
+	Value8  float32 `json:"value8"`
+	Value9  float32 `json:"value9"`
+	Value10 float32 `json:"value10"`
+	Value11 float32 `json:"value11"`
+	Value12 float32 `json:"value12"`
+	Value13 float32 `json:"value13"`
+	Value14 float32 `json:"value14"`
+	Value15 float32 `json:"value15"`
+	Value16 float32 `json:"value16"`
+	Value17 float32 `json:"value17"`
+	Value18 float32 `json:"value18"`
+	Value19 float32 `json:"value19"`
+	Value20 float32 `json:"value20"`
+	Value21 float32 `json:"value21"`
+	Value22 float32 `json:"value22"`
+	Value23 float32 `json:"value23"`
+	Value24 float32 `json:"value24"`
+	Value25 float32 `json:"value25"`
 }
 
 //

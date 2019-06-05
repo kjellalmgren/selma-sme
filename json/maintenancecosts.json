@@ -15,7 +15,8 @@
         "InstituteLoanNumber": "0028600",
         "loanOwners": [
           {
-            "customerId": "19640120-3887"
+            "customerId": "19640120-3887",
+            "ownershipPart": 100
           }
         ],
         "loanAmount": 850000.00,

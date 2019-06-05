@@ -58,7 +58,7 @@ type HouseholdID struct {
 	HouseholdID string `json:"householdId"`
 }
 
-// Applicant documentation
+// ApplicantType documentation
 type ApplicantType struct {
 	ProcessID             string `json:"processId"`
 	CustomerID            string `json:"customerId"`
@@ -90,7 +90,7 @@ type ContactInformationType struct {
 	ApplicantMobileNumber string `json:"applicantBySms"`
 }
 
-// Loan documentation
+// LoanType documentation
 type LoanType struct {
 	ProcessID         string  `json:"processId"`
 	LoanID            string  `json:"loanId"`
@@ -116,7 +116,7 @@ type LoanID struct {
 	LoanID string `json:"loanId"`
 }
 
-// ExtLoan documentation
+// ExtLoanType documentation
 type ExtLoanType struct {
 	ProcessID          string `json:"processId"`
 	ExtLoanID          string `json:"extloanId"`
@@ -148,7 +148,13 @@ type CompanyEconomyType struct {
 	Revenues         []RevenueType
 }
 
-// Revenue documentation
+// CompanyEconomyIdBudgetID documentation
+type CompanyEconomyIdBudgetID struct {
+	CompanyEconomyID string `json:"companyEconomyId"`
+	BudgetID         string `json:"budgetId"`
+}
+
+// RevenueType documentation
 type RevenueType struct {
 	//RevenueID   string  `json:"revenueId"`
 	RevenueYear int32   `json:"revenueYear"`
@@ -422,7 +428,8 @@ type TypeOfHouse struct {
 
 // LoanOwnerType documentation
 type LoanOwnerType struct {
-	CustomerID string `json:"customerId"`
+	CustomerID    string `json:"customerId"`
+	OwnershipPart int    `json:"ownershipPart"`
 }
 
 // Header struct documentation

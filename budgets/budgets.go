@@ -53,7 +53,7 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	//
-	var data models.CompanyEconomyID
+	var data models.CompanyEconomyIdBudgetID
 	var r1 []byte
 	r1, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -68,7 +68,7 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("GetBudget executed: processId: %s companyEconomy: %s...\r\n", processid, data.CompanyEconomyID)
+	fmt.Printf("GetBudget executed: processId: %s companyEconomy: %s BudgetId: %s...\r\n", processid, data.CompanyEconomyID, data.BudgetID)
 	//
 	file, err := ioutil.ReadFile("json/budgets.json")
 	if err != nil {
@@ -82,10 +82,15 @@ func GetBudget(w http.ResponseWriter, r *http.Request) {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
 		for i := 0; i < len(budgets); i++ {
 			if budgets[i].CompanyEconomyID == data.CompanyEconomyID {
-				budret[0] = budgets[i]
+				for _, budgetyear := range budgets[i].BudgetYears {
+					if budgetyear.BudgetID == data.BudgetID {
+						budret[0] = budgets[i]
+					}
+				}
 			}
 		}
 	}
+	fmt.Println(fmt.Sprintf("Idx: %s", budret[0].CompanyEconomyID))
 	if budret[0].CompanyEconomyID == data.CompanyEconomyID {
 		if err := json.NewEncoder(w).Encode(budret); err != nil {
 			w.WriteHeader(http.StatusNotFound)

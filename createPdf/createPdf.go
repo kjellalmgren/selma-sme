@@ -169,6 +169,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "\tKategori:", Value: "\t" + cp(bf.BusinessCategory)})
 			tr = append(tr, TableRow{Key: "\tInriktning:", Value: "\t" + cp(bf.BusinessDirection)})
 			tr = append(tr, TableRow{Key: "\t%-andel:", Value: fmt.Sprintf("\t%v", bf.BusinessPart)})
+			tr = append(tr, TableRow{Key: "\tHuvuddriftinriktning", Value: fmt.Sprintf("\t%v", bf.MainBusiness)})
 		}
 		tr = append(tr, TableRow{Key: "", Value: ""})
 		tr = append(tr, TableRow{Key: "Created:", Value: company.Created})

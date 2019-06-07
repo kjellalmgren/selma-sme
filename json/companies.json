@@ -12,7 +12,8 @@
         "businessId": "5c497a6e-3a5b-44a8-8302-21012cad32a2",
         "businessCategory": "Jordbruksväxter",
         "businessDirection": "Spanmål & oljeväxt.",
-        "businessPart": 100
+        "businessPart": 100,
+        "mainBusiness": true
       }
     ],
     "industriCode": "28300",

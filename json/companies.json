@@ -26,6 +26,8 @@
         "customerId": "19640120-3887",
         "principalName": "Karin Karinsson"
       }
-    ]
+    ],
+    "brokenFiscalYear": false,
+    "fiscalYearEndDate": "2019-12-31"
   }
 ]

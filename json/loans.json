@@ -8,16 +8,17 @@
     "downPaymentType": "Övrigt",
     "downPaymentOther": "The mob",
     "downPaymentAmount": 300000,
-    "purposeOfLoan": "Köp",
     "Aims": [
       {
         "aimId": "fce3d0aa-4b04-11e9-8646-d663bd873d93",
-        "aimText": "Fastighetsköp - annan fastighet",
+        "purposeText": "Renovering",
+        "aimText": "Mjölkstall",
         "loanAmountPart": 2000000
       },
       {
         "aimId": "fce3d0aa-4b04-11e9-8646-d663bd873d94",
-        "aimText": "Renovering mjölkstall",
+        "purposeText": "Fastighetsköp",
+        "aimText": "Annan fastighet",
         "loanAmountPart": 300000
       }
     ]

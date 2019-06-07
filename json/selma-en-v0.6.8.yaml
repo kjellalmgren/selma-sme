@@ -135,6 +135,11 @@ info:
   # 2019-06-04 0.6.8 kal Started a new version
   # 2019-06-04 0.6.8 kal Budget redesign
   # 2019-06-05 0.6.8 kal ownershipPart has been added for MaintenanceCost handle %-share of
+  # 2019-06-07 0.6.8 kal mainBusiness has been added to company (Huvuddriftinriktning)
+  # 2019-06-07 0.6.8 kal extMonthlyCost has been added to extLoans, should be used for studilån
+  # 2019-06-07 0.6.8 kal mainPurposeOfLoan has been removed and replace by PurposeText in Aims
+  # 2019-06-07 0.6.8 kal brokenFiscalYear (true/false) has been added to Company
+  # 2910-06-07 0.6.8 kal fiscalYearEndDate has been added to Company
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -6024,6 +6029,11 @@ definitions:
     type: integer
     example: 100
   #
+  mainBusiness:
+    description: Vald huvuddrifitinriktning av kund, kan vara vara ett val oavsett antal driftinriktningar.
+    type: boolean
+    example: true
+  #
   industriCode:
     description: SNI-code from external company service roaring.io
     type: string
@@ -6515,6 +6525,12 @@ definitions:
     type: boolean
     example: true
   #
+  extMonthlyCost:
+    description: Monthly cost for Studielån
+    type: number
+    format: float
+    example: 800.0
+  #
   #####################################
   # PersonalCompanies
   #####################################
@@ -6567,37 +6583,49 @@ definitions:
   #######################################
   # mainPurpose
   #######################################
-  mainPurposes:
+  #mainPurpose:
+  #  type: string
+  #  description: Ändamål och syfte (TBD)
+  #  example: 'Utökning av lån'
+  #  enum:
+  #  - 'Nybyggnad'
+  #  - 'Renovering'
+  #  - 'Tillbyggnad'
+  #  - 'Maskininvestering'
+  #  - 'Fastighetsköp'
+  #  - 'Rörelsekapital'
+  #  - 'Energiproduktion'
+  #
+  #aimText:
+  #  type: string
+  #  description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggaren göra det innan överföring till SAP. Detta för att de ska bli rätt i uppföljning ned i SAS och den finsiella rapporteringen.
+  #  enum:
+  #  - 'Övrig ekonomibyggnad'
+  #  - 'Mjölkstall'
+  #  - 'Svinstall'
+  #  - 'Nötstall'
+  #  - 'Ekonomibyggnad'
+  #  - 'Fjäderfä'
+  #  - 'Maskinhall'
+  #  - 'Maskiner'
+  #  - 'Jordbruk'
+  #  - 'Annan fastighet'
+  #  - 'Likvid förstärkning'
+  #  - 'EU-kredit'
+  #  - 'Djur'
+  #  - 'Lager'
+  #  - 'Vindkraft'
+  #  - 'Biogas'
+  #
+  purposeText:
+    description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggaren göra det innan överföring till SAP. Detta för att de ska bli rätt i uppföljning ned i SAS och den finsiella rapporteringen.
     type: string
-    description: Ändamål och syfte (TBD)
-    example: 'Utökning av lån'
-    enum:
-    - 'Köp'
-    - 'Övertag'
-    - 'Utökning lån'
-    - 'Utlåning mot obelånat'
+    example: 'Renovering'
   #
   aimText:
+    description: Delsyfte på respektive lån, läses från mainPurposes.json
     type: string
-    description: Ändamål och syfte ska sättas på respektive lån som går över till LP. I de fall där det inte specifiseras ska handläggaren göra det innan överföring till SAP. Detta för att de ska bli rätt i uppföljning ned i SAS och den finsiella rapporteringen.
-    enum:
-    - 'Fastighetsköp - privatbostad'
-    - 'Fastighetsköp - annan fastighet'
-    - 'Fastighetsköp - jordbruk'
-    - 'Finansiering befintlig bostad'
-    - 'Finansiering befintlig bostad (omläggning internt)'
-    - 'Ny/tillbyggnad/renovering mjölkstall'
-  #
-  purposeDisplayText:
-    type: string
-    description: TBD
-    enum:
-    - Fastighetsköp - privatbostad
-    - Fastighetsköp - annan fastighet
-    - Fastighetsköp - jordbruk
-    - Finansiering befintlig bostad
-    - Finansiering befintlig bostad (omläggning internt)
-    - Ny/tillbyggnad/renovering mjölkstall
+    example: 'Mjölkstall'
   #
   ###################################
   # CompanyEconomies
@@ -6934,6 +6962,11 @@ definitions:
         $ref: '#/definitions/selectedCompany'
       principals:
         $ref: '#/definitions/principals'
+      brokenFiscalYear:
+        $ref: '#/definitions/brokenFiscalYear'
+      fiscalYearEndDate:
+        $ref: '#/definitions/fiscalYearEndDate'
+      
   #
   #Company:
   #  $ref: '#/definitions/companyType'
@@ -6962,6 +6995,8 @@ definitions:
         $ref: '#/definitions/businessDirection'
       businessPart:
         $ref: '#/definitions/businessPart'
+      mainBusiness:
+        $ref: '#/definitions/mainBusiness'
   #
   principals:
     description: list of huvudmän
@@ -6977,6 +7012,17 @@ definitions:
         $ref: '#/definitions/customerId'
       principalName:
         $ref: '#/definitions/principalName'
+  #
+  brokenFiscalYear:
+    description: Broken fiscal year, brutet räkenskapsår (true/false) should only be visible for legalGroupCode AB
+    type: boolean
+    example: false
+  #
+  fiscalYearEndDate:
+    description: Bokslutsdatum
+    type: string
+    example: '2019-12-31'
+  #
   updateCompanyType:
     description: Update of businessCategories (driftinriktning)
     type: object
@@ -7116,8 +7162,6 @@ definitions:
         $ref: '#/definitions/loanNumber'
       loanTakeOver:
         $ref: '#/definitions/loanTakeOver'
-      purposeOfLoan:
-        $ref: '#/definitions/mainPurposes'
       loanAmount:
         $ref: '#/definitions/loanAmount'
       downPaymentType:
@@ -7126,6 +7170,8 @@ definitions:
         $ref: '#/definitions/downPaymentOther'
       downPaymentAmount:
         $ref: '#/definitions/downPaymentAmount'
+      #purposeOfLoan:
+      #  $ref: '#/definitions/mainPurposes'
       aims:
         $ref: '#/definitions/Aims'
   #
@@ -7159,6 +7205,8 @@ definitions:
     properties:
       aimId:
         $ref: '#/definitions/aimId'
+      purposeText:
+        $ref: '#/definitions/purposeText'
       aimText:
         $ref: '#/definitions/aimText'
       loanAmountPart:
@@ -7174,8 +7222,8 @@ definitions:
         $ref: '#/definitions/loanId'
       loanAmount:
         $ref: '#/definitions/loanAmount'
-      purposeOfLoan:
-        $ref: '#/definitions/mainPurposes'
+#      purposeOfLoan:
+#        $ref: '#/definitions/mainPurpose'
       aims:
         $ref: '#/definitions/aimType'
   #
@@ -7206,6 +7254,8 @@ definitions:
         $ref: '#/definitions/extloanAmount'
       extRedeemLoan:
         $ref: '#/definitions/extRedeemLoan'
+      extMonthlyCost:
+        $ref: '#/definitions/extMonthlyCost'
   #
   #ExtLoan:
   #  $ref: '#/definitions/extLoanType'

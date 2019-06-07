@@ -119,19 +119,20 @@ func GetLoansx(w http.ResponseWriter, r *http.Request) {
 	// r.Header().Get("XprocessID")
 	loans = append(loans,
 		models.LoanType{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-			LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
-			LoanNumber:    "930101011212",
-			LoanAmount:    2300000,
-			PurposeOfLoan: "Köp",
+			LoanID:     "9b8e4822-3cb7-11e9-b210-d663bd873d93",
+			LoanNumber: "930101011212",
+			LoanAmount: 2300000,
 			Aims: []models.AimType{
 				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
+					PurposeText:    "Fastighetsköp",
 					AimText:        "Fastighetsköp - annan fastighet",
 					LoanAmountPart: 2000000,
 				},
 				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
-					AimText:        "Renovering mjölkstall",
+					PurposeText:    "Renovering",
+					AimText:        "Mjölkstall",
 					LoanAmountPart: 300000,
 				},
 			},
@@ -173,19 +174,20 @@ func GetLoanx(w http.ResponseWriter, r *http.Request) {
 	//
 	loans = append(loans,
 		models.LoanType{ProcessID: "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
-			LoanID:        "9b8e4822-3cb7-11e9-b210-d663bd873d93",
-			LoanNumber:    "930101011212",
-			LoanAmount:    2300000,
-			PurposeOfLoan: "Köp",
+			LoanID:     "9b8e4822-3cb7-11e9-b210-d663bd873d93",
+			LoanNumber: "930101011212",
+			LoanAmount: 2300000,
 			Aims: []models.AimType{
 				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d93",
-					AimText:        "Fastighetsköp - annan fastighet",
+					PurposeText:    "Renovering",
+					AimText:        "Mjölkstall",
 					LoanAmountPart: 2000000,
 				},
 				models.AimType{
 					AimID:          "fce3d0aa-4b04-11e9-8646-d663bd873d94",
-					AimText:        "Renovering mjölkstall",
+					PurposeText:    "Fastighetsköp",
+					AimText:        "Annan fastighet",
 					LoanAmountPart: 300000,
 				},
 			},

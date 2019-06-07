@@ -11,6 +11,7 @@
     "extLoanClearing": "5270",
     "extloanNumber": "0028600",
     "extLoanAmount": 100000,
+    "extMonthlyCost": 800.0,
     "extRedeemLoan": true
   }
 ]

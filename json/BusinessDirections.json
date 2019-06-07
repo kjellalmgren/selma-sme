@@ -51,11 +51,15 @@
       },
       {
         "BusinessDirectionID": "22",
-        "BusinessDirection": "Frukt - och bärodling "
+        "BusinessDirection": "Frukt - och bärodling"
       },
       {
         "BusinessDirectionID": "23",
         "BusinessDirection": "Övriga trädgårdsväxt."
+      },
+      {
+        "BusinessDirectionID": "24",
+        "BusinessDirection": "Frilandsodling"
       }
     ]
   },
@@ -78,6 +82,10 @@
       {
         "BusinessDirectionID": "33",
         "BusinessDirection": "Övriga nöt."
+      },
+      {
+        "BusinessDirectionID": "34",
+        "BusinessDirection": "Nötkreatur"
       }
     ]
   },
@@ -87,7 +95,7 @@
     "BusinessDirections": [
       {
         "BusinessDirectionID": "40",
-        "BusinessDirection": "Förskötsel"
+        "BusinessDirection": "Fårskötsel"
       },
       {
         "BusinessDirectionID": "41",
@@ -157,7 +165,7 @@
       },
       {
         "BusinessDirectionID": "71",
-        "BusinessDirection": "Hästv erksamhet"
+        "BusinessDirection": "Hästverksamhet"
       },
       {
         "BusinessDirectionID": "72",
@@ -203,10 +211,6 @@
       },
       {
         "BusinessDirectionID": "84",
-        "BusinessDirection": "Ridsport, tävling"
-      },
-      {
-        "BusinessDirectionID": "85",
         "BusinessDirection": "Övrig djurhållning"
       }
     ]
@@ -295,7 +299,7 @@
   },
   {
     "BusinessCategoryID": "14",
-    "BusinessCategory": "Turisn",
+    "BusinessCategory": "Turism",
     "BusinessDirections": [
       {
         "BusinessDirectionID": "140",

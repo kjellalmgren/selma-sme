@@ -1,0 +1,171 @@
+[
+    {
+        "id": "01",
+        "mainText": "Nybyggnad",
+        "mainDisplayText": "Nygyggnad",
+        "aims": [
+            {
+                "aimText": "Övrig ekonomibyggnad",
+                "aimDisplayText": "Övrig ekonomibyggnad"
+            },
+            {
+                "aimText": "Mjölkstall",
+                "aimDisplayText": "Mjölkstall"
+            },
+            {
+                "aimText": "Svinstall",
+                "aimDisplayText": "Svinstall"
+            },
+            {
+                "aimText": "Nötstall",
+                "aimDisplayText": "Nötstall"
+            },
+            {
+                "aimText": "Ekonomibyggnad",
+                "aimDisplayText": "Ekonomibyggnad"
+            },
+            {
+                "aimText": "Fjäderfä",
+                "aimDisplayText": "Fjäderfä"
+            },
+            {
+                "aimText": "Maskinhall",
+                "aimDisplayText": "Maskinhall"
+            }
+        ]
+    },
+    {
+        "id": "02",
+        "mainText": "Renovering",
+        "mainDisplayText": "Renovering",
+        "aims": [
+            {
+                "aimText": "Övrig ekonomibyggnad",
+                "aimDisplayText": "Övrig ekonomibyggnad"
+            },
+            {
+                "aimText": "Mjölkstall",
+                "aimDisplayText": "Mjölkstall"
+            },
+            {
+                "aimText": "Svinstall",
+                "aimDisplayText": "Svinstall"
+            },
+            {
+                "aimText": "Nötstall",
+                "aimDisplayText": "Nötstall"
+            },
+            {
+                "aimText": "Ekonomibyggnad",
+                "aimDisplayText": "Ekonomibyggnad"
+            },
+            {
+                "aimText": "Fjäderfä",
+                "aimDisplayText": "Fjäderfä"
+            },
+            {
+                "aimText": "Maskinhall",
+                "aimDisplayText": "Maskinhall"
+            }
+        ]
+    },
+    {
+        "id": "03",
+        "mainText": "Tillbyggnad",
+        "mainDisplayText": "Tillbyggnad",
+        "aims": [
+            {
+                "aimText": "Övrig ekonomibyggnad",
+                "aimDisplayText": "Övrig ekonomibyggnad"
+            },
+            {
+                "aimText": "Mjölkstall",
+                "aimDisplayText": "Mjölkstall"
+            },
+            {
+                "aimText": "Svinstall",
+                "aimDisplayText": "Svinstall"
+            },
+            {
+                "aimText": "Nötstall",
+                "aimDisplayText": "Nötstall"
+            },
+            {
+                "aimText": "Ekonomibyggnad",
+                "aimDisplayText": "Ekonomibyggnad"
+            },
+            {
+                "aimText": "Fjäderfä",
+                "aimDisplayText": "Fjäderfä"
+            },
+            {
+                "aimText": "Maskinhall",
+                "aimDisplayText": "Maskinhall"
+            }
+        ]
+    },
+    {
+        "id": "04",
+        "mainText": "Maskininvestering",
+        "mainDisplayText": "Maskininvestering",
+        "aims": [
+            {
+                "aimText": "Maskiner",
+                "aimDisplayText": "Maskiner"
+            }
+        ]
+    },
+    {
+        "id": "05",
+        "mainText": "Fastighetsköp",
+        "mainDisplayText": "Fastighetsköp",
+        "aims": [
+            {
+                "aimText": "Jordbruk",
+                "aimDisplayText": "Jordbruk"
+            },
+            {
+                "aimText": "Annan fastighet",
+                "aimDisplayText": "Annan fastighet"
+            }
+        ]
+    },
+    {
+        "id": "06",
+        "mainText": "Rörelsekapital",
+        "mainDisplayText": "Rörelsekapital",
+        "aims": [
+            {
+                "aimText": "Likvid förstärkning",
+                "aimDisplayText": "Likvid förstärkning"
+            },
+            {
+                "aimText": "EU-kredit",
+                "aimDisplayText": "EU-kredit"
+            },
+            {
+                "aimText": "Djur",
+                "aimDisplayText": "Djur"
+            },
+            {
+                "aimText": "Lager",
+                "aimDisplayText": "Lager"
+            }
+        ]
+    },
+    {
+        "id": "07",
+        "mainText": "Energiproduktion",
+        "mainDisplayText": "Energiproduktion",
+        "aims": [
+            {
+                "aimText": "Vindkraft",
+                "aimDisplayText": "Vindkraft"
+            },
+            {
+                "aimText": "Biogas",
+                "aimDisplayText": "Biogas"
+            }
+        ]
+    }
+]

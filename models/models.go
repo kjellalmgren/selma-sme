@@ -100,13 +100,14 @@ type LoanType struct {
 	DownPaymentType   string  `json:"downPaymentType"`
 	DownPaymentOther  string  `json:"downPaymentOther"`
 	DownPaymentAmount float32 `json:"downPaymentAmount"`
-	PurposeOfLoan     string  `json:"purposeOfLoan"`
-	Aims              []AimType
+	//PurposeOfLoan     string  `json:"purposeOfLoan"`
+	Aims []AimType
 }
 
 // AimType documentation
 type AimType struct {
 	AimID          string  `json:"aimId"`
+	PurposeText    string  `json:"purposeText"`
 	AimText        string  `json:"aimText"`
 	LoanAmountPart float32 `json:"loanAmountPart"`
 }
@@ -126,6 +127,7 @@ type ExtLoanType struct {
 	ExtLoanNumber      string  `json:"extloanNumber"`
 	ExtLoanAmount      float32 `json:"extLoanAmount"`
 	ExtRedeemLoan      bool    `json:"extRedeemLoan"`
+	ExtMonthlyCost     float32 `json:"extMonthlyCost"`
 }
 
 //
@@ -177,12 +179,14 @@ type CompanyType struct {
 	Created         string `json:"created"`
 	BusinessFocuses []BusinessFocusType
 	//BusinessFocus   string `json:"businessFocus"`
-	IndustriCode    string `json:"industriCode"` // SNI-kod
-	IndustriText    string `json:"industriText"` // SNI-Text, kategori
-	LegalGroupCode  string `json:"legalGroupCode"`
-	LegalGroupText  string `json:"legalGroupText"`
-	SelectedCompany bool   `json:"selectedCompany"`
-	Principals      []PrincipalType
+	IndustriCode      string `json:"industriCode"` // SNI-kod
+	IndustriText      string `json:"industriText"` // SNI-Text, kategori
+	LegalGroupCode    string `json:"legalGroupCode"`
+	LegalGroupText    string `json:"legalGroupText"`
+	SelectedCompany   bool   `json:"selectedCompany"`
+	Principals        []PrincipalType
+	BrokenFiscalYear  bool   `json:"brokenFiscalYear"`
+	FiscalYearEndDate string `json:"fiscalYearEndDate"`
 }
 
 // PrincipalType documentation
@@ -440,4 +444,18 @@ type Header struct {
 	Scope         string
 	ExpiresIn     string
 	Authorization string
+}
+
+// PurposeTextType documentation
+type PurposeTextType struct {
+	ID              string        `json:"id"`
+	MainText        string        `json:"mainText"`
+	MainDisplayText string        `json:"mainDisplayText"`
+	Aims            []AimTextType `json:"aims"`
+}
+
+// AimTextType documentation
+type AimTextType struct {
+	AimText        string `json:"aimText"`
+	AimDisplayText string `json:"aimDisplayText"`
 }

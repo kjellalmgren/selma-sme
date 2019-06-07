@@ -181,6 +181,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		for _, pr := range company.Principals {
 			tr = append(tr, TableRow{Key: "\tPersNr/Namn:", Value: fmt.Sprintf("\t%s - %s", pr.CustomerID, pr.PrincipalName)})
 		}
+		tr = append(tr, TableRow{Key: cp("\tBrutet räkenskapsår:"), Value: fmt.Sprintf("\t%v", company.BrokenFiscalYear)})
+		tr = append(tr, TableRow{Key: cp("\tBokslutsdatum:"), Value: fmt.Sprintf("\t%s", company.FiscalYearEndDate)})
 		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//
@@ -228,11 +230,12 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("ProcessID:*"), Value: loan.ProcessID})
 		tr = append(tr, TableRow{Key: cp("LoanID:*"), Value: loan.LoanID})
 		tr = append(tr, TableRow{Key: cp("Lånenummer:"), Value: loan.LoanNumber})
-		tr = append(tr, TableRow{Key: cp("Ändamål:"), Value: cp(loan.PurposeOfLoan)})
+		//tr = append(tr, TableRow{Key: cp("Ändamål:"), Value: cp(loan.PurposeOfLoan)})
 		tr = append(tr, TableRow{Key: cp("Lånebelopp:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(loan.LoanAmount)))})
 		tr = append(tr, TableRow{Key: cp("Syfte respektive lån"), Value: ""})
 		for _, aim := range loan.Aims {
-			tr = append(tr, TableRow{Key: "\tSyfte:", Value: "\t" + cp(aim.AimText)})
+			tr = append(tr, TableRow{Key: cp("\tÄndamål:"), Value: "\t" + cp(aim.PurposeText)})
+			tr = append(tr, TableRow{Key: cp("\tSyfte:"), Value: "\t" + cp(aim.AimText)})
 			tr = append(tr, TableRow{Key: cp("\tLånebelopp:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(aim.LoanAmountPart)))})
 		}
 		pdf = table1(pdf, tr) // add table to page current page
@@ -253,7 +256,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("Institut:"), Value: cp(extloan.ExtCreditInstitute)})
 		tr = append(tr, TableRow{Key: cp("Clearing:"), Value: extloan.ExtLoanClearing})
 		tr = append(tr, TableRow{Key: cp("Lånenummer:"), Value: extloan.ExtLoanNumber})
-		tr = append(tr, TableRow{Key: cp("Belopp:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(extloan.ExtLoanAmount)))})
+		tr = append(tr, TableRow{Key: cp("Kapitalskuld:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(extloan.ExtLoanAmount)))})
+		tr = append(tr, TableRow{Key: cp("Månadskostnad:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(extloan.ExtMonthlyCost)))})
 		tr = append(tr, TableRow{Key: cp("Lösa lån:"), Value: fmt.Sprintf("%t", extloan.ExtRedeemLoan)})
 		tr = append(tr, TableRow{Key: cp("Lånet står på"), Value: ""})
 		for _, owner := range extloan.ExtLoanOwners {
@@ -321,8 +325,8 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: cp("\ttype av hushåll:"), Value: "\t" + cp(typeofhouse.TypeOfHouse)})
 			tr = append(tr, TableRow{Key: cp("\tLån i annan bank:"), Value: fmt.Sprintf("\t%t", typeofhouse.LoanInOtherInstitute)})
 			tr = append(tr, TableRow{Key: cp("\tLösa lån:"), Value: fmt.Sprintf("\t%t", typeofhouse.RedeemLoan)})
-			tr = append(tr, TableRow{Key: "\tKreditinstitut:", Value: "\t" + cp(typeofhouse.CreditInstitute)})
-			tr = append(tr, TableRow{Key: "\tClearing:", Value: "\t" + cp(typeofhouse.LoanClearing)})
+			tr = append(tr, TableRow{Key: cp("\tKreditinstitut:"), Value: "\t" + cp(typeofhouse.CreditInstitute)})
+			tr = append(tr, TableRow{Key: cp("\tClearing:"), Value: "\t" + cp(typeofhouse.LoanClearing)})
 			tr = append(tr, TableRow{Key: cp("\tLånenummer:"), Value: "\t" + cp(typeofhouse.InstituteLoanNumber)})
 			tr = append(tr, TableRow{Key: cp("\tLånebelopp:"), Value: "\t" + fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(typeofhouse.LoanAmount)))})
 			//tr = append(tr, TableRow{Key: cp("Ägare:"), Value: cp(typeofhouse.LoanOwner)})

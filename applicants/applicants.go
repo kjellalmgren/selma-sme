@@ -132,7 +132,7 @@ func UpdateApplicant(w http.ResponseWriter, r *http.Request) {
 	//
 	//varsh := r.Header
 	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("Update-Applicant executed, processId: %s...\r\n", processid)
+	fmt.Printf("UpdateApplicant executed, processId: %s...\r\n", processid)
 	//
 	var data models.UpdateApplicantType
 	//var d []contactInformationType
@@ -179,7 +179,7 @@ func DeleteApplicant(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "DELETE":
 		processid := r.Header.Get("X-process-Id")
-		fmt.Printf("Delete-Applicant executed: processId: %s...\r\n", processid)
+		fmt.Printf("DeleteApplicant executed: processId: %s...\r\n", processid)
 		//
 		var data models.CustomerID
 		var r1 []byte
@@ -208,7 +208,7 @@ func AddApplicant(w http.ResponseWriter, r *http.Request) {
 	// 19640120-3887 d5744655-b71e-428a-98b9-2b6c66c8c95a
 	// 19650705-5579 b2f86b36-7ff3-428e-ab45-8dad11952dae
 	processid := r.Header.Get("X-process-Id")
-	fmt.Printf("Add-Applicant executed, processId: %s...\r\n", processid)
+	fmt.Printf("AddApplicant executed, processId: %s...\r\n", processid)
 	//
 	data := models.ApplicantType{}
 	var r1 []byte

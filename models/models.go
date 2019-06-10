@@ -22,7 +22,7 @@ type CustomerID struct {
 	CustomerID string `json:"customerId"`
 }
 
-// CustomerID documentation
+// CustomerIDType documentation
 type CustomerIDType struct {
 	CustomerID    string `json:"customerId"`
 	CustomerAdded string `json:"customerAdded"`
@@ -136,12 +136,12 @@ type ExtLoanOwner struct {
 	CustomerID string `json:"customerId"`
 }
 
-// ExtloanID documentation
+// ExtLoanID documentation
 type ExtLoanID struct {
 	ExtLoanID string `json:"extloanId"`
 }
 
-// CompanyEconomy
+// CompanyEconomyType documentation
 type CompanyEconomyType struct {
 	ProcessID        string `json:"processId"`
 	CompanyID        string `json:"companyId"`
@@ -214,7 +214,7 @@ type CompanyID struct {
 	CompanyID string `json:"companyId"`
 }
 
-// PersonalEconomy documentation
+// PersonalEconomyType documentation
 type PersonalEconomyType struct {
 	ProcessID          string  `json:"processId"`
 	CustomerID         string  `json:"customerId"`
@@ -237,7 +237,7 @@ type Cases struct {
 	CaseID string `json:"caseId"`
 }
 
-// Collateral documentation
+// CollateralType documentation
 type CollateralType struct {
 	ProcessID              string `json:"processId"`
 	CustomerID             string `json:"customerId"`
@@ -332,8 +332,7 @@ type ValueType struct {
 	Value25 float32 `json:"value25"`
 }
 
-//
-// submitApplication documentation
+// SubmitApplication documentation
 type SubmitApplication struct {
 	SubmitApplication bool `json:"submitApplication"`
 }
@@ -390,6 +389,7 @@ type EUSupportType struct {
 	SupportYear   string  `json:"supportYear"`
 }
 
+// GuarantorID documentation
 type GuarantorID struct {
 	GuarantorID string `json:"guarantorId"`
 }
@@ -403,12 +403,12 @@ type GuarantorType struct {
 	GuarantorCustomerID string `json:"guarantorCustomerId"`
 }
 
-// mainttenanceCostID
+// MaintenanceCostID documentation
 type MaintenanceCostID struct {
 	MaintenanceCostID string `json:"maintenanceCostId"`
 }
 
-// maintenanceCostType documentation
+// MaintenanceCostType documentation
 type MaintenanceCostType struct {
 	ProcessID         string `json:"processId"`
 	MaintenanceCostID string `json:"maintenanceCostId"`

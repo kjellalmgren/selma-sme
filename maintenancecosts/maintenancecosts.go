@@ -65,7 +65,7 @@ func GetMaintenanceCost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	json.NewDecoder(bytes.NewReader([]byte(r1))).Decode(&data)
-	fmt.Printf("getMaintenanceCostID executed: processId: %s /MaintenanceCostID: %s...\r\n", processid, data.MaintenanceCostID)
+	fmt.Printf("getMaintenanceCost executed: processId: %s /MaintenanceCostID: %s...\r\n", processid, data.MaintenanceCostID)
 
 	file, err := ioutil.ReadFile("json/maintenancecosts.json")
 	if err != nil {

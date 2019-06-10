@@ -67,7 +67,7 @@ func GetGuarantor(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	fmt.Printf("getLoan executed: X-process-ID: %s...LoanId: %s\r\n", processid, data.GuarantorID)
+	fmt.Printf("getGuarantor executed: X-process-ID: %s...LoanId: %s\r\n", processid, data.GuarantorID)
 	//
 	guarantors := []models.GuarantorType{}
 	file, err := ioutil.ReadFile("json/guarantors.json")

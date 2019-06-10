@@ -65,7 +65,7 @@ func GetExtLoan(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	fmt.Printf("getExtLoans executed: processId: %s /extloanId: %s...\r\n",
+	fmt.Printf("getExtLoan executed: processId: %s /extloanId: %s...\r\n",
 		processid,
 		data.ExtLoanID)
 	//

@@ -68,7 +68,7 @@ func GetPersonalEconomy(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	//
-	fmt.Printf("getPersonalEconomies executed: processId: %s /personalEconomyId: %s...\r\n",
+	fmt.Printf("getPersonalEconomy executed: processId: %s /personalEconomyId: %s...\r\n",
 		processid, data.PersonalEconomyID)
 	//
 	personaleconomies := []models.PersonalEconomyType{}

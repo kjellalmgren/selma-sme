@@ -136,7 +136,7 @@ info:
   # 2019-06-04 0.6.8 kal Budget redesign
   # 2019-06-05 0.6.8 kal ownershipPart has been added for MaintenanceCost handle %-share of
   # 2019-06-07 0.6.8 kal mainBusiness has been added to company (Huvuddriftinriktning)
-  # 2019-06-07 0.6.8 kal extMonthlyCost has been added to extLoans, should be used for studilån
+  # 2019-06-07 0.6.8 kal extMonthlyCost has been added to extLoans, should be used for studielån
   # 2019-06-07 0.6.8 kal mainPurposeOfLoan has been removed and replace by PurposeText in Aims
   # 2019-06-07 0.6.8 kal brokenFiscalYear (true/false) has been added to Company
   # 2910-06-07 0.6.8 kal fiscalYearEndDate has been added to Company
@@ -6206,7 +6206,7 @@ definitions:
         $ref: '#/definitions/TypeOfHouses'
   #
   MaintenanceHouseType:
-    description: TBD
+    description: Typ av hus
     type: object
     properties:
       typeOfHouse:
@@ -6330,7 +6330,7 @@ definitions:
     example: 4500.00
   #
   ownershipPart:
-    description: andel kund har i huset (MaintenanceType), gäller inte hyresrätt.
+    description: Andel kund har i huset (MaintenanceType), gäller inte hyresrätt.
     type: integer
     example: 100
   #

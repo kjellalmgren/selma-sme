@@ -65,7 +65,7 @@ func GetHousehold(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}
 	//
-	fmt.Printf("getHouseholds executed: processId: %s/ HouseholdId: %s...\r\n",
+	fmt.Printf("getHousehold executed: processId: %s/ HouseholdId: %s...\r\n",
 		processid, data.HouseholdID)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")

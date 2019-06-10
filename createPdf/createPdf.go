@@ -333,6 +333,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: cp("Låneägare"), Value: ""})
 			for _, loanOwner := range typeofhouse.LoanOwners {
 				tr = append(tr, TableRow{Key: "\t\tCustomerID:", Value: "\t\t" + loanOwner.CustomerID})
+				tr = append(tr, TableRow{Key: cp("\t\t%-ägarandel:"), Value: "\t\t" + fmt.Sprintf("%v", loanOwner.OwnershipPart)})
 			}
 			tr = append(tr, TableRow{Key: "", Value: ""})
 			//tr = append(tr, TableRow{Key: cp("\tStöd:"), Value: fmt.Sprintf("\t%.2f", typeofhouse.LoanAmount)})

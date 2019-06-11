@@ -256,6 +256,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("Institut:"), Value: cp(extloan.ExtCreditInstitute)})
 		tr = append(tr, TableRow{Key: cp("Clearing:"), Value: extloan.ExtLoanClearing})
 		tr = append(tr, TableRow{Key: cp("Lånenummer:"), Value: extloan.ExtLoanNumber})
+		tr = append(tr, TableRow{Key: cp("Typ av kredit:"), Value: extloan.TypeOfLoan})
 		tr = append(tr, TableRow{Key: cp("Kapitalskuld:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(extloan.ExtLoanAmount)))})
 		tr = append(tr, TableRow{Key: cp("Månadskostnad:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(extloan.ExtMonthlyCost)))})
 		tr = append(tr, TableRow{Key: cp("Lösa lån:"), Value: fmt.Sprintf("%t", extloan.ExtRedeemLoan)})

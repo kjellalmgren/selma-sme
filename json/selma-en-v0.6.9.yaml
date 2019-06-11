@@ -6511,7 +6511,7 @@ definitions:
     example: '0028600'
   #
   typeOfLoan:
-    description: enumeration of type of loans
+    description: Enumeration of type of loans
     type: string
     enum:
       - 'Studielån'

@@ -6516,7 +6516,7 @@ definitions:
     enum:
       - 'Studielån'
       - 'Konto/kortkredit'
-      - 'Avbetalningskredit/Bill'
+      - 'Avbetalningskredit'
       - 'Borgensåtagande'
       - 'Garantier'
       - 'Näringskredit'
@@ -7561,9 +7561,15 @@ definitions:
         $ref: '#/definitions/customerCategory'
   #
   ##############################################
-  # Definition BudgetType
+  # Definition Budgets
   ##############################################
   Budgets:
+    description: Array of budgetType for processId with dirrent companyEconomyID
+    type: array
+    items:
+      $ref: '#/definitions/BudgetType'
+  #
+  BudgetType:
     description: Type definition for companyBudget
     required:
     - processId
@@ -7591,9 +7597,9 @@ definitions:
       budgetyear:
         $ref: '#/definitions/budgetYear'
       budget:
-        $ref: '#/definitions/BudgetType'
+        $ref: '#/definitions/ValueType'
   #
-  BudgetType:
+  ValueType:
     description: Array of BudgetType, Budget records, minusposter registreras som minusposter
       value1; Resultaträkning; Skog
       value2; Resultaträkning; Växtodling
@@ -7622,8 +7628,6 @@ definitions:
       value25; Åretsresultat (value21) sum (value22+value23+value24)
     type: object
     properties:
-      #budgetYear:
-      #  $ref: '#/definitions/budgetYear'
       value1:
         $ref: '#/definitions/value1'
       value2:
@@ -7674,12 +7678,6 @@ definitions:
         $ref: '#/definitions/value24'
       value25:
         $ref: '#/definitions/value25'
-  #
-  #budgetValues:
-  #  description: Values for a specific year
-  #  type: array
-  #  items:
-  #    $ref: '#/definitions/BudgetType'
   #
   ###############################################
   # Definition ProcessType

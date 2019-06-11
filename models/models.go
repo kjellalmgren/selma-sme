@@ -122,6 +122,7 @@ type ExtLoanType struct {
 	ProcessID          string `json:"processId"`
 	ExtLoanID          string `json:"extloanId"`
 	ExtLoanOwners      []ExtLoanOwner
+	TypeOfLoan         string  `json:"typeOfLoan"`
 	ExtCreditInstitute string  `json:"extCreditInstitute"`
 	ExtLoanClearing    string  `json:"extLoanClearing"`
 	ExtLoanNumber      string  `json:"extloanNumber"`

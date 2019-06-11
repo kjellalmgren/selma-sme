@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.8'
+  version: '0.6.9'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -139,7 +139,8 @@ info:
   # 2019-06-07 0.6.8 kal extMonthlyCost has been added to extLoans, should be used for studielån
   # 2019-06-07 0.6.8 kal mainPurposeOfLoan has been removed and replace by PurposeText in Aims
   # 2019-06-07 0.6.8 kal brokenFiscalYear (true/false) has been added to Company
-  # 2910-06-07 0.6.8 kal fiscalYearEndDate has been added to Company
+  # 2019-06-07 0.6.8 kal fiscalYearEndDate has been added to Company
+  # 2019-06-11 0.6.9 kal
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -4170,7 +4171,7 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to update a Budget in Activiti
+      # required parameters to update a Budget
         - $ref: '#/parameters/X-process-ID'
         - name: companyEconomyIdBudgetId
           in: body
@@ -4181,7 +4182,7 @@ paths:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/budgetYear'
+            $ref: '#/definitions/budgetYearType'
         400:
           description: 'Bad request'  
           schema:
@@ -4244,15 +4245,15 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to delete a budget in Activiti
+      # required parameters to delete a budget
         - $ref: '#/parameters/X-process-ID'
-        - name: companyEconomyId
+        - name: companyEcononyIdBudgetId
           in: body
           schema:
-            $ref: '#/definitions/companyEconomyId'
+            $ref: '#/definitions/companyEcononyIdBudgetId'
       responses:
         200:
-          description: Successful
+          description: Successfully deleted
         400:
           description: 'Bad request'  
           schema:
@@ -4315,17 +4316,17 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to delete a budget in Activiti
+      # required parameters to delete a budget
         - $ref: '#/parameters/X-process-ID'
         - name: budgetyear
           in: body
           schema:
-            $ref: '#/definitions/budgetYear'
+            $ref: '#/definitions/budgetYearType'
       responses:
         201:
           description: Successfully created
           schema:
-            $ref: '#/definitions/Budgets'
+            $ref: '#/definitions/budgetYearType'
         400:
           description: 'Bad request'  
           schema:
@@ -4388,17 +4389,17 @@ paths:
       consumes:
         - application/json
       parameters:
-      # required parameters to delete a budget in Activiti
+      # required parameters to delete a budget
         - $ref: '#/parameters/X-process-ID'
         - name: budget
           in: body
           schema:
-            $ref: '#/definitions/budgetYear'
+            $ref: '#/definitions/budgetYearType'
       responses:
         200:
           description: Successful
           schema:
-            $ref: '#/definitions/budgetYear'
+            $ref: '#/definitions/budgetYearType'
         400:
           description: 'Bad request'  
           schema:
@@ -6509,6 +6510,19 @@ definitions:
     type: string
     example: '0028600'
   #
+  typeOfLoan:
+    description: enumeration of type of loans
+    type: string
+    enum:
+      - 'Studielån'
+      - 'Konto/kortkredit'
+      - 'Avbetalningskredit/Bill'
+      - 'Borgensåtagande'
+      - 'Garantier'
+      - 'Näringskredit'
+      - 'Blancokredit/övriga lån'
+    example: 'Konto/kortkredit'
+  #
   extloanClearing:
     description: Clearing number
     type: string
@@ -6666,7 +6680,7 @@ definitions:
     description: unique identifier for a specifict budget
     type: string
     format: uuid
-    example: '{ "budgetId": "6737d7be-520f-47f5-a761-b24c1db2df5e"}'
+    example: '{ "budgetId": "4804f0c2-3d2d-11e9-b210-d663bd873d90"}'
   budgetYear:
     description: Budget avser år, ska generas av API, föregående år - 2 år. Value1-7 är intäkter och summeras i Loan Process
     type: integer
@@ -7244,6 +7258,8 @@ definitions:
         $ref: '#/definitions/extLoanOwner'
       extloanId:
         $ref: '#/definitions/extloanId'
+      typeOfLoan:
+        $ref: '#/definitions/typeOfLoan'  
       extCreditInstitute:
         $ref: '#/definitions/extCreditInstitute'
       extloanClearing:
@@ -7291,6 +7307,8 @@ definitions:
         $ref: '#/definitions/extLoanOwner'
       extloanId:
         $ref: '#/definitions/extloanId'
+      typeOfLoan:
+        $ref: '#/definitions/typeOfLoan'
       extCreditInstitute:
         $ref: '#/definitions/extCreditInstitute'
       extloanClearing:
@@ -7558,6 +7576,23 @@ definitions:
       budgetYears:
         $ref: '#/definitions/budgetYears'
   #
+  budgetYears:
+    description: Budget years
+    type: array
+    items:
+      $ref: '#/definitions/budgetYearType'
+  #
+  budgetYearType:
+    description: Avser ett enskilt budgetår
+    type: object
+    properties:
+      budgetId:
+        $ref: '#/definitions/budgetId'
+      budgetyear:
+        $ref: '#/definitions/budgetYear'
+      budget:
+        $ref: '#/definitions/BudgetType'
+  #
   BudgetType:
     description: Array of BudgetType, Budget records, minusposter registreras som minusposter
       value1; Resultaträkning; Skog
@@ -7639,23 +7674,6 @@ definitions:
         $ref: '#/definitions/value24'
       value25:
         $ref: '#/definitions/value25'
-  #
-  budgetYears:
-    description: TBD
-    type: array
-    items:
-      $ref: '#/definitions/budgetYearType'
-  #
-  budgetYearType:
-    description: TBD
-    type: object
-    properties:
-      budgetId:
-        $ref: '#/definitions/budgetId'
-      budgetyear:
-        $ref: '#/definitions/budgetYear'
-      budget:
-        $ref: '#/definitions/BudgetType'
   #
   #budgetValues:
   #  description: Values for a specific year

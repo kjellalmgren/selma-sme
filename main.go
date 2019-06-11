@@ -146,6 +146,7 @@ func main() {
 	router.HandleFunc("/v1/getbudget", budgets.GetBudget).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/updatebudget", budgets.UpdateBudget).Methods("PATCH", "OPTIONS")
 	router.HandleFunc("/v1/deletebudget", budgets.DeleteBudget).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/v1/addbudget", budgets.AddBudget).Methods("PUT", "OPTIONS")
 	//
 	// households.go
 	router.HandleFunc("/v1/gethouseholds", households.GetHouseholds).Methods("POST", "OPTIONS")
@@ -156,7 +157,7 @@ func main() {
 	router.HandleFunc("/v1/getpersonaleconomy", personaleconomies.GetPersonalEconomy).Methods("POST", "OPTIONS")
 	//
 	// companyEconomies
-	router.HandleFunc("/v1/gompanyeconomies", companyeconomies.GetCompanyEconomies).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/getcompanyeconomies", companyeconomies.GetCompanyEconomies).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/getcompanyeconomy", companyeconomies.GetCompanyEconomy).Methods("POST", "OPTIONS")
 	router.HandleFunc("/v1/deletecompanyeconomy", companyeconomies.DeleteCompanyEconomy).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/updatecompanyeconomy}", companyeconomies.UpdateCompanyEconomy).Methods("PATCH", "OPTIONS")

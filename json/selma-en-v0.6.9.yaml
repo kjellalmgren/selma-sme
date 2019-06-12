@@ -140,7 +140,9 @@ info:
   # 2019-06-07 0.6.8 kal mainPurposeOfLoan has been removed and replace by PurposeText in Aims
   # 2019-06-07 0.6.8 kal brokenFiscalYear (true/false) has been added to Company
   # 2019-06-07 0.6.8 kal fiscalYearEndDate has been added to Company
-  # 2019-06-11 0.6.9 kal
+  # 2019-06-11 0.6.9 kal Started a new version
+  # 2019-06-11 0.6.9 kal typeOfLoan has been added to extLoanType
+  # 2019-06-11 9.6.9 kal Budget has been corrected regarding types
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -6516,7 +6518,7 @@ definitions:
     enum:
       - 'Studielån'
       - 'Konto/kortkredit'
-      - 'Avbetalningskredit'
+      - 'Avbetalningskredit/Billån/båtlån'
       - 'Borgensåtagande'
       - 'Garantier'
       - 'Näringskredit'

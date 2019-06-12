@@ -33,7 +33,7 @@
       },
       {
         "CategoriID": "17",
-        "BusinessDirection": "Övriga jordbruksgröd"
+        "BusinessDirection": "Övriga jordbruksgrödor"
       }
     ]
   },
@@ -289,7 +289,7 @@
       },
       {
         "BusinessDirectionID": "131",
-        "BusinessDirection": "Uth. Lokaer (ek b.)"
+        "BusinessDirection": "Uth. Lokaer (ekonomisk byggnad)"
       },
       {
         "BusinessDirectionID": "132",
@@ -359,7 +359,17 @@
       },
       {
         "BusinessDirectionID": "162",
-        "BusinessDirection": "Ink tjänst och cap."
+        "BusinessDirection": "Ink tjänst och kapital"
+      }
+    ]
+  },
+  {
+    "BusinessCategoryID": "17",
+    "BusinessCategory": "Övrigt",
+    "BusinessDirections": [
+      {
+        "BusinessDirectionID": "170",
+        "BusinessDirection": "Övrigt"
       }
     ]
   }

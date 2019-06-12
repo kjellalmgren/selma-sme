@@ -18,6 +18,7 @@ type TableRow struct {
 	Value string
 }
 
+// BudgetTableRow documentation
 type BudgetTableRow struct {
 	Key     string
 	Text    string
@@ -30,7 +31,7 @@ type HeaderRow struct {
 	Value string
 }
 
-// Value docuemntation
+// Value documentation
 type Value struct {
 	//Year  int
 	Value float32
@@ -323,7 +324,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 		tr = append(tr, TableRow{Key: cp("Hushåll"), Value: ""})
 		for _, typeofhouse := range maintenancecost.TypeOfHouses {
 			tr = append(tr, TableRow{Key: "\tHouseID:*", Value: "\t" + typeofhouse.HouseID})
-			tr = append(tr, TableRow{Key: cp("\ttype av hushåll:"), Value: "\t" + cp(typeofhouse.TypeOfHouse)})
+			tr = append(tr, TableRow{Key: cp("\ttyp av hushåll:"), Value: "\t" + cp(typeofhouse.TypeOfHouse)})
 			tr = append(tr, TableRow{Key: cp("\tLån i annan bank:"), Value: fmt.Sprintf("\t%t", typeofhouse.LoanInOtherInstitute)})
 			tr = append(tr, TableRow{Key: cp("\tLösa lån:"), Value: fmt.Sprintf("\t%t", typeofhouse.RedeemLoan)})
 			tr = append(tr, TableRow{Key: cp("\tKreditinstitut:"), Value: "\t" + cp(typeofhouse.CreditInstitute)})

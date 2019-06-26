@@ -26,11 +26,11 @@ func getEncodedString() string {
 	var key Key
 
 	// QA
-	//key.consumerKey = "hApFNht4DgDjY4QVLtiZNnpgJWEa"
-	//key.secretKey = "dfab3Krxb80p71QaqITP9P8bmKga"
+	key.consumerKey = "hApFNht4DgDjY4QVLtiZNnpgJWEa"
+	key.secretKey = "dfab3Krxb80p71QaqITP9P8bmKga"
 	// PROD
-	key.consumerKey = "HVD7kM1uBFFzSsVKDmpy7YjRfeIa"
-	key.secretKey = "buXOYxxSujXJW0lAOaUaxqtpqyUa"
+	//key.consumerKey = ""
+	//key.secretKey = ""
 
 	data := fmt.Sprintf("%s:%s", key.consumerKey, key.secretKey)
 	sEnc := b64.StdEncoding.EncodeToString([]byte(data))

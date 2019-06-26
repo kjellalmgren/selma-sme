@@ -214,11 +214,11 @@ func main() {
 	//	IdleTimeout:  time.Second * 30,
 	//}
 	// ******* ROARING *******
-	//var header Header
 	//header := roaring.GetRoaringAccessToken()
 	//fmt.Println(fmt.Sprintf("1:%v", string(header.AccessToken)))
 	//fmt.Println(fmt.Sprintf("2:%s", string(header.TokenType)))
 	//fmt.Println(string(header.TokenType))
+	//os.Exit(1)
 	// ************************
 	// ******** BANKID ********
 	//ret := bankid.AuthenticatePerson("196010050190")

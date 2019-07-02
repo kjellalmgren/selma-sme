@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.6.9'
+  version: '0.7.0'
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -142,7 +142,8 @@ info:
   # 2019-06-07 0.6.8 kal fiscalYearEndDate has been added to Company
   # 2019-06-11 0.6.9 kal Started a new version
   # 2019-06-11 0.6.9 kal typeOfLoan has been added to extLoanType
-  # 2019-06-11 9.6.9 kal Budget has been corrected regarding types
+  # 2019-06-11 0.6.9 kal Budget has been corrected regarding types
+  # 2019-06-12 0.7.0 kal Started a new version
   ###########################################################################################
   title: Selma SME Superlight Project
   description: This definition is the API between customer SME-Gui and the persistence layer for the application

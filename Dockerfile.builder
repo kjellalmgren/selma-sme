@@ -39,7 +39,7 @@ COPY json/eusupports.json /selmasme/json
 COPY json/guarantors.json /selmasme/json
 COPY json/maintenancecosts.json /selma/json
 COPY json/mainpurposes.json /selma/json
-COPY json/selma-en-v0.6.9.yaml /selmasme/json
+COPY json/selma-en-v0.7.0.yaml /selmasme/json
 # COPY executable ./selma-sme
 COPY selmasme /selmasme
 #

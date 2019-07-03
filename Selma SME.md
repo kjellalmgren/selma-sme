@@ -3,12 +3,12 @@
 ## Informationsinsamling
 
 **Vx**
-reserverCaseId ska vid anrop första gången även anropa setCaseIdStatus
+<!--reserverCaseId ska vid anrop första gången även anropa setCaseIdStatus
 
 	Method: reserveCaseId/processId/{customerId}
 	Method: setCaseIdStatus/{processId}/{caseId}/{caseIdStatus}
 	caseIdStatus: Enum: STARTEDBYAPPLICANT
-	
+	-->
 **Vx** LIME ska uppdateras att kund startat ansökan, befintlig kund, ny kund. LIME kundkort ska logga aktiviteten.
 
 **CustomerId**: "19640120-3887": "d5744655-b71e-428a-98b9-2b6c66c8c95a"
@@ -18,7 +18,7 @@ reserverCaseId ska vid anrop första gången även anropa setCaseIdStatus
 	
 ## Processes
 **Nyckelbegrepp**
-När en ny ansökan inkommer ska vi alltid skapa ett processiId, denna nyckel håller ihop hela ansökan. Under processId kan fler kunder finnas, representeras av customerId. Elementen processCreatedDate ska sättas när ansökan första gången skapas och elementet lastAccessed ska uppdateras när någon kunderna customerId har varit inne på ansökan. Dessa värden tillsammans med caseIdStatus används vid gallringen.
+När en ny ansökan inkommer ska vi alltid skapa ett ProcessID, denna nyckel håller ihop hela ansökan. Under processId kan fler kunder finnas, representeras av customerId. Elementen processCreatedDate ska sättas när ansökan första gången skapas och elementet lastAccessed ska uppdateras när någon kunderna customerId har varit inne på ansökan. Dessa värden tillsammans med caseIdStatus används vid gallringen.
 
 Genomgående i modellen är ProcessID, denna uuid håller ihop respektive ansökan, i REST-API så ingår det i http-header som "X-process-ID".
 
@@ -27,10 +27,12 @@ Genomgående i modellen är ProcessID, denna uuid håller ihop respektive ansök
     	"processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
     	"CustomerID": [
       	{
-        	"customerId": "19640120-3887"
+        	"customerId": "19640120-3887",
+			"customerCreated": 2019-05-02T09:00:00"
       	},
       	{
-        	"customerId": "19650705-5579"
+        	"customerId": "19650705-5579",
+			"customerCreated": 2019-05-02T19:00:00"
       	}
     	],
     	"processCreatedDate": "2019-06-01",

@@ -3,7 +3,7 @@ package main
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
-	Date: 2019-07-25
+	Date: 2019-08-13
 	Description: Service to feed Selma-SME UX, just for test purpose
 	Compiled: go 1.12.7
 	Architecture:
@@ -238,7 +238,7 @@ func main() {
 //
 // Index documentation
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion()))
+	fmt.Fprint(os.Stderr, fmt.Sprintf(TETRACON, version.ServerVersion(), version.ModelVersion(), version.ModelDate()))
 }
 
 // Upload documentation

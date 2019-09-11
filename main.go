@@ -3,7 +3,7 @@ package main
 /*
 Services: selma-sme
 	Author: Kjell Osse Almgren, Tetracon AB
-	Date: 2019-08-13
+	Date: 2019-09-11
 	Description: Service to feed Selma-SME UX, just for test purpose
 	Compiled: go 1.12.7
 	Architecture:

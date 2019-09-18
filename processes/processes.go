@@ -138,6 +138,7 @@ func AddProcess(w http.ResponseWriter, r *http.Request) {
 	processtype.ProcessCreatedDate = "2019-05-22T09:00:00"
 	processtype.LastAccessed = "2019-05-22T09:00:00"
 	processtype.CaseID = "100666"
+	processtype.ProcessVersion = "v1"
 	//
 	//processidcaseid.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
 	//processidcaseid.CaseID = "106100"
@@ -189,6 +190,7 @@ func UpdateProcess(w http.ResponseWriter, r *http.Request) {
 	//fmt.Println(t.Format("2006-01-02 15:04:05"))
 	processtype.LastAccessed = t.Format("2006-01-02 15:04:05")
 	processtype.CaseID = "100666"
+	processtype.ProcessVersion = "v1"
 	//
 	//processidcaseid.ProcessID = "9a65d28a-46bb-4442-b96d-6a09fda6b18b"
 	//processidcaseid.CaseID = "106100"

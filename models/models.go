@@ -9,6 +9,7 @@ type ProcessType struct {
 	ProcessCreatedDate string           `json:"processCreatedDate"`
 	LastAccessed       string           `json:"lastAccessed"`
 	ReferenceID        int              `json:"referenceId"`
+	ProcessVersion     string           `json:"processVersion"`
 }
 
 // ProcessIDCaseID documentation
@@ -88,6 +89,22 @@ type UpdateApplicantType struct {
 type ContactInformationType struct {
 	ApplicantEmail        string `json:"applicantByeMail"`
 	ApplicantMobileNumber string `json:"applicantBySms"`
+}
+
+// TakeoverLoanType struct
+type TakeoverLoanType struct {
+	ProcessID       string `json:"processId"`
+	TakeoverLoanID  string `json:"takeoverLoanId"`
+	CreditInstitute string `json:"creditInstitute"`
+	LoanNumber      string `json:"loanNumber"`
+	LoanAmount      string `json:"loanAmount"`
+	PurposeText     string `json:"purposeText"`
+	AimText         string `json:"aimText"`
+}
+
+// TakeoverLoanID documentation
+type TakeoverLoanID struct {
+	TakeoverLoanID string `json:"takeoverLoanId"`
 }
 
 // LoanType documentation

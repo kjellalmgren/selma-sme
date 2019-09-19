@@ -47,7 +47,7 @@ func GetTakeoverLoan(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	fmt.Printf("getTakeoverLoan executed: X-process-ID: %s...LoanId: %s\r\n", processid, data.TakeoverLoanID)
+	fmt.Printf("getTakeoverLoan executed: X-process-ID: %s...TakeoverLoanId: %s\r\n", processid, data.TakeoverLoanID)
 	//
 	takeoverloans := []models.TakeoverLoanType{}
 	file, err := ioutil.ReadFile("json/takeoverloans.json")

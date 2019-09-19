@@ -1,0 +1,36 @@
+[
+    {
+        "FinancialInstitutions": [
+            {
+                "Bank": "Handelsbanken"
+            },
+            {
+                "Bank": "Danske bank"
+            },
+            {
+                "Bank": "Landshypotek"
+            },
+            {
+                "Bank": "Länsförsäkringar Bank"
+            },
+            {
+                "Bank": "Nordea"
+            },
+            {
+                "Bank": "SEB"
+            },
+            {
+                "Bank": "Skandiabanken"
+            },
+            {
+                "Bank": "Stadshypotek"
+            },
+            {
+                "Bank": "Swedbank hypotek"
+            },
+            {
+                "Bank": "Annan"
+            }
+        ]
+    }
+]

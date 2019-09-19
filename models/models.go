@@ -93,13 +93,13 @@ type ContactInformationType struct {
 
 // TakeoverLoanType struct
 type TakeoverLoanType struct {
-	ProcessID       string `json:"processId"`
-	TakeoverLoanID  string `json:"takeoverLoanId"`
-	CreditInstitute string `json:"creditInstitute"`
-	LoanNumber      string `json:"loanNumber"`
-	LoanAmount      string `json:"loanAmount"`
-	PurposeText     string `json:"purposeText"`
-	AimText         string `json:"aimText"`
+	ProcessID       string  `json:"processId"`
+	TakeoverLoanID  string  `json:"takeoverLoanId"`
+	CreditInstitute string  `json:"creditInstitute"`
+	LoanNumber      string  `json:"loanNumber"`
+	DebtAmount      float32 `json:"debtAmount"`
+	PurposeText     string  `json:"purposeText"`
+	AimText         string  `json:"aimText"`
 }
 
 // TakeoverLoanID documentation

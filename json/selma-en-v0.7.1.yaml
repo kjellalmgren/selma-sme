@@ -1,6 +1,20 @@
 swagger: '2.0'
 info:
-  version: '0.7.0'
+  version: '0.7.1'
+  title: SelmaSME API
+  description: This definition is the API between customer SME-Gui and the persistence layer for the application
+    NOT FOR V1
+    When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+  #  
+  termsOfService: 'http://www.landshypotek.se/sme/terms'
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  contact:
+    name: API v1 for SME initiative
+    url: api.landshypotek.se/v1/sme
+    email: developer@landshypotek.se
+  #
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
   # 2019-02-10 0.2.1 kal Minor changes
@@ -144,20 +158,9 @@ info:
   # 2019-06-11 0.6.9 kal typeOfLoan has been added to extLoanType
   # 2019-06-11 0.6.9 kal Budget has been corrected regarding types
   # 2019-06-12 0.7.0 kal Started a new version
-  ###########################################################################################
-  title: Selma SME Superlight Project
-  description: This definition is the API between customer SME-Gui and the persistence layer for the application
-    NOT FOR V1
-    When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
-  #  
-  termsOfService: 'http://www.landshypotek.se/sme/terms'
-  license:
-    name: MIT
-    url: http://opensource.org/licenses/MIT
-  contact:
-    name: API v1 for SME initiative
-    url: api.landshypotek.se/v1/sme
-    email: developer@landshypotek.se
+  # 2019-09-11 0.7.1 kal Takeover loan from other institute
+  # 2019-09-17 0.7.1 kal processVersion has been added to be able to upgrade in production in the future.
+  ##########################################################################################
 host: 'localhost:8443'
 #host: 'localhost:8400'
 basePath: /
@@ -3373,6 +3376,76 @@ paths:
             $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
+  # getTakeoverLoan
+  ################################################################################
+  /v1/gettakeoverloan:
+    post:
+      tags:
+        - TakeoverLoan
+      summary: Get a specific TakeoverLoan by processId, takeoverloanId
+      description: Get a specific TakeoverLoan by processId, takeoverLoanId
+      operationId: getTakeoverLoan
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/X-process-ID'
+        - name: takeoverLoanId
+          in: body
+          schema:
+            $ref: '#/definitions/takeoverLoanId'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/takeoverLoanType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  ################################################################################
   # Get a list of available PersonalEconomies for a given processId and customerId
   # in Activiti
   ################################################################################
@@ -5436,7 +5509,7 @@ paths:
      post:
       tags:
         - MaintenanceCosts
-      summary: Driftkostander på andra boenden
+      summary: Driftkostnader på andra boenden
       description: Driftkostnader på andra boenden
       operationId: getMaintenanceCosts
       produces:
@@ -5858,6 +5931,11 @@ definitions:
       short number serie starting at 1000 and incrementing
     type: integer
     example: 1000
+  #
+  processVersion:
+    description: Version of the current process
+    type: string
+    example: 'v1'
   #
   customerCreated:
     description: timestamp when customer has been added to the application, to hold (huvudsökande, medsökande) order
@@ -6383,6 +6461,21 @@ definitions:
     example: true
   #
   ##################################
+  # takeoverLoanType
+  ##################################
+  takeoverLoanId:
+    description: TakeoverLoanId identity
+    type: string
+    format: uuid
+    example: '{"takeoverLoanId": "4b8e4822-3cb7-11e9-b210-d663bd873d93"}'
+  #
+  debtAmount:
+    description: Dept of loan in other institute to redeem
+    type: number
+    format: float
+    example: 250000.00
+  #
+  ##################################
   # LoanType
   ##################################
   loanId:
@@ -6395,7 +6488,8 @@ definitions:
     type: string
     example: '9397000010'
   loanTakeOver:
-    description: Övertag från annan bank, fix för att övertag inte finns i LP
+    description: Övertag från annan bank, fix för att övertag inte finns i LP (deprecated) moved to takeoverLoan
+    # deprecated: true
     type: boolean
     example: false
   loanAmount:
@@ -6412,7 +6506,7 @@ definitions:
       - "Blanco"
       - "Sparande"
   downPaymentOther:
-    description: Om val Övrigt på downPaymentType ska text anges i GUI och hamn i detta fält.
+    description: Om val Övrigt på downPaymentType ska text anges i GUI och hamna i detta fält.
     type: string
     example: 'The mob'
   #
@@ -6527,7 +6621,8 @@ definitions:
     example: 'Konto/kortkredit'
   #
   extloanClearing:
-    description: Clearing number
+    description: Clearing number (has been deprecated)
+    # deprecated: true
     type: string
     example: '5270'
   #
@@ -6592,6 +6687,7 @@ definitions:
     type: integer
     description: Anställd sedan år
     example: 2009
+  #
   monthOfEmployment:
     type: integer
     description: anställd i månad, om anställningen < 2 år.
@@ -7163,6 +7259,30 @@ definitions:
       $ref: '#/definitions/childType'
   #
   #########################################
+  # Definition takeoverLoanType
+  #########################################
+  takeoverLoanType:
+    description: This represent loan in other institute to redeem
+    required:
+    - takeoverLoanId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      takeoverLoanId:
+        $ref: '#/definitions/takeoverLoanId'
+      creditInstitute:
+        $ref: '#/definitions/creditInstitute'
+      loanNumber:
+        $ref: '#/definitions/loanNumber'
+      debtAmount:
+        $ref: '#/definitions/debtAmount'
+      purposeText:
+        $ref: '#/definitions/purposeText'
+      aimText:
+        $ref: '#/definitions/aimText'
+  #
+  #########################################
   # Definition LoanType
   #########################################
   loanType:
@@ -7706,6 +7826,8 @@ definitions:
         $ref: '#/definitions/lastAccessed'
       referenceId:
         $ref: '#/definitions/referenceId'
+      processVersion:
+        $ref: '#/definitions/processVersion'
   #
   Customers:
     description: Array of customer in a application (processid)

@@ -10,6 +10,13 @@
 	# use 127.0.0.1:8443 when register
 	$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem
 	...
+	# 2019-09-20 https://venilnoronha.io/a-step-by-step-guide-to-mtls-in-go
+	$ openssl req -newkey rsa:2048 \
+  -new -nodes -x509 \
+  -days 3650 \
+  -out cert.pem \
+  -keyout key.pem \
+  -subj "/C=SE/ST=Stockholm/L=Lidingo/O=Tetracon AB/OU=Development/CN=localhost"
 
 ## Generate SSL certificate
 

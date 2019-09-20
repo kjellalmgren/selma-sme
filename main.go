@@ -123,12 +123,12 @@ func main() {
 	//
 	// loans.go
 	router.HandleFunc("/v1/getloans", loans.GetLoans).Methods("POST", "OPTIONS")
-	router.HandleFunc("/v1/getloan", loans.GetLoan).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/getloan", loans.GetLoan).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/deleteloan", loans.DeleteLoan).Methods("DELETE", "OPTIONS")
 	//
 	// extloans.go
 	router.HandleFunc("/v1/getextloans", extloans.GetExtLoans).Methods("POST", "OPTIONS")
-	router.HandleFunc("/v1/getextloan", extloans.GetExtLoan).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/getextloan", extloans.GetExtLoan).Methods("POST", "GET", "OPTIONS")
 	//
 	// collaterals.go
 	router.HandleFunc("/v1/getcollaterals", collaterals.GetCollaterals).Methods("POST", "OPTIONS")

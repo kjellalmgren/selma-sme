@@ -23,7 +23,7 @@ func GetTakeoverLoans(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-// GetTakeoverLoans method
+// GetTakeoverLoan method
 func GetTakeoverLoan(w http.ResponseWriter, r *http.Request) {
 
 	processid := r.Header.Get("X-process-Id")

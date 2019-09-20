@@ -176,7 +176,8 @@ func main() {
 	router.HandleFunc("/v1/getxloan", loans.GetLoanx).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/deletexloan", loans.DeleteLoanx).Methods("DELETE", "OPTIONS")
 	//
-	// takeoverLoan
+	// takeoverLoans.go
+	router.HandleFunc("/v1/gettakeoverloans", takeoverloans.GetTakeoverLoans).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/gettakeoverloan", takeoverloans.GetTakeoverLoan).Methods("POST", "GET", "OPTIONS")
 	// eusupports.go
 	router.HandleFunc("/v1/geteusupports", eusupports.GetEUSupports).Methods("POST", "GET", "OPTIONS")

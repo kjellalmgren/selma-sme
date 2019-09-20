@@ -26,7 +26,7 @@ func GetGuarantors(w http.ResponseWriter, r *http.Request) {
 	//
 	switch processid {
 	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
-		file, err := ioutil.ReadFile("json/loans.json")
+		file, err := ioutil.ReadFile("json/guarantors.json")
 		if err != nil {
 			fmt.Fprintf(w, "Error reading guarantors.json - %s", err)
 			w.WriteHeader(http.StatusNotFound)
@@ -42,7 +42,7 @@ func GetGuarantors(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// GetGuarantors documentation
+// GetGuarantor documentation
 func GetGuarantor(w http.ResponseWriter, r *http.Request) {
 
 	//
@@ -67,7 +67,7 @@ func GetGuarantor(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	fmt.Printf("getGuarantor executed: X-process-ID: %s...LoanId: %s\r\n", processid, data.GuarantorID)
+	fmt.Printf("getGuarantor executed: X-process-ID: %s...GuarantorId: %s\r\n", processid, data.GuarantorID)
 	//
 	guarantors := []models.GuarantorType{}
 	file, err := ioutil.ReadFile("json/guarantors.json")

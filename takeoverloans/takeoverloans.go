@@ -21,6 +21,25 @@ func GetTakeoverLoans(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 	//
+	takeoverloans := []models.TakeoverLoanType{}
+	//
+	switch processid {
+	case "9a65d28a-46bb-4442-b96d-6a09fda6b18b":
+		file, err := ioutil.ReadFile("json/takeoverloans.json")
+		if err != nil {
+			fmt.Fprintf(w, "Error reading takeoverloans.json - %s", err)
+			w.WriteHeader(http.StatusNotFound)
+		}
+		_ = json.Unmarshal([]byte(file), &takeoverloans)
+	}
+	//
+
+	if err := json.NewEncoder(w).Encode(takeoverloans); err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		panic(err)
+	}
+	w.WriteHeader(http.StatusOK)
+	//
 }
 
 // GetTakeoverLoan method
@@ -32,7 +51,7 @@ func GetTakeoverLoan(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-process-ID")
 
 	var data models.TakeoverLoanID

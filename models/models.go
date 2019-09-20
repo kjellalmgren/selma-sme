@@ -121,17 +121,17 @@ type LoanType struct {
 	Aims []AimType
 }
 
+// LoanID documentation
+type LoanID struct {
+	LoanID string `json:"loanId"`
+}
+
 // AimType documentation
 type AimType struct {
 	AimID          string  `json:"aimId"`
 	PurposeText    string  `json:"purposeText"`
 	AimText        string  `json:"aimText"`
 	LoanAmountPart float32 `json:"loanAmountPart"`
-}
-
-// LoanID documentation
-type LoanID struct {
-	LoanID string `json:"loanId"`
 }
 
 // ExtLoanType documentation
@@ -376,6 +376,7 @@ type ProcessAllType struct {
 	Applicants        []ApplicantType
 	Loans             []LoanType
 	ExtLoans          []ExtLoanType
+	TakeoverLoans     []TakeoverLoanType
 	Households        []HouseholdType
 	Companies         []CompanyType
 	CompanyEconomies  []CompanyEconomyType

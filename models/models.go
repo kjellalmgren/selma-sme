@@ -100,6 +100,8 @@ type TakeoverLoanType struct {
 	DebtAmount      float32 `json:"debtAmount"`
 	PurposeText     string  `json:"purposeText"`
 	AimText         string  `json:"aimText"`
+	Interest        float32 `json:"interest"`
+	Period          string  `json:"Period"`
 }
 
 // TakeoverLoanID documentation

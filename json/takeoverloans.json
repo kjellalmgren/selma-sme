@@ -6,7 +6,9 @@
     "loanNumber": "9397000010",
     "debtAmount": 2500000,
     "purposeText": "Renovering",
-    "aimText": "Mjölkstall"
+    "aimText": "Mjölkstall",
+    "interest": 1.08,
+    "period": 3
   },
   {
     "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
@@ -15,6 +17,8 @@
     "loanNumber": "9397000010",
     "debtAmount": 2100000,
     "purposeText": "Renovering",
-    "aimText": "Mjölkstall"
+    "aimText": "Mjölkstall",
+    "interest": 1.08,
+    "period": 5
   }
 ]

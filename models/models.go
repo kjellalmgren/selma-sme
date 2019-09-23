@@ -101,7 +101,7 @@ type TakeoverLoanType struct {
 	PurposeText     string  `json:"purposeText"`
 	AimText         string  `json:"aimText"`
 	Interest        float32 `json:"interest"`
-	Period          string  `json:"Period"`
+	Period          int16   `json:"Period"`
 }
 
 // TakeoverLoanID documentation

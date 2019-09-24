@@ -61,20 +61,21 @@ type HouseholdID struct {
 
 // ApplicantType documentation
 type ApplicantType struct {
-	ProcessID             string `json:"processId"`
-	CustomerID            string `json:"customerId"`
-	ApplicantID           string `json:"applicantId"`
-	ApplicantName         string `json:"applicantName"`
-	ApplicantAddress      string `json:"applicantAddress"`
-	ApplicantPostalCode   string `json:"applicantPostalCode"`
-	ApplicantPostAddress  string `json:"applicantPostAddress"`
-	StakeholderType       string `json:"stakeholderType"`
-	ContactInformation    []ContactInformationType
-	ApplicantEmployed     bool   `json:"applicantEmployed"`
-	ApplicantLPEmployment string `json:"applicantLPEmployment"`
-	ApplicantMember       bool   `json:"applicantMember"`
-	ApplicantBySms        bool   `json:"applicantBySms"`
-	ApplicantByeMail      bool   `json:"applicantByeMail"`
+	ProcessID                string `json:"processId"`
+	CustomerID               string `json:"customerId"`
+	ApplicantID              string `json:"applicantId"`
+	ApplicantName            string `json:"applicantName"`
+	ApplicantAddress         string `json:"applicantAddress"`
+	ApplicantPostalCode      string `json:"applicantPostalCode"`
+	ApplicantPostAddress     string `json:"applicantPostAddress"`
+	StakeholderType          string `json:"stakeholderType"`
+	ContactInformation       []ContactInformationType
+	ApplicantEmployed        bool   `json:"applicantEmployed"`
+	ApplicantLPEmployment    string `json:"applicantLPEmployment"`
+	ApplicantMember          bool   `json:"applicantMember"`
+	ApplicantBySms           bool   `json:"applicantBySms"`
+	ApplicantByeMail         bool   `json:"applicantByeMail"`
+	ApplicantCollateralToBuy bool   `json:"applicantCollateralToBuy"`
 }
 
 // UpdateApplicantType documentation
@@ -120,7 +121,8 @@ type LoanType struct {
 	DownPaymentOther  string  `json:"downPaymentOther"`
 	DownPaymentAmount float32 `json:"downPaymentAmount"`
 	//PurposeOfLoan     string  `json:"purposeOfLoan"`
-	Aims []AimType
+	Aims          []AimType
+	TakeoverLoans []TakeoverLoanType
 }
 
 // LoanID documentation

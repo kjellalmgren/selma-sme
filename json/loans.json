@@ -21,6 +21,19 @@
         "aimText": "Annan fastighet",
         "loanAmountPart": 300000
       }
+    ],
+    "TakeoverLoans": [
+      {
+        "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
+        "takeoverLoanId": "4b8e4822-3cb7-11e9-b210-d663bd873d93",
+        "creditInstitute": "SEB",
+        "loanNumber": "9397000010",
+        "debtAmount": 2500000,
+        "purposeText": "Renovering",
+        "aimText": "Mjölkstall",
+        "interest": 1.08,
+        "period": 3
+      }
     ]
   }
 ]

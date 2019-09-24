@@ -17,7 +17,8 @@
     "applicantLPEmployment": "PERMANENT",
     "applicantMember": false,
     "applicantBySms": true,
-    "applicantByeMail": true
+    "applicantByeMail": true,
+    "applicantCollateralToBuy": false
   },
   {
     "processId": "9a65d28a-46bb-4442-b96d-6a09fda6b18b",
@@ -37,6 +38,7 @@
     "applicantLPEmployment": "PERMANENT",
     "applicantMember": false,
     "applicantBySms": true,
-    "applicantByeMail": true
+    "applicantByeMail": true,
+    "applicantCollateralToBuy": false
   }
 ]

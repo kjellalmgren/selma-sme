@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.7.1'
+  version: '0.7.2'
   #
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
@@ -147,6 +147,8 @@ info:
   # 2019-06-12 0.7.0 kal Started a new version
   # 2019-09-11 0.7.1 kal Takeover loan from other institute
   # 2019-09-17 0.7.1 kal processVersion has been added to be able to upgrade in production in the future.
+  # 2019-09-23 0.7.2 kal New version created
+  # 2019-09-23 0.7.2 kal TakeoverLoans missing in LinksAll
   ##########################################################################################
   title: SelmaSME API
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -3378,363 +3380,6 @@ paths:
             $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
-  # Get a list of available takeoverloans for a given processId
-  ################################################################################
-  /v1/gettakeoverloans:
-    post:
-      tags:
-        - TakeoverLoans
-      summary: get a list of available takeoverloans on processId
-      description: Get a list of available takeoverloans by ProcessId...
-      operationId: getTakeoverLoans
-      # The method will handle the following MIME/Types
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-        # parameters required for getTakeoverLoans
-        - $ref: '#/parameters/X-process-ID'
-      responses:
-        200:
-          description: Successful
-          schema:
-            $ref: '#/definitions/TakeoverLoansType'
-        400:
-          description: 'Bad request'  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
-  ################################################################################
-  # getTakeoverLoan
-  ################################################################################
-  /v1/gettakeoverloan:
-    post:
-      tags:
-        - TakeoverLoans
-      summary: Get a specific TakeoverLoan by processId, takeoverLoanId
-      description: Get a specific TakeoverLoan by processId, takeoverLoanId
-      operationId: getTakeoverLoan
-      # The method will handle the following MIME/Types
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/X-process-ID'
-        - name: takeoverLoanId
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/takeoverLoanId'
-      responses:
-        200:
-          description: Successful
-          schema:
-            $ref: '#/definitions/takeoverLoanType'
-        400:
-          description: 'Bad request'  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
-  ################################################################################
-  # updateTakeoverLoan
-  ################################################################################
-  /v1/updatetakeoverloan:
-    patch:
-      tags:
-        - TakeoverLoans
-      summary: update a specific TakeoverLoan in the model
-      description: >-
-        TBD
-      operationId: updateTaskeoverLoan
-      # The method will handle the following MIME/Types
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-      # required parameters to update a takeoverLoan
-        - $ref: '#/parameters/X-process-ID'
-        - name: takeoverLoanId
-          in: body
-          schema:
-            $ref: '#/definitions/updateTakeoverLoanType'
-      responses:
-        200:
-          description: Successful
-          schema:
-            $ref: '#/definitions/updateTakeoverLoanType'
-        400:
-          description: 'Bad request'  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
-  ################################################################################
-  # deletetakeoverloan
-  ################################################################################
-  /v1/deletetakeoverloan:
-    delete:
-      tags:
-        - TakeoverLoans
-      summary: Delete a specific takeoverLoan in the model
-      description: >-
-        TBD
-      operationId: deleteTakeoverLoan
-      # The method will handle the following MIME/Types
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-      # required parameters to delete a loan in Activiti
-        - $ref: '#/parameters/X-process-ID'
-        - name: takeoverLoanId
-          in: body
-          schema:
-            $ref: '#/definitions/takeoverLoanId'
-      responses:
-        200:
-          description: Successful
-        400:
-          description: 'Bad request'  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
-  #######################################################
-  # Add of a specific takeoverloan
-  #######################################################
-  /v1/addtakeoverloan:
-    put:
-      tags:
-        - TakeoverLoans
-      summary: Add a specific takeoverloanloan in the model
-      description: >-
-        TBD
-      operationId: addTakeoverLoan
-      # The method will handle the following MIME/Types
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-      # required parameters to update a extLoan in Activiti
-        - $ref: '#/parameters/X-process-ID'
-        - name: extloan
-          in: body
-          schema:
-            $ref: '#/definitions/takeoverLoanType'
-      responses:
-        201:
-          description: Successfully created
-          schema:
-            $ref: '#/definitions/takeoverLoanType'
-        400:
-          description: 'Bad request'  
-          schema:
-            $ref: '#/definitions/ErrorModel'        
-        401:
-          description: 'Unauthorized'       
-          schema:
-            $ref: '#/definitions/ErrorModel'   
-        403:
-          description: 'Forbidden'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        404:
-          description: 'Not found'
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        405:
-          description: 'Method Not Allowed'
-          schema:
-            $ref: '#/definitions/ErrorModel'         
-        406:
-          description: 'Not Acceptable'
-          schema:
-            $ref: '#/definitions/ErrorModel'     
-        408:
-          description: 'Request Timeout'
-          schema:
-            $ref: '#/definitions/ErrorModel'      
-        415:
-          description: 'Unsupported media type'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        429:
-          description: 'Too many requests'        
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: 'Internal server error'          
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        503:
-          description: 'Service unavailable'    
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  #
-  ################################################################################
   # Get a list of available PersonalEconomies for a given processId and customerId
   ################################################################################
   /v1/getpersonaleconomies:
@@ -6343,6 +5988,11 @@ definitions:
     type: boolean
     example: true
   #
+  applicantCollateralToBuy:
+    description: Personens namn har eller avser köpa en jord och skogsbruksfastighet.
+    type: boolean
+    example: false
+  #
   ###############################
   # Companies
   ###############################
@@ -7032,10 +6682,10 @@ definitions:
     format: float
     example: 1.08
   #
-  period:
+  conditionchangedate:
     description: Aktuell bindningstid hos nuvarande institue inför lösen
-    type: integer
-    example: 3
+    type: string
+    example: '2020-06-30'
   #
   ###################################
   # CompanyEconomies
@@ -7302,6 +6952,8 @@ definitions:
         $ref: '#/definitions/applicantBySms'
       applicantByeMail:
         $ref: '#/definitions/applicantByeMail'
+      applicantCollateralToBuy:
+        $ref: '#/definitions/applicantCollateralToBuy'
   #
   #Applicant:
   #  $ref: '#/definitions/applicantType'
@@ -7577,8 +7229,8 @@ definitions:
         $ref: '#/definitions/aimText'
       interest:
         $ref: '#/definitions/interest'
-      period:
-        $ref: '#/definitions/period'
+      conditionchangedate:
+        $ref: '#/definitions/conditionchangedate'
   #
   #########################################
   # Definition LoanType
@@ -7609,6 +7261,8 @@ definitions:
       #  $ref: '#/definitions/mainPurposes'
       aims:
         $ref: '#/definitions/Aims'
+      takeoverloans:
+        $ref: '#/definitions/TakeoverLoansType'
   #
   #Loan:
   #  $ref: '#/definitions/loanType'
@@ -7660,6 +7314,9 @@ definitions:
       loanAmountPart:
         $ref: '#/definitions/loanAmountPart'
   #
+  ###################################################################
+  # updateLoanType
+  ###################################################################
   updateLoanType:
     description: This represent the customer loan structure
     required:
@@ -7674,6 +7331,8 @@ definitions:
 #        $ref: '#/definitions/mainPurpose'
       aims:
         $ref: '#/definitions/aimType'
+      takeoverLoans:
+        $ref: '#/definitions/TakeoverLoans'
   #
   ###########################################
   # ExtLoanType
@@ -7728,34 +7387,6 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/customerId'
-  #
-  ###########################################
-  # updateTakeoverLoanType
-  ###########################################
-  updateTakeoverLoanType:
-    description: update TakeoverLoanType
-    required:
-    - takeoverLoanId
-    type: object
-    properties:
-      processId:
-        $ref: '#/definitions/processId'
-      takeoverLoanId:
-        $ref: '#/definitions/takeoverLoanId'
-      creditInstitute:
-        $ref: '#/definitions/creditInstitute'
-      loanNumber:
-        $ref: '#/definitions/loanNumber'
-      debtAmount:
-        $ref: '#/definitions/debtAmount'
-      purposeText:
-        $ref: '#/definitions/purposeText'
-      aimText:
-        $ref: '#/definitions/aimText'
-      interest:
-        $ref: '#/definitions/interest'
-      period:
-        $ref: '#/definitions/period'
   #
   ###########################################
   # updateExtLoanType

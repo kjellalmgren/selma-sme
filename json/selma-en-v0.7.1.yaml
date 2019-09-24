@@ -1,19 +1,6 @@
 swagger: '2.0'
 info:
   version: '0.7.1'
-  title: SelmaSME API
-  description: This definition is the API between customer SME-Gui and the persistence layer for the application
-    NOT FOR V1
-    When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
-  #  
-  termsOfService: 'http://www.landshypotek.se/sme/terms'
-  license:
-    name: MIT
-    url: http://opensource.org/licenses/MIT
-  contact:
-    name: API v1 for SME initiative
-    url: api.landshypotek.se/v1/sme
-    email: developer@landshypotek.se
   #
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
@@ -161,6 +148,19 @@ info:
   # 2019-09-11 0.7.1 kal Takeover loan from other institute
   # 2019-09-17 0.7.1 kal processVersion has been added to be able to upgrade in production in the future.
   ##########################################################################################
+  title: SelmaSME API
+  description: This definition is the API between customer SME-Gui and the persistence layer for the application
+    NOT FOR V1
+    When customer logg-in to Selma-EN, we will create a processId with applicant CustomerId (from BankID). When a customer added attachment to the application, we don't have a CaseId i LP, should we add a LP-Service to create/reserve a caseId to be able to attach a document to the caseId in DM.
+  #  
+  termsOfService: 'http://www.landshypotek.se/sme/terms'
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  contact:
+    name: API v1 for SME initiative
+    url: api.landshypotek.se/v1/sme
+    email: developer@landshypotek.se
 host: 'localhost:8443'
 #host: 'localhost:8400'
 basePath: /
@@ -888,6 +888,7 @@ paths:
         - $ref: '#/parameters/X-process-ID'
         - name: customerId
           in: body
+          required: true
           schema:
             $ref: '#/definitions/customerId'
         # parameters required for getApplicant
@@ -2655,7 +2656,7 @@ paths:
             $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
-  # Get a list of available loans for a given processId and companyId in Activiti
+  # Get a list of available loans for a given processId
   ################################################################################
   /v1/getloans:
     post:
@@ -2738,8 +2739,9 @@ paths:
       consumes:
         - application/json
       parameters:
-        # parameters required for getCustomer request
+        # parameters required for getLoan request
         - $ref: '#/parameters/X-process-ID'
+        #
         - name: loanId
           in: body
           schema:
@@ -3376,13 +3378,81 @@ paths:
             $ref: '#/definitions/ErrorModel'
   #
   ################################################################################
+  # Get a list of available takeoverloans for a given processId
+  ################################################################################
+  /v1/gettakeoverloans:
+    post:
+      tags:
+        - TakeoverLoans
+      summary: get a list of available takeoverloans on processId
+      description: Get a list of available takeoverloans by ProcessId...
+      operationId: getTakeoverLoans
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        # parameters required for getTakeoverLoans
+        - $ref: '#/parameters/X-process-ID'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/TakeoverLoansType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  ################################################################################
   # getTakeoverLoan
   ################################################################################
   /v1/gettakeoverloan:
     post:
       tags:
-        - TakeoverLoan
-      summary: Get a specific TakeoverLoan by processId, takeoverloanId
+        - TakeoverLoans
+      summary: Get a specific TakeoverLoan by processId, takeoverLoanId
       description: Get a specific TakeoverLoan by processId, takeoverLoanId
       operationId: getTakeoverLoan
       # The method will handle the following MIME/Types
@@ -3394,6 +3464,7 @@ paths:
         - $ref: '#/parameters/X-process-ID'
         - name: takeoverLoanId
           in: body
+          required: true
           schema:
             $ref: '#/definitions/takeoverLoanId'
       responses:
@@ -3445,9 +3516,226 @@ paths:
           description: 'Service unavailable'    
           schema:
             $ref: '#/definitions/ErrorModel'
+  #
+  ################################################################################
+  # updateTakeoverLoan
+  ################################################################################
+  /v1/updatetakeoverloan:
+    patch:
+      tags:
+        - TakeoverLoans
+      summary: update a specific TakeoverLoan in the model
+      description: >-
+        TBD
+      operationId: updateTaskeoverLoan
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to update a takeoverLoan
+        - $ref: '#/parameters/X-process-ID'
+        - name: takeoverLoanId
+          in: body
+          schema:
+            $ref: '#/definitions/updateTakeoverLoanType'
+      responses:
+        200:
+          description: Successful
+          schema:
+            $ref: '#/definitions/updateTakeoverLoanType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  ################################################################################
+  # deletetakeoverloan
+  ################################################################################
+  /v1/deletetakeoverloan:
+    delete:
+      tags:
+        - TakeoverLoans
+      summary: Delete a specific takeoverLoan in the model
+      description: >-
+        TBD
+      operationId: deleteTakeoverLoan
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to delete a loan in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: takeoverLoanId
+          in: body
+          schema:
+            $ref: '#/definitions/takeoverLoanId'
+      responses:
+        200:
+          description: Successful
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
+  #######################################################
+  # Add of a specific takeoverloan
+  #######################################################
+  /v1/addtakeoverloan:
+    put:
+      tags:
+        - TakeoverLoans
+      summary: Add a specific takeoverloanloan in the model
+      description: >-
+        TBD
+      operationId: addTakeoverLoan
+      # The method will handle the following MIME/Types
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      # required parameters to update a extLoan in Activiti
+        - $ref: '#/parameters/X-process-ID'
+        - name: extloan
+          in: body
+          schema:
+            $ref: '#/definitions/takeoverLoanType'
+      responses:
+        201:
+          description: Successfully created
+          schema:
+            $ref: '#/definitions/takeoverLoanType'
+        400:
+          description: 'Bad request'  
+          schema:
+            $ref: '#/definitions/ErrorModel'        
+        401:
+          description: 'Unauthorized'       
+          schema:
+            $ref: '#/definitions/ErrorModel'   
+        403:
+          description: 'Forbidden'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        405:
+          description: 'Method Not Allowed'
+          schema:
+            $ref: '#/definitions/ErrorModel'         
+        406:
+          description: 'Not Acceptable'
+          schema:
+            $ref: '#/definitions/ErrorModel'     
+        408:
+          description: 'Request Timeout'
+          schema:
+            $ref: '#/definitions/ErrorModel'      
+        415:
+          description: 'Unsupported media type'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        429:
+          description: 'Too many requests'        
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: 'Internal server error'          
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        503:
+          description: 'Service unavailable'    
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #
   ################################################################################
   # Get a list of available PersonalEconomies for a given processId and customerId
-  # in Activiti
   ################################################################################
   /v1/getpersonaleconomies:
     post:
@@ -4964,6 +5252,7 @@ paths:
         - $ref: '#/parameters/X-process-ID'
         - name: guarantorId
           in: body
+          required: true
           schema:
             $ref: '#/definitions/guarantorId'
       responses:
@@ -5894,11 +6183,6 @@ definitions:
     type: boolean
     example: '{"submitApplication": true}'
   #
-  submitReadyness:
-    description: En skala för att bedöm graden av ifylld ansökan
-    type: integer
-    example: 1
-  #
   caseIdStatus:
     type: string
     description: Set status on the caseId or in the process (application)
@@ -5953,11 +6237,11 @@ definitions:
     type: string
     #example: '19640120-3887' # Anna Andersson
   #
-  householdMembers:
-    description: This holds a array of one to many Applicant/make/maka in a household
-    type: array
-    items:
-      $ref: '#/definitions/householdMember'
+  #householdMembers:
+  #  description: This holds a array of one to many Applicant/make/maka in a household
+  #  type: array
+  #  items:
+  #    $ref: '#/definitions/householdMember'
   #
   #####################################################
   # ApplicantType
@@ -6189,7 +6473,7 @@ definitions:
     description: TBD
     type: string
     format: uuid
-    example: ''
+    example: '{"guarantorId": "1e938826-cda3-49d7-93b5-06dc87ba627b"}'
   guarantorName:
     description: TBD
     type: string
@@ -6395,10 +6679,10 @@ definitions:
     type: string
     example: '0028600'
   #
-  loanOwner:
-    description: Lånet står på person
-    type: string
-    example: 'Anna Andersson'
+  #loanOwner:
+  #  description: Lånet står på person
+  #  type: string
+  #  example: 'Anna Andersson'
   #
   houseLoanAmount:
     description: Lånet är på belopp
@@ -6464,7 +6748,7 @@ definitions:
   # takeoverLoanType
   ##################################
   takeoverLoanId:
-    description: TakeoverLoanId identity
+    description: takeoverLoanId identity
     type: string
     format: uuid
     example: '{"takeoverLoanId": "4b8e4822-3cb7-11e9-b210-d663bd873d93"}'
@@ -6483,10 +6767,12 @@ definitions:
     type: string
     format: uuid
     example: '{"loanId": "9b8e4822-3cb7-11e9-b210-d663bd873d93"}'
+  #
   loanNumber:
     description: This will only be a temporary loanNumber, when can we reserve a loan number in SAP
     type: string
     example: '9397000010'
+  #
   loanTakeOver:
     description: Övertag från annan bank, fix för att övertag inte finns i LP (deprecated) moved to takeoverLoan
     # deprecated: true
@@ -6740,6 +7026,17 @@ definitions:
     type: string
     example: 'Mjölkstall'
   #
+  interest:
+    description: Aktuell ränta hos nuvarande institute inför lösen
+    type: number
+    format: float
+    example: 1.08
+  #
+  period:
+    description: Aktuell bindningstid hos nuvarande institue inför lösen
+    type: integer
+    example: 3
+  #
   ###################################
   # CompanyEconomies
   ###################################
@@ -6750,7 +7047,7 @@ definitions:
     example: '{ "companyEconomyId": "4804f0c2-3d2d-11e9-b210-d663bd873d93"}'
   #
   companyEcononyIdBudgetId:
-    description: body parameters to get a specific budgetId for a CompanytEconomyId
+    description: body parameters to get a specific budgetId for a CompanyEconomyId
     type: object
     properties:
       companyEconomyId:
@@ -6952,16 +7249,16 @@ definitions:
   #################################################################
   OK200:
     description: Successful
-  OK201:
-    description: Resource successfully added
-  UnauthorizedError:
-    description: Access token is missing or invalid
-  ForbiddenError:
-    description: Access forbidden
-  InvalidPage:
-    description: Invalid page
-  PageNotFound:
-    description: Page not found
+  #OK201:
+  #  description: Resource successfully added
+  #UnauthorizedError:
+  #  description: Access token is missing or invalid
+  #ForbiddenError:
+  #  description: Access forbidden
+  #InvalidPage:
+  #  description: Invalid page
+  #PageNotFound:
+  #  description: Page not found
   #
   #################################################################
   #################################################################
@@ -7249,9 +7546,6 @@ definitions:
       partInHousehold:
         $ref: '#/definitions/partInHousehold'
   #
-  #Child:
-  #  $ref: '#/definitions/childType'
-  #
   Childs:
     description: holds all child in a household
     type: array
@@ -7281,6 +7575,10 @@ definitions:
         $ref: '#/definitions/purposeText'
       aimText:
         $ref: '#/definitions/aimText'
+      interest:
+        $ref: '#/definitions/interest'
+      period:
+        $ref: '#/definitions/period'
   #
   #########################################
   # Definition LoanType
@@ -7321,6 +7619,19 @@ definitions:
     properties:
       loans:
         $ref: '#/definitions/Loans'
+  #
+  TakeoverLoansType:
+    description: Array of TakeoverLoanType
+    type: object
+    properties:
+      takeoverloans:
+        $ref: '#/definitions/TakeoverLoans'
+  #
+  TakeoverLoans:
+    type: array
+    description: Array list of TakeoverLoanType (TakeoverLoan)
+    items:
+      $ref: '#/definitions/takeoverLoanType'
   #
   Loans:
     type: array
@@ -7418,6 +7729,37 @@ definitions:
     items:
       $ref: '#/definitions/customerId'
   #
+  ###########################################
+  # updateTakeoverLoanType
+  ###########################################
+  updateTakeoverLoanType:
+    description: update TakeoverLoanType
+    required:
+    - takeoverLoanId
+    type: object
+    properties:
+      processId:
+        $ref: '#/definitions/processId'
+      takeoverLoanId:
+        $ref: '#/definitions/takeoverLoanId'
+      creditInstitute:
+        $ref: '#/definitions/creditInstitute'
+      loanNumber:
+        $ref: '#/definitions/loanNumber'
+      debtAmount:
+        $ref: '#/definitions/debtAmount'
+      purposeText:
+        $ref: '#/definitions/purposeText'
+      aimText:
+        $ref: '#/definitions/aimText'
+      interest:
+        $ref: '#/definitions/interest'
+      period:
+        $ref: '#/definitions/period'
+  #
+  ###########################################
+  # updateExtLoanType
+  ###########################################
   updateExtLoanType:
     description: update of ExtLoanType
     required:
@@ -7934,17 +8276,17 @@ definitions:
       maintenancecosts:
         $ref: '#/definitions/MaintenanceCosts'
   #
-  hrefType:
-      description: Link to a resource
-      type: object
-      properties:
-        href:
-          $ref: '#/definitions/hrefEntry'
+  #hrefType:
+  #    description: Link to a resource
+  #    type: object
+  #    properties:
+  #      href:
+  #        $ref: '#/definitions/hrefEntry'
   #
-  hrefEntry:
-      description: Link to a resource
-      type: string
-      example: /v1/Applicants/{processId}
+  #hrefEntry:
+  #    description: Link to a resource
+  #    type: string
+  #    example: /v1/Applicants/{processId}
 #
 ####################################################################################
 ####################################################################################

@@ -287,13 +287,6 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = json.Unmarshal([]byte(file), &loans)
 	//
-	file, err = ioutil.ReadFile("json/takeoverloans.json")
-	if err != nil {
-		fmt.Fprintf(w, "Error reading takeoverloans.json - %s", err)
-		w.WriteHeader(http.StatusNotFound)
-	}
-	_ = json.Unmarshal([]byte(file), &takeoverloans)
-	//
 	file, err = ioutil.ReadFile("json/companies.json")
 	if err != nil {
 		fmt.Fprintf(w, "Error reading companies.json - %s", err)
@@ -377,7 +370,6 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	processall.Applicants = append(applicants)
 	processall.Loans = append(loans)
 	processall.ExtLoans = append(extloans)
-	processall.TakeoverLoans = append(takeoverloans)
 	processall.Households = append(households)
 	processall.Companies = append(companies)
 	processall.CompanyEconomies = append(companyeconomies)

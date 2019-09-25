@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.7.2'
+  version: '0.7.3'
   #
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
@@ -149,6 +149,7 @@ info:
   # 2019-09-17 0.7.1 kal processVersion has been added to be able to upgrade in production in the future.
   # 2019-09-23 0.7.2 kal New version created
   # 2019-09-23 0.7.2 kal TakeoverLoans missing in LinksAll
+  # 2019-09-25 0.7.3 kal Changes structure of TakeoverLoans (TakeoverLoansType)
   ##########################################################################################
   title: SelmaSME API
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -7262,7 +7263,7 @@ definitions:
       aims:
         $ref: '#/definitions/Aims'
       takeoverloans:
-        $ref: '#/definitions/TakeoverLoansType'
+        $ref: '#/definitions/TakeoverLoans'
   #
   #Loan:
   #  $ref: '#/definitions/loanType'

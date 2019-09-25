@@ -240,7 +240,6 @@ func GetProcessAll(w http.ResponseWriter, r *http.Request) {
 	applicants := []models.ApplicantType{}
 	loans := []models.LoanType{}
 	extloans := []models.ExtLoanType{}
-	takeoverloans := []models.TakeoverLoanType{}
 	households := []models.HouseholdType{}
 	companies := []models.CompanyType{}
 	companyeconomies := []models.CompanyEconomyType{}

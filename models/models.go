@@ -380,7 +380,6 @@ type ProcessAllType struct {
 	Applicants        []ApplicantType
 	Loans             []LoanType
 	ExtLoans          []ExtLoanType
-	TakeoverLoans     []TakeoverLoanType
 	Households        []HouseholdType
 	Companies         []CompanyType
 	CompanyEconomies  []CompanyEconomyType

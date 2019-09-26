@@ -240,6 +240,18 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: cp("\tSyfte:"), Value: "\t" + cp(aim.AimText)})
 			tr = append(tr, TableRow{Key: cp("\tLånebelopp:"), Value: fmt.Sprintf("%s SEK", rendernumber.RenderFloat("# ###.", float64(aim.LoanAmountPart)))})
 		}
+		tr = append(tr, TableRow{Key: cp("Lån för lösen: "), Value: ""})
+		for _, takeoverloan := range loan.TakeoverLoans {
+			tr = append(tr, TableRow{Key: cp("\tTakeoverloanID:*"), Value: "\t" + takeoverloan.TakeoverLoanID})
+			tr = append(tr, TableRow{Key: cp("\tInstitute:"), Value: "\t" + takeoverloan.CreditInstitute})
+			tr = append(tr, TableRow{Key: cp("\tLånenummer:"), Value: "\t" + takeoverloan.LoanNumber})
+			tr = append(tr, TableRow{Key: cp("\tAktuell skuld:"), Value: fmt.Sprintf("\t%s SEK", rendernumber.RenderFloat("# ###.", float64(takeoverloan.DebtAmount)))})
+			tr = append(tr, TableRow{Key: cp("\tHuvudändamål:"), Value: "\t" + cp(takeoverloan.PurposeText)})
+			tr = append(tr, TableRow{Key: cp("\tHuvudsyfte:"), Value: "\t" + cp(takeoverloan.AimText)})
+			tr = append(tr, TableRow{Key: cp("\tAktuell ränta:"), Value: fmt.Sprintf("\t%s\t", rendernumber.RenderFloat("##.##", float64(takeoverloan.Interest)))})
+			tr = append(tr, TableRow{Key: cp("\tVillkorsändras:"), Value: "\t" + takeoverloan.ConditionChangeDate})
+
+		}
 		pdf = table1(pdf, tr) // add table to page current page
 	}
 	//

@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.7.3'
+  version: '0.7.4'
   #
   ############################################################################################
   # 2019-02-10 0.2.0 kal Initial version
@@ -150,6 +150,7 @@ info:
   # 2019-09-23 0.7.2 kal New version created
   # 2019-09-23 0.7.2 kal TakeoverLoans missing in LinksAll
   # 2019-09-25 0.7.3 kal Changes structure of TakeoverLoans (TakeoverLoansType)
+  # 2019-09-25 0.7.4 kal Removed /v1/example
   ##########################################################################################
   title: SelmaSME API
   description: This definition is the API between customer SME-Gui and the persistence layer for the application
@@ -5730,7 +5731,7 @@ paths:
         - application/json
       parameters:
         - $ref: '#/parameters/X-process-ID'
-        - name: submit
+        - name: submitApplication
           in: body
           schema:
             $ref: '#/definitions/submitApplication'
@@ -5825,8 +5826,11 @@ definitions:
     example: '106666'
   #
   submitApplication:
-    description: Jag försäkrar att lämnade uppgifter är korrekta. Denna måste vara satt till true, annars kan inte ansökan skickas in till LP. Sökande ska klicka i detta val. Om vi tycker att sökande behöver fylla i mer för att skicka in ansökan ska denna inte gå att sätta till true.
-    type: boolean
+    description: Skicka in ansökan
+    type: object
+    properties:
+      submitApplication:
+        type: boolean
     example: '{"submitApplication": true}'
   #
   caseIdStatus:

@@ -118,6 +118,7 @@ func CreatePdfDocument(processid string) models.MessageBody {
 			tr = append(tr, TableRow{Key: "\tSkapad:", Value: "\t\t" + customerID.CustomerAdded})
 		}
 		tr = append(tr, TableRow{Key: "\tReferensid: ", Value: "\t\t" + fmt.Sprintf("%d", process.ReferenceID)})
+		tr = append(tr, TableRow{Key: "\tProcessVersion: ", Value: "\t\t" + fmt.Sprintf("%s", process.ProcessVersion)})
 		pdf = table1(pdf, tr) // add table to page
 	}
 	// Applicants

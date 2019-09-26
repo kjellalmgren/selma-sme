@@ -193,7 +193,7 @@ func main() {
 	router.HandleFunc("/v1/deletemaintenancecost", maintenancecosts.DeleteMaintenanceCost).Methods("DELETE", "OPTIONS")
 	//
 	// submitApplication.go
-	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/submitapplication", submitapplication.Submit).Methods("POST", "GET", "PUT", "PATCH", "OPTIONS")
 	// roaring.go
 	//router.HandleFunc("/v1/getaccesstoken", roaring.GetAccesToken).Methods("POST", "OPTIONS")
 	// Healt services local

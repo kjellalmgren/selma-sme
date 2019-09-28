@@ -137,7 +137,7 @@ func main() {
 	//
 	// companies.go
 	router.HandleFunc("/v1/getcompanies", companies.GetCompanies).Methods("POST", "OPTIONS")
-	router.HandleFunc("/v1/getcompany", companies.GetCompany).Methods("POST", "OPTIONS")
+	router.HandleFunc("/v1/getcompany", companies.GetCompany).Methods("POST", "GET", "OPTIONS")
 	router.HandleFunc("/v1/deletecompany", companies.DeleteCompany).Methods("DELETE", "OPTIONS")
 	router.HandleFunc("/v1/updatecompany", companies.UpdateCompany).Methods("PATCH", "OPTIONS")
 	router.HandleFunc("/v1/addcompany", companies.AddCompany).Methods("PUT", "OPTIONS")

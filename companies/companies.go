@@ -65,8 +65,7 @@ func GetCompanies(w http.ResponseWriter, r *http.Request) {
 	//
 }
 
-//
-// getCompany documentation
+// GetCompany documentation
 func GetCompany(w http.ResponseWriter, r *http.Request) {
 
 	//var companies []models.Company
@@ -83,7 +82,7 @@ func GetCompany(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 	}
-	fmt.Printf("getCompanies executed: processId: %s CompanyId: %s...\r\n", processid, data.CompanyID)
+	fmt.Printf("getCompany executed: processId: %s CompanyId: %s...\r\n", processid, data.CompanyID)
 	//
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "https://app.swaggerhub.com")

@@ -24,6 +24,7 @@
       }
     ],
     "numberOfCars": 1,
-    "childMaintenanceCost": 0
+    "childMaintenanceCost": 0,
+    "childCareAmount": 1800.0
   }
 ]

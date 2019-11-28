@@ -40,7 +40,7 @@ COPY json/guarantors.json /selmasme/json
 COPY json/maintenancecosts.json /selma/json
 COPY json/mainpurposes.json /selma/json
 COPY json/financialinstitutions.json /selma/json
-COPY json/selma-en-v0.7.4.yaml /selmasme/json
+COPY json/selma-en-v0.7.5.yaml /selmasme/json
 # COPY executable ./selma-sme
 COPY selmasme /selmasme
 #

@@ -9,6 +9,7 @@
     "kycPublicFunction": false,
     "kycRelatedPublicFunction": false,
     "kycHighRiskIndustry": false,
-    "kycHighRiskIndustryText": "Nej, Annan bransch"
+    "kycHighRiskIndustryText": "Nej, Annan bransch",
+    "kycUSPerson": false
   }
 ]

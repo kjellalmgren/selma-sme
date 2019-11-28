@@ -1,0 +1,837 @@
+---
+swagger: "2.0"
+info:
+  description: Create case API for LP
+  version: 0.8.2
+  title: Create Case
+host: localhost:7001
+basePath: /loanprocess/rs
+tags:
+- name: createcasesme
+  description: Creates a a request
+schemes:
+- http
+- https
+paths:
+  /createcasesme:
+    post:
+      tags:
+      - createcasesme
+      summary: Skapar ett ärende i Loan Process och bygger upp ärendet med inskickad data.
+      description: ""
+      operationId: createCase
+      produces:
+      - application/xml
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Request för att skapa ett ärende.
+        required: true
+        schema:
+          $ref: '#/definitions/CreateCaseRequest'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/CreateCaseResponse'
+        500:
+          description: BAD REQUEST
+definitions:
+  Budget:
+    type: object
+    required:
+    - year
+    properties:
+      year:
+        type: integer
+        format: int32
+        example: 2020
+        description: Budgetår
+      forest:
+        type: number
+        example: 110000.0
+        description: '''Skog'''
+      crop:
+        type: number
+        example: 50000.0
+        description: '''Växtodling'''
+      geteUFundings:
+        type: number
+        example: 0.0
+        description: '''EU-stöd'''
+      otherAnimalProduction:
+        type: number
+        example: 340000.0
+        description: '''Övrig djurproduktion'''
+      changeOfWarehouseProduction:
+        type: number
+        example: 33000.0
+        description: '''Förändring av lager produktion'''
+      milk:
+        type: number
+        example: 210000.0
+        description: '''Mjölk'''
+      otherIncomes:
+        type: number
+        example: 70000.0
+        description: '''Övriga intäkter'''
+      purchases:
+        type: number
+        example: 95000.0
+        description: '''Inköp (Råvaror och förnödenheter)'''
+      leaseCosts:
+        type: number
+        example: 0.0
+        description: '''Arrendekostnader'''
+      personnelCosts:
+        type: number
+        example: 420000.0
+        description: '''Personalkostnader'''
+      otherOperatingExpenses:
+        type: number
+        example: 210000.0
+        description: '''Övriga rörelsekostnader'''
+      depreciationOfEquipment:
+        type: number
+        example: 9000.0
+        description: '''Avskrivning inventarier (exkl byggn.inventarier)'''
+      otherDepreciationAndWritedowns:
+        type: number
+        example: 0.0
+        description: '''Övriga avskrivningar och nedskrivningar'''
+      financialIncome:
+        type: number
+        example: 310000.0
+        description: '''Finansiella intäkter'''
+      financialCosts:
+        type: number
+        example: 280000.0
+        description: '''Finansiella kostnader'''
+      extraordinaryIncomeAndExpenses:
+        type: number
+        example: 0.0
+        description: '''Extraordinära intäkter och kostnader'''
+      allocations:
+        type: number
+        example: 34000.0
+        description: '''Bokslutsdispositioner'''
+      tax:
+        type: number
+        example: 810000.0
+        description: '''Skatt'''
+    description: Visas under Räkenskaper - Räkenskap
+  BusinessCategory:
+    type: object
+    properties:
+      businessCategoryType:
+        type: string
+        example: AGRICULTURE_PLANTS_110
+        description: DriftsinrikningÖversättning Enumvärden:<br>111 - Spannmål & Oljeväxt.,<br>110 - Jordbruksväxter,<br>112 - Vall (för avsalu),<br>113 - Potatis,<br>114 - Sockerbetor,<br>115 - Vallfrö,<br>118 - Energigrödor,<br>119 - Övriga jordbruksgröd,<br>121 - Frilandsodling,<br>120 - Trädgårdsväxter,<br>122 - Växthusodling,<br>125 - Frukt- och bärodling,<br>129 - Övriga trädgårdsväxt,<br>211 - Mjölkproduktion,<br>210 - Nötkreatur,<br>212 - Am- och Dikor,<br>213 - Köttproduktion,<br>219 - Övriga nöt,<br>221 - Fårskötsel,<br>220 - Får och getter,<br>222 - Getskötsel,<br>231 - Smågrisproduktion,<br>230 - Svinproduktion,<br>232 - Slaktsvinsproduktion,<br>233 - Integrerad prod.,<br>239 - Övrig svinproduktion,<br>241 - Äggproduktion,<br>240 - Fjäderfäskötsel,<br>242 - Slaktkyckling,<br>249 - Övrig fjäderfäsköts.,<br>251 - Avel,<br>250 - Hästverksamhet,<br>252 - Stallplatser,<br>253 - Ridskola & utbildning,<br>254 - Ridsport, tävling,<br>255 - Trav & galopp,<br>259 - Övrig hästverksamhet,<br>261 - Renskötsel,<br>260 - Annan djursköts.,<br>262 - Pälsdjursuppfödning,<br>263 - Biodling,<br>269 - Övrig djurhållning,<br>311 - Produktion av skog,<br>310 - Prod. av skog,<br>321 - För. av skogsråvara,<br>320 - Förädl. av skog,<br>399 - Övrig skogsverksamh.,<br>390 - Övrig skogsverk.,<br>811 - Lantbruksmaskiner,<br>810 - Maskinentr.,<br>815 - Skogsmaskiner,<br>819 - Övrig entreprenad,<br>821 - Uthyrning bostäder,<br>822 - Uth. lokaler (ek.b.),<br>820 - Lokaler,<br>831 - Bo på Lantgård/B&B,<br>830 - Turism,<br>832 - Hotel & Konferens,<br>833 - Natur, Hälsa & Rekr.,<br>835 - Jakt & Fiske,<br>839 - Övrig turism,<br>851 - Förädling egna prod.,<br>850 - Tillverkning,<br>859 - Övrig tillverkning,<br>869 - Övrig tjänst & kons.,<br>860 - Tjäns.- konsultv,<br>900 - Ink. tjänst och cap.,<br>999 - Övrigt,<br>990 - Övrigt
+        enum:
+        - CEREALS_AND_OIL_PLANTS_111
+        - AGRICULTURE_PLANTS_110
+        - MOUND_FOR_SALE_112
+        - POTATOES_113
+        - SUGAR_BEETS_114
+        - GRASS_SEED_115
+        - ENERGY_CROPS_118
+        - OTHER_AGRICULTURAL_CROPS_119
+        - FIELD_GROWING_121
+        - GARDEN_PLANTS_120
+        - GREENHOUSE_CULTIVATION_122
+        - FRUIT_AND_BERRY_CULTIVATION_125
+        - OTHER_GARDEN_PLANTS_129
+        - MILK_PRODUCTION_211
+        - CATTLE_210
+        - SUCKLER_COWS_212
+        - MEAT_PRODUCTION_213
+        - OTHER_NUTS_219
+        - SHEEP_FARMING_221
+        - SHEEP_AND_GOATS_220
+        - GOAT_FARMING_222
+        - PIGLET_PRODUCTION_231
+        - SWINE_PRODUCTION_230
+        - PIG_PRODUCTION_232
+        - INTEGRATED_PRODUCTION_233
+        - OTHER_PIG_PRODUCTION_239
+        - EGG_PRODUCTION_241
+        - POULTRY_CARE_240
+        - BROILERS_242
+        - OTHER_POULTRY_CARE_249
+        - BREEDING_251
+        - HORSE_BUSINESS_250
+        - HORSE_BOARDING_252
+        - RIDING_SCHOOL_AND_EDUCATION_253
+        - EQUESTRIAN_AND_COMPETITION_254
+        - TROT_AND_GALLOP_255
+        - OTHER_HORSE_OPERATIONS_259
+        - REINDEER_HERDING_261
+        - OTHER_ANIMAL_CARE_260
+        - FUR_262
+        - BEEKEEPING_263
+        - OTHER_ANIMAL_FARMING_269
+        - PRODUCTION_OF_FOREST_311
+        - PRODUCTION_OF_FOREST_310
+        - PROCESSING_OF_FOREST_RAW_MATERIAL_321
+        - PROCESSING_OF_FOREST_320
+        - OTHER_FOREST_BUSINESS_399
+        - OTHER_FOREST_BUSINESS_390
+        - AGRICULTURAL_MACHINERY_811
+        - MACHINERY_CONTRACTING_810
+        - FOREST_MACHINES_815
+        - OTHER_CONTRACTING_819
+        - RENTAL_HOUSING_821
+        - RENTAL_PREMISES_ECONOMY_BUILDINGS_822
+        - PREMISES_820
+        - BED_AND_BREAKFAST_831
+        - TOURISM_830
+        - HOTEL_AND_CONFERENCE_832
+        - NATURE_HEALTH_AND_RECREATION_833
+        - HUNTING_AND_FISHING_835
+        - OTHER_TOURISM_839
+        - PROCESSING_OWN_PRODUCTS_851
+        - MANUFACTURING_850
+        - OTHER_MANUFACTURING_859
+        - OTHER_SERVICE_AND_CONSULTING_869
+        - SERVICE_AND_CONSULTING_860
+        - INCOME_SERVICE_AND_CAPITAL_900
+        - OTHER_999
+        - OTHER_990
+      share:
+        type: number
+        example: 100.0
+        description: '''Andel (%)'' - Driftinrikningens andel av kundens samtliga driftsinrikningar. Anges i procent (dvs 12.5 för 12,5%)'
+      mainBusiness:
+        type: boolean
+        example: true
+        description: '''Huvudinriktning'' - true om aktuell driftsinrikning är kundens huvudinriktning. Default inget värde om den utelämnas.'
+        default: false
+  Child:
+    type: object
+    properties:
+      age:
+        type: integer
+        format: int32
+        example: 14
+        description: '''Ålder'' - Barnets ålder (år)'
+      fullTimeHouseholdMember:
+        type: boolean
+        example: true
+        description: '''Heltid/Deltid'' - true om Barnet bor i hushållet heltid, false om delad vårdnad. Default är true om värdet utelämnas.'
+        default: false
+    description: Visas under Hushåll - Hemmavarande barn
+  CompanyEconomy:
+    type: object
+    properties:
+      revenues:
+        type: array
+        description: Lista av omsättningar för tidigare år
+        items:
+          $ref: '#/definitions/Revenue'
+  CreateCaseRequest:
+    type: object
+    required:
+    - customers
+    - system
+    properties:
+      system:
+        type: string
+        example: SELMA_SME
+        description: Anropande system/applikation som skapar det nya ärendet. Lagras som CreatedBy i LP och gör bl a ärendet sökbart via startsidan under valet 'Kanal'
+        enum:
+        - OFFICE
+        - SELFSERVICE_PRIVATE
+        - SELFSERVICE_SME
+        - EXTERNAL_SYSTEM_LIME
+        - EXTERNAL_SYSTEM_SAS
+        - OTHER
+      caseOwnerOfficerId:
+        type: string
+        example: rti
+        description: Handläggare som default sätts som ägare av ärendet. Visas bl a i footern i LP som 'Ärendets ägare' och går att söka på på startsidan under valet 'Handläggare'
+      endUserId:
+        type: string
+        example: "196806015209"
+        description: 'Personnummer på den användare som skickar in ansökan (att använda om ansökan är ämnad för annan part än den som skriver ansökan). Format: YYYYMMDDnnnn. Sätts inte i LP idag och kommer initialt enbart visas som info i inskickat kreditinformation.'
+      performUC:
+        type: boolean
+        example: true
+        description: Sätts till False om inte UC ska tas per automatik när ärendet körs. Motsvarar fältet 'Bered utan UC' på ärendets startsida. Default True om den inte skickas in.
+        default: false
+      customers:
+        type: array
+        description: Lista av sökande som ansöker om lånet eller personer som har koppling till de sökande.
+        items:
+          $ref: '#/definitions/Customer'
+      loans:
+        type: array
+        description: Lista av nya lån som man ansöker om i detta ärende.
+        items:
+          $ref: '#/definitions/Loan'
+      realEstateCollaterals:
+        type: array
+        description: Lista av fastigheter som ska användas som säkerhet i detta ärende.
+        items:
+          $ref: '#/definitions/RealEstateCollateral'
+      guarantees:
+        type: array
+        description: Lista av borgensmän som ska användas som säkerhet i detta ärende.
+        items:
+          $ref: '#/definitions/Guarantee'
+      euFundings:
+        type: array
+        description: Lista av eu-stöd som ska användas som säkerhet i detta ärende.
+        items:
+          $ref: '#/definitions/EUFunding'
+      households:
+        type: array
+        description: Lista av hushåll för de sökande i detta ärende
+        items:
+          $ref: '#/definitions/Household'
+      externalLoans:
+        type: array
+        description: Lista av de sökandes externa lån (i andra banker än LHB)
+        items:
+          $ref: '#/definitions/ExternalLoan'
+      otherInfo:
+        type: string
+        example: '[ {"Key" : "Firmatecknare för 16523564-1234"} , "Value" : "19640220-3215 Anders Fredriksson"}, {"Key" : "Omsättning för 16523564-1234 år 2017", "Value" : "13 456 000 kr"} ]'
+        description: Övrig information som önskas sändas in till Loan process-ärendet som inte finns med i API:et. Presenteras som övrig information i kreditunderlaget. Om informationen skickas i json-format i en map med värdepar (key + value) enligt exempelformatet så presenteras den tydligare för handläggare i inskickade kreditunderlag-dokumentet.
+    xml:
+      name: CreateCaseRequest
+  CreateCaseResponse:
+    type: object
+    properties:
+      errors:
+        type: array
+        description: Lista av fel som uppkommit vid skapande av ärendet.
+        items:
+          $ref: '#/definitions/Error'
+      response:
+        description: Responseobjekt om ett ärende skapats.
+        $ref: '#/definitions/Response'
+  Customer:
+    type: object
+    required:
+    - customerId
+    properties:
+      customerId:
+        type: string
+        example: "196806015209"
+        description: 'Personnummer eller organisationsnummer för aktuell kund. Format: YYYYMMDDnnnn'
+      fictiousId:
+        type: boolean
+        example: false
+        description: Sätts till true om personen har ett fiktivt personnummer. Default satt till false.
+        default: false
+      phonenumber:
+        type: string
+        example: 0735-429312
+        description: Telefonnummer
+      email:
+        type: string
+        example: ingrid.parnemar@gmail.com
+        description: E-post
+      businessDescription:
+        type: string
+        example: Huvudsaklig inkomst från Mjölkkor.
+        description: Beskrivning av kundens verksamhet. Fritext max 10 000 tecken
+      conflictOfInterest:
+        type: boolean
+        example: false
+        description: Sätts till true om personen är jävig. Default satt till false.
+        default: false
+      privateEconomy:
+        description: Kundens privatekonomi (inkomst, anställningsform mm)
+        $ref: '#/definitions/PrivateEconomy'
+      companyEconomy:
+        description: Kundens ekonomi från rörelse (omsättning)
+        $ref: '#/definitions/CompanyEconomy'
+      budgets:
+        type: array
+        description: Lista av kundens Budgetar
+        items:
+          $ref: '#/definitions/Budget'
+      knowYourCustomer:
+        description: Kundkännedom
+        $ref: '#/definitions/KnowYourCustomer'
+      interestCategories:
+        type: array
+        description: Lista av intressekategorier kopplade till kunden i detta ärende
+        items:
+          type: string
+          enum:
+          - HUSBAND_WIFE
+          - PARTNER
+          - OPERATING_COMPANY
+          - GUARANTOR
+          - HOLDINGS_IN_MORTGAGES
+          - OWNER_LEGAL_OVER_PERCENTAGE
+          - OTHER_ECONOMIC_INTEREST
+      businessCategories:
+        type: array
+        description: Lista av driftsinrikningar kopplade till kunden.
+        items:
+          $ref: '#/definitions/BusinessCategory'
+      applicant:
+        type: boolean
+        example: true
+        description: Sätts till true om personen är sökande till lånen i detta ärende. Default satt till true om värdet ej anges.
+        default: false
+      customerAdvisorId:
+        type: string
+        example: fla
+        description: Användar-id på kundansvarig i banken för aktuell kund.
+      customerAdvisorName:
+        type: string
+        example: Fredrik Larsson
+        description: Namn på kundansvarig i banken för aktuell kund.
+      beneficialOwners:
+        type: array
+        example: '["196806015209"]'
+        description: Lista av verkliga huvudmän för aktuellt företag. Personnummer med format YYYYMMDDnnnn
+        items:
+          type: string
+  EUFunding:
+    type: object
+    required:
+    - customerId
+    properties:
+      customerId:
+        type: string
+        example: "196806015209"
+        description: personnummer/organisationsnummer för vilken egen firma/företag EU-stödet gäller. Format YYYYMMDDnnnn
+      supportYear:
+        type: integer
+        format: int32
+        example: 2020
+        description: År för EU-stöd
+      euFundingType:
+        type: string
+        example: NATIONAL_SUPPORT_NO_MILK
+        description: Typ av EU-stöd.<br>Översättning Enumvärden:<br>EU_SUPPORT - EU-stöd,<br>EU_SUPPORT_AND_NATIONAL_SUPPORT - EU-stöd och nationellt stöd,<br>EU_SUPPORT_AND_NATIONAL_SUPPORT_NO_MILK - EU-stöd och nationellt stöd utan mjölk,<br>NATIONAL_SUPPORT_NO_MILK - Nationellt stöd, utan mjölk
+        enum:
+        - EU_SUPPORT
+        - EU_SUPPORT_AND_NATIONAL_SUPPORT
+        - EU_SUPPORT_AND_NATIONAL_SUPPORT_NO_MILK
+        - NATIONAL_SUPPORT_NO_MILK
+      fundingAmount:
+        type: number
+        example: 1000000.0
+        description: Beräknat stödbelopp
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        example: CUSTOMER_NOT_CREATED
+        description: Felkod för det aktuella felet. Exakt värdemängd är ännu inte definierad.
+      message:
+        type: string
+        example: Customer with id 19470113-4872 could not be created. Customer not found.
+        description: Felmeddelande för det specifika felet.
+  Estate:
+    type: object
+    properties:
+      id:
+        type: string
+        example: Örebro Fastigheten 2:12
+        description: Id på fastigheten. Sätts om man vill koppla ett externt lån (ExternalLoan) till fastigheten. På ExternalLoan kan då referens till detta id sättas.
+      estateType:
+        type: string
+        example: VACATIONHOUSE
+        description: Typ av fastighet
+        enum:
+        - HOUSE
+        - VACATIONHOUSE
+        - TENACY
+        - APARTMENT
+        - FARM
+        - OTHER
+      keepResidence:
+        type: boolean
+        example: true
+        description: Ska fastigheten behållas? Default True om värdet inte anges.
+        default: false
+      countyCode:
+        type: integer
+        format: int32
+        example: 1
+        description: Länskod
+      municipalityCode:
+        type: integer
+        format: int32
+        example: 21
+        description: Kommunkod
+      monthlyCost:
+        type: number
+        example: 7500.0
+        description: Driftskostnad per månad
+      debt:
+        type: number
+        example: 2150000.0
+        description: Summa av befintliga lån kopplade till bostaden.
+      ownershipShares:
+        type: array
+        description: Ägarandelar
+        items:
+          $ref: '#/definitions/OwnershipShare'
+  ExternalLoan:
+    type: object
+    properties:
+      borrowers:
+        type: array
+        description: Lista av låntagare
+        items:
+          type: string
+      institute:
+        type: string
+        example: Swedbank
+        description: Externt låneinstitut
+      accountNumber:
+        type: string
+        example: "9220381234421"
+        description: Lånenummer
+      loanType:
+        type: string
+        example: MORTGAGE
+        description: Typ av lån.<br>MORTGAGE - Bolån<br>UNSECURED - Blancolån/Övriga lån<br>INSTALLMENT - Avbetalning/Leasing<br>ACCOUNTCREDIT - Kort/Kontokredit<br>SECURITY - Borgen<br>GUARANTEES - Garantier<br>STUDENT - Studielån<br>BUSINESS - Näringslån
+        enum:
+        - MORTGAGE
+        - UNSECURED
+        - INSTALLMENT
+        - ACCOUNTCREDIT
+        - SECURITY
+        - GUARANTEES
+        - STUDENT
+        - BUSINESS
+      amount:
+        type: number
+        example: 2150000.0
+        description: Lånebelopp
+      yearlyPaymentAmount:
+        type: number
+        example: 12000.0
+        description: Årlig amortering
+      interest:
+        type: number
+        format: double
+        example: 1.52
+        description: Ränta i procent.
+      redeemed:
+        type: boolean
+        example: false
+        description: Sätts till true om ånet lösas in i samband med detta ärende. Default satt till false.
+        default: false
+      realEstateID:
+        type: string
+        example: Örebro Fastigheten 2:12
+        description: Om lånet är kopplat till en fastighet så kan de kopplas samman genom att ange fastighetens id
+  Guarantee:
+    type: object
+    required:
+    - guarantorId
+    properties:
+      guarantorId:
+        type: string
+        example: "196102131652"
+        description: Personnummer på borgensman som går i borgen. Format YYYYMMDDnnnn
+      guarantorPhone:
+        type: string
+        example: 0735-4131225
+        description: Telefonnummer till borgensman
+  Household:
+    type: object
+    properties:
+      estates:
+        type: array
+        description: Lista av fastigheter som innehas av hushållet. Fastigheter som anges som säkerhet (RealEstateCollateral) behöver inte anges här.
+        items:
+          $ref: '#/definitions/Estate'
+      children:
+        type: array
+        description: Lista av barn i hushållet
+        items:
+          $ref: '#/definitions/Child'
+      numberOfCars:
+        type: integer
+        format: int32
+        example: 1
+        description: Antal bilar i hushållet
+      receivesMonthlyAlimony:
+        type: number
+        example: 1573.0
+        description: Underhåll som hushållet får per månad
+      paysMonthlyAlimony:
+        type: number
+        example: 0.0
+        description: Underhåll som hushållet betalar per månad
+      childCareAmount:
+        type: number
+        example: 1150.0
+        description: Kostnad för barnomsorg per månad
+      suspensionAmount:
+        type: number
+        example: 120000.0
+        description: Uppskovsbelopp från tidigare försäljning.
+      householdMemberIds:
+        type: array
+        example: '["196806015209"]'
+        description: 'Lista av personnummer på hushållets medlemmar (barn normalt exluderade). Format på personnummer: YYYYMMDDnnnn'
+        items:
+          type: string
+  KnowYourCustomer:
+    type: object
+    properties:
+      gdprConsent:
+        type: boolean
+        example: true
+        description: Givit GDPR-samtycke för hantering av personuppgifter.
+        default: false
+      ucConsent:
+        type: boolean
+        example: true
+        description: Givit samtycke för att ta kreditupplysning.
+        default: false
+      pep:
+        type: boolean
+        example: false
+        description: är politiskt exponerad person (PEP)
+        default: false
+      pepRelated:
+        type: boolean
+        example: false
+        description: Är familjemedlem eller nära medarbetare politiskt exponerad person (PEP)
+        default: false
+      contactByEmail:
+        type: boolean
+        example: true
+        description: Personen vill bli kontaktad via epost vid statusförändringar i ansökan
+        default: false
+      contactByText:
+        type: boolean
+        example: true
+        description: Personen vill bli kontaktad via SMS vid statusförändringar i ansökan
+        default: false
+      highRiskIndustry:
+        type: boolean
+        example: true
+        description: Personen/Företaget är verksam inom en högriskbransch.
+        default: false
+      highRiskIndustryType:
+        type: string
+        example: MANUFACTURING_EXPLOSIVE_20510
+        description: Typ av högriskbransch (utelämnas om man ej är verksam inom högriskbransch). Översättning enumtyper:<br>07210 - Utvinning av uran- och toriummalm/Vapenhandlare,<br>20510 - Sprängämnestillverkning/Vapenhandlare,<br>24460 - Tillverkning av kärnbränsle/Vapenhandlare,<br>25400 - Tillverkning av vapen och ammunition/Vapenhandlare,<br>30400 - Tillverkning av militära stridsfordon/Vapenhandlare,<br>47771 - Specialiserad butikshandel med ur,<br>47772 - Specialiserad butikshandel med guldsmedsvaror och smycken (av ädel metall),<br>47783 - Specialiserad butikshandel med konst samt galleriverksamhet,<br>47784 - Specialiserad butikshandel med mynt och frimärken,<br>47791 - Specialiserad butikshandel med antikviteter,<br>47793 - Auktioner i butik,<br>47917 - Auktioner på Internet,<br>47919 - Postorderhandel och detaljhandel på Internet med övriga varor (apoteksartiklar),<br>47994 - Auktioner ej i butiker eller på Internet,<br>66120 - Valutaväxling, växlingskontor,<br>66190 - Betalningsförmedling,<br>68310 - Fastighetsförmedling,<br>88994 - Humanitära insatser,<br>92000 - Spel- och vadhållningsverksamhet
+        enum:
+        - EXTRACT_URANIUM_07210
+        - MANUFACTURING_EXPLOSIVE_20510
+        - MANUFACTURING_NUCLEAR_24460
+        - MANUFACTURING_WEAPONS_25400
+        - MANUFACTURING_COMBAT_VEHICLES_30400
+        - SPECIALIZED_RETAIL_SALE_WATCH_47771
+        - SPECIALIZED_RETAIL_SALE_GOLD_47772
+        - SPECIALIZED_RETAIL_SALE_ART_47783
+        - SPECIALIZED_RETAIL_SALE_STAMPS_47784
+        - SPECIALIZED_RETAIL_SALE_ANTIQUES_47791
+        - AUCTIONS_STORE_47793
+        - AUCTIONS_INTERNET_47917
+        - MAIL_ORDER_INTERNET_47919
+        - AUCTIONS_OTHER_47994
+        - CURRENCY_EXCHANGE_66120
+        - MONEY_TRANSFER_66190
+        - PROPERTY_BORKER_68310
+        - HUMANITARIAN_EFFORTS_88994
+        - GAMBLE_BETTING_OPERATIONS_92000
+  Loan:
+    type: object
+    properties:
+      amount:
+        type: number
+        example: 1000000.0
+        description: Lånebelopp
+      productCode:
+        type: string
+        example: MORTGAGE_BASE_A10
+        description: Lånets produktkod. Obligatorisk om ett lån ska skapas upp i LP. Produktgrupp behöver inte anges då LP har kännedom om respektive produkts grupptillhörighet.
+        enum:
+        - MORTGAGE_BASE_A10
+        - MORTGAGE_LOAN_A11
+        - MORTGAGE_FLEX_A20
+        - MORTGAGE_STIBOR_A30
+        - MORTGAGE_BANK_LOAN_A40
+        - HOUSE_FARM_A50
+        - HOUSE_VILLA_A51
+        - MORTGAGE_TOP_B10
+        - EU_CREDIT_OLD_C10
+        - EU_CREDIT_A60
+        - GUARANTEE_LOAN_C11
+        - DEPOSIT_INS
+      downPayment:
+        type: number
+        example: 100000.0
+        description: Insats
+      downPaymentSource:
+        type: string
+        example: SAVINGS
+        description: Var kommer insatsen ifrån?
+        enum:
+        - EARLIER_EXCESS
+        - UNSECURED_LOANS
+        - SAVINGS
+        - OTHER
+      downPaymentNote:
+        type: string
+        example: Bidrag från investerare.
+        description: Kommentar kring var kommer insatsen ifrån
+      purpose:
+        type: string
+        example: REAL_ESTATE_PURCHASE_FARM
+        description: 'Lånets ändamål<br>Översättning av enumtyper:<br>MACHINE_INVESTMENT_MACHINES : Maskininvestering - Maskiner<br>WORKING_CAPITAL_ADDITIONAL_LIQUIDITY : Rörelsekapital - Likvid.först.<br>WORKING_CAPITAL_RECONSTRUCTION : Rörelsekapital - Rekonstrukt<br>OTHER_OTHER : Övrigt - Övrigt<br>WORKING_CAPITAL_ANIMALS : Rörelsekapital - Djur<br>WORKING_CAPITAL_STOCK : Rörelsekapital - Lager<br>REAL_ESTATE_PURCHASE_FARM : Fastighetsköp – Jordbruk<br>REAL_ESTATE_PURCHASE_HOUSE : Fastighetsköp - Privatbostad<br>REAL_ESTATE_PURCHASE_OTHER_PROPERTY : Fastighetsköp - Annan fastighet<br>EXTENSION_OR_RENOVATION_DAIRY_FARM : Ny/Renov./Tillb. - Mjölkstall<br>EXTENSION_OR_RENOVATION_PIG_FARM : Ny/Renov./Tillb. - Svinstall<br>EXTENSION_OR_RENOVATION_CATTLE : Ny/Renov./Tillb. - Nöt<br>EXTENSION_OR_RENOVATION_POULTRY : Ny/Renov./Tillb. - Fjäderfä<br>EXTENSION_OR_RENOVATION_OTHER_SPECIES : Ny/Renov./Tillb. - Övr. djurslag<br>EXTENSION_OR_RENOVATION_MACHINE_OR_WORKSHOP : Ny/Renov./Tillb. - Mask.h./verkst<br>EXTENSION_OR_RENOVATION_OTHER_BUILDING : Ny/Renov./Tillb. - Övr. ekonomibyggn.<br>EXTENSION_OR_RENOVATION_HOUSE : Ny/Renov./Tillb. – Bostad<br>ENERGY_PRODUCTION_WIND_POWER : Energiproduktion - Vindkraft<br>ENERGY_PRODUCTION_BIOGAS : Energiproduktion – Biogas<br>TAKE_OVER_EXTERNALLY : Finansiering befintlig bostad (Övertag externt)<br>TAKE_OVER_INTERNALLY : Finansiering befintlig bostad (Omläggning internt)<br>EXTENSION_OF_LOANS : Utökning av lån<br>NEW_LENDING : Nyutlåning'
+        enum:
+        - MACHINE_INVESTMENT_MACHINES
+        - WORKING_CAPITAL_ADDITIONAL_LIQUIDITY
+        - WORKING_CAPITAL_RECONSTRUCTION
+        - OTHER_OTHER
+        - WORKING_CAPITAL_ANIMALS
+        - WORKING_CAPITAL_STOCK
+        - REAL_ESTATE_PURCHASE_FARM
+        - REAL_ESTATE_PURCHASE_HOUSE
+        - REAL_ESTATE_PURCHASE_OTHER_PROPERTY
+        - EXTENSION_OR_RENOVATION_DAIRY_FARM
+        - EXTENSION_OR_RENOVATION_PIG_FARM
+        - EXTENSION_OR_RENOVATION_CATTLE
+        - EXTENSION_OR_RENOVATION_POULTRY
+        - EXTENSION_OR_RENOVATION_OTHER_SPECIES
+        - EXTENSION_OR_RENOVATION_MACHINE_OR_WORKSHOP
+        - EXTENSION_OR_RENOVATION_OTHER_BUILDING
+        - EXTENSION_OR_RENOVATION_HOUSE
+        - ENERGY_PRODUCTION_WIND_POWER
+        - ENERGY_PRODUCTION_BIOGAS
+        - TAKE_OVER_EXTERNALLY
+        - TAKE_OVER_INTERNALLY
+        - EXTENSION_OF_LOANS
+        - NEW_LENDING
+  OwnershipShare:
+    type: object
+    properties:
+      customerId:
+        type: string
+        example: "196806015209"
+        description: Personnummer på ägare av fastighet. Format YYYYMMDDnnnn
+      shareNumerator:
+        type: integer
+        format: int32
+        example: 1
+        description: Antal ägarandelar som aktuell person har i fastigheten (täljare)
+      shareDenominator:
+        type: integer
+        format: int32
+        example: 1
+        description: Totalt antal ägarandelar i fastigheten (nämnare)
+  PrivateEconomy:
+    type: object
+    properties:
+      givenYearlyIncome:
+        type: number
+        example: 710000.0
+        description: Årlig inkomst angiven av kund. Kommer att visas i LP under 'Justerad inkomst'
+      employmentType:
+        type: string
+        example: PERMANENT
+        description: Anställningsform
+        enum:
+        - PERMANENT
+        - TEMPORARY
+        - PROBATIONARY
+        - UNEMPLOYMENT_INSURANCE
+        - SELF_EMPLOYED
+        - STUDENT_AID
+        - PENSION
+      employedSince:
+        type: string
+        format: date
+        example: 2002-01-01
+        description: Anställd sedan (år, månad, dag). Om detaljer för månad och dag inte finns angiven av kund, så kan första dag på året sättas (dvs anställningsår 2010 blir '2010-01-01')
+      employer:
+        type: string
+        example: Stockholm stad
+        description: Arbetsgivare
+      givenIncomeInForeignCurrency:
+        type: boolean
+        example: false
+        description: Erhålls inkomsten i utländsk valuta?
+        default: false
+  RealEstateCollateral:
+    type: object
+    required:
+    - municipality
+    properties:
+      municipality:
+        type: string
+        example: Österåker
+        description: Kommun
+      block:
+        type: string
+        example: "78"
+        description: Block
+      region:
+        type: string
+        example: Rydboholm
+        description: Trakt
+      unit:
+        type: string
+        example: "2"
+        description: Enhet
+      streetAddress:
+        type: string
+        example: Sturevägen
+        description: Gata
+      streetAddressNumber:
+        type: string
+        example: Sturevägen 3
+        description: Gatunummer
+      postalCode:
+        type: string
+        example: "18494"
+        description: Postnummer
+      postalAddress:
+        type: string
+        example: Åkersberga
+        description: Postort
+      buyRealEstate:
+        type: boolean
+        example: true
+        description: Ska fastigheten köpas
+        default: false
+      useAsCollateral:
+        type: boolean
+        example: true
+        description: Ska fastigheten användas som säkerhet för lån sökta i detta ärende?
+        default: false
+  Response:
+    type: object
+    properties:
+      caseId:
+        type: string
+        example: "103141"
+        description: Skapat ärendenummer i Loan Process
+      caseURL:
+        type: string
+        example: https://lhblpp.landshypotek.se:7001/loanprocess/servlet?appid=loanprocess.application.cp&flowid=HME_Mainpage_2&Action=OPEN_CASE&ActionValue=103141
+        description: Länk till ärendet i LoanProcess
+  Revenue:
+    type: object
+    required:
+    - revenue
+    - year
+    properties:
+      year:
+        type: integer
+        format: int32
+        example: 2018
+        description: År för omsättning
+      revenue:
+        type: number
+        example: 4500000.0
+        description: Årsomsättning

@@ -39,6 +39,7 @@ type HouseholdType struct {
 	NumberOfCars                 int     `json:"numberOfCars"`
 	ChildMaintenanceCost         float32 `json:"childMaintenanceCost"`
 	ReceivedChildMaintenanceCost float32 `json:"receivedchildMaintenanceCost"`
+	ChildCareAmount              float32 `json:"childCareAmount"`
 }
 
 // HouseholdMemberType documentation
@@ -299,6 +300,7 @@ type KycInformationType struct {
 	KycRelatedPublicFunction bool   `json:"kycRelatedPublicFunction"`
 	KycHighRiskIndustry      bool   `json:"kycHighRiskIndustry"`
 	KycHighRiskIndustryText  string `json:"kycHighRiskIndustryText"`
+	KycUSPerson              bool   `json:"kycUSPerson"`
 }
 
 // KycID documentation

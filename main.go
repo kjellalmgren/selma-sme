@@ -33,6 +33,7 @@ import (
 	"selmasme/eusupports"
 	"selmasme/guarantors"
 	"selmasme/maintenancecosts"
+	"selmasme/segments"
 	submitapplication "selmasme/submitapplications"
 	"selmasme/swagger"
 
@@ -98,6 +99,7 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", Index)
+	router.HandleFunc("/v1/segments", segments.Segments).Methods("GET", "POST", "OPTIONS")
 	router.HandleFunc("/v1/swagger", swagger.Swagger).Methods("GET", "POST", "OPTIONS")
 	router.HandleFunc("/v1/upload", Upload).Methods("GET", "POST", "OPTIONS")
 	//
